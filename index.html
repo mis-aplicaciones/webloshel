@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="menu">
+      <ion-icon name="menu-outline"></ion-icon>
+      <ion-icon name="close-outline"></ion-icon>
+    </div>
+
+    <div class="barra-lateral">
+      <div>
+        <div class="nombre-pagina">
+          <ion-icon id="cloud" name="menu-outline"></ion-icon>
+          <span>LoShel</span>
+        </div>
+        <button class="boton">
+          <ion-icon name="add-outline"></ion-icon>
+          <span>Create new</span>
+        </button>
+      </div>
+
+      <nav class="navegacion">
+        <ul>
+          <li>
+            <a href="#tabinicio">
+              <ion-icon name="home-outline"></ion-icon>
+              <span>Inicio</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <ion-icon name="film-outline"></ion-icon>
+              <span>Películas</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <ion-icon name="logo-youtube"></ion-icon>
+              <span>Series</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <ion-icon name="tv-outline"></ion-icon>
+              <span>Tv Online</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <ion-icon name="cafe-outline"></ion-icon>
+              <span>Donar</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <ion-icon name="search-outline"></ion-icon>
+              <span>Buscar</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div>
+        <div class="linea"></div>
+
+        <div class="modo-oscuro">
+          <div class="info">
+            <ion-icon name="moon-outline"></ion-icon>
+            <span>Drak Mode</span>
+          </div>
+          <div class="switch">
+            <div class="base">
+              <div class="circulo"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="usuario">
+          <img src="/Jhampier.jpg" alt="" />
+          <div class="info-usuario">
+            <div class="nombre-email">
+              <span class="nombre">Invitdo</span>
+              <span class="email">Invitado@gmail.com</span>
+            </div>
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="secciones">
+        <article id="tabinicio">
+          <div class="nav" id="nav">
+            <img src="/imagenes/logo LoShel.png" alt="logo" class="nav__logo" />
+          </div>
+          <!--header-->
+          <!--<div class="banner">
+            <div class="banner__contents">
+              <h1 class="banner__title">
+                <img
+                  src="https://micartelera.com.ar/novedades/wp-content/uploads/2023/08/image.png"
+                  alt="lamonja2"
+                />
+              </h1>
+              <div class="banner__buttons">
+                <button class="banner__button">Play</button>
+                <button class="banner__button">My list</button>
+              </div>
+              <div class="banner_description">
+                <p>
+                  Francia, 1956. El asesinato de un sacerdote provoca que un mal
+                  demoníaco se extienda sin control. La hermana Irene deberá
+                  enfrentarse, de nuevo, a la monja satánica Valak.
+                </p>
+              </div>
+            </div>
+          </div>-->
+          <div class="banner">
+            <!-- <div class="bg"> -->
+            <div class="content">
+              <img
+                src="https://entradaspe.lamonja2.com/images/tt.png"
+                class="movieTitle"
+              />
+              <h4>
+                <span>2023</span>
+                <span><i>14+</i></span>
+                <span>1h 55min</span>
+                <span>Terror</span>
+              </h4>
+              <p>
+                Francia, 1956. El asesinato de un sacerdote provoca que un mal
+                demoníaco se extienda sin control. La hermana Irene deberá
+                enfrentarse, de nuevo, a la monja satánica Valak.
+              </p>
+              <div class="buttons">
+                <a href="go:blueb"
+                  ><i class="fa fa-play aria" hidden="true"></i>Play</a
+                >
+                <a href="#"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>My list</a
+                >
+              </div>
+            </div>
+            <!--</div>-->
+          </div>
+          <!--Loshel top 10-->
+          <div class="row">
+            <h2>Top Películas</h2>
+            <div class="row__posters">
+              <img
+                src="imagenes/top1.png"
+                alt="top1"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top2.png"
+                alt="top2"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top3.png"
+                alt="top3"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top4.png"
+                alt="top4"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top5.png"
+                alt="top5"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top6.png"
+                alt="top6"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top7.png"
+                alt="top7"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top8.png"
+                alt="top8"
+                class="row__poster row__posterLarger"
+              />
+              <img
+                src="imagenes/top9.png"
+                alt="top9"
+                class="row__poster row__posterLarger"
+              />
+            </div>
+          </div>
+
+          <!--Recien Subidas-->
+          <div class="row">
+            <h2>Recien Subidas</h2>
+            <div class="row__posters">
+              <img src="imagenes/top1.png" alt="top1" class="row__poster" />
+              <img src="imagenes/top2.png" alt="top2" class="row__poster" />
+              <img src="imagenes/top3.png" alt="top3" class="row__poster" />
+              <img src="imagenes/top4.png" alt="top4" class="row__poster" />
+              <img src="imagenes/top5.png" alt="top5" class="row__poster" />
+              <img src="imagenes/top6.png" alt="top6" class="row__poster" />
+              <img src="imagenes/top7.png" alt="top7" class="row__poster" />
+              <img src="imagenes/top8.png" alt="top8" class="row__poster" />
+              <img src="imagenes/top9.png" alt="top9" class="row__poster" />
+            </div>
+          </div>
+
+          <!--Para no dormir-->
+          <div class="row">
+            <h2>Para no dormir</h2>
+            <div class="row__posters">
+              <img src="imagenes/top1.png" alt="top1" class="row__poster" />
+              <img src="imagenes/top2.png" alt="top2" class="row__poster" />
+              <img src="imagenes/top3.png" alt="top3" class="row__poster" />
+              <img src="imagenes/top4.png" alt="top4" class="row__poster" />
+              <img src="imagenes/top5.png" alt="top5" class="row__poster" />
+              <img src="imagenes/top6.png" alt="top6" class="row__poster" />
+              <img src="imagenes/top7.png" alt="top7" class="row__poster" />
+              <img src="imagenes/top8.png" alt="top8" class="row__poster" />
+              <img src="imagenes/top9.png" alt="top9" class="row__poster" />
+            </div>
+          </div>
+
+          <!--Top Series-->
+          <div class="row">
+            <h2>Top Series</h2>
+            <div class="row__posters">
+              <img
+                src="imagenes/1 top series.png"
+                alt="top1"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/2 top series.png"
+                alt="top2"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/3 top series.png"
+                alt="top3"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/4 top series.png"
+                alt="top4"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/5 top series.png"
+                alt="top5"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/6 top series.png"
+                alt="top6"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/7 top series.png"
+                alt="top7"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/8 top series.png"
+                alt="top8"
+                class="row__poster"
+              />
+              <img
+                src="imagenes/9 top series.png"
+                alt="top9"
+                class="row__poster"
+              />
+            </div>
+          </div>
+        </article>
+        <article id="tabpeliculas"></article>
+        <article id="tabseries"></article>
+        <article id="tabtv"></article>
+        <article id="tabdonar"></article>
+        <article id="tabbuscar"></article>
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>

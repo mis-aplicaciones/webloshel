@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+main{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #111111;
+    
+}
+body::-webkit-scrollbar{
+    width: 10px;
+    background: rgb(17, 17, 17);
+}
+.contentimg{
+    width: 100%;
+    object-fit: contain;
+    max-height: 100px;
+    margin-right: 10px;
+    transition: transform 450ms;
+}
+.contentimg img{
+    min-width: 100px;
+    height: 100px;
+    background-size: cover; 
+    cursor: pointer;
+    transition: 0.5 ease;
+    z-index: 2;
+    border-radius: 10px;
+}
+/*.row__poster{
+    width: 100%;
+    object-fit: contain;
+    max-height: 100px;
+    margin-right: 10px;
+    transition: transform 450ms;
+
+}*/
+.row__posters{
+    display: flex;
+    overflow-y: hidden ;
+    overflow-x: scroll;
+    padding: 20PX;
+}
+/*.row__poster:hover{
+    transform: scale(1.08);
+}*/
+.contentimg:hover{
+    transform: scale(1.08);
+    
+}
+.row__posters::-webkit-scrollbar{
+    display: none;
+}
+/*---solo si quiero agrandar las imagenes de TOP PELICULAS
+.row__posterLarger{
+   max-height: 250px;
+}
+.row__posterLarger:hover{
+    transform: scale(1.09);
+}--*/
+.row{
+    color: white;
+    margin-left: 70px; /*----muevo a la derecha el margen  del carrusel---*/
+cursor: pointer;
+}
+.row h2{
+    font-size: 18px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+/*--.row__posters .control{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff27;
+    cursor: pointer;
+    object-fit: cover;
+    padding: 10px;
+    
+}
+.row__posters .control:hover{
+    background: #ffffff6b;
+}
+.row__posters .prev{
+    left: 115px;
+    top: 89%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    
+}
+.row__posters .next{
+    right: 40px;
+    top: 89%;
+    transform: translate(50%, -50%);
+    z-index: 1;
+}--*/
+/*.banner{
+    background-image: url(https://blog.apis.cineplanet.com.pe/uploads/la_monja_2_escena_cineplanet_e9f1b8447d.webp) ;
+    background-size: cover;
+    background-position: center center;
+    color: white;
+    object-fit: contain;
+    height: 448px;
+}
+.banner__contents{
+    margin-left: 30px;
+    padding-top: 140px;
+    height: 190px;
+}
+.banner__title{
+    font-size: 3rem;
+    padding-bottom: 0.3rem;
+}*/
+
+/*--titulo y descripcion sobre la imagen principal--*/
+.banner{
+    
+    position: relative;
+    width: 100%;
+    min-height: 75vh;
+    padding:0 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    background: linear-gradient(rgba(255, 255, 255, 0)0%,rgb(17, 17, 17)100%), url(https://hips.hearstapps.com/hmg-prod/images/lidya-jewett-olivia-marcum-the-exorcist-believer-64bfebb3dfa01.jpg);
+    background-position: center center;
+    background-size: cover;
+    padding-bottom: 4rem;
+}
+/*.banner .bg{
+    position: absolute;
+    top: 0;
+    left: 80px;
+    height: 100%;
+    object-fit: cover;
+    
+    
+}*/
+.content{
+    position: relative;
+    z-index: 1;
+    max-width: 500px; 
+    padding-top: 5rem;
+      
+}
+.movieTitle{  
+    max-width: 220px;      
+}
+
+.banner .content h4{
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+}
+.banner .content h4 span{
+    padding: 3px; /*separador de año y minutos de pelicula*/
+    border-right: 1px solid rgba(255,255,255,0.5);
+}
+.banner .content h4 span:first-child{
+    padding-left: 0;
+}
+
+.banner .content h4 span:last-child{
+    border-right:  none;
+}
+.banner .content h4 span i{
+    background: red;
+    color: #fff;
+    padding: 0 8px;
+    display: inline-block;
+    font-style: normal;
+    border-radius: 2px;
+}
+.banner .content p{
+    text-align: justify;
+    font-size: 1em;
+    padding-top: 1rem;
+    font-weight: 300;
+    line-height: 1.5em;
+    color: #fff;
+    margin-bottom: 1.4rem; /*mover los botones mas abajo de la descripcion*/
+}
+.banner .content .buttons{
+    position: relative;
+    
+}
+.banner  .content .buttons a{
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    background: rgb(162, 0, 255);
+    color: #fff;
+    padding: 6px 20px;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+.banner .content  .buttons a:nth-child(2){
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.banner .content .buttons a:hover:nth-child(2){
+    background: rgb(162, 0, 255);
+}
+.nav__logo{
+    display: flex;
+    width: 63px;
+    object-fit: contain;
+}
+.nav{
+    position:absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content:end;
+    padding: 20px;
+    padding-right: 35px;
+    z-index: 1;
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+    opacity: 1;
+    
+}
+#version {
+    position:absolute;
+    margin-top: 44px;
+    font-size: 14px;
+    color: #353535;
+    opacity: 1;
+
+}

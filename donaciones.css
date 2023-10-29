@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0px;
+}
+body{
+    padding: 40px;
+}
+h1 {
+    text-align: center;
+    font-size: 22px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 2em;
+}
+.contenedor {
+    display: flex;
+    border-style: solid;
+    border-color: black;
+    border-radius: 20px;
+    padding: 3em;
+}
+.contenedor p{
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-right: 2em;
+    
+    
+}
+.contenedor .metodos{
+    display: flex;
+    
+}
+.contenedor .metodos .paypal{
+    border-style: solid;
+    border-color: rgb(4, 108, 206);
+    border-radius: 10px;
+    width: 250px;
+    padding: 0;
+    margin-right: 15px;
+    
+
+}
+.contenedor .metodos .paypal img{
+    padding-top: 6em;
+    width: 180px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    
+    
+}
+.contenedor .metodos .paypal h2{
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 8em;
+}
+.contenedor .metodos .yape{
+    border-style: solid;
+    border-color: rgb(4, 108, 206);
+    border-radius: 10px;
+    width: 250px;
+    padding: 0;
+}
+.contenedor .metodos .yape img{
+    padding-top: 2em;
+    width: 160px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    
+}
+.contenedor .metodos .yape h3{
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 2em;
+}
+/*------------------> Responsive*/
+@media (max-height: 660px){
+    
+}
+@media (max-width: 720px){
+    body{
+        padding: 5px;
+    }
+    h1 {
+        font-size: 18px;
+        padding: 1em;
+    }
+    .contenedor{
+        
+        display: block;
+        justify-content: center;
+        padding: 0.8em;
+        height: auto;
+        width: auto;
+        margin: auto;
+        
+    }
+    
+    .contenedor p{
+        padding: 10px;
+        text-align: center;
+        height: auto;
+        font-size: 12px;
+        margin-right: 0;
+        padding-bottom: 2em;
+    }
+    .contenedor .metodos{
+        display: block;
+        justify-content: center;
+        height: auto;
+        width: auto;
+        margin: auto;       
+    }
+    .contenedor .metodos .paypal{       
+        width: 250px;
+        padding: 1em;
+        margin: auto;
+    }
+    .contenedor .metodos .paypal img{
+        padding-top: 1.5em;
+        width: 180px;
+        margin-right: auto;
+        margin-left: auto;
+        display: block;
+    }
+    .contenedor .metodos .paypal h2{
+        text-align: center;
+        font-size: 15px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding-top: 2em;
+    }
+    .contenedor .metodos .yape{       
+        width: 250px;
+        padding: 1em;
+        margin: auto;
+        margin-top: 1em;
+    }
+    .contenedor .metodos .yape img{
+        padding-top: 0.7em;
+        width: 160px;
+       
+    }
+}

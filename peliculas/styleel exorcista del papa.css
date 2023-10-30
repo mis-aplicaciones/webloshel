@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-@import "/peliculas/el exorcista del papa.css";
+@import "el exorcista del papa.css";
 
 :root{
     --color-barra-lateral:rgb(17,17,17);

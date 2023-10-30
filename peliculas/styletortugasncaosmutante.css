@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-@import "/peliculas/tortugas ninja caos mutante.css";
+@import "tortugas ninja caos mutante.css";
 
 :root{
     --color-barra-lateral:rgb(17,17,17);

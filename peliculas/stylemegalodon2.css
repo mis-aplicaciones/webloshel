@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-@import "/peliculas/megalodon2.css";
+@import "megalodon2.css";
 
 :root{
     --color-barra-lateral:rgb(17,17,17);

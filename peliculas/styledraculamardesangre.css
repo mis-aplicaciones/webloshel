@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-@import "/peliculas/dracula mar de sangre.css";
+@import "dracula mar de sangre.css";
 
 :root{
     --color-barra-lateral:rgb(17,17,17);

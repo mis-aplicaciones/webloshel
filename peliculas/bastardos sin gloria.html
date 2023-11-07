@@ -7,104 +7,31 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <title>Sidebar</title>
-    <link rel="stylesheet" href="stylebastardossingloria.css" />
+    <link rel="stylesheet" href="style-peliculas.css" />
+    <style>
+      .banner {
+        position: relative;
+        width: 100%;
+        min-height: 70vh;
+        padding: 0 50px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: end;
+        background: linear-gradient(
+            rgba(255, 255, 255, 0) 0%,
+            rgb(17, 17, 17) 100%
+          ),
+          url(https://www.laxmasmusica.com/uploads/newsarticle/d4976f91f79d4e44973c6c4cb8335027/basweb-min.jpg);
+        background-position: center center;
+        background-size: cover;
+        padding-bottom: 2rem;
+      }
+    </style>
   </head>
   <body>
-    <div class="menu">
-      <ion-icon name="menu-outline"></ion-icon>
-      <ion-icon name="close-outline"></ion-icon>
-    </div>
-
-    <div class="barra-lateral">
-      <div>
-        <div class="nombre-pagina">
-          <ion-icon id="cloud" name="menu-outline"></ion-icon>
-          <span>LoShel</span>
-        </div>
-        <!--<button class="boton">
-          <ion-icon name="add-outline"></ion-icon>
-          <span>Create new</span>
-        </button>-->
-      </div>
-
-      <nav class="navegacion">
-        <ul>
-          <li>
-            <a href="../index.html">
-              <ion-icon name="home-outline"></ion-icon>
-              <span>Inicio</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="film-outline"></ion-icon>
-              <span>Películas</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="logo-youtube"></ion-icon>
-              <span>Series</span>
-            </a>
-          </li>
-          <li>
-            <a href="../playerjs.html">
-              <ion-icon name="tv-outline"></ion-icon>
-              <span>Tv Online</span>
-            </a>
-          </li>
-          <li>
-            <a href="../donar.html">
-              <ion-icon name="cafe-outline"></ion-icon>
-              <span>Donar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="search-outline"></ion-icon>
-              <span>Buscar</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div>
-        <div class="linea"></div>
-
-        <div class="modo-oscuro">
-          <div class="info">
-            <ion-icon name="moon-outline"></ion-icon>
-            <span>Drak Mode</span>
-          </div>
-          <div class="switch">
-            <div class="base">
-              <div class="circulo"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="usuario">
-          <img src="../imagenes/avatar.png" alt="avatar" />
-          <div class="info-usuario">
-            <div class="nombre-email">
-              <span class="nombre">Invitdo</span>
-              <span class="email">Invitado@gmail.com</span>
-            </div>
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <main>
-      <div class="secciones">
-        <article id="tabinicio">
-          <div class="nav" id="nav">
-            <img src="../imagenes/logo LoShel.png" alt="logo" class="nav__logo" />
-            <p id="version">Versión 9.9</p>
-          </div>
-          <!--header-->
-          <!--<div class="banner">
+      <!--header-->
+      <!--<div class="banner">
             <div class="banner__contents">
               <h1 class="banner__title">
                 <img
@@ -125,164 +52,76 @@
               </div>
             </div>
           </div>-->
-          <div class="banner">
-            <!-- <div class="bg"> -->
-            <div class="content">
-              <img
-                src="https://image.tmdb.org/t/p/original/ynL1F2jvOnimVDulMvaHKHzxNw1.png"
-                class="movieTitle"
-              />
-              <h4>
-                <span>2009</span>
-                <span><i>14+</i></span>
-                <span>2h 33min</span>
-                <span>Drama/Bélico</span>
-              </h4>
-              <p>
-                Comienza en una Francia ocupada por los alemanes, donde Shosanna
-                Dreyfus (Mélanie Laurent) atestigua la ejecución de su familia a
-                manos del Coronel Nazi Hans Landa (Christoph Waltz). Shosanna
-                logra escapar y huye a París, donde ella se crea una nueva
-                identidad como la dueña y operadora de un cine.
-              </p>
-              <div class="buttons">
-                <a href="go:bsgloria"
-                  ><i class="fa fa-play aria" hidden="true"></i>Play</a
-                >
-                <a href="#"
-                  ><i class="fa fa-plus" aria-hidden="true"></i>My list</a
-                >
-              </div>
-            </div>
-            <!--</div>-->
+      <div class="banner">
+        <!-- <div class="bg"> -->
+        <div class="content">
+          <img
+            src="https://image.tmdb.org/t/p/original/ynL1F2jvOnimVDulMvaHKHzxNw1.png"
+            class="movieTitle"
+          />
+          <h4>
+            <span>2009</span>
+            <span><i>14+</i></span>
+            <span>2h 33min</span>
+            <span>Drama/Bélico</span>
+          </h4>
+          <p>
+            Comienza en una Francia ocupada por los alemanes, donde Shosanna
+            Dreyfus (Mélanie Laurent) atestigua la ejecución de su familia a
+            manos del Coronel Nazi Hans Landa (Christoph Waltz). Shosanna logra
+            escapar y huye a París, donde ella se crea una nueva identidad como
+            la dueña y operadora de un cine.
+          </p>
+          <div class="buttons">
+            <a href="go:bsgloria"
+              ><i class="fa fa-play aria" hidden="true"></i>Play</a
+            >
+            <a href="#"><i class="fa fa-plus" aria-hidden="true"></i>Opc. 2</a>
+            <a href="https://mis-aplicaciones.github.io/webloshel/donar.html"
+              ><i class="fa fa-donar" aria-hidden="true"></i>Donar</a
+            >
           </div>
+        </div>
+        <!--</div>-->
+      </div>
 
-          <!--Recien Subidas-->
-          <div class="row">
-            <h2>Recien Subidas</h2>
-            <div class="row__posters">
-              <div>
-                <a class="contentimg" href="#"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA_nAUaL-FRy1VKtwo1qu13ny7f4_sSbG22OdjBHQAaVBPtkKfR83okmZR-57Zyg_M_ATcv551Rc3FzS8_BDJV5wUTLYg=w1360-h619"
-                    alt="Dulces y sangrientos 16"
-                    class="row__poster"
-                /></a>
-              </div>
-              <div>
-                <a class="contentimg" href="#"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC4FX7PXLcLn98g93xd4tZRo2HupdWZpbrR28qi_GMhWjHLtdMYCZ69-R95kp4FZMqBK0VgAzSMfqu2lrmHT5h081usKw=w1360-h619"
-                    alt="Este cuerpo no es mio"
-                    class="row__poster"
-                /></a>
-              </div>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA908F_09ubduMk-uPqp631HphV2Mf2bhhCApEzdI3nFgjJis-AZesC03T6PgRnQuvT8k5rBn7-Em9_n1bh1IAOk62e=w1360-h619"
-                  alt="Bastardos sin gloria"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC5SruGnn03Gn66QRHXlJgMrzY9wvw1Y1ixttiBYVJd0pMOI_NOjG_5TYR-CYj9rZBKyAFk6dY6vt4K3r4uh8dK1G8c1Q=w1360-h619"
-                  alt="Capitan America"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAoIgS_0daoc0IS2ysTOd1yMR4XhrbRq4s2GOHvgwCb-wuSrKfCHt28xWI7F2Vlo6myyxNsCyzYTMv4TP7zRhKFCtBg=w1360-h619"
-                  alt="Golpes del destino"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBfOYD6hadefD8f-ekFHhrgEz0lJEOfridG6OXCrMMJKY4Drg_rLy22fZKyj7NUAcRpos8ZIizo33cucCoQP_xqRK5lbA=w1360-h619"
-                  alt="Extinción"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaASISs9_0McJVoc-UK4n59TSG2WnBY6JNRRzD6uull-Ru_UEPZbPGWN89HwFKqzTzZC2i6D8E9fnr2V8huTCk72LozbWA=w1360-h619"
-                  alt="Amor, sexo y 30 velitas"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAW-GZrz-v3RXS-cSgcLBJy6AOPmjYOS2u00Eteb1lXQdSWUzCBIip0uUSkEIaLg8O88Ffoze-dvnFa-VC5nmpOP3zqmw=w1360-h619"
-                  alt="La pasión de cristo"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDIJjhTtSUr_Hpg-U6O9AwHbmIPbaNvBZGDJCHEX_rxrcASmrgTzMmoGIJXEBp-kgvDmI0hNdYmy5EzGU6reYbE8F2OwQ=w1360-h619"
-                  alt="Oso visioso"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
+      <!--Recien Subidas-->
+      <div class="row">
+        <h2>Recien Subidas</h2>
+        <div class="row__posters">
+          <a class="contentimg" href="#"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA_nAUaL-FRy1VKtwo1qu13ny7f4_sSbG22OdjBHQAaVBPtkKfR83okmZR-57Zyg_M_ATcv551Rc3FzS8_BDJV5wUTLYg=w1360-h619"
+              alt="Dulces y sangrientos 16"
+              class="row__poster"
+          /></a>
 
-          <!--Polulares 2023-->
-          <div class="row">
-            <h2>Populares 2023</h2>
-            <div class="row__posters">
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAxgT6_LaEvCcvBUrWaRdinMNVckoVCBCg9tmJts6vppekOFr4-UBfTWYyL07WUnWGtb92D8i2GKejzEKQMo1HoO6nzuQ=w1360-h619"
-                  alt="Contrareloj"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="go:blueb"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC7WAG_ecTDbMbYcTND1JNb-lRZUin3PqVHIeemmNLOPUdirzRJWbyuLvhSryCeLUmjYIDVyYo7agtfdqjTMJQWLB2coQ=w1360-h619"
-                  alt="Bluebeetle"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCPVPGcuIaBbwC1lfQ_mtvQHkv3sT_uUFAc97JMG5nj8P4Nvglhwn4QozDO8C9tNKv40XzGj-kQDI0mSKwDfSUfoJq6vA=w1360-h619"
-                  alt="Hazme el favor"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCh5J-2QYBNURJBFOM9OKsvEglgsszDPiaEZwZtanTTbokMcM9OEsaItlmw2f7qtVKiMfLWdkMsfkXkKtJQFiuiiBGe=w1360-h619"
-                  alt="La noche del demonio"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAwN7fF2x7g0WfWf3ukaMVu-x8w9y854t14ArrCjISIRgmrEMBwrFobobqQvbWEfhJGL1LQf5WXob4PRZ12ySl8JfyN=w1360-h619"
-                  alt="Sonidos de libertad"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAN2o_LjUmD01o0qWBD3w1wNfpzOFg_w1qUtv03Jl0_muTVShHx1h3f_eKeeffg27ceHDvys89_wO7m_Ov9Y5jDq5JKZg=w1360-h619"
-                  alt="RE: Dead island"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA9havFv7Er7wn-oEhukyirzZELUE6wJwH1XI_DpE-kcou26G7hgYOTH0gznelnQ8p-0e9X-qGb6vr98jxIz3gYAlQctg=w1360-h619"
-                  alt="El pacto"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBSz5R8LmHJgmX-zQRprkUq9t8RojAZKPxKO-ZscdRymUylTGnjsPkbXWBXZ6i2m1TUWlDYtDjqca1eeW0mk-LqDY8lew=w1360-h619"
-                  alt="Flash"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCBlJzrC0u-6_mJRPi3a8bo4BUuEXCtP_b_glZDY3QjK0i1i5uf8B9gWvILeL76Ezjb8JXFoAOWZXbbc5GbatUsQ5_lvA=w1360-h619"
-                  alt="Transformers: El despertar de las Bestias"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
-        </article>
+          <a class="contentimg" href="#"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC4FX7PXLcLn98g93xd4tZRo2HupdWZpbrR28qi_GMhWjHLtdMYCZ69-R95kp4FZMqBK0VgAzSMfqu2lrmHT5h081usKw=w1360-h619"
+              alt="Este cuerpo no es mio"
+              class="row__poster"
+          /></a>
+
+          <a class="contentimg" href="#"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA908F_09ubduMk-uPqp631HphV2Mf2bhhCApEzdI3nFgjJis-AZesC03T6PgRnQuvT8k5rBn7-Em9_n1bh1IAOk62e=w1360-h619"
+              alt="Bastardos sin gloria"
+              class="row__poster"
+          /></a>
+          <a class="contentimg" href="#"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC5SruGnn03Gn66QRHXlJgMrzY9wvw1Y1ixttiBYVJd0pMOI_NOjG_5TYR-CYj9rZBKyAFk6dY6vt4K3r4uh8dK1G8c1Q=w1360-h619"
+              alt="Capitan America"
+              class="row__poster"
+          /></a>
+          <a class="contentimg" href="#"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAoIgS_0daoc0IS2ysTOd1yMR4XhrbRq4s2GOHvgwCb-wuSrKfCHt28xWI7F2Vlo6myyxNsCyzYTMv4TP7zRhKFCtBg=w1360-h619"
+              alt="Golpes del destino"
+              class="row__poster"
+          /></a>
+        </div>
       </div>
     </main>
 
@@ -294,6 +133,5 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-    <script src="../script.js"></script>
   </body>
 </html>

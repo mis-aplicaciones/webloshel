@@ -289,15 +289,16 @@ margin-top: 15px;
         left: 10px; /*margen izquierdo entre la descripcion y la pantalla--*/
     }
     .content{
-        padding-top: 6rem; /*---dar espacio entre la imagen de titulo y toda la aprte de arriba--*/
+        padding-top: 15rem; /*---dar espacio entre la imagen de titulo y toda la aprte de arriba--*/
     }
     /*.banner .content h4 span{
        color: #fff;
     }------cambia el color del año y edad de pelicula*/
 
     .movieTitle{
-        max-width: 300px;
-        padding-bottom: 6px;
+        max-width: 250px;
+        padding-bottom: 0px;
+        margin-bottom: 5px;
     }
     .banner .content p{
         text-align:center;

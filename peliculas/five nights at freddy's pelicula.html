@@ -7,205 +7,100 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <title>Sidebar</title>
-    <link
-      rel="stylesheet"
-      href="stylefive nights at freddy's pelicula.css"
-    />
+    <link rel="stylesheet" href="style-peliculas.css" />
+    <style>
+      .banner {
+        position: relative;
+        width: 100%;
+        min-height: 67vh;
+        padding: 0 29px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: end;
+        background: linear-gradient(
+            rgba(255, 255, 255, 0) 0%,
+            rgb(17, 17, 17) 100%
+          ),
+          url(https://cdn-3.expansion.mx/dims4/default/ce439ea/2147483647/strip/true/crop/1366x768+0+0/resize/1200x675!/format/webp/quality/60/?url=https%3A%2F%2Fcdn-3.expansion.mx%2F47%2F76%2Fe5512b8c42e682aecaaa3f26ad9e%2Festreno-fnaf-mexico.jpeg);
+        background-position: top center;
+        background-size: cover;
+        padding-bottom: 2rem;
+      }
+    </style>
   </head>
   <body>
-    <div class="menu">
-      <ion-icon name="menu-outline"></ion-icon>
-      <ion-icon name="close-outline"></ion-icon>
-    </div>
-
-    <div class="barra-lateral">
-      <div>
-        <div class="nombre-pagina">
-          <ion-icon id="cloud" name="menu-outline"></ion-icon>
-          <span>LoShel</span>
-        </div>
-        <!--<button class="boton">
-          <ion-icon name="add-outline"></ion-icon>
-          <span>Create new</span>
-        </button>-->
-      </div>
-
-      <nav class="navegacion">
-        <ul>
-          <li>
-            <a href="/index.html">
-              <ion-icon name="home-outline"></ion-icon>
-              <span>Inicio</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="film-outline"></ion-icon>
-              <span>Películas</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="logo-youtube"></ion-icon>
-              <span>Series</span>
-            </a>
-          </li>
-          <li>
-            <a href="/playerjs.html">
-              <ion-icon name="tv-outline"></ion-icon>
-              <span>Tv Online</span>
-            </a>
-          </li>
-          <li>
-            <a href="/donar.html">
-              <ion-icon name="cafe-outline"></ion-icon>
-              <span>Donar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="search-outline"></ion-icon>
-              <span>Buscar</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div>
-        <div class="linea"></div>
-
-        <div class="modo-oscuro">
-          <div class="info">
-            <ion-icon name="moon-outline"></ion-icon>
-            <span>Drak Mode</span>
-          </div>
-          <div class="switch">
-            <div class="base">
-              <div class="circulo"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="usuario">
-          <img src="/imagenes/avatar.png" alt="avatar" />
-          <div class="info-usuario">
-            <div class="nombre-email">
-              <span class="nombre">Invitdo</span>
-              <span class="email">Invitado@gmail.com</span>
-            </div>
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <main>
-      <div class="secciones">
-        <article id="tabinicio">
-          <div class="nav" id="nav">
-            <img src="imagenes/logo LoShel.png" alt="logo" class="nav__logo" />
-            <p id="version">Versión 9.9</p>
+      <div class="banner">
+        <!-- <div class="bg"> -->
+        <div class="content">
+          <img
+            src="https://www.universalpictures-latam.com/tl_files/content/movies/five_nights/title.png"
+            class="movieTitle"
+          />
+          <h4>
+            <span>2023</span>
+            <span><i>12+</i></span>
+            <span>1h 49min</span>
+            <span> Terror</span>
+          </h4>
+          <p>
+            Un problemático guardia de seguridad empieza a trabajar en la
+            pizzería Freddy Fazbear's. Mientras pasa su primera noche en el
+            trabajo, se da cuenta de que el turno de noche en Freddy's no será
+            tan fácil de sobrellevar.
+          </p>
+          <div class="buttons">
+            <a href="go:fnfred"
+              ><i class="fa fa-play aria" hidden="true"></i>Play</a
+            >
+            <a href="https://ok.ru/videoembed/6986606119591?autoplay=1"
+              ><i class="fa fa-plus" aria-hidden="true"></i>Play 2</a
+            >
+            <a href="https://mis-aplicaciones.github.io/webloshel/donar.html"
+              ><i class="fa fa-donar" aria-hidden="true"></i>Donar</a
+            >
           </div>
-          <!--header-->
-          <!--<div class="banner">
-            <div class="banner__contents">
-              <h1 class="banner__title">
-                <img
-                  src="https://micartelera.com.ar/novedades/wp-content/uploads/2023/08/image.png"
-                  alt="lamonja2"
-                />
-              </h1>
-              <div class="banner__buttons">
-                <button class="banner__button">Play</button>
-                <button class="banner__button">My list</button>
-              </div>
-              <div class="banner_description">
-                <p>
-                  Francia, 1956. El asesinato de un sacerdote provoca que un mal
-                  demoníaco se extienda sin control. La hermana Irene deberá
-                  enfrentarse, de nuevo, a la monja satánica Valak.
-                </p>
-              </div>
-            </div>
-          </div>-->
-          <div class="banner">
-            <!-- <div class="bg"> -->
-            <div class="content">
-              <img
-                src="https://www.universalpictures-latam.com/tl_files/content/movies/five_nights/title.png"
-                class="movieTitle"
-              />
-              <h4>
-                <span>2023</span>
-                <span><i>12+</i></span>
-                <span>1h 49min</span>
-                <span> Terror</span>
-              </h4>
-              <p>
-                Un problemático guardia de seguridad empieza a trabajar en la
-                pizzería Freddy Fazbear's. Mientras pasa su primera noche en el
-                trabajo, se da cuenta de que el turno de noche en Freddy's no
-                será tan fácil de sobrellevar.
-              </p>
-              <div class="buttons">
-                <a href="go:fnfred"
-                  ><i class="fa fa-play aria" hidden="true"></i>Play</a
-                >
-                <a href="#"
-                  ><i class="fa fa-plus" aria-hidden="true"></i>My list</a
-                >
-              </div>
-            </div>
-            <!--</div>-->
-          </div>
+        </div>
+        <!--</div>-->
+      </div>
 
-          <!--Recien Subidas-->
-          <div class="row">
-            <h2>También puedes ver</h2>
-            <div class="row__posters">
-              <div>
-                <a class="contentimg" href="dracula mar de sangre.html"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDn6cEvY3QQmneR4Z_wiJDWgtDhq8rJDdbLnUS9CN_qCRgr0IHjdefeXiKrym2GEVqPt5Q137czcNKVkL7Mfsw6hcJjpQ=w1360-h619"
-                    alt="Dracula mar de sangre"
-                    class="row__poster"
-                /></a>
-              </div>
-              <div>
-                <a class="contentimg" href="megalodon2.html"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBQuNSgz4fRn6Bzn6skaxpz_C1rgcXullE58HtX_ON74shQNv1eqPUUteviQws3QYhjY9NQEO-unyEcgpERqg9Lo3u_=w1360-h619"
-                    alt="Megalodon 2"
-                    class="row__poster"
-                /></a>
-              </div>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCYOmHsIwwtf_DFj71bEmvC1LYuL7K5YXnid0BMyIeRi3QXUKmjCf2Od3eWKr-FTAXCGqjxIMOGIHuCov88-vkcowzveA=w1360-h619"
-                  alt="el exorcismo de mi mejor amiga"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="oso vicioso.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDAR2DVYjQRBm9AwGvYPQmG0SsZ9H39Maax_MIsKoDtyws_WIkx3KGxeAonKgJ1L7vldCf0Xtit6CB1t8_6zILjRyqNqA=w1360-h619"
-                  alt="oso vicioso"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBaAGoS407SGA_ZqEibteIinBkEsjKldoXfowPCdAjLnQ3w_DrXS_sdr2qKcpM9fDD3zGk2iLmatQnB2mWg6cLE5Xhdcw=w1360-h619"
-                  alt="exorcista: Creyente"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCzAaGbo2ZworBXfDoo6SEYAr43c89J7h5xi08rF1IyOe2YoGi_Xr4Uye3nLLE6HFEEGKluJRhj2FO8sYvRvBtgUkkJTw=w1360-h619"
-                  alt="este cuerpo esta para matar"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
-        </article>
+      <!--Recien Subidas-->
+      <div class="row">
+        <h2>También puedes ver</h2>
+        <div class="row__posters">
+          <a class="contentimg" href="dracula mar de sangre.html"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDn6cEvY3QQmneR4Z_wiJDWgtDhq8rJDdbLnUS9CN_qCRgr0IHjdefeXiKrym2GEVqPt5Q137czcNKVkL7Mfsw6hcJjpQ=w1360-h619"
+              alt="Dracula mar de sangre"
+              class="row__poster"
+          /></a>
+
+          <a class="contentimg" href="megalodon2.html"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBQuNSgz4fRn6Bzn6skaxpz_C1rgcXullE58HtX_ON74shQNv1eqPUUteviQws3QYhjY9NQEO-unyEcgpERqg9Lo3u_=w1360-h619"
+              alt="Megalodon 2"
+              class="row__poster"
+          /></a>
+
+          <a class="contentimg" href="elexorcismodemimejoramiga.html"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCYOmHsIwwtf_DFj71bEmvC1LYuL7K5YXnid0BMyIeRi3QXUKmjCf2Od3eWKr-FTAXCGqjxIMOGIHuCov88-vkcowzveA=w1360-h619"
+              alt="el exorcismo de mi mejor amiga"
+              class="row__poster"
+          /></a>
+          <a class="contentimg" href="oso vicioso.html"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDAR2DVYjQRBm9AwGvYPQmG0SsZ9H39Maax_MIsKoDtyws_WIkx3KGxeAonKgJ1L7vldCf0Xtit6CB1t8_6zILjRyqNqA=w1360-h619"
+              alt="oso vicioso"
+              class="row__poster"
+          /></a>
+          <a class="contentimg" href="exorcistacreyente.html"
+            ><img
+              src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBaAGoS407SGA_ZqEibteIinBkEsjKldoXfowPCdAjLnQ3w_DrXS_sdr2qKcpM9fDD3zGk2iLmatQnB2mWg6cLE5Xhdcw=w1360-h619"
+              alt="exorcista: Creyente"
+              class="row__poster"
+          /></a>
+        </div>
       </div>
     </main>
 
@@ -217,6 +112,6 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-    <script src="script.js"></script>
   </body>
 </html>
+

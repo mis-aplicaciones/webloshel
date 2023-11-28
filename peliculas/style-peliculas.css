@@ -243,6 +243,7 @@ margin-top: 15px;
         color: #fff;
         margin: 2px 0 10px;
         
+        
     }
     .movieTitle{  
         max-width: 250px;
@@ -289,6 +290,9 @@ margin-top: 15px;
     .banner .bg{
         left: 10px; /*margen izquierdo entre la descripcion y la pantalla--*/
     }
+    .banner .content h4{
+        font-size: 16px;
+    }
     .content{
         padding-top: 15rem; /*---dar espacio entre la imagen de titulo y toda la aprte de arriba--*/
     }
@@ -310,6 +314,7 @@ margin-top: 15px;
         margin: 2px 0 10px;
         margin-top: 0;
         padding-top: 0.6rem;
+       
         
     }
     .contentimg img{

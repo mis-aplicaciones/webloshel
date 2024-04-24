@@ -1242,7 +1242,7 @@
             </a>
           </div>
           <div class="compartir">
-            <a href="#" onclick="compartirEnFacebook()">
+            <a href="#" onclick="share()">
               <ion-icon name="arrow-redo"></ion-icon>
             </a>
           </div>
@@ -1282,14 +1282,25 @@
     </script>
 
     <script>
-      function compartirEnFacebook() {
-  const url = "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
-  const mensaje = "Si quieres ver el video y muchos más, descarga la app desde aquí: " + url;
-  const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
-
-  window.open(facebookUrl, "_blank");
-}
-
+      async function share() {
+            try {
+                // Verificar si el navegador admite la Web Share API
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'App LoShel Movie version 9.9',
+                        text: 'App para contenido multimedia gratis',
+                        url: 'https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file'
+                    });
+                    console.log('Enlace compartido correctamente');
+                } else {
+                    throw new Error('La Web Share API no está soportada en este navegador.');
+                }
+            } catch (error) {
+                console.error('Error al compartir enlace:', error);
+                // Puedes proporcionar una alternativa en caso de que la Web Share API no esté disponible
+                alert('La Web Share API no está disponible en este dispositivo.');
+            }
+        }
     </script>
     <script>
       // Función para convertir la puntuación numérica a estrellas

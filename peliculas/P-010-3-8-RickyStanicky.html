@@ -7,7 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
-    <style>
+    <meta name="description" content="Contenido multimedia para todos">
+  <meta name="author" content="loshel">
+  <!-- Metaetiqueta para especificar que el sitio web es una aplicación web -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- Metaetiqueta para indicar el nombre de la aplicación -->
+  <meta name="apple-mobile-web-app-title" content="Loshel Movie">
+  <!-- Metaetiqueta para especificar la URL de la imagen de la aplicación -->
+  <link rel="apple-touch-icon" href="/ruta/a/tu/icono.png">
+  <!-- Metaetiqueta para indicar que se pueden compartir enlaces -->
+  <meta name="shareable" content="yes">
+<style>
       .ubuntu-regular {
         font-family: "Ubuntu", sans-serif;
         font-weight: 400;
@@ -1276,12 +1286,16 @@
   const url = "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
   const mensaje = "Si quieres ver el video y muchos más, descarga la app desde aquí: " + url;
 
-  // Crear un Intent para compartir
-  const intent = document.createElement("a");
-  intent.href = "intent://send?text=" + encodeURIComponent(mensaje) + "&url=" + encodeURIComponent(url) + "#Intent;scheme=mailto;package=com.google.android.gm;end";
-
-  // Abrir el menú de compartir nativo de Android
-  window.location.href = intent.href;
+  // Verificar si el navegador del usuario es Android y admite la API de Web Share
+  if (navigator.share) {
+    // Si es compatible, utilizar la API de Web Share
+    navigator.share({ title: "Título del enlace", text: mensaje, url: url })
+      .then(() => console.log("Enlace compartido con éxito"))
+      .catch((error) => console.error("Error al compartir enlace:", error));
+  } else {
+    // Si no es compatible, proporcionar un mensaje de alerta
+    alert("Esta función solo está disponible en dispositivos Android que admiten la API de Web Share.");
+  }
 }
 
     </script>

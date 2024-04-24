@@ -1242,7 +1242,7 @@
             </a>
           </div>
           <div class="compartir">
-            <a href="#" onclick="compartirEnAndroid()">
+            <a href="#" onclick="compartirEnFacebook()">
               <ion-icon name="arrow-redo"></ion-icon>
             </a>
           </div>
@@ -1282,20 +1282,12 @@
     </script>
 
     <script>
-      function compartirEnAndroid() {
+      function compartirEnFacebook() {
   const url = "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
   const mensaje = "Si quieres ver el video y muchos más, descarga la app desde aquí: " + url;
+  const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
 
-  // Verificar si el navegador del usuario es Android y admite la API de Web Share
-  if (navigator.share) {
-    // Si es compatible, utilizar la API de Web Share
-    navigator.share({ title: "Título del enlace", text: mensaje, url: url })
-      .then(() => console.log("Enlace compartido con éxito"))
-      .catch((error) => console.error("Error al compartir enlace:", error));
-  } else {
-    // Si no es compatible, proporcionar un mensaje de alerta
-    alert("Esta función solo está disponible en dispositivos Android que admiten la API de Web Share.");
-  }
+  window.open(facebookUrl, "_blank");
 }
 
     </script>

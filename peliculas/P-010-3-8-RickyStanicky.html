@@ -1273,26 +1273,17 @@
 
     <script>
       function compartirEnAndroid() {
-        const url =
-          "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
-        const mensaje =
-          "Si quieres ver el video y muchos más, descarga la app desde aquí: " +
-          url;
+  const url = "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
+  const mensaje = "Si quieres ver el video y muchos más, descarga la app desde aquí: " + url;
 
-        // Verificar si el navegador del usuario es Android
-        if (/Android/.test(navigator.userAgent)) {
-          // Intentar abrir la aplicación de compartir nativa de Android
-          navigator
-            .share({ url: url, text: mensaje })
-            .then(() => console.log("Enlace compartido con éxito"))
-            .catch((error) =>
-              console.error("Error al compartir enlace:", error)
-            );
-        } else {
-          // Si no es un dispositivo Android, proporcionar un mensaje de aviso
-          alert("Esta función solo está disponible en dispositivos Android.");
-        }
-      }
+  // Crear un Intent para compartir
+  const intent = document.createElement("a");
+  intent.href = "intent://send?text=" + encodeURIComponent(mensaje) + "&url=" + encodeURIComponent(url) + "#Intent;scheme=mailto;package=com.google.android.gm;end";
+
+  // Abrir el menú de compartir nativo de Android
+  window.location.href = intent.href;
+}
+
     </script>
     <script>
       // Función para convertir la puntuación numérica a estrellas

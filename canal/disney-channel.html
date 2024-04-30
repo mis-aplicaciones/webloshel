@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reproductor de Video</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+
+    <style>
+      #my-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+      }
+      /* Cambiar el color del botón de reproducción */
+      .video-js .vjs-big-play-button {
+        background-color: #0077ff; /* Cambia el color a rojo */
+      }
+
+      /* Cambiar el color de fondo del reproductor */
+      .video-js {
+        background-color: #000000; /* Cambia el color a gris claro */
+      }
+
+      /* Cambiar el color de los controles del reproductor */
+      .video-js .vjs-control-bar {
+        background-color: #333; /* Cambia el color a negro */
+      }
+
+      /* Cambiar el color del texto de los controles del reproductor */
+      .video-js .vjs-control-text {
+        color: #fff; /* Cambia el color a blanco */
+      }
+
+      /* Cambiar el estilo del botón de cambio de pista de audio */
+      .video-js .vjs-menu-button-popup .vjs-menu-content {
+        background-color: #333; /* Cambia el color del fondo del menú */
+        color: #fff; /* Cambia el color del texto del menú */
+        border: 1px solid #fff; /* Agrega borde al menú */
+      }
+
+      /* Cambiar el estilo del botón de cambio de pista de audio al pasar el mouse sobre él */
+      .video-js .vjs-menu-button-popup:hover .vjs-menu-content {
+        background-color: #444; /* Cambia el color del fondo al pasar el mouse */
+      }
+
+      /* Cambiar el color de fondo del botón de cambio de pista de audio seleccionado */
+      .video-js .vjs-menu-button-popup .vjs-selected {
+        background-color: #0077ff; /* Cambia el color del fondo del elemento seleccionado */
+      }
+
+      /* Cambiar el color del texto del botón de cambio de pista de audio seleccionado */
+      .video-js .vjs-menu-button-popup .vjs-selected span {
+        color: #fff; /* Cambia el color del texto del elemento seleccionado */
+      }
+      /* Cambiar el color de fondo de los botones al pasar el mouse sobre ellos */
+      .video-js .vjs-button:hover {
+        background-color: #555; /* Cambia el color de fondo al pasar el mouse */
+      }
+
+      /* Cambiar el color de fondo de los botones al estar enfocados (navegación con teclado o control remoto) */
+      .video-js .vjs-button:focus {
+        background-color: #555; /* Cambia el color de fondo cuando está enfocado */
+      }
+    </style>
+  </head>
+  <body>
+    <video
+      id="my-video"
+      class="video-js vjs-default-skin"
+      controls
+      preload="metadata"
+      autoplay
+    >
+      <source
+        src="https://spa-ha-p004.cdn.masmediatv.es/SVoriginOperatorEdge2/smil:21_HD.smil/manifest.m3u8"
+        type="application/x-mpegURL"
+      />
+      <p class="vjs-no-js">
+        Para ver este video, activa JavaScript y considera actualizar a un
+        navegador web que
+        <a
+          href="https://videojs.com/html5-video-support/"
+          target="_blank"
+          rel="noopener"
+          >soporte video HTML5</a
+        >.
+      </p>
+      <button
+        id="cast-button"
+        class="vjs-control vjs-button"
+        title="Transmitir a dispositivo"
+      >
+        Cast
+      </button>
+    </video>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var player = videojs("my-video");
+        var castButton = document.getElementById("cast-button");
+
+        // Obtener el estado del audio track seleccionado desde localStorage
+        var selectedAudioTrackIndex = localStorage.getItem(
+          "selectedAudioTrackIndex"
+        );
+
+        // Restaurar el audio track seleccionado si está almacenado
+        if (selectedAudioTrackIndex !== null) {
+          player.ready(function () {
+            player.audioTracks().selectedIndex = parseInt(
+              selectedAudioTrackIndex
+            );
+          });
+        }
+
+        castButton.addEventListener("click", function () {
+          castToReceiver(player);
+        });
+
+        function castToReceiver(player) {
+          if (chrome.cast.isAvailable) {
+            var sessionRequest = new chrome.cast.SessionRequest(
+              chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
+            );
+            var apiConfig = new chrome.cast.ApiConfig(
+              sessionRequest,
+              sessionListener,
+              receiverListener
+            );
+
+            chrome.cast.initialize(apiConfig, onInitSuccess, onError);
+          }
+        }
+
+        function sessionListener(session) {
+          // Manejar la conexión con el dispositivo receptor
+        }
+
+        function receiverListener(availability) {
+          if (availability === chrome.cast.ReceiverAvailability.AVAILABLE) {
+            castButton.style.display = "block"; // Mostrar el botón de Cast si hay dispositivos disponibles
+          } else {
+            castButton.style.display = "none"; // Ocultar el botón de Cast si no hay dispositivos disponibles
+          }
+        }
+
+        function onInitSuccess() {
+          console.log("Cast API initialized");
+        }
+
+        function onError(error) {
+          console.error("Error initializing Cast API:", error);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        var key = event.key;
+        var player = videojs("my-video");
+
+        if (key === "ArrowUp" || key === "ArrowDown") {
+          // Navegar por los botones del reproductor
+          var focusedButton = document.activeElement;
+          var buttons = player.controlBar.el().querySelectorAll(".vjs-button");
+
+          var index = Array.prototype.indexOf.call(buttons, focusedButton);
+          var newIndex =
+            key === "ArrowUp"
+              ? Math.max(index - 1, 0)
+              : Math.min(index + 1, buttons.length - 1);
+
+          buttons[newIndex].focus();
+        } else if (key === "ArrowLeft" || key === "ArrowRight") {
+          // Controlar el volumen del reproductor
+          var currentVolume = player.volume();
+
+          if (key === "ArrowLeft") {
+            player.volume(Math.max(currentVolume - 0.1, 0.0));
+          } else if (key === "ArrowRight") {
+            player.volume(Math.min(currentVolume + 0.1, 1.0));
+          }
+        } else if (key === "Enter") {
+          // Reproducir / Pausar el video
+          if (player.paused()) {
+            player.play();
+          } else {
+            player.pause();
+          }
+        } else if (key === "MediaPlayPause") {
+          // Reproducir / Pausar el video (botón de reproducción / pausa del control remoto)
+          if (player.paused()) {
+            player.play();
+          } else {
+            player.pause();
+          }
+        } else if (key === "MediaStop") {
+          // Detener el video (botón de stop del control remoto)
+          player.pause();
+          player.currentTime(0);
+        }
+      });
+    </script>
+    <script>
+      var player = videojs("my-video");
+
+      // Activar el modo de pantalla completa al iniciar la reproducción
+      player.ready(function () {
+        player.requestFullscreen();
+      });
+
+      // Ajustar automáticamente el tamaño del reproductor al tamaño de la ventana del navegador
+      window.addEventListener("resize", function () {
+        player.dimensions(window.innerWidth, window.innerHeight);
+      });
+    </script>
+    <script>
+      var player = videojs("my-video");
+
+      // Función para reintentar la carga del video en caso de error
+      function retryLoad() {
+        player.dispose(); // Liberar el reproductor existente para evitar problemas de carga
+        player = videojs("my-video"); // Crear un nuevo reproductor
+        player.ready(function () {
+          player.requestFullscreen(); // Activar el modo de pantalla completa al iniciar la reproducción
+          player.play(); // Comenzar la reproducción automáticamente
+          player.on("error", function () {
+            retryLoad(); // Reintentar cargar el video en caso de error
+          });
+        });
+      }
+
+      // Monitorear errores de carga y reintentar la carga del video
+      player.on("error", function () {
+        retryLoad(); // Reintentar cargar el video en caso de error
+      });
+
+      // Al cambiar la pista de audio, almacenar el índice seleccionado en localStorage
+      player.audioTracks().addEventListener("change", function () {
+        var selectedAudioTrackIndex = player.audioTracks().selectedIndex;
+        localStorage.setItem(
+          "selectedAudioTrackIndex",
+          selectedAudioTrackIndex
+        );
+      });
+
+      // Agregar botón de selección de resolución
+      player.controlBar.addChild("ResolutionMenuButton");
+
+      // Ajustar automáticamente el tamaño del reproductor al tamaño de la ventana del navegador
+      window.addEventListener("resize", function () {
+        player.dimensions(window.innerWidth, window.innerHeight);
+      });
+
+      // Permitir que el reproductor se adapte a la resolución adecuada según el ancho de banda del usuario
+      player.tech_.hls.xhr.beforeRequest = function (options) {
+        options.uri += "?bandwidth=" + Math.floor(window.performance.now());
+        return options;
+      };
+    </script>
+  </body>
+</html>

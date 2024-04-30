@@ -6,20 +6,122 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Reproductor de Video con Clappr</title>
-    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.css"
-      rel="stylesheet"
-    />
+    <title>Reproductor de Video</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+
+    <style>
+      #my-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+      }
+      /* Cambiar el color del botón de reproducción */
+      .video-js .vjs-big-play-button {
+        background-color: #0077ff; /* Cambia el color a rojo */
+      }
+
+      /* Cambiar el color de fondo del reproductor */
+      .video-js {
+        background-color: #000000; /* Cambia el color a gris claro */
+      }
+
+      /* Cambiar el color de los controles del reproductor */
+      .video-js .vjs-control-bar {
+        background-color: #333; /* Cambia el color a negro */
+      }
+
+      /* Cambiar el color del texto de los controles del reproductor */
+      .video-js .vjs-control-text {
+        color: #fff; /* Cambia el color a blanco */
+      }
+
+      /* Cambiar el estilo del botón de cambio de pista de audio */
+      .video-js .vjs-menu-button-popup .vjs-menu-content {
+        background-color: #333; /* Cambia el color del fondo del menú */
+        color: #fff; /* Cambia el color del texto del menú */
+        border: 1px solid #fff; /* Agrega borde al menú */
+      }
+
+      /* Cambiar el estilo del botón de cambio de pista de audio al pasar el mouse sobre él */
+      .video-js .vjs-menu-button-popup:hover .vjs-menu-content {
+        background-color: #444; /* Cambia el color del fondo al pasar el mouse */
+      }
+
+      /* Cambiar el color de fondo del botón de cambio de pista de audio seleccionado */
+      .video-js .vjs-menu-button-popup .vjs-selected {
+        background-color: #0077ff; /* Cambia el color del fondo del elemento seleccionado */
+      }
+
+      /* Cambiar el color del texto del botón de cambio de pista de audio seleccionado */
+      .video-js .vjs-menu-button-popup .vjs-selected span {
+        color: #fff; /* Cambia el color del texto del elemento seleccionado */
+      }
+      /* Cambiar el color de fondo de los botones al pasar el mouse sobre ellos */
+      .video-js .vjs-button:hover {
+        background-color: #555; /* Cambia el color de fondo al pasar el mouse */
+      }
+
+      /* Cambiar el color de fondo de los botones al estar enfocados (navegación con teclado o control remoto) */
+      .video-js .vjs-button:focus {
+        background-color: #555; /* Cambia el color de fondo cuando está enfocado */
+      }
+    </style>
   </head>
   <body>
-    <div id="player"></div>
+    <video
+      id="my-video"
+      class="video-js vjs-default-skin"
+      controls
+      preload="metadata"
+      autoplay
+      onclick="requestFullScreen()"
+    >
+      <source
+        src="http://170.254.18.106/AXN/index.m3u8"
+        type="application/x-mpegURL"
+      />
+      <p class="vjs-no-js">
+        Para ver este video, activa JavaScript y considera actualizar a un
+        navegador web que
+        <a
+          href="https://videojs.com/html5-video-support/"
+          target="_blank"
+          rel="noopener"
+          >soporte video HTML5</a
+        >.
+      </p>
+    </video>
+
     <script>
-      var player = new Clappr.Player({
-        source: "http://170.254.18.106/AXN/index.m3u8",
-        parentId: "#player",
-        mimeType: "application/x-mpegURL",
+      function requestFullScreen() {
+        var player = videojs("my-video");
+        player.requestFullscreen();
+      }
+    </script>
+    <script>
+      var player = videojs("my-video");
+
+      // Función para reintentar la carga del video en caso de error
+      function retryLoad() {
+        player.dispose(); // Liberar el reproductor existente para evitar problemas de carga
+        player = videojs("my-video"); // Crear un nuevo reproductor
+        player.ready(function () {
+          player.requestFullscreen(); // Activar el modo de pantalla completa al iniciar la reproducción
+          player.play(); // Comenzar la reproducción automáticamente
+          player.on("error", function () {
+            retryLoad(); // Reintentar cargar el video en caso de error
+          });
+        });
+      }
+
+      // Monitorear errores de carga y reintentar la carga del video
+      player.on("error", function () {
+        retryLoad(); // Reintentar cargar el video en caso de error
       });
     </script>
   </body>

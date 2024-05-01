@@ -67,6 +67,10 @@
       .video-js .vjs-button:focus {
         background-color: #555; /* Cambia el color de fondo cuando está enfocado */
       }
+      /* Ocultar el botón de volumen */
+      .video-js .vjs-volume-panel {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -250,11 +254,6 @@
 
       // Agregar botón de selección de resolución
       player.controlBar.addChild("ResolutionMenuButton");
-
-      // Ajustar automáticamente el tamaño del reproductor al tamaño de la ventana del navegador
-      window.addEventListener("resize", function () {
-        player.dimensions(window.innerWidth, window.innerHeight);
-      });
 
       // Permitir que el reproductor se adapte a la resolución adecuada según el ancho de banda del usuario
       player.tech_.hls.xhr.beforeRequest = function (options) {

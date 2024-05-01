@@ -148,11 +148,56 @@
       border-radius: 5px; /* Añade bordes redondeados a la imagen */
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Añade una sombra a la imagen */
     }
-
-    @media (max-width: 600px) {
+    .clock {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 40px;
+      color: #fff;
+    }
+    @media (min-width: 360px) and (max-width: 384px) {
+      .clock {
+        display: none;
+      }
       section {
-        padding: 30px 10px;
+        padding: 0px 10px;
+        min-height: 0;
+      }
 
+      .container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        overflow: hidden;
+      }
+      .container #reproductor {
+        height: 240px;
+      }
+      .playlistBx {
+        height: 325px;
+        margin-top: 10px;
+      }
+      .playlist {
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 40px);
+        overflow-y: scroll;
+      }
+      .boton {
+        margin-left: -40px;
+      }
+      .row .AllLessons {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
+
+    @media (min-width: 385px) and (max-width: 600px) {
+      .clock {
+        display: none;
+      }
+      section {
+        padding: 0px 10px;
         min-height: 0;
       }
 
@@ -266,7 +311,7 @@
         margin-left: -38px;
       }
       .playlist {
-        height: calc(100% - 40px);
+        height: calc(100% - 100px);
       }
       .playlistBx {
         height: 115%;
@@ -302,6 +347,7 @@
   <body>
     <section>
       <h2 class="title">Tv Online</h2>
+      <div class="clock" id="clock"></div>
       <div class="container">
         <div id="reproductor">
           <!-- Aquí se insertará el reproductor de Player.js -->
@@ -350,13 +396,13 @@
               </a>
             </li>
             <li class="boton">
-              <a href="./canal/axn.html" target="_self">
-                <img src="./canal icon/CANAL AXN.jpg" alt="AXN" />
+              <a href="./canal/cosmos tv.html" target="_self">
+                <img src="./canal icon/CANAL COSMOS TV.jpg" alt="COSMOSTV" />
               </a>
             </li>
             <li class="boton">
-              <a href="./canal/cinemax.html" target="_self">
-                <img src="./canal icon/CANAL cinemax.jpg" alt="CINEMAX" />
+              <a href="./canal/historia.html" target="_self">
+                <img src="./canal icon/CANAL HISTORIAHD.jpg" alt="CINEMAX" />
               </a>
             </li>
 
@@ -416,6 +462,25 @@
       }
       var playerjs = new Playerjs(vs);
       playerjs.volume = 1;
+    </script>
+    <script>
+      function updateClock() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        var timeString = hours + ":" + minutes + " " + ampm;
+        document.getElementById("clock").textContent = timeString;
+      }
+
+      // Actualizar el reloj cada segundo
+      setInterval(updateClock, 1000);
+
+      // Actualizar el reloj cuando se carga la página
+      updateClock();
     </script>
   </body>
 </html>

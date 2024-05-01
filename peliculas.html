@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peliculas</title>
+    <!-- Enlaza los estilos CSS aquí -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        overflow: hidden;
+      }
+
+      #sidebar {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        background-color: #121212;
+        left: 0;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      #sidebar a:hover {
+        background-color: transparent;
+        color: #fff;
+      }
+
+      #main {
+        overflow-y: scroll;
+        height: calc(100vh - 120px);
+        margin-top: 50px; /* Margen superior ajustado */
+        margin-left: 70px;
+        z-index: 999;
+        position: absolute; /* Agregado */
+
+        left: 0; /* Ajustado */
+        right: 0; /* Ajustado */
+      }
+      #main::-webkit-scrollbar {
+        width: 10px; /* Ancho de la barra de desplazamiento */
+      }
+
+      #main::-webkit-scrollbar-track {
+        background-color: #222; /* Color de fondo de la barra de desplazamiento */
+      }
+
+      #main::-webkit-scrollbar-thumb {
+        background-color: #888; /* Color del "pulgón" de la barra de desplazamiento */
+        border-radius: 5px; /* Borde redondeado */
+      }
+
+      #main::-webkit-scrollbar-thumb:hover {
+        background-color: #666; /* Color del "pulgón" al pasar el cursor */
+      }
+      .menu-icon {
+        width: 30px;
+        height: 40px;
+        border-radius: 0;
+        position: relative;
+        color: #ffffff0a;
+        margin-bottom: 20px;
+        transition: color 0.3s;
+      }
+
+      .menu-icon:hover {
+        color: #818181;
+      }
+
+      #sidebar:hover {
+        opacity: 1;
+      }
+
+      .menu-icon::after {
+        content: "";
+        position: absolute;
+        top: 38px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: red;
+        transition: width 0.3s ease;
+      }
+
+      .menu-icon:hover::after {
+        width: 100%;
+      }
+      /* Estilos del header omitidos por brevedad */
+
+      header {
+        background-color: #121212;
+        color: #fff;
+        position: fixed;
+
+        left: 85px;
+        width: calc(100% - 125px);
+        z-index: 1000;
+
+        padding: 5px;
+      }
+
+      .header-title {
+        font-size: 32px; /* Agrandar un poco más el título */
+        color: #fff;
+        z-index: 1000;
+        margin-bottom: 5px; /* Separación adicional */
+        margin-top: 10px; /* Separación adicional */
+        margin-left: 80px; /* Margen izquierdo */
+        font-family: Arial, sans-serif; /* Cambio de fuente */
+      }
+
+      .quick-search-wrapper {
+        display: flex;
+        align-items: center;
+        margin-top: 5px; /* Margen superior de 5px */
+        overflow-x: auto;
+      }
+      header::-webkit-scrollbar {
+        display: none; /* Oculta la barra de desplazamiento en Chrome, Safari y Opera */
+      }
+      .quick-search-buttons {
+        display: flex;
+        height: 100%;
+        overflow-x: auto; /* Agregar desplazamiento horizontal */
+      }
+
+      .quick-search-buttons a {
+        display: inline-block;
+        padding: 10px 8px; /* Ajusta el relleno vertical */
+        margin-right: 6px; /* Margen derecho entre botones */
+        background-color: #121212;
+        color: #fff;
+
+        text-decoration: none;
+        transition: background-color 0.3s;
+        text-align: center; /* Centrar texto */
+        white-space: nowrap; /* Evita que el texto se desplace a la siguiente línea */
+      }
+
+      .quick-search-buttons a:hover {
+        background-color: #454555; /* Cambiar color de fondo al pasar el mouse */
+      }
+      .quick-search-button:last-child {
+        margin-right: 0;
+      }
+
+      #menu-toggle {
+        cursor: pointer;
+        position: fixed;
+        z-index: 3;
+        top: 10px;
+        left: 15px;
+        display: none;
+      }
+      .scroll-left-btn,
+      .scroll-right-btn {
+        border: none;
+        color: transparent; /* Hacemos el color transparente por defecto */
+        font-size: 24px;
+        padding: 0;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        transition: color 0.3s; /* Transición suave para el color */
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%; /* Bordes redondeados */
+        border: 2px solid transparent; /* Borde transparente por defecto */
+        background-color: transparent; /* Fondo transparente por defecto */
+      }
+
+      .scroll-left-btn {
+        left: -29px;
+      }
+
+      .scroll-right-btn {
+        right: -35px;
+      }
+
+      .scroll-left-btn:hover,
+      .scroll-right-btn:hover {
+        color: #ffffff; /* Cambio de color al pasar el cursor */
+      }
+
+      .carousel {
+        margin-left: 5px;
+        overflow: hidden;
+        position: relative;
+        margin-left: 5px;
+      }
+
+      .carousel h3 {
+        margin: 0;
+        color: #fff;
+        text-align: left;
+        padding: 20px 20px 15px;
+      }
+
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 129px);
+        grid-auto-rows: 191px;
+        gap: 10px;
+        padding: 0 10px;
+      }
+
+      .card {
+        background-color: #ddd;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card:hover {
+        border: 2px solid white; /* Agregar borde de 2px sólido blanco al pasar el cursor */
+      }
+
+      /* Eliminación de estilos de botones de desplazamiento */
+      .scroll-btn {
+        display: none;
+      }
+      /* Estilos para el botón "Quiero Donar" */
+      .donate-button {
+        display: none; /* Oculta el botón por defecto */
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #4f8cf7; /* Fondo celeste */
+        color: #fff; /* Texto blanco */
+        border-radius: 20px; /* Borde redondeado */
+        z-index: 1001; /* Posición delante del header-title */
+        text-decoration: none; /* Quita el subrayado */
+        font-size: 16px; /* Tamaño de fuente */
+        font-weight: bold; /* Tipo de letra negrita */
+      }
+      #bottom-menu {
+        display: none; /* Oculta el menú inferior en pantallas normales */
+      }
+      /* Estilos para pantallas pequeñas como tablet y móviles */
+      @media only screen and (max-width: 700px) {
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+
+        /* Ajuste del contenido principal */
+        #content {
+          margin-bottom: 50px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+        }
+        .header-title {
+          margin-left: 10px; /* Posición del título a la izquierda */
+        }
+
+        .donate-button {
+          display: block; /* Muestra el botón en pantallas pequeñas */
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #333;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        #bottom-menu li {
+          margin: 10px;
+          padding: 10px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          margin-bottom: 0px; /* posicionar al centro los botones del menu inferior */
+        }
+
+        /* Quita el margen izquierdo de los elementos y los posiciona como columna */
+        #main,
+        header,
+        .data {
+          margin-left: 0;
+          left: 0px;
+        }
+
+        .data,
+        header {
+          width: 100%;
+        }
+        .card-container {
+          grid-template-columns: repeat(auto-fill, 109px);
+          grid-auto-rows: 164px;
+
+          padding: 0;
+        }
+        .card:first-child {
+          margin-left: 0px;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+        #bottom-menu ion-icon[name="film"] {
+          color: #4c65b1; /* Cambiar el color a rojo */
+        }
+      }
+
+      /* Estilos para pantallas de televisión HD */
+      @media only screen and (min-width: 768px) and (max-width: 1365px) {
+        /* Agrega estilos adicionales según sea necesario */
+      }
+
+      /* Estilos para pantallas de televisión Full HD */
+      @media only screen and (min-width: 1366px) and (max-width: 1920px) {
+        /* Agrega estilos adicionales según sea necesario */
+      }
+
+      /* Estilos para pantallas de televisión 4K */
+      @media only screen and (min-width: 1921px) {
+        /* Agrega estilos adicionales según sea necesario */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-title">Peliculas</div>
+    <a href="enlace-donar.html" class="donate-button">Quiero Donar</a>
+    <header>
+      <div class="quick-search-wrapper">
+        <button class="scroll-left-btn">&lt;</button>
+        <div class="quick-search-buttons">
+          <a href="#carousel1">Acción</a>
+          <a href="#carousel2">Aventura</a>
+          <a href="#carousel3">Comedia</a>
+          <a href="#carousel4">Drama</a>
+          <a href="#carousel5">Terror</a>
+          <a href="#carousel6">Romance</a>
+          <a href="#carousel7">Ciencia Ficción</a>
+          <a href="#carousel8">Fantasía</a>
+          <a href="#carousel9">Animación</a>
+          <a href="#carousel10">Documental</a>
+          <a href="#carousel10">Infantil</a>
+        </div>
+        <button class="scroll-right-btn">&gt;</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <a href="editarusuario.html" id="enlace1">
+        <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace2.html" id="enlace2">
+        <ion-icon name="search" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace3.html" id="enlace3">
+        <ion-icon name="home" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace4.html" id="enlace4">
+        <ion-icon name="film" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace5.html" id="enlace5">
+        <ion-icon name="albums" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace6.html" id="enlace6">
+        <ion-icon name="tv" class="menu-icon"></ion-icon>
+      </a>
+      <a href="enlace6.html" id="enlace6">
+        <ion-icon name="cafe" class="menu-icon"></ion-icon>
+      </a>
+    </div>
+    <div id="bottom-menu" class="hidden">
+      <ul>
+        <li>
+          <a href="enlace4.html"
+            ><ion-icon name="film" class="menu-icon"></ion-icon
+          ></a>
+        </li>
+        <li>
+          <a href="enlace5.html"
+            ><ion-icon name="albums" class="menu-icon"></ion-icon
+          ></a>
+        </li>
+        <li>
+          <a href="index.html"
+            ><ion-icon name="home" class="menu-icon"></ion-icon
+          ></a>
+        </li>
+        <li>
+          <a href="enlace6.html"
+            ><ion-icon name="tv" class="menu-icon"></ion-icon
+          ></a>
+        </li>
+        <li>
+          <a href="editarusuario.html"
+            ><ion-icon name="person-circle" class="menu-icon"></ion-icon
+          ></a>
+        </li>
+      </ul>
+    </div>
+
+    <button id="menu-toggle">Toggle Menu</button>
+    <!-- Contenido de la página -->
+    <div id="main">
+      <!-- Carrusel para el género de Acción -->
+      <!-- Carrusel para el género de Acción -->
+      <div class="carousel" id="carousel1">
+        <h3>Acción</h3>
+        <div class="card-container">
+          <!-- Aquí puedes agregar manualmente las tarjetas de películas para el género de Acción -->
+          <div class="card">
+            <a href="./peliculas/P-002-1-5-JohnWick.html">
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/e7afc8edae40deb97f9dd7b5c626fdfae9197eef8bd16e319d80fcbc826fa46d.jpg"
+                alt="John Wick"
+              />
+            </a>
+          </div>
+          <!-- Puedes agregar más tarjetas según sea necesario -->
+        </div>
+      </div>
+
+      <!-- Otros carruseles para diferentes géneros -->
+      <div class="carousel" id="carousel2">
+        <h3>Aventura</h3>
+        <div class="card-container">
+          <!-- Aquí puedes agregar manualmente las tarjetas de películas para el género de Aventura -->
+          <div class="card">
+            <a href="P-005-2-3-IndianaJones.html">
+              <img src="ruta_a_la_imagen" alt="Indiana Jones" />
+            </a>
+          </div>
+          <!-- Puedes agregar más tarjetas según sea necesario -->
+        </div>
+      </div>
+      <!-- Otros carruseles para diferentes géneros -->
+      <div class="carousel" id="carousel3">
+        <h3>Comedia</h3>
+        <div class="card-container">
+          <!-- Aquí puedes agregar manualmente las tarjetas de películas para el género de Aventura -->
+          <div class="card">
+            <a href="./peliculas/P-006-3-4-Labodademiex.html">
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/a669acc7d99ba68bfe805dc22871003b751af52d16ee06acb569ee01c9923dd5.jpg"
+                alt="la boda de mi ex"
+              />
+            </a>
+          </div>
+          <div class="card">
+            <a href="./peliculas/P-010-3-8-RickyStanicky.html">
+              <img
+                src="https://pics.filmaffinity.com/Ricky_Stanicky-916228200-large.jpg"
+                alt="ricky s"
+              />
+            </a>
+          </div>
+          <div class="card">
+            <a href="./peliculas/P-011-3-8-Pobrescriaturas.html">
+              <img
+                src="https://pics.filmaffinity.com/Pobres_criaturas-311025824-large.jpg"
+                alt="pobres criaturas"
+              />
+            </a>
+          </div>
+          <!-- Puedes agregar más tarjetas según sea necesario -->
+        </div>
+      </div>
+
+      <!-- Otros carruseles para otros géneros omitidos por brevedad -->
+    </div>
+
+    <!-- Scripts JavaScript -->
+    <script>
+      const quickSearchWrapper = document.querySelector(
+        ".quick-search-buttons"
+      );
+      const scrollLeftBtn = document.querySelector(".scroll-left-btn");
+      const scrollRightBtn = document.querySelector(".scroll-right-btn");
+
+      let animationFrameId;
+
+      function smoothScrollToLeft() {
+        if (quickSearchWrapper.scrollLeft > 0) {
+          quickSearchWrapper.scrollLeft -= 10; // Ajusta la velocidad de desplazamiento cambiando este valor
+          animationFrameId = requestAnimationFrame(smoothScrollToLeft);
+        }
+      }
+
+      function smoothScrollToRight() {
+        if (
+          quickSearchWrapper.scrollLeft <
+          quickSearchWrapper.scrollWidth - quickSearchWrapper.offsetWidth
+        ) {
+          quickSearchWrapper.scrollLeft += 10; // Ajusta la velocidad de desplazamiento cambiando este valor
+          animationFrameId = requestAnimationFrame(smoothScrollToRight);
+        }
+      }
+
+      scrollLeftBtn.addEventListener("click", function () {
+        cancelAnimationFrame(animationFrameId);
+        smoothScrollToLeft();
+      });
+
+      scrollRightBtn.addEventListener("click", function () {
+        cancelAnimationFrame(animationFrameId);
+        smoothScrollToRight();
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Recuperar la imagen de perfil guardada del almacenamiento local
+        var savedProfile = localStorage.getItem("userProfile");
+        if (savedProfile) {
+          savedProfile = JSON.parse(savedProfile);
+          var profileImage = savedProfile.image;
+
+          // Actualizar el icono de usuario en el sidebar
+          var sidebarIcons = document.querySelectorAll(
+            '#sidebar ion-icon[name="person-circle"]'
+          );
+          sidebarIcons.forEach(function (icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "35px"; // Nuevo tamaño
+            divIcon.style.height = "35px"; // Nuevo tamaño
+            icon.parentNode.replaceChild(divIcon, icon);
+          });
+
+          // Actualizar el icono de usuario en el bottom-menu
+          var bottomMenuIcons = document.querySelectorAll(
+            '#bottom-menu ion-icon[name="person-circle"]'
+          );
+          bottomMenuIcons.forEach(function (icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "30px"; // Nuevo tamaño
+            divIcon.style.height = "30px"; // Nuevo tamaño
+            divIcon.style.marginTop = "calc(1.25em - 13px)"; // Alinear con los demás iconos
+            icon.parentNode.replaceChild(divIcon, icon);
+          });
+        }
+      });
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

@@ -564,7 +564,7 @@ width: 100%;
 }
 
 /* Estilos para pantallas pequeñas como tablet y móviles */
-@media only screen and (min-width: 385px) and (max-width: 700px) {
+@media only screen and (min-width: 385px) and (max-width: 600px) {
   /* Mueve el sidebar a la parte inferior en modo horizontal */
   .description {
     display: none; /* Oculta la descripción en pantallas pequeñas */
@@ -740,7 +740,7 @@ header{
 }
 
 /* Estilos para pantallas de televisión HD */
-    @media only screen and (min-width: 701px) and (max-width: 720px) {
+    @media only screen and (min-width: 601px) and (max-width: 730px) {
         /* Agrega estilos adicionales según sea necesario */
         /* Agrega estilos para informacion de cabecera */
         .image-container img {
@@ -805,11 +805,32 @@ height: 30px;
 	}
     }
     /* Estilos para pantallas de televisión HD */
-    @media only screen and (min-width: 768px) and (max-width: 1365px) {
+    @media only screen and (min-width: 962px) and (max-width: 1279px) {
         /* Agrega estilos adicionales según sea necesario */
-
+        .data {
+    
+    height: 335px;
+    width: calc(100% - 87px);
+    
+}
+header {
+    
+    top: 335px;
+    
+    
+    
     }
-
+    #main {
+    
+    height: calc(100vh - 389px);
+    margin-top: 385px;
+    
+}
+.description {
+    
+    font-size: 12px;
+}
+  }
     /* Estilos para pantallas de televisión Full HD */
     @media only screen and (min-width: 1366px) and (max-width: 1920px) {
         /* Agrega estilos adicionales según sea necesario */
@@ -930,107 +951,56 @@ height: 30px;
         <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
         <div class="card-container">
             <!-- 10 Cards -->
-            <a class="card-link" href="prueba2.html">
-            <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-       data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-       data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-       data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-       data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-       data-cover-img="cover.jpg">
-    <img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
-    <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres Criaturas"
-data-additional-info="18+ | 2024 | 2h 21min | Comedia/Fantasía"
-data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad."
-data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
-data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
-data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
-<img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card 1">
-</div>
-</a>
-
+            <a class="card-link" href="./peliculas/P-008-6-RebelMoon(Partedos):Laguerreraquedejamarcas.html">
+              <div class="card" data-pelicula="./peliculas/P-008-6-RebelMoon(Partedos):Laguerreraquedejamarcas.html" data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas" data-additional-info="13+ | 2024 | 2h 3min | Ciencia Ficción" data-description="Mientras los rebeldes se preparan para combatir las despiadadas fuerzas del Mundo Madre, se forjan lazos inquebrantables, emergen héroes... y nacen leyendas." data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg" data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko" data-cover-img="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg">
+                <img src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-009-9-5-Imaginario:Juguetediabólico.html">
+              <div class="card" data-pelicula="./peliculas/P-009-9-5-Imaginario:Juguetediabólico.html" data-text-title="Imaginario: Juguete diabólico" data-additional-info="14+ | 2024 | 1h 45min | Terror/Suspenso" data-description="Jessica se muda al hogar en el que creció con su familia. Allí, su pequeña hijastra, Alice, encuentra un osito de peluche llamado Chauncey. Poco a poco, el comportamiento de Alice se va volviendo perturbador, por lo que Alice sospecha del juguete." data-bg="https://images.thedirect.com/media/article_full/imaginary-filmmakers-reveal-similar-horror-movies-inspirations-exclusive.jpg" data-title-img="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/imaginary/images/regions/us/updates/tt.png" data-cover-img="https://www.bizcochito.es/Films/Movil/tt26658104.webp">
+                <img src="https://www.bizcochito.es/Films/Movil/tt26658104.webp" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-007-5-1-Hipnosis:Armainvisible.html">
+              <div class="card" data-pelicula="./peliculas/P-007-5-1-Hipnosis:Armainvisible.html" data-text-title="Hipnosis: Arma invisible" data-additional-info="14+ | 2023 | 1h 34min | Suspenso/Acción" data-description="El detective Danny Rourke busca a su hija desaparecida. Mientras investiga una serie de asesinatos desconcertantes, Rourke descubre, con la ayuda de una psíquica, un programa secreto del Gobierno que podría conducirlo hasta su hija." data-bg="https://www.citicinemas.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fciticinemas-store%2FMovie-1625%2Fbanner%2FoB9RJ9D7Oowt%2FHIPNO.jpg&w=1920&q=75" data-title-img="https://image.tmdb.org/t/p/original/cXrY3E9QcTzgDSCh1styJc96lZe.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/692feb76603b5f1d8db1ab460313ad65fbb16c68a221ac10437e66f3515f7b25.png">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/692feb76603b5f1d8db1ab460313ad65fbb16c68a221ac10437e66f3515f7b25.png" alt="Card">
+              </div>
+            </a>
 <a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
-    <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía"
-data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
-<a class="card-link" href="prueba2.html">
-    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
-data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
-data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
-data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
-data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
-data-cover-img="cover.jpg">
-<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
-</div>
-</a>
+              <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Ricky Stanicky" data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía" data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky." data-bg="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html">
+              <div class="card" data-pelicula="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html" data-text-title="Cómo conquistar a Billy Walsh" data-additional-info="16+ | 2024 | 1h 40min | Comedia/Romance" data-description="Los mejores amigos Archie y Amelia están enamorados. Por desgracia, no el uno del otro. Archie quiere a Amelia, pero ella sólo tiene ojos para el nuevo estudiante americano, Billy Walsh. Archie decide ayudarla a conquistar al chico de sus sueños." data-bg="https://is1-ssl.mzstatic.com/image/thumb/xmDg311eJ9UM29lQsEG3bA/1200x675mf.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/97c71ae7bb94a8b3cef5dd2e9abd617af75b087cd8a69f479869be1f9dfabb9a.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/a43d68d2f3b159fbca2ca6336fcae97f80572e95f392e0995983ab0f4d5687c1.jpg">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/a43d68d2f3b159fbca2ca6336fcae97f80572e95f392e0995983ab0f4d5687c1.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-016-1-5-Codigo8parteII.html">
+              <div class="card" data-pelicula="./peliculas/P-016-1-5-Codigo8parteII.html" data-text-title="Codigo 8 parte II" data-additional-info="16+ | 2024 | 1h 40min | Acción/Suspenso" data-description="En una ciudad donde las personas con poderes son vigiladas y oprimidas, un ex criminal debe recurrir a un narcotraficante al que desprecia para proteger a un adolescente de un policía corrupto." data-bg="https://laestatuilla.com/wp-content/uploads/2024/02/codigo-8-renegados-parte-ii.jpg" data-title-img="https://dnm.nflximg.net/api/v6/S4oi7EPZbv2UEPaukW54OORa0S8/AAAABX_6SXO4vS8x9OiYECwS6dajcL4aRYiH37xcxF80LVPVW39EO0iGFE3CbX4wydtnXirBmSdTuoYuC1rLL14I2Lu-hPrHmzokiAE.png" data-cover-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSLmLKCp4-hDm0wkQRoP0lyhwmTQ5Maow1bG5RK0UcupXXOMzFYmjvLgWuHh0cOA4hheY0x6BhLMjXtwsqRh2CiLRf9OkhU_UMa5WhSFL03_uxz4CmFVDhFICHYLkMoNowCTop3kgQibuCClAi0zZHYjT_KBQ4u4OqFHfPZM5p3e-2NLWiyYruv6gaEjzqmwymoqf2C0fsyyiFugra0-Dad_dMzuOM-htzvFkP68svHbMu0K2da7uo9GLm0UqLtTPc0kbFpjOFfPDazr6pOxLBiUjY3wUOVxGM_tYL-xRJOKDq-KVlMhQXLEtWU.jpg?r=214">
+                <img src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSLmLKCp4-hDm0wkQRoP0lyhwmTQ5Maow1bG5RK0UcupXXOMzFYmjvLgWuHh0cOA4hheY0x6BhLMjXtwsqRh2CiLRf9OkhU_UMa5WhSFL03_uxz4CmFVDhFICHYLkMoNowCTop3kgQibuCClAi0zZHYjT_KBQ4u4OqFHfPZM5p3e-2NLWiyYruv6gaEjzqmwymoqf2C0fsyyiFugra0-Dad_dMzuOM-htzvFkP68svHbMu0K2da7uo9GLm0UqLtTPc0kbFpjOFfPDazr6pOxLBiUjY3wUOVxGM_tYL-xRJOKDq-KVlMhQXLEtWU.jpg?r=214" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html">
+              <div class="card" data-pelicula="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html" data-text-title="Ghostbusters: apocalipsis fantasma" data-additional-info="12+ | 2024 | 1h 56min | Comedia/Fantasía" data-description="La familia Spengler regresa a la famosa estación de bomberos de la ciudad de Nueva York con los cazafantasmas originales. Cuando un antiguo artefacto desata una fuerza maligna, los cazafantasmas nuevos y antiguos deben unirse para proteger el mundo." data-bg="https://img.optimalcdn.com/www.posta.com.mx/2024/03/c00abe9db559b10230781d96ce97d3d56077e7f0/GHOSTBUSTERS_APOLIPSIS_FANTASMA.webp" data-title-img="https://admin.cineflick.com.gt/wp-content/uploads/2024/04/dgfb6j0-cb71151a-b8ed-4ca3-aac3-9587c7058e3e.png" data-cover-img="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg">
+                <img src="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html">
+              <div class="card" data-pelicula="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html" data-text-title="la liga de la justicia crisis en las tierras infinitas parte 2" data-additional-info="14+ | 2024 | 1h 33min | Acción/Aventura/Superhéroes" data-description="Un ejército interminable de demonios de las sombras busca destruir todas las realidades. Los secretos de Monitor y Supergirl amenazan con destruir la última defensa de los héroes." data-bg="https://image.tmdb.org/t/p/original/tBmJCH9llj1Q9jDOS7vGWnl7GVj.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/82/01/3e/82013e96-863f-be14-d6e4-8fe126997bf5/tff2880198494073204467.png/480x180.webp" data-cover-img="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg">
+                <img src="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-021-3-Elpájarolocosevadecampamento.html">
+              <div class="card" data-pelicula="./peliculas/P-021-3-Elpájarolocosevadecampamento.html" data-text-title="El pájaro loco se va de campamento" data-additional-info="07+ | 2024 | 1h 40min | Comedia" data-description="Después de ser expulsado del bosque, Woody cree haber encontrado un hogar permanente en el Campamento Woo Hoo, hasta que un inspector amenaza con cerrar el campamento." data-bg="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABYU7139iFky2exXOgxjsUpu0GIdmF4Z9fBhssWUXUb7OpoyTKk036MVAQX3kDCpTnAUmUUnlS-vz-h2Sxwxb0UM9LjrFKavOEQV8.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/tx1O544a9T7n8Z_G12qaboulQQE/AAAABS1rNm_a7knzVjlrsceveY33w1_-vo1wcwU2VZURCM3HXH6d9zwR3yzaoTQO3gtC_MTEKoNY9GpQekv-nHpx5aE8cpBhUkyEI1l_QKcZxAVvsZWMf6uLnm-QvNK7p8qhXiSNWPxC4LAJvIIVPBoVMrEvjZdALAkom67A7Af62LQrvWKlFEgN2Q.png" data-cover-img="https://i.ytimg.com/vi/x5LLP8NxC9c/maxresdefault.jpg">
+                <img src="https://i.ytimg.com/vi/x5LLP8NxC9c/maxresdefault.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-022-2-ArthurtheKing.html">
+              <div class="card" data-pelicula="./peliculas/P-022-2-ArthurtheKing.html" data-text-title="Arthur the King" data-additional-info="10+ | 2024 | 1h 48min | Aventura" data-description="Michael Light y su equipo compiten en un campeonato mundial de aventuras extremas. En el momento de mayor desesperación, cuando las fuerzas y la moral parecen haber desaparecido, surge un perro que los hará reinterpretar el significado de victoria." data-bg="https://deadline.com/wp-content/uploads/2023/11/atk-01912rc.jpeg" data-title-img="https://bestfriends.org/sites/default/files/media-icon/ATK_TT.png" data-cover-img="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/arthur-the-king/images/regions/us/header.jpg">
+                <img src="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/arthur-the-king/images/regions/us/header.jpg" alt="Card">
+              </div>
+            </a>
         </div>
         <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
     </div>
@@ -1039,43 +1009,56 @@ data-cover-img="cover.jpg">
         <button class="scroll-btn left"><ion-icon name="chevron-back"></button>
         <div class="card-container">
             <!-- 10 Cards -->
-            <a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
-                <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres Criaturas"
-            data-additional-info="18+ | 2024 | 2h 21min | Comedia/Fantasía"
-            data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad."
-            data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
-            data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
-            data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
-            <img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card 1">
-            </div>
+            <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+              <div class="card" data-pelicula="./peliculas/P-002-1-5-JohnWick.html" data-text-title="John Wick" data-additional-info="14+ | 2014 | 1h 41min | Acción/Suspenso" data-description="La ciudad de Nueva York se llena de balas cuando John Wick, un exasesino a sueldo, regresa de su retiro para enfrentar a los mafiosos rusos, liderados por Viggo Tarasov, que destruyeron todo aquello que él amaba y pusieron precio a su cabeza." data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg" data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg" alt="Card">
+              </div>
             </a>
-            <a class="card-link" href="./peliculas/P-012-4-Siempreatulado.html">
-                <div class="card" data-pelicula="./peliculas/P-012-4-Siempreatulado.html" data-text-title="Siempre a tu lado"
-            data-additional-info="10+ | 2009 | 1h 33min | Drama"
-            data-description="Un perro fiel llamado Hachiko acompaña cada mañana a su amo a la estación de tren y regresa cada tarde para darle la bienvenida después del trabajo. Sin embargo, esta rutina se ve rota por una desgracia."
-            data-bg="https://s3.amazonaws.com/rtvc-assets-parrilla.rtvc.gov.co/s3fs-public/siempre-a-tu-lado-hachiko-p1.jpg"
-            data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABTp5APPcT01f1QC_nlVDQU-JgFjXi4LBM_8qcgylDKZTpY4MAI34pHR5ekySzqPlU47NbOD7Jkm2kL2tQSMglm0UeMDAjRYRm1NfmBf-n12b.png"
-            data-cover-img="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg">
-            <img src="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg" alt="Card 1">
-            </div>
+<a class="card-link" href="./peliculas/P-003-9-8-Constantine.html">
+              <div class="card" data-pelicula="./peliculas/P-003-9-8-Constantine.html" data-text-title="Constantine" data-additional-info="13+ | 2005 | 2h 1min | Terror/Fantasía" data-description="Un hombre que puede ver demonios ayuda a una mujer policía escéptica a investigar la misteriosa muerte de su hermana gemela." data-bg="https://images-2.rakuten.tv/storage/snapshot/shot/5e5f73a2-836e-4add-bba6-984484df9777-snapshot-1590658118.jpeg" data-title-img="https://picfiles.alphacoders.com/595/59547.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/ae295e840707af4f3f88e0c41a2b69b7d2c65b13c99da30537341487b6a1d800.jpg">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/ae295e840707af4f3f88e0c41a2b69b7d2c65b13c99da30537341487b6a1d800.jpg" alt="Card">
+              </div>
             </a>
-            <a class="card-link" href="./peliculas/P-013-3-1-Planfamiliar.html">
-                <div class="card" data-pelicula="./peliculas/P-013-3-1-Planfamiliar.html" data-text-title="Siempre a tu lado"
-            data-additional-info="10+ | 2009 | 1h 33min | Drama"
-            data-description="Dan Morgan es un marido devoto, un padre cariñoso, un buen trabajador y también un exasesino. Y, cuando su pasado alcanza su presente, se ve obligado a embarcar a su ingenua familia en un viaje por carretera sin igual."
-            data-bg="https://i0.wp.com/www.themoviedb.org/t/p/w1280/r9oTasGQofvkQY5vlUXglneF64Z.jpg"
-            data-title-img="https://is1-ssl.mzstatic.com/image/thumb/9BiWiFQu0mBEfNodXKnRhg/480x180.webp"
-            data-cover-img="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg">
-            <img src="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg" alt="Card 1">
-            </div>
+<a class="card-link" href="./peliculas/P-005-5-Siberia.html">
+              <div class="card" data-pelicula="./peliculas/P-005-5-Siberia.html" data-text-title="Siberia" data-additional-info="16+ | 2018 | 1h 44min | Suspenso" data-description="Lucas Hill, un comerciante de diamantes estadounidense, viaja a Siberia en busca de un socio que ha desaparecido, pero terminará dejando todos sus objetivos a un lado cuando una mujer se cruza en su destino." data-bg="https://static01.nyt.com/images/2018/07/13/arts/13siberia1/siberia1-superJumbo.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABezp_lBzVF7uaKIbIb2wfnCwpfBYSyDaG1HSJIzjG7KzgrhH-WcWqfrSv4_-bG6aqY-9XQeDhwW8VNgitdZABEdxTfjohnPZlyt8ppRhp5dl.png" data-cover-img="https://resizing.flixster.com/yQZR0HQGutj-igG7xAdIlQSUncM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15595606_v_h8_ab.jpg">
+                <img src="https://resizing.flixster.com/yQZR0HQGutj-igG7xAdIlQSUncM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15595606_v_h8_ab.jpg" alt="Card">
+              </div>
             </a>
-            <div class="card">Card 4</div>
-            <div class="card">Card 5</div>
-            <div class="card">Card 6</div>
-            <div class="card">Card 7</div>
-            <div class="card">Card 8</div>
-            <div class="card">Card 9</div>
-            <div class="card">Card 10</div>
+<a class="card-link" href="./peliculas/P-006-3-4-Labodademiex.html">
+              <div class="card" data-pelicula="./peliculas/P-006-3-4-Labodademiex.html" data-text-title="La boda de mi ex" data-additional-info="14+ | 2018 | 1h 26min | Comedia/Drama" data-description="Los invitados a la boda, Frank y Lindsay, descubren que tienen mucho en común: no les cae bien ni la novia, ni el novio, ni les gusta la ceremonia, ni ellos mismos, ni los demás." data-bg="https://es.web.img3.acsta.net/pictures/18/07/05/14/42/0391084.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABV1b2Wwxw7JmSOd1KQ4MgIXR6IxEdsLYi1yIBkbruZ6_onI_UGHxnKYUADR8_CQeIhOt4vjbmzPCv-vxjN_DPTA02-mJvNjCpwNDTkl1-E-q.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/3f5815ac5e551083ccade3fad296519ba965ef2ffbdbd299da876e9c41d046d8.png">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/3f5815ac5e551083ccade3fad296519ba965ef2ffbdbd299da876e9c41d046d8.png" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
+              <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Ricky Stanicky" data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía" data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky." data-bg="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
+              <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres criaturas" data-additional-info="18+ | 2023 | 2h 21min | Comedia/Fantasía" data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad." data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg" data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png" data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
+                <img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-012-4-Siempreatulado.html">
+              <div class="card" data-pelicula="./peliculas/P-012-4-Siempreatulado.html" data-text-title="Siempre a tu lado" data-additional-info="10+ | 2009 | 1h 33min | Drama" data-description="Un perro fiel llamado Hachiko acompaña cada mañana a su amo a la estación de tren y regresa cada tarde para darle la bienvenida después del trabajo. Sin embargo, esta rutina se ve rota por una desgracia." data-bg="https://s3.amazonaws.com/rtvc-assets-parrilla.rtvc.gov.co/s3fs-public/siempre-a-tu-lado-hachiko-p1.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABTp5APPcT01f1QC_nlVDQU-JgFjXi4LBM_8qcgylDKZTpY4MAI34pHR5ekySzqPlU47NbOD7Jkm2kL2tQSMglm0UeMDAjRYRm1NfmBf-n12b.png" data-cover-img="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg">
+                <img src="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-001-3-1-Planfamiliar.html">
+              <div class="card" data-pelicula="./peliculas/P-001-3-1-Planfamiliar.html" data-text-title="Plan familiar" data-additional-info="14+ | 2023 | 1h 59min | Comedia/Acción" data-description="Dan Morgan es un marido devoto, un padre cariñoso, un buen trabajador y también un exasesino. Y, cuando su pasado alcanza su presente, se ve obligado a embarcar a su ingenua familia en un viaje por carretera sin igual." data-bg="https://i0.wp.com/www.themoviedb.org/t/p/w1280/r9oTasGQofvkQY5vlUXglneF64Z.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/9BiWiFQu0mBEfNodXKnRhg/480x180.webp" data-cover-img="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg">
+                <img src="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html">
+              <div class="card" data-pelicula="./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html" data-text-title="Soltera, casada, viuda, divorciada" data-additional-info="16+ | 2023 | 1h 49min | Comedia" data-description="Unas amigas, tras la muerte del esposo de una de ellas, deciden realizar un viaje por carretera hacia la ciudad de Pacasmayo, Trujillo, el lugar donde vivieron los mejores momentos de sus vidas durante la infancia." data-bg="https://portal.andina.pe/EDPfotografia3/Thumbnail/2022/07/13/000883079W.jpg" data-title-img="https://occ-0-1822-3418.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABStwOyOr0rVzik1lS-lpZJ5wvkRWjld10uUlLMQdXQIhTa-WmzuLoRUfSX-VVrjYzpNR3Mm1XKkkOkBv9pF4xRe__zpaaMuWKtgNbESy2nx0.png" data-cover-img="https://image.tmdb.org/t/p/w780/ouzWgXKgSnBOIdvWAjbRSTvPiqp.jpg">
+                <img src="https://image.tmdb.org/t/p/w780/ouzWgXKgSnBOIdvWAjbRSTvPiqp.jpg" alt="Card">
+              </div>
+            </a>
+<a class="card-link" href="./peliculas/P-019-1-3-Nochesinpaz.html">
+              <div class="card" data-pelicula="./peliculas/P-019-1-3-Nochesinpaz.html" data-text-title=" Noche sin paz" data-additional-info="16+ | 2022 | 1h 52min | Acción/Comedia" data-description="Un grupo de mercenarios de élite irrumpe en la casa de una familia rica en la noche de Navidad. Lo que no esperaban encontrar era al enemigo más improbable, y sin embargo violento, posible: Santa Claus." data-bg="https://images.reporteindigo.com/wp-content/uploads/2022/12/noche-sin-paz-pelicula.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/4Wbf3aqP2GxoLyArpZw93Q/480x180.webp" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg" alt="Card">
+              </div>
+            </a>
         </div>
         <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
     </div>
@@ -1409,6 +1392,26 @@ window.addEventListener('resize', () => {
 window.addEventListener('load', manejarEnlaceEnPantallaPequena);
 window.addEventListener('resize', manejarEnlaceEnPantallaPequena);
     </script>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        var key = event.key;
+      
+        if (key === "ArrowUp" || key === "ArrowDown") {
+          // Navegación vertical de la página
+          window.scrollBy(0, key === "ArrowUp" ? -100 : 100);
+        } else if (key === "ArrowLeft" || key === "ArrowRight") {
+          // Navegación horizontal de la página (opcional)
+          // window.scrollBy(key === "ArrowLeft" ? -100 : 100, 0);
+        } else if (key === "Enter") {
+          // Abrir enlace cuando esté enfocado
+          var focusedElement = document.activeElement;
+          if (focusedElement.tagName === "A") {
+            focusedElement.click();
+          }
+        }
+      });
+      </script>
+      
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

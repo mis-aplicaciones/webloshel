@@ -1,523 +1,1415 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>Sidebar</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="menu">
-      <ion-icon name="menu-outline"></ion-icon>
-      <ion-icon name="close-outline"></ion-icon>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tu Web</title>
+
+    <style>
+.ubuntu-regular {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .ubuntu-bold {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            overflow: hidden;
+        }
+
+        .data {
+    position: fixed;
+    top: 0;
+    left: 70px;
+    height: 420px;
+    width: calc(100% - 70px);
+    background-image: linear-gradient(transparent 35%, #121212 100px), url('enlace_para_fondo_del_data.jpg'); /* Gradiente de transparente a #121212 de 0 a 100px */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el div */
+    background-position: top; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    z-index: 1000;
+    overflow: hidden; /* Ocultar el degradado que se desborda */
+    display: flex; /* Cambiar a flex para alinear en columna */
+    align-items: flex-start; /* Alinear los elementos en la parte superior */
+    padding-left: 20px; /* Añadir un pequeño espacio a la izquierda */
+transition: opacity 0.3s ease-in-out; /* Agregar una transición suave de opacidad */
+}
+
+
+    .data-content {
+    display: flex; /* Cambiar a flex para alinear en columna */
+    flex-direction: column; /* Alinear los elementos en columna */
+    margin-top: 30px; /* Espacio desde la parte superior */
+margin-left: 20px;
+}
+
+
+
+.image-container {
+    margin-bottom: 10px; /* Espacio entre la imagen y el título */
+}
+.image-container img{
+    width: 300px;
+}
+.title {
+    margin: 0;
+color: white;
+}
+
+.additional-info {
+    margin: 5px 0; /* Espacio entre la información adicional y la descripción */
+color: white;
+}
+
+.description {
+    width: 450px; /* Ancho fijo */
+    text-align: justify; /* Alinear justificado */
+color: white;
+}
+        header {
+            height: 50px; /* Altura del encabezado */
+            background-color: #121212;
+    color: #121212; /* Color del texto del encabezado */
+            position: fixed; /* Fijar el encabezado en la parte superior */
+            top: 420px; /* Alinear el encabezado después de la sección data */
+            left: 95px; /* Dejar espacio para el sidebar */
+            width: calc(100% - 125px); /* Ancho total menos el espacio del sidebar */
+            z-index: 1000; /* Z-index alto para que esté encima de otros elementos */
+        }
+
+        #main {
+    overflow-y: scroll; /* Agregar scrollbar solo en dirección vertical */
+    height: calc(100vh - 470px); /* Altura del área principal, restando la altura del header y la sección data */
+    margin-top: 470px; /* Espacio para el header y la sección data */
+    margin-left: 70px; /* Dejar espacio para el sidebar */
+    z-index: 999; /* Aseguramos que el contenido del div main esté por encima de div data */
+}
+#main::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+#main::-webkit-scrollbar-track {
+    background-color: #222; /* Color de fondo de la barra de desplazamiento */
+}
+
+#main::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del "pulgón" de la barra de desplazamiento */
+    border-radius: 5px; /* Borde redondeado */
+}
+
+#main::-webkit-scrollbar-thumb:hover {
+    background-color: #666; /* Color del "pulgón" al pasar el cursor */
+}
+
+        header::-webkit-scrollbar {
+            display: none; /* Oculta la barra de desplazamiento en Chrome, Safari y Opera */
+        }
+
+        .quick-search-buttons {
+            display: flex;
+            height: 100%;
+            overflow-x: auto; /* Agregar desplazamiento horizontal */
+        }
+.quick-search-wrapper {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    margin: 5px; /* Espacio inferior para evitar que los botones se superpongan al contenido */
+}
+       .card-container a{
+        text-decoration: none;
+       }
+
+        .quick-search-button:last-child {
+            margin-right: 0;
+        }
+
+        .quick-search-buttons a {
+    display: inline-block;
+    padding: 10px 10px; /* Ajusta el relleno vertical */
+    margin-right: 10px; /* Margen derecho entre botones */
+    background-color: #454555;
+    color: #fff;
+    border-radius: 25px; /* Bordos redondeados */
+    text-decoration: none;
+    transition: background-color 0.3s;
+    text-align: center; /* Centrar texto */
+    white-space: nowrap; /* Evita que el texto se desplace a la siguiente línea */
+}
+
+        .scroll-btn:hover {
+            background-color: #777;
+        }
+.scroll-left-btn,
+.scroll-right-btn {
+    border: none;
+    color: transparent; /* Hacemos el color transparente por defecto */
+    font-size: 24px;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    transition: color 0.3s; /* Transición suave para el color */
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Bordes redondeados */
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    background-color: transparent; /* Fondo transparente por defecto */
+}
+
+.scroll-left-btn {
+    left: -35px;
+}
+
+.scroll-right-btn {
+    right: -35px;
+}
+
+
+
+.scroll-left-btn:hover,
+.scroll-right-btn:hover {
+    color: #ffffff; /* Cambio de color al pasar el cursor */
+    
+}
+
+        .quick-search-buttons a:hover {
+            background-color: #777; /* Cambiar color de fondo al pasar el mouse */
+        }
+.quick-search-buttons::-webkit-scrollbar {
+            display: none; /* Ocultar la barra de desplazamiento horizontal de WebKit */
+        }
+        #sidebar {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 70px;
+    position: fixed;
+    background-color: #121212; /* Cambia el color de fondo aquí */
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    z-index: 1000;
+}
+
+
+        
+
+        #sidebar a:hover {
+            background-color: transparent; /* Cambio a transparente al posicionar el mouse */
+            color: #fff; /* Cambio de color del texto al posicionar el mouse */
+        }
+
+        .menu-icon {
+        width: 30px;
+        height: 40px;
+        border-radius: 0;
+        position: relative;
+        color: #ffffff0a;
+        margin-bottom: 20px;
+        transition: color 0.3s;
+      }
+.menu-icon:hover {
+    color: #818181; /* Cambio de color al pasar el cursor */
+}
+
+        #sidebar:hover {
+            opacity: 1;
+        }
+/* Línea horizontal */
+        .menu-icon::after {
+    content: '';
+    position: absolute;
+    top: 38px; /* Establece un margen superior para la línea */
+    left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
+    transform: translateX(-50%); /* Centra la línea horizontalmente */
+    width: 0;
+    height: 2px;
+    background-color: red; /* Color de la línea */
+    transition: width 0.3s ease; /* Transición suave para el ancho */
+}
+
+        /* Cuando se posicione el mouse sobre el enlace */
+        .menu-icon:hover::after {
+    width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
+}
+
+        #menu-toggle {
+            cursor: pointer;
+            position: fixed;
+            z-index: 3;
+            top: 10px;
+            left: 15px;
+            display: none;
+        }
+
+        #user-icon {
+            margin-bottom: 8px;
+border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
+        }
+
+        
+
+        .carousel {
+            margin-left: 5px; /* Ajuste para dejar espacio al sidebar */
+            overflow: hidden;
+            position: relative; /* Para posicionar los botones */
+            margin-left: 5px; /* Margen izquierdo de 5px */
+        }
+
+        .carousel h3 {
+            margin: 0;
+            color: #333;
+            text-align: left;
+            padding: 20px 20px 0px; /* Añadido para separar los botones del contenido */
+        }
+
+        .card-container {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 0 20px; /* Añadido para separar los botones del contenido */
+    
+}
+
+
+        .card {
+    width: 200px;
+    height: 100px;
+    background-color: #ddd;
+    margin: 10px; /* Modificado para un margen uniforme */
+    display: inline-block;
+    transition: transform 0.3s ease; /* Transición suave */
+    
+}
+
+.card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .card:hover {
+            transform: scale(1.1); /* Agrandar suavemente al pasar el cursor */
+        }
+
+ .scroll-btn {
+    background-color: rgb(128 128 128 / 12%);
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 63%;
+    transform: translateY(-50%);
+    z-index: 100;
+    transition: color 0.5s, background-color 0.5s;
+    height: 100px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+        .scroll-btn.left {
+            left: 0;
+            opacity: 0; /* Botón izquierdo inicialmente invisible */
+        }
+
+        .scroll-btn.right {
+            right: 0;
+        }
+
+.scroll-btn:hover {
+    color: #ffffff; /* Cambio de color al pasar el cursor */
+    background-color: rgba(128, 128, 128, 0.7); /* Hacer el fondo más claro */
+}
+.scroll-btn:hover:before {
+    transform: scale(1.5); /* Hacer el icono más grueso al pasar el cursor */
+}
+        .card-container:hover .scroll-btn {
+            opacity: 1; /* Mostrar botones al pasar el ratón sobre el contenedor */
+        }
+
+        .card:first-child {
+            margin-left: 20px; /* Añadido para que el primer card no quede pegado al borde del contenedor */
+        }
+        #bottom-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        text-align: center;
+        display: none;
+      }
+
+      #bottom-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #bottom-menu ul li a {
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+      }
+/* Estilos por defecto */
+.ver-mas {
+  display: none; /* Inicialmente oculto */
+}
+/* Estilos para pantallas pequeñas como tablet y móviles */
+@media only screen and (max-width: 384px) {
+  /* Mueve el sidebar a la parte inferior en modo horizontal */
+  .description {
+    display: none; /* Oculta la descripción en pantallas pequeñas */
+  }
+
+  .ver-mas {
+    display: inline-block; /* Muestra el botón en pantallas pequeñas */
+    background-color: #3f51b5;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px; /* Ajusta según el redondeo deseado */
+    
+    cursor: pointer;
+    outline: none; /* Para quitar el contorno al hacer clic */
+    margin-bottom: 10px;
+    width: 100px;
+    height: 40px;
+}
+.ver-mas a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.ver-mas:hover {
+    background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
+}
+.data {    
+    top: 0; 
+    height: 420px;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1000;
+    overflow: hidden;
+    display: flex; /* Cambiado a flex */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: flex-end;
+    padding-left: 0px;
+    align-content: center;
+}
+/* Quita el margen izquierdo de los elementos y los posiciona como columna */
+#main, header, .data {
+    margin-left: 0;
+    left: 0px;
+  }
+  .image-container img{
+    width: 250px;
+  }
+  #main, header{
+    margin-top: 480px;
+  }
+ #main {
+height: calc(100vh - 485px);
+}
+header{
+    margin-top: 10px;
+  }
+  .data, header {
+    width: 100%;
+  }
+.title {
+    text-align: center;
+}
+.data-content {  
+    margin-top: 0px;
+    margin-left: 0px;
+align-items: center;
+width: 100%;
+}
+/* Ajuste del botón de menú */
+  #menu-toggle {
+    display: block; /* Hace visible el botón en pantallas pequeñas */
+    position: fixed;
+    z-index: 1001; /* Lo coloca adelante del div data */
+    top: 10px;
+    left: 15px;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Estilos para el ícono del menú */
+  #menu-toggle ion-icon {
+    font-size: 40px; /* Tamaño del ícono */
+    color: white; /* Color del ícono */
+  }
+  /* Ajuste del sidebar */
+  #sidebar {
+    display: none; /* Oculta el sidebar en pantallas pequeñas */
+  }
+
+  /* Ajuste del contenido principal */
+  #content {
+    margin-bottom: 50px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+  }
+
+  /* Estilos para el menú inferior */
+  #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 17px;
+        }
+
+  #bottom-menu .menu-icon {
+    color: white; /* Cambia el color de los iconos a blanco */
+  }
+
+  .menu-icon::after {
+    display: none; /* Oculta la línea horizontal en pantallas móviles */
+  }
+.menu-icon.selected {
+    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+  }
+
+  .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+  
+  .card-container {
+    padding: 0;
+  }
+  .card:first-child {
+    margin-left: 0px;
+  }
+  .card {
+    width: 163px;
+    height: 95px;
+  }
+
+  /* Define el estilo del scrollbar */
+  #main::-webkit-scrollbar {
+    width: 6px; /* Ancho del scrollbar */
+  }
+
+  #main::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Color del scrollbar */
+    border-radius: 6px; /* Radio de borde del scrollbar */
+  }
+
+  #main::-webkit-scrollbar-track {
+    background-color: transparent; /* Color de fondo del scrollbar */
+  }
+#bottom-menu .menu-icon[name="home"] {
+    color: #4c65b1; /* Cambia el color del icono de película a rojo */
+}
+}
+
+/* Estilos para pantallas pequeñas como tablet y móviles */
+@media only screen and (min-width: 385px) and (max-width: 700px) {
+  /* Mueve el sidebar a la parte inferior en modo horizontal */
+  .description {
+    display: none; /* Oculta la descripción en pantallas pequeñas */
+  }
+
+  .ver-mas {
+    display: inline-block; /* Muestra el botón en pantallas pequeñas */
+    background-color: #3f51b5;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px; /* Ajusta según el redondeo deseado */
+    
+    cursor: pointer;
+    outline: none; /* Para quitar el contorno al hacer clic */
+    margin-bottom: 10px;
+    width: 100px;
+    height: 40px;
+}
+.ver-mas a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.ver-mas:hover {
+    background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
+}
+.data {    
+    top: 0; 
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1000;
+    overflow: hidden;
+    display: flex; /* Cambiado a flex */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: flex-end;
+    padding-left: 0px;
+    align-content: center;
+}
+
+.data-content {  
+    margin-top: 0px;
+    margin-left: 0px;
+align-items: center;
+width: 100%;
+}
+/* Ajuste del botón de menú */
+  #menu-toggle {
+    display: block; /* Hace visible el botón en pantallas pequeñas */
+    position: fixed;
+    z-index: 1001; /* Lo coloca adelante del div data */
+    top: 10px;
+    left: 15px;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Estilos para el ícono del menú */
+  #menu-toggle ion-icon {
+    font-size: 40px; /* Tamaño del ícono */
+    color: white; /* Color del ícono */
+  }
+  /* Ajuste del sidebar */
+  #sidebar {
+    display: none; /* Oculta el sidebar en pantallas pequeñas */
+  }
+
+  /* Ajuste del contenido principal */
+  #content {
+    margin-bottom: 50px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+  }
+
+  /* Estilos para el menú inferior */
+  #bottom-menu {
+    right: 0;
+    text-align: center;
+    position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+  }
+
+  #bottom-menu ul {
+    display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+  }
+
+  #bottom-menu ul li {
+          padding: 25px;
+        }
+
+  #bottom-menu .menu-icon {
+    color: white; /* Cambia el color de los iconos a blanco */
+  }
+
+  .menu-icon::after {
+    display: none; /* Oculta la línea horizontal en pantallas móviles */
+  }
+.menu-icon.selected {
+    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+  }
+
+.menu-icon{
+    width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s; /* posicionar al centro los botones del menu inferior */
+  }
+
+  /* Quita el margen izquierdo de los elementos y los posiciona como columna */
+  #main, header, .data {
+    margin-left: 0;
+    left: 0px;
+  }
+  #main, header{
+    margin-top: 550px;
+  }
+ #main {
+height: calc(100vh - 550px);
+}
+header{
+    margin-top: 90px;
+  }
+  .data, header {
+    width: 100%;
+  }
+.title {
+    text-align: center;
+}
+  .card-container {
+    padding: 0;
+  }
+  .card:first-child {
+    margin-left: 0px;
+  }
+  .card {
+    width: 163px;
+    height: 95px;
+  }
+
+  /* Define el estilo del scrollbar */
+  #main::-webkit-scrollbar {
+    width: 6px; /* Ancho del scrollbar */
+  }
+
+  #main::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Color del scrollbar */
+    border-radius: 6px; /* Radio de borde del scrollbar */
+  }
+
+  #main::-webkit-scrollbar-track {
+    background-color: transparent; /* Color de fondo del scrollbar */
+  }
+#bottom-menu .menu-icon[name="home"] {
+    color: #4c65b1; /* Cambia el color del icono de película a rojo */
+}
+}
+
+/* Estilos para pantallas de televisión HD */
+    @media only screen and (min-width: 701px) and (max-width: 720px) {
+        /* Agrega estilos adicionales según sea necesario */
+        /* Agrega estilos para informacion de cabecera */
+        .image-container img {
+    width: 250px;
+}
+.description {
+    font-size: 11px;
+    font-family: "Ubuntu";
+    
+}
+#sidebar {
+    width: 50px;
+	}
+.data {
+    position: fixed;
+    top: 0;
+    left: 50px;
+    height: 300px;
+    width: calc(100% - 50px);
+    padding-left: 0px;
+	}
+.data-content {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 17px;
+}
+.description {
+    width: 320px;  
+}
+header {
+height: 30px;
+    left: 67px;
+    top: 300px;
+    width: calc(100% - 89px);
+}
+#main {
+    
+    height: calc(100vh - 332px);
+    margin-top: 330px;
+    margin-left: 30px;    
+	}
+.quick-search-buttons a {
+    font-size: 11px;
+    
+    padding: 5px 10px;
+    margin-right: 8px;
+	}
+.scroll-left-btn, .scroll-right-btn {   
+    font-size: 19px;
+    top: 50%;
+    transform: translateY(-65%);  
+    height: 30px;
+    width: 30px;
+	}
+.scroll-left-btn {
+    left: -25px;
+	}
+.scroll-right-btn {
+    right: -25px;
+	}
+    }
+    /* Estilos para pantallas de televisión HD */
+    @media only screen and (min-width: 768px) and (max-width: 1365px) {
+        /* Agrega estilos adicionales según sea necesario */
+
+    }
+
+    /* Estilos para pantallas de televisión Full HD */
+    @media only screen and (min-width: 1366px) and (max-width: 1920px) {
+        /* Agrega estilos adicionales según sea necesario */
+    }
+
+    /* Estilos para pantallas de televisión 4K */
+    @media only screen and (min-width: 1921px) {
+        /* Agrega estilos adicionales según sea necesario */
+    }
+    </style>
+</head>
+<body>
+
+<div class="data">
+    <div class="data-content">
+        <div class="image-container">
+            <img src="ejemplo.jpg" alt="Imagen de ejemplo">
+        </div>
+        <h2 class="title">Text Title</h2>
+        <p class="additional-info">Información adicional</p>
+        <p class="description">Descripción del texto que se alinea justificadamente con un ancho de 450px y alto automático según la cantidad de palabras. Descripción del texto que se alinea justificadamente con un ancho de 450px y alto automático según la cantidad de palabras.</p>
+        <button class="ver-mas">
+            <a href="#" target="_self">Ver +</a>
+        </button>
+    </div>
+</div>
+
+<header>
+    <div class="quick-search-wrapper">
+<button class="scroll-left-btn"><ion-icon name="chevron-back"></ion-icon></button>
+        <div class="quick-search-buttons">
+            <a href="#carousel1">Populares</a>
+            <a href="#carousel2">Recomendada</a>
+            <a href="#carousel3">Series</a>
+            <a href="#carousel4">Zombie</a>
+            <a href="#carousel5">Acción</a>
+            <a href="#carousel1">Comedia</a>
+            <a href="#carousel2">Familiares</a>
+            <a href="#carousel3">Terror</a>
+            <a href="#carousel4">Series netflix</a>
+            <a href="#carousel5">Series Disney</a>
+<a href="#carousel5">Ganadoras de Oscar</a>
+<a href="#carousel5">Series Animadas</a>
+        </div>
+        
+        <button class="scroll-right-btn"><ion-icon name="chevron-forward-outline"></ion-icon></button>
     </div>
 
-    <div class="barra-lateral">
-      <div>
-        <div class="nombre-pagina">
-          <ion-icon id="cloud" name="menu-outline"></ion-icon>
-          <span>LoShel</span>
+
+</header>
+
+<div id="sidebar">
+    <a href="editarusuario.html" id="enlace1">
+    <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+</a>
+<a href="buscar.html" id="enlace2">
+    <ion-icon name="search" class="menu-icon"></ion-icon>
+</a>
+<a href="index.html" id="enlace3">
+    <ion-icon name="home" class="menu-icon"></ion-icon>
+</a>
+<a href="peliculas.html" id="enlace4">
+    <ion-icon name="film" class="menu-icon"></ion-icon>
+</a>
+<a href="series.html" id="enlace5">
+    <ion-icon name="albums" class="menu-icon"></ion-icon>
+</a>
+<a href="tv.html" id="enlace6">
+    <ion-icon name="tv" class="menu-icon"></ion-icon>
+</a>
+<a href="donar.html" id="enlace6">
+    <ion-icon name="cafe" class="menu-icon"></ion-icon>
+</a>
+
+</div>
+<!-- Menú inferior -->
+<div id="bottom-menu" class="hidden">
+    <ul>
+      <li>
+        <a href="peliculas.html" title="Películas">
+          <ion-icon name="film" class="menu-icon"></ion-icon>
+          <span class="menu-title">Pelís</span>
+        </a>
+      </li>
+      <li>
+        <a href="series.html" title="Álbumes">
+          <ion-icon name="albums" class="menu-icon"></ion-icon>
+          <span class="menu-title">Series</span>
+        </a>
+      </li>
+      <li>
+        <a href="index.html" title="Inicio">
+          <ion-icon name="home" class="menu-icon"></ion-icon>
+          <span class="menu-title">Inicio</span>
+        </a>
+      </li>
+      <li>
+        <a href="tv.html" title="Programas de TV">
+          <ion-icon name="tv" class="menu-icon"></ion-icon>
+          <span class="menu-title">TV</span>
+        </a>
+      </li>
+      <li>
+        <a id="usericon" href="editarusuario.html" title="Editar Usuario">
+          <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+          <span class="menu-title">Tú</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <button id="menu-toggle">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+<div id="main">
+    <div class="carousel" id="carousel1">
+        <h3>Populares 2024</h3>
+        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
+        <div class="card-container">
+            <!-- 10 Cards -->
+            <a class="card-link" href="prueba2.html">
+            <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+       data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+       data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+       data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+       data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+       data-cover-img="cover.jpg">
+    <img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
+    <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres Criaturas"
+data-additional-info="18+ | 2024 | 2h 21min | Comedia/Fantasía"
+data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad."
+data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
+data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
+data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
+<img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card 1">
+</div>
+</a>
+
+<a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
+    <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía"
+data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
+<a class="card-link" href="prueba2.html">
+    <div class="card" data-pelicula="prueba2.html" data-text-title="Beekeeper: sentencia de muerte"
+data-additional-info="15+ | 2024 | 1h 45min | Acción/Suspenso"
+data-description="Adam Clay se embarca en la misión de matar a los estafadores que provocaron que su casera se suicidara tras robarle dinero para la beneficencia. Verona, la hija de la casera y agente del FBI, sospecha que el enigmático Adam no es quien asegura ser."
+data-bg="https://media-s3-us-east-1.ceros.com/news-uk/images/2023/12/13/0bc61d4befeae6a4650908e29582717c/beekeeper-quad-image-highres-1.jpg"
+data-title-img="https://image.tmdb.org/t/p/original/8AOU701rM97m2JtTsonvKfDnWoV.png"
+data-cover-img="cover.jpg">
+<img src="https://i.ytimg.com/vi/J2pWkhP3ou0/maxresdefault.jpg" alt="Card 1">
+</div>
+</a>
         </div>
-        <!--<button class="boton">
-          <ion-icon name="add-outline"></ion-icon>
-          <span>Create new</span>
-        </button>-->
-      </div>
-
-      <nav class="navegacion">
-        <ul>
-          <li>
-            <a href="#tabinicio">
-              <ion-icon name="home-outline"></ion-icon>
-              <span>Inicio</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="film-outline"></ion-icon>
-              <span>Películas</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="logo-youtube"></ion-icon>
-              <span>Series</span>
-            </a>
-          </li>
-          <li>
-            <a href="playerjs.html">
-              <ion-icon name="tv-outline"></ion-icon>
-              <span>Tv Online</span>
-            </a>
-          </li>
-          <li>
-            <a href="donar.html">
-              <ion-icon name="cafe-outline"></ion-icon>
-              <span>Donar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <ion-icon name="search-outline"></ion-icon>
-              <span>Buscar</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div>
-        <div class="linea"></div>
-
-        <div class="modo-oscuro">
-          <div class="info">
-            <ion-icon name="moon-outline"></ion-icon>
-            <span>Drak Mode</span>
-          </div>
-          <div class="switch">
-            <div class="base">
-              <div class="circulo"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="usuario">
-          <img src="imagenes/avatar.png" alt="avatar" />
-          <div class="info-usuario">
-            <div class="nombre-email">
-              <span class="nombre">Invitdo</span>
-              <span class="email">Invitado@gmail.com</span>
-            </div>
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
+        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
     </div>
+<div class="carousel" id="carousel2">
+        <h3>Recomendada</h3>
+        <button class="scroll-btn left"><ion-icon name="chevron-back"></button>
+        <div class="card-container">
+            <!-- 10 Cards -->
+            <a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
+                <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres Criaturas"
+            data-additional-info="18+ | 2024 | 2h 21min | Comedia/Fantasía"
+            data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad."
+            data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
+            data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
+            data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
+            <img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card 1">
+            </div>
+            </a>
+            <a class="card-link" href="./peliculas/P-012-4-Siempreatulado.html">
+                <div class="card" data-pelicula="./peliculas/P-012-4-Siempreatulado.html" data-text-title="Siempre a tu lado"
+            data-additional-info="10+ | 2009 | 1h 33min | Drama"
+            data-description="Un perro fiel llamado Hachiko acompaña cada mañana a su amo a la estación de tren y regresa cada tarde para darle la bienvenida después del trabajo. Sin embargo, esta rutina se ve rota por una desgracia."
+            data-bg="https://s3.amazonaws.com/rtvc-assets-parrilla.rtvc.gov.co/s3fs-public/siempre-a-tu-lado-hachiko-p1.jpg"
+            data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABTp5APPcT01f1QC_nlVDQU-JgFjXi4LBM_8qcgylDKZTpY4MAI34pHR5ekySzqPlU47NbOD7Jkm2kL2tQSMglm0UeMDAjRYRm1NfmBf-n12b.png"
+            data-cover-img="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg">
+            <img src="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg" alt="Card 1">
+            </div>
+            </a>
+            <a class="card-link" href="./peliculas/P-013-3-1-Planfamiliar.html">
+                <div class="card" data-pelicula="./peliculas/P-013-3-1-Planfamiliar.html" data-text-title="Siempre a tu lado"
+            data-additional-info="10+ | 2009 | 1h 33min | Drama"
+            data-description="Dan Morgan es un marido devoto, un padre cariñoso, un buen trabajador y también un exasesino. Y, cuando su pasado alcanza su presente, se ve obligado a embarcar a su ingenua familia en un viaje por carretera sin igual."
+            data-bg="https://i0.wp.com/www.themoviedb.org/t/p/w1280/r9oTasGQofvkQY5vlUXglneF64Z.jpg"
+            data-title-img="https://is1-ssl.mzstatic.com/image/thumb/9BiWiFQu0mBEfNodXKnRhg/480x180.webp"
+            data-cover-img="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg">
+            <img src="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg" alt="Card 1">
+            </div>
+            </a>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <div class="card">Card 8</div>
+            <div class="card">Card 9</div>
+            <div class="card">Card 10</div>
+        </div>
+        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+    </div>
+<div class="carousel" id="carousel3">
+        <h3>Carrusel 3</h3>
+        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
+        <div class="card-container">
+            <!-- 10 Cards -->
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <div class="card">Card 8</div>
+            <div class="card">Card 9</div>
+            <div class="card">Card 10</div>
+        </div>
+        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+    </div>
+<div class="carousel" id="carousel4">
+        <h3>Carrusel 4</h3>
+        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
+        <div class="card-container">
+            <!-- 10 Cards -->
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <div class="card">Card 8</div>
+            <div class="card">Card 9</div>
+            <div class="card">Card 10</div>
+        </div>
+        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+    </div>
+<div class="carousel" id="carousel5">
+        <h3>Carrusel 5</h3>
+        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
+        <div class="card-container">
+            <!-- 10 Cards -->
+            <div class="card">Card 1</div>
+            <div class="card">Card 2</div>
+            <div class="card">Card 3</div>
+            <div class="card">Card 4</div>
+            <div class="card">Card 5</div>
+            <div class="card">Card 6</div>
+            <div class="card">Card 7</div>
+            <div class="card">Card 8</div>
+            <div class="card">Card 9</div>
+            <div class="card">Card 10</div>
+        </div>
+        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+    </div>
+    <!-- Otros carruseles aquí -->
+</div>
 
-    <main>
-      <div class="secciones">
-        <article id="tabinicio">
-          <div class="nav" id="nav">
-            <img src="imagenes/logo LoShel.png" alt="logo" class="nav__logo" />
-            <p id="version">Versión 9.9</p>
-          </div>
-          <!--header-->
-          <!--<div class="banner">
-            <div class="banner__contents">
-              <h1 class="banner__title">
-                <img
-                  src="https://micartelera.com.ar/novedades/wp-content/uploads/2023/08/image.png"
-                  alt="lamonja2"
-                />
-              </h1>
-              <div class="banner__buttons">
-                <button class="banner__button">Play</button>
-                <button class="banner__button">My list</button>
-              </div>
-              <div class="banner_description">
-                <p>
-                  Francia, 1956. El asesinato de un sacerdote provoca que un mal
-                  demoníaco se extienda sin control. La hermana Irene deberá
-                  enfrentarse, de nuevo, a la monja satánica Valak.
-                </p>
-              </div>
-            </div>
-          </div>-->
-          <div class="banner">
-            <!-- <div class="bg"> -->
-            <div class="content">
-              <img
-                src="https://images.moviesanywhere.com/2df2f1a4e6169d82aa137eacfa58da4c/3e74a4da-6e75-4366-a70c-43fc4ff6d3ab.png"
-                class="movieTitle"
-              />
-              <h4>
-                <span>2023</span>
-                <span><i>16+</i></span>
-                <span>1h 51min</span>
-                <span>Terror/Crimen</span>
-              </h4>
-              <p>
-                Victor percibe con horror que su hija, Angela, y la amiga de
-                esta, Katherine, muestran síntomas de haber sido poseídas por
-                una entidad demoníaca. Desesperado, busca la ayuda de Chris
-                MacNeil, la única persona viva que ha experimentado algo así.
-              </p>
-              <div class="buttons">
-                <a href="go:exorcisc"
-                  ><i class="fa fa-play aria" hidden="true"></i>Play</a
-                >
-                <a href="#"
-                  ><i class="fa fa-plus" aria-hidden="true"></i>My list</a
-                >
-              </div>
-            </div>
-            <!--</div>-->
-          </div>
-          <!--Loshel top 10-->
-          <div class="row">
-            <h2>Top Películas</h2>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousels = document.querySelectorAll('.carousel');
 
-            <div class="row__posters">
-              <!--<img
-                class="control prev"
-                src="/imagenes/left previous icon.png"
-                alt="atras"
-              />
-              <img
-                class="control next"
-                src="/imagenes/next right icon.png"
-                alt="adelante"
-              />-->
-              <a
-                class="contentimg"
-                href="peliculas/five nights at freddy's pelicula.html"
-                ><img
-                  src="imagenes/top1.png"
-                  alt="top1"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/gran turismo.html"
-                ><img
-                  src="imagenes/top2.png"
-                  alt="top2"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/la monja 2.html"
-                ><img
-                  src="imagenes/top3.png"
-                  alt="top3"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/indiana jones 5.html"
-                ><img
-                  src="imagenes/top4.png"
-                  alt="top4"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/barbie.html"
-                ><img
-                  src="imagenes/top5.png"
-                  alt="top5"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/jcreborn.html"
-                ><img
-                  src="imagenes/top6.png"
-                  alt="top6"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a
-                class="contentimg"
-                href="peliculas/el dia del fin del mundo.html"
-                ><img
-                  src="imagenes/top7.png"
-                  alt="top7"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/hablame.html"
-                ><img
-                  src="imagenes/top8.png"
-                  alt="top8"
-                  class="row__poster row__posterLarger"
-              /></a>
-              <a class="contentimg" href="peliculas/el sonido del mal.html"
-                ><img
-                  src="imagenes/top9.png"
-                  alt="top9"
-                  class="row__poster row__posterLarger"
-              /></a>
-            </div>
-          </div>
+            carousels.forEach(carousel => {
+                const cardContainer = carousel.querySelector('.card-container');
+                const leftBtn = carousel.querySelector('.scroll-btn.left');
+                const rightBtn = carousel.querySelector('.scroll-btn.right');
 
-          <!--Recien Subidas-->
-          <div class="row">
-            <h2>Recien subidas</h2>
-            <div class="row__posters">
-              <div>
-                <a
-                  class="contentimg"
-                  href="peliculas/dulces y sangrientos 16.html"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA_nAUaL-FRy1VKtwo1qu13ny7f4_sSbG22OdjBHQAaVBPtkKfR83okmZR-57Zyg_M_ATcv551Rc3FzS8_BDJV5wUTLYg=w1360-h619"
-                    alt="Dulces y sangrientos 16"
-                    class="row__poster"
-                /></a>
-              </div>
-              <div>
-                <a
-                  class="contentimg"
-                  href="peliculas/este cuerpo no es mio.html"
-                  ><img
-                    src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC4FX7PXLcLn98g93xd4tZRo2HupdWZpbrR28qi_GMhWjHLtdMYCZ69-R95kp4FZMqBK0VgAzSMfqu2lrmHT5h081usKw=w1360-h619"
-                    alt="Este cuerpo no es mio"
-                    class="row__poster"
-                /></a>
-              </div>
-              <a class="contentimg" href="peliculas/bastardos sin gloria.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA908F_09ubduMk-uPqp631HphV2Mf2bhhCApEzdI3nFgjJis-AZesC03T6PgRnQuvT8k5rBn7-Em9_n1bh1IAOk62e=w1360-h619"
-                  alt="Bastardos sin gloria"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/capitan america 1.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC5SruGnn03Gn66QRHXlJgMrzY9wvw1Y1ixttiBYVJd0pMOI_NOjG_5TYR-CYj9rZBKyAFk6dY6vt4K3r4uh8dK1G8c1Q=w1360-h619"
-                  alt="Capitan America"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/millon dolar baby.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAoIgS_0daoc0IS2ysTOd1yMR4XhrbRq4s2GOHvgwCb-wuSrKfCHt28xWI7F2Vlo6myyxNsCyzYTMv4TP7zRhKFCtBg=w1360-h619"
-                  alt="Golpes del destino"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/eradication.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBfOYD6hadefD8f-ekFHhrgEz0lJEOfridG6OXCrMMJKY4Drg_rLy22fZKyj7NUAcRpos8ZIizo33cucCoQP_xqRK5lbA=w1360-h619"
-                  alt="Extinción"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/amor sexo y 30 velitas.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaASISs9_0McJVoc-UK4n59TSG2WnBY6JNRRzD6uull-Ru_UEPZbPGWN89HwFKqzTzZC2i6D8E9fnr2V8huTCk72LozbWA=w1360-h619"
-                  alt="Amor, sexo y 30 velitas"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/la pasion de cristo.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAW-GZrz-v3RXS-cSgcLBJy6AOPmjYOS2u00Eteb1lXQdSWUzCBIip0uUSkEIaLg8O88Ffoze-dvnFa-VC5nmpOP3zqmw=w1360-h619"
-                  alt="La pasión de cristo"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/oso vicioso.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaDIJjhTtSUr_Hpg-U6O9AwHbmIPbaNvBZGDJCHEX_rxrcASmrgTzMmoGIJXEBp-kgvDmI0hNdYmy5EzGU6reYbE8F2OwQ=w1360-h619"
-                  alt="Oso visioso"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
+                cardContainer.addEventListener('scroll', () => {
+                    // Mostrar u ocultar botones según la posición del scroll
+                    leftBtn.style.opacity = cardContainer.scrollLeft > 0 ? '1' : '0';
+                    rightBtn.style.display = cardContainer.scrollLeft < cardContainer.scrollWidth - cardContainer.clientWidth ? 'block' : 'none';
+                });
 
-          <!--Para no dormir-->
-          <div class="row">
-            <h2>Para no dormir</h2>
-            <div class="row__posters">
-              <a class="contentimg" href="peliculas/nadie podra salvarte.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCK57zaqfvduf1pkxmJbKlU3wxu0SvO0vPrlWF_oxkjT1ceEo2ROcnQfkeZ2PuXoVDySBKeRk6LO-lC2AVF_7_-M5AChw=w1360-h619"
-                  alt="nadie podra salvarte"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/hablame.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAVtZJaEPaEB3IMJDZUALBrZIInb125xXO89xHSgqa1-4Yi70rArhedvI_pYqek5_LL4E1J9O81DTClDQR43Szuhb3B-A=w1360-h619"
-                  alt="háblame"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/cadaver.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBt3vhYyPddZf0MWaBry5fKCAJUrSJXy7SSS3pZmE3iEYVy8Z7ubVJOn4L-Icc_6GhaxWG2uSgmc9cyjaQ5i5jqeIXG2A=w1360-h619"
-                  alt="Cadaver"
-                  class="row__poster"
-              /></a>
-              <a
-                class="contentimg"
-                href="peliculas/asi en la tierra como en el cielo.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA5jfzjhSjFwkOSsjK8WhTI8bZcM5Jo0rJBUeDIngYWqfg2-oQLsIQgKvoFdLGXYs3DBBXPwuMB1kyzAij7wePG38cv=w1360-h619"
-                  alt="Asi en la tierra como en el infierno"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/barbarian.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBoryTNkUKl039shUZdi3pY9LMSIH4uCkQ477-UTgmSgYYJwTOf9g_0BLmkqMmFVl__84UFRQ3as__Rr_dgjLpeynMJGw=w1360-h619"
-                  alt="Barbaro"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/hellraiser 2022.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAr2ecNBGHWFVpmvuey466kNn_s1BPGk1NGvpEiIv2vcyzzb2HFQh_fl5a4-15iHT9IFpSudzj47eAFIz3-TVj9HpWOdQ=w1360-h619"
-                  alt="Hellraiser"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/terrifier 2.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCdDryCvhTYOGvw2mNyrGncKssU0RA-aVnvyGVrACcWadOoZ9gWBX4sQIsxYu0B2v5kxh-732aowhvmDoWvz2yL-Ddt-w=w1360-h619"
-                  alt="Terrifier 2"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/dracula mar de sangre.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaD4ETlIhYkRl_G2LyVjvEQdnmRyufAUNd8ZBpavlspHNuzFxLiQA4Jpphut-X2-GFMsld09doxWfPtaNw3c6LCl6Fs5EQ=w1360-h619"
-                  alt="Dracula: Mar de sangre"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/el exorcista del papa.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAJS1Tb3_lboo82alCkoEVeBSRl9XRUjcSbn9aK_sjymYXOamo5-4aZFvBAsU67CynFWnRQFjydX_cXSRA2b13hVUDyHg=w1360-h619"
-                  alt="El exorcista del Papa"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaD9vJV1Enr9qpRZabNq1gUXTttns87Yqa7TywSZNDt-A7ifHj1vJrr_hQCUIIpbNhgMQ_l5VGhmhNEjl-EUkIamWfLjEw=w1360-h619"
-                  alt="En la Tormenta"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCb9EexDRpWdrawAX5ciOLTaiMNtYn0tV-81oAgz5IfPeDEoKzBQhF3lMClpvnoYgnAR6HyvsVQRqupsSjRZcyKPqGaSw=w1360-h619"
-                  alt="Psesión Infernal: El despertar"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
+                leftBtn.addEventListener('click', () => {
+                    cardContainer.scrollBy({ left: -cardContainer.offsetWidth, behavior: 'smooth' });
+                });
 
-          <!--Top Series-->
-          <div class="row">
-            <h2>Top Series</h2>
-            <div class="row__posters">
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/1 top series.png"
-                  alt="top1"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/2 top series.png"
-                  alt="top2"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/3 top series.png"
-                  alt="top3"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/4 top series.png"
-                  alt="top4"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/5 top series.png"
-                  alt="top5"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/6 top series.png"
-                  alt="top6"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/7 top series.png"
-                  alt="top7"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/8 top series.png"
-                  alt="top8"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="imagenes/9 top series.png"
-                  alt="top9"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
-          <!--Polulares 2023-->
-          <div class="row">
-            <h2>Populares 2023</h2>
-            <div class="row__posters">
-              <a class="contentimg" href="peliculas/indestructibles 4.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA7X7a3SPswgIoXgBZJs2qk4kXNH4UwNflgqcBqgrMamY4TNHUbm4q15KIVc52HvKpLnD3orD2WCGeZ9obmWBLudFlWmw=w1360-h619"
-                  alt="Indestructibles4"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAxgT6_LaEvCcvBUrWaRdinMNVckoVCBCg9tmJts6vppekOFr4-UBfTWYyL07WUnWGtb92D8i2GKejzEKQMo1HoO6nzuQ=w1360-h619"
-                  alt="Contrareloj"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="go:blueb"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaC7WAG_ecTDbMbYcTND1JNb-lRZUin3PqVHIeemmNLOPUdirzRJWbyuLvhSryCeLUmjYIDVyYo7agtfdqjTMJQWLB2coQ=w1360-h619"
-                  alt="Bluebeetle"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="peliculas/la naranja mecanica.html"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCPVPGcuIaBbwC1lfQ_mtvQHkv3sT_uUFAc97JMG5nj8P4Nvglhwn4QozDO8C9tNKv40XzGj-kQDI0mSKwDfSUfoJq6vA=w1360-h619"
-                  alt="Hazme el favor"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCh5J-2QYBNURJBFOM9OKsvEglgsszDPiaEZwZtanTTbokMcM9OEsaItlmw2f7qtVKiMfLWdkMsfkXkKtJQFiuiiBGe=w1360-h619"
-                  alt="La noche del demonio"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAwN7fF2x7g0WfWf3ukaMVu-x8w9y854t14ArrCjISIRgmrEMBwrFobobqQvbWEfhJGL1LQf5WXob4PRZ12ySl8JfyN=w1360-h619"
-                  alt="Sonidos de libertad"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaAN2o_LjUmD01o0qWBD3w1wNfpzOFg_w1qUtv03Jl0_muTVShHx1h3f_eKeeffg27ceHDvys89_wO7m_Ov9Y5jDq5JKZg=w1360-h619"
-                  alt="RE: Dead island"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaA9havFv7Er7wn-oEhukyirzZELUE6wJwH1XI_DpE-kcou26G7hgYOTH0gznelnQ8p-0e9X-qGb6vr98jxIz3gYAlQctg=w1360-h619"
-                  alt="El pacto"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaBSz5R8LmHJgmX-zQRprkUq9t8RojAZKPxKO-ZscdRymUylTGnjsPkbXWBXZ6i2m1TUWlDYtDjqca1eeW0mk-LqDY8lew=w1360-h619"
-                  alt="Flash"
-                  class="row__poster"
-              /></a>
-              <a class="contentimg" href="#"
-                ><img
-                  src="https://lh3.googleusercontent.com/u/1/drive-viewer/AK7aPaCBlJzrC0u-6_mJRPi3a8bo4BUuEXCtP_b_glZDY3QjK0i1i5uf8B9gWvILeL76Ezjb8JXFoAOWZXbbc5GbatUsQ5_lvA=w1360-h619"
-                  alt="Transformers: El despertar de las Bestias"
-                  class="row__poster"
-              /></a>
-            </div>
-          </div>
-        </article>
-        <article id="tabpeliculas"></article>
-        <article id="tabseries"></article>
-        <article id="tabtv"></article>
-        <article id="tabdonar"></article>
-        <article id="tabbuscar"></article>
-      </div>
-    </main>
+                rightBtn.addEventListener('click', () => {
+                    cardContainer.scrollBy({ left: cardContainer.offsetWidth, behavior: 'smooth' });
+                });
+            });
 
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-    <script src="script.js"></script>
-  </body>
+            const quickSearchWrapper = document.querySelector('.quick-search-buttons');
+            const scrollLeftBtn = document.querySelector('.scroll-left-btn');
+            const scrollRightBtn = document.querySelector('.scroll-right-btn');
+
+            let animationFrameId;
+
+            function smoothScrollToLeft() {
+                if (quickSearchWrapper.scrollLeft > 0) {
+                    quickSearchWrapper.scrollLeft -= 10; // Ajusta la velocidad de desplazamiento cambiando este valor
+                    animationFrameId = requestAnimationFrame(smoothScrollToLeft);
+                }
+            }
+
+            function smoothScrollToRight() {
+                if (quickSearchWrapper.scrollLeft < quickSearchWrapper.scrollWidth - quickSearchWrapper.offsetWidth) {
+                    quickSearchWrapper.scrollLeft += 10; // Ajusta la velocidad de desplazamiento cambiando este valor
+                    animationFrameId = requestAnimationFrame(smoothScrollToRight);
+                }
+            }
+
+            scrollLeftBtn.addEventListener('click', function() {
+                cancelAnimationFrame(animationFrameId);
+                smoothScrollToLeft();
+            });
+
+            scrollRightBtn.addEventListener('click', function() {
+                cancelAnimationFrame(animationFrameId);
+                smoothScrollToRight();
+            });
+
+            const cards = document.querySelectorAll('.card');
+            const dataContent = document.querySelector('.data-content');
+            const title = dataContent.querySelector('.title');
+            const additionalInfo = dataContent.querySelector('.additional-info');
+            const description = dataContent.querySelector('.description');
+            const imageContainer = dataContent.querySelector('.image-container img');
+            const dataBg = document.querySelector('.data');
+            const verMasBtn = document.querySelector('.ver-mas a');
+            
+
+
+            let currentCard = null; // Variable para almacenar el card actual
+
+            function mostrarDatosIniciales() {
+                // Obtener el primer card del primer carrusel
+                const primerCarousel = document.querySelector('.carousel');
+                const primerCard = primerCarousel.querySelector('.card');
+
+                // Obtener los datos del primer card
+                const textTitle = primerCard.getAttribute('data-text-title');
+                const additionalInfoText = primerCard.getAttribute('data-additional-info');
+                const descriptionText = primerCard.getAttribute('data-description');
+                const backgroundImage = primerCard.getAttribute('data-bg');
+                const titleImage = primerCard.getAttribute('data-title-img');
+
+
+                // Actualizar los datos del div .data con los del primer card
+                title.textContent = textTitle;
+                additionalInfo.textContent = additionalInfoText;
+                description.textContent = descriptionText;
+                imageContainer.src = titleImage;
+                dataBg.style.backgroundImage = `linear-gradient(transparent 70%, #121212 420px), url('${backgroundImage}')`; // Solo establecer la imagen de fondo sin gradiente
+                dataBg.style.display = 'flex'; // Mostrar el div .data
+	        // Obtener el enlace del primer card y establecerlo en el botón "Ver más"
+    const peliculaUrl = primerCard.getAttribute('data-pelicula');
+    verMasBtn.setAttribute('href', peliculaUrl);
+
+                // Almacenar el primer card como el actual
+                currentCard = primerCard;
+            }
+
+            // Llamar a la función para mostrar datos iniciales al iniciar la página
+            mostrarDatosIniciales();
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    // Obtener los datos del card actual
+                    const textTitle = card.getAttribute('data-text-title');
+                    const additionalInfoText = card.getAttribute('data-additional-info');
+                    const descriptionText = card.getAttribute('data-description');
+                    const backgroundImage = card.getAttribute('data-bg');
+                    const titleImage = card.getAttribute('data-title-img');
+      
+
+                    // Actualizar los datos del div .data
+                    title.textContent = textTitle;
+                    additionalInfo.textContent = additionalInfoText;
+                    description.textContent = descriptionText;
+                    imageContainer.src = titleImage;
+                    dataBg.style.backgroundImage = `linear-gradient(transparent 70%, #121212 420px), url('${backgroundImage}')`; // Solo establecer la imagen de fondo sin gradiente
+                    dataBg.style.display = 'flex'; // Mostrar el div .data
+		   // Obtener y actualizar el enlace del card actual en el botón "Ver más"
+           const peliculaUrl = card.getAttribute('data-pelicula');
+        verMasBtn.setAttribute('href', peliculaUrl);
+
+                    // Almacenar el card actual
+                    currentCard = card;
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    // Ocultar el div .data al salir del card solo si el puntero no está sobre otro card
+                    if (currentCard !== card) {
+                        dataBg.style.display = 'none';
+                    }
+                });
+            });           
+        });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const menuToggle = document.getElementById("menu-toggle");
+  const bottomMenu = document.getElementById("bottom-menu");
+
+  // Función para cambiar la visibilidad del menú inferior
+  function toggleBottomMenu() {
+    const currentIcon = menuToggle.querySelector("ion-icon").getAttribute("name");
+    const menuIcon = "menu";
+    const closeIcon = "close-circle";
+    const newIcon = currentIcon === menuIcon ? closeIcon : menuIcon;
+
+    // Cambia el icono del botón
+    menuToggle.querySelector("ion-icon").setAttribute("name", newIcon);
+
+    // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
+    if (window.innerWidth <= 700) {
+      if (newIcon === closeIcon) {
+        bottomMenu.style.display = "flex";
+        localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+      } else {
+        bottomMenu.style.display = "none";
+        localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+      }
+    }
+  }
+
+  // Agrega el evento click al botón de menú
+  menuToggle.addEventListener("click", toggleBottomMenu);
+
+  // Verifica si hay un estado guardado para el menú inferior al cargar la página
+  const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+  if (bottomMenuVisible === "true") {
+    if (window.innerWidth <= 700) {
+      bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+      menuToggle.querySelector("ion-icon").setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+    }
+  }
+});
+
+// Evento para verificar si el tamaño de la pantalla cambia
+window.addEventListener("resize", function() {
+  const bottomMenu = document.getElementById("bottom-menu");
+  const menuToggle = document.getElementById("menu-toggle");
+
+  // Verifica si el menú estaba activo antes de cambiar el tamaño de la pantalla
+  const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+  if (bottomMenuVisible === "true") {
+    // Si la pantalla es pequeña, muestra el menú
+    if (window.innerWidth <= 700) {
+      bottomMenu.style.display = "flex";
+      menuToggle.querySelector("ion-icon").setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+    } else {
+      // Si la pantalla es grande, oculta el menú
+      bottomMenu.style.display = "none";
+      menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
+      localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+    }
+  } else {
+    // Si el menú estaba inactivo, ocúltalo en pantallas grandes
+    if (window.innerWidth > 700) {
+      bottomMenu.style.display = "none";
+      menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
+    }
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Recuperar la imagen de perfil guardada del almacenamiento local
+    var savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+        savedProfile = JSON.parse(savedProfile);
+        var profileImage = savedProfile.image;
+
+        // Actualizar el icono de usuario en el sidebar
+        var sidebarIcons = document.querySelectorAll('#sidebar ion-icon[name="person-circle"]');
+        sidebarIcons.forEach(function(icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement('div');
+            divIcon.classList.add('menu-icon');
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "35px"; // Nuevo tamaño
+            divIcon.style.height = "35px"; // Nuevo tamaño
+            icon.parentNode.replaceChild(divIcon, icon);
+        });
+
+        // Actualizar el icono de usuario en el bottom-menu
+        var bottomMenuIcons = document.querySelectorAll('#bottom-menu ion-icon[name="person-circle"]');
+        bottomMenuIcons.forEach(function(icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement('div');
+            divIcon.classList.add('menu-icon');
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "30px"; // Nuevo tamaño
+            divIcon.style.height = "30px"; // Nuevo tamaño
+            divIcon.style.marginTop = "0"; // Alinear con los demás iconos
+            icon.parentNode.replaceChild(divIcon, icon);
+        });
+    }
+});
+// Función para desactivar el enlace cuando la pantalla es pequeña
+function desactivarEnlaceEnPantallaPequena() {
+    const links = document.querySelectorAll('.card-link');
+    links.forEach(link => {
+        if (window.innerWidth <= 715) {
+            link.removeAttribute('href');
+        }
+    });
+}
+
+// Función para reactivar el enlace cuando la pantalla es lo suficientemente grande
+function reactivarEnlaceEnPantallaGrande() {
+    const links = document.querySelectorAll('.card-link');
+    links.forEach(link => {
+        const pelicula = link.querySelector('.card').getAttribute('data-pelicula');
+        if (window.innerWidth > 715) {
+            link.setAttribute('href', pelicula);
+        }
+    });
+}
+
+// Ejecutar las funciones al cargar la página y cuando se redimensione la pantalla
+window.addEventListener('load', () => {
+    desactivarEnlaceEnPantallaPequena();
+    reactivarEnlaceEnPantallaGrande();
+});
+window.addEventListener('resize', () => {
+    desactivarEnlaceEnPantallaPequena();
+    reactivarEnlaceEnPantallaGrande();
+});
+
+// Ejecutar la función al cargar la página y cuando se redimensione la pantalla
+window.addEventListener('load', manejarEnlaceEnPantallaPequena);
+window.addEventListener('resize', manejarEnlaceEnPantallaPequena);
+    </script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
 </html>

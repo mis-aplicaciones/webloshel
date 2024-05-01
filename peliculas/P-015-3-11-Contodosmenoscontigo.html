@@ -14,16 +14,6 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
       rel="stylesheet"
     />
-    <meta name="description" content="Contenido multimedia para todos" />
-    <meta name="author" content="loshel" />
-    <!-- Metaetiqueta para especificar que el sitio web es una aplicación web -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <!-- Metaetiqueta para indicar el nombre de la aplicación -->
-    <meta name="apple-mobile-web-app-title" content="Loshel Movie" />
-    <!-- Metaetiqueta para especificar la URL de la imagen de la aplicación -->
-    <link rel="apple-touch-icon" href="/ruta/a/tu/icono.png" />
-    <!-- Metaetiqueta para indicar que se pueden compartir enlaces -->
-    <meta name="shareable" content="yes" />
     <style>
       .ubuntu-regular {
         font-family: "Ubuntu", sans-serif;
@@ -439,7 +429,7 @@
           height: 100%;
         }
         .movie-title-text {
-          font-size: 20px;
+          font-size: 24px;
           text-align: center;
         }
         .movie-rating {
@@ -615,7 +605,7 @@
           height: 100%;
         }
         .movie-title-text {
-          font-size: 20px;
+          font-size: 24px;
           text-align: center;
         }
         .movie-rating {
@@ -1195,25 +1185,31 @@
     <!-- Contenido principal -->
     <div id="content">
       <!-- Campo oculto para almacenar el ID de la película -->
-      <input type="hidden" id="ID_pelicula" value="P-009" />
+      <input type="hidden" id="ID_pelicula" value="P-015" />
       <!-- Campo oculto para almacenar el cover de la película -->
       <input
         type="hidden"
         id="cover-url"
         name="cover-url"
-        value="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png"
+        value="https://m.media-amazon.com/images/S/pv-target-images/7b6abd4b4290b5f5586935d7cf98dc5c537d55640429e75b1c9741e99dcc9d67.jpg"
+      />
+      <input
+        type="hidden"
+        id="cover-url-2"
+        name="cover-url-2"
+        value="https://mx.web.img3.acsta.net/pictures/23/12/12/19/18/0489818.jpg"
       />
       <input
         type="hidden"
         id="pagina-nombre"
         name="pagina-nombre"
-        value="P-010-3-8-RickyStanicky.html"
+        value="P-015-3-11-Contodosmenoscontigo.html"
       />
 
       <!-- Sección para el fondo del cuerpo -->
       <div
         id="background-section"
-        data-background-url="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg"
+        data-background-url="https://lacomikeria.com/wp-content/uploads/2024/01/anyone-6-scaled.jpg"
       ></div>
 
       <!-- Logo -->
@@ -1223,50 +1219,52 @@
         <!-- Título de la película (imagen) -->
         <img
           id="movie-title-image"
-          src="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png"
+          src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABdvox46GArVmqlUazfvk5JbJak6dSKMw7oiKkCIsWGpLqP222O7GsNFe8rJZG_mhZCYMJ8F1j3AmsHgfOrYIgzg3-8o2BrMlzIqtEg44HsmV.png"
           alt="Título de la Película"
           class="movie-title"
         />
         <!-- Título de la película (texto) -->
-        <h2 id="movie-title-text" class="movie-title-text">Ricky Stanicky</h2>
+        <h2 id="movie-title-text" class="movie-title-text">
+          Con todos menos contigo
+        </h2>
         <!-- Sección de puntuación y detalles de película -->
         <div class="movie-details-and-rating">
           <!-- Puntuación de la película -->
-          <div id="puntuacion" class="movie-rating" data-puntuacion="3">
+          <div id="puntuacion" class="movie-rating" data-puntuacion="3.5">
             <span class="stars"></span>
           </div>
 
           <!-- Detalles de la película -->
           <div class="movie-details">
             <h4>
-              <span id="edad"><i>14+</i></span>
-              <span id="año">2024</span>
+              <span id="edad"><i>16+</i></span>
+              <span id="año">2023</span>
               <span id="duracion-horas">1h</span>
-              <span id="duracion-minutos">53min</span>
+              <span id="duracion-minutos">44min</span>
             </h4>
           </div>
         </div>
         <!-- Sección de género de película -->
-        <div id="genero" class="genre-section" data-genre-ids="3,8"></div>
+        <div id="genero" class="genre-section" data-genre-ids="3,11"></div>
         <!-- Descripción de la película -->
         <div id="descripcion" class="movie-description">
           <p>
-            Tres chicos crean a un amigo imaginario, Ricky Stanicky, para
-            justificar su comportamiento inmaduro. Veinte años después, siguen
-            usándolo como excusa para todo, pero, cuando sus esposas les exigen
-            que se lo presenten, tienen que contratar a un actor que lo
-            interprete. No obstante, el actor se toma demasiado en serio el
-            papel y los hombres terminan arrepintiéndose de haber inventado a
-            Ricky.
+            Bea y Ben, antiguos compañeros de universidad cuya mutua atracción
+            inicial se tornó asco, se encuentran inesperadamente juntos en una
+            boda en Australia y fingen ser la pareja perfecta para mantener las
+            apariencias.
           </p>
         </div>
 
         <!-- Botones de acción -->
         <div class="movie-buttons">
-          <a id="video1" href="go:rickystan"
+          <a id="video1" href="go:todos-tigo"
             ><ion-icon name="play"></ion-icon>Ver Ahora</a
           >
-          <a id="video2" href="//ok.ru/videoembed/7302325865191?autoplay=1">
+          <a
+            id="video2"
+            href="https://ok.ru/videoembed/6814552885822?autoplay=1"
+          >
             <ion-icon name="play"></ion-icon>Ver Ahora opc. 2
           </a>
         </div>
@@ -1326,23 +1324,18 @@
           "Si quieres ver el video y muchos más, descarga la app desde aquí: " +
           url;
 
-        // Verificar si el navegador admite la Web Share API
-        if (navigator.share) {
+        // Verificar si el navegador del usuario es Android
+        if (/Android/.test(navigator.userAgent)) {
+          // Intentar abrir la aplicación de compartir nativa de Android
           navigator
-            .share({
-              title: "Título del enlace",
-              text: mensaje,
-              url: url,
-            })
-            .then(() => {
-              console.log("Enlace compartido con éxito");
-            })
-            .catch((error) => {
-              console.error("Error al compartir enlace:", error);
-            });
+            .share({ url: url, text: mensaje })
+            .then(() => console.log("Enlace compartido con éxito"))
+            .catch((error) =>
+              console.error("Error al compartir enlace:", error)
+            );
         } else {
-          // Si la Web Share API no está disponible, proporcionar una alternativa
-          alert("La Web Share API no está disponible en este dispositivo.");
+          // Si no es un dispositivo Android, proporcionar un mensaje de aviso
+          alert("Esta función solo está disponible en dispositivos Android.");
         }
       }
     </script>
@@ -1442,6 +1435,8 @@
 
         // Obtenemos el URL del cover desde el valor del input hidden
         let coverUrl = document.getElementById("cover-url").value;
+        // Obtenemos el URL del cover desde el valor del input hidden
+        let coverUrl2 = document.getElementById("cover-url-2").value;
 
         // Obtenemos el nombre de la página desde el valor del input hidden
         let paginaNombre = document.getElementById("pagina-nombre").value;
@@ -1455,6 +1450,7 @@
           favoritos.push({
             id: idUnico,
             coverUrl: coverUrl,
+            coverUrl2: coverUrl2,
             paginaNombre: paginaNombre,
           });
 
@@ -1468,6 +1464,7 @@
           console.log("Película agregada a favoritos:", {
             id: idUnico,
             coverUrl: coverUrl,
+            coverUrl2: coverUrl2,
             paginaNombre: paginaNombre,
           });
         } else {
@@ -1706,9 +1703,9 @@
             divIcon.style.backgroundSize = "cover";
             divIcon.style.backgroundPosition = "center";
             divIcon.style.borderRadius = "50%";
-            divIcon.style.width = "30px"; // Nuevo tamaño
-            divIcon.style.height = "30px"; // Nuevo tamaño
-            divIcon.style.marginTop = "calc(1.25em - 10px)"; // Alinear con los demás iconos
+            divIcon.style.width = "27px"; // Nuevo tamaño
+            divIcon.style.height = "27px"; // Nuevo tamaño
+            divIcon.style.marginTop = "calc(1.25em - 21px)"; // Alinear con los demás iconos
             icon.parentNode.replaceChild(divIcon, icon);
           });
         }

@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <title>Generado por Loshelsistem 1.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
     <style>
       .ubuntu-regular {
         font-family: "Ubuntu", sans-serif;
@@ -148,8 +155,8 @@
         position: absolute;
         top: 8px;
         right: 8px;
-        width: 56px;
-        height: 46px;
+        width: 5%;
+
         z-index: 1001;
       }
 
@@ -382,7 +389,359 @@
         position: relative;
         bottom: 15px;
       }
-      @media only screen and (max-width: 700px) {
+      @media only screen and (max-width: 360px) {
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        #logo {
+          width: 10%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 20px;
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+        }
+        .movie-details h4 span {
+          margin-right: 15px;
+          font-size: 14px;
+        }
+        #movie-content {
+          margin-top: 96%;
+          padding: 8px;
+          transition: margin-top 0.5s ease;
+        }
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 16px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 20px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 530px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        .compartir {
+          left: 14px;
+          bottom: 465px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 400px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 17px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+      }
+      @media only screen and (min-width: 361px) and (max-width: 384px) {
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        #logo {
+          width: 10%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 20px;
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+        }
+        .movie-details h4 span {
+          margin-right: 15px;
+          font-size: 14px;
+        }
+        #movie-content {
+          margin-top: 94%;
+          padding: 8px;
+          transition: margin-top 0.5s ease;
+        }
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 16px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 20px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 530px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        .compartir {
+          left: 14px;
+          bottom: 465px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 400px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 17px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+      }
+
+      @media only screen and (min-width: 385px) and (max-width: 700px) {
         /* Mueve el sidebar a la parte inferior en modo horizontal */
         .description {
           display: none; /* Oculta la descripción en pantallas pequeñas */
@@ -536,9 +895,85 @@
         }
       }
 
-      /* Estilos para pantallas de televisión HD */
-      @media only screen and (min-width: 480px) and (max-width: 720px) {
+      /* Estilos para pantallas de televisión SD */
+      @media only screen and (min-width: 480px) and (max-width: 767px) {
         /* Agrega estilos adicionales según sea necesario */
+        #movie-content > * {
+          margin-bottom: 3px;
+        }
+        .movie-title-text {
+          margin-top: 5px;
+
+          font-size: 22px;
+        }
+        #movie-content {
+          margin-top: 30px;
+
+          padding: 10px;
+        }
+        p {
+          font-size: 10px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 10px 0 0;
+          text-align: justify;
+        }
+        .movie-rating {
+          font-size: large;
+        }
+        .movie-description {
+          max-width: 375px;
+        }
+        .movie-details h4 span {
+          margin-right: 7px;
+          font-size: 11px;
+        }
+        .genre-section {
+          font-size: 14px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 7px 10px;
+
+          font-size: 12px;
+        }
+        .donar-button a {
+          width: 105px;
+          height: 33px;
+
+          font-size: 12px;
+        }
+        #content {
+          margin-left: 50px;
+
+          width: calc(100% - 50px);
+        }
+        .menu-icon {
+          width: 25px;
+          height: 20px;
+        }
+        .button-aditional {
+          left: 5px;
+          top: 13px;
+        }
+        .add-button a {
+          width: 30px;
+          height: 30px;
+
+          line-height: 40px;
+
+          font-size: 24px;
+        }
+        .add-button a span {
+          font-size: 9px;
+        }
+        .donar-button {
+          left: 82px;
+        }
+        .movie-title {
+          max-width: 290px;
+        }
+
         #sidebar {
           width: 50px;
         }
@@ -561,12 +996,76 @@
         }
       }
       /* Estilos para pantallas de televisión HD */
-      @media only screen and (min-width: 768px) and (max-width: 1365px) {
+      @media only screen and (min-width: 768px) and (max-width: 1280px) {
         /* Agrega estilos adicionales según sea necesario */
+        .movie-title {
+          max-width: 250px;
+        }
+        #movie-content > * {
+          margin-bottom: 5px;
+        }
+        .movie-details h4 span {
+          margin-right: 5px;
+        }
+        .movie-details-and-rating {
+          width: 50%;
+        }
+        p {
+          font-size: 14px;
+
+          margin: 10px 0 0;
+        }
+        #movie-content {
+          margin-top: 40px;
+
+          padding: 15px;
+        }
+        .genre-section {
+          font-size: 19px;
+        }
+
+        .movie-buttons {
+          margin-top: 10px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 7px 12px;
+
+          margin-right: 18px;
+        }
+        .donar-button {
+          left: 87px;
+          bottom: 6px;
+          padding: 4px;
+        }
+        .button-aditional {
+          left: 24px;
+          top: 15px;
+        }
+        .add-button a {
+          width: 35px;
+          height: 35px;
+
+          line-height: 43px;
+
+          font-size: 20px;
+        }
+        #content {
+          margin-left: 60px;
+
+          width: calc(100% - 60px);
+        }
+        #sidebar {
+          width: 60px;
+        }
+        .movie-description {
+          max-width: 440px;
+          line-height: 1.05;
+        }
       }
 
       /* Estilos para pantallas de televisión Full HD */
-      @media only screen and (min-width: 1366px) and (max-width: 1920px) {
+      @media only screen and (min-width: 1281px) and (max-width: 1920px) {
         /* Agrega estilos adicionales según sea necesario */
         .movie-title {
           max-width: 650px;
@@ -625,22 +1124,22 @@
       <a href="editarusuario.html" id="enlace1">
         <ion-icon name="person-circle" class="menu-icon"></ion-icon>
       </a>
-      <a href="enlace2.html" id="enlace2">
+      <a href="../editarusuario.html" id="enlace2">
         <ion-icon name="search" class="menu-icon"></ion-icon>
       </a>
-      <a href="index.html" id="enlace3">
+      <a href="../index.html" id="enlace3">
         <ion-icon name="home" class="menu-icon"></ion-icon>
       </a>
-      <a href="enlace4.html" id="enlace4">
+      <a href="../peliculas.html" id="enlace4">
         <ion-icon name="film" class="menu-icon"></ion-icon>
       </a>
-      <a href="enlace5.html" id="enlace5">
+      <a href="../series.html" id="enlace5">
         <ion-icon name="albums" class="menu-icon"></ion-icon>
       </a>
-      <a href="enlace6.html" id="enlace6">
+      <a href="../tv.html" id="enlace6">
         <ion-icon name="tv" class="menu-icon"></ion-icon>
       </a>
-      <a href="enlace7.html" id="enlace7">
+      <a href="../donar.html" id="enlace7">
         <ion-icon name="cafe" class="menu-icon"></ion-icon>
       </a>
     </div>
@@ -649,31 +1148,31 @@
     <div id="bottom-menu" class="hidden">
       <ul>
         <li>
-          <a href="peliculas.html" title="Películas">
+          <a href="../peliculas.html" title="Películas">
             <ion-icon name="film" class="menu-icon"></ion-icon>
             <span class="menu-title">Pelís</span>
           </a>
         </li>
         <li>
-          <a href="series.html" title="Álbumes">
+          <a href="../series.html" title="Álbumes">
             <ion-icon name="albums" class="menu-icon"></ion-icon>
             <span class="menu-title">Series</span>
           </a>
         </li>
         <li>
-          <a href="index.html" title="Inicio">
+          <a href="../index.html" title="Inicio">
             <ion-icon name="home" class="menu-icon"></ion-icon>
             <span class="menu-title">Inicio</span>
           </a>
         </li>
         <li>
-          <a href="tv.html" title="Programas de TV">
+          <a href="../tv.html" title="Programas de TV">
             <ion-icon name="tv" class="menu-icon"></ion-icon>
             <span class="menu-title">TV</span>
           </a>
         </li>
         <li>
-          <a href="editarusuario.html" title="Editar Usuario">
+          <a href="../editarusuario.html" title="Editar Usuario">
             <ion-icon name="person-circle" class="menu-icon"></ion-icon>
             <span class="menu-title">Tú</span>
           </a>
@@ -686,21 +1185,44 @@
     <!-- Contenido principal -->
     <div id="content">
       <!-- Campo oculto para almacenar el ID de la película -->
-      <input type="hidden" id="ID_pelicula" value="P-011">
+      <input type="hidden" id="ID_pelicula" value="P-011" />
       <!-- Campo oculto para almacenar el cover de la película -->
-      <input type="hidden" id="cover-url" name="cover-url" value="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
-      <input type="hidden" id="cover-url-2" name="cover-url-2" value="https://image.tmdb.org/t/p/w500/mm1M6CoN2qLy8BpnrmYEVToQHJR.jpg">
-      <input type="hidden" id="pagina-nombre" name="pagina-nombre" value="P-011-3-8-Pobrescriaturas.html">
+      <input
+        type="hidden"
+        id="cover-url"
+        name="cover-url"
+        value="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg"
+      />
+      <input
+        type="hidden"
+        id="cover-url-2"
+        name="cover-url-2"
+        value="https://image.tmdb.org/t/p/w500/mm1M6CoN2qLy8BpnrmYEVToQHJR.jpg"
+      />
+      <input
+        type="hidden"
+        id="pagina-nombre"
+        name="pagina-nombre"
+        value="P-011-3-8-Pobrescriaturas.html"
+      />
 
       <!-- Sección para el fondo del cuerpo -->
-      <div id="background-section" data-background-url="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"></div>
+      <div
+        id="background-section"
+        data-background-url="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
+      ></div>
 
       <!-- Logo -->
-      <img id="logo" src="logo001.png" alt="Logo">
+      <img id="logo" src="logo001.png" alt="Logo" />
       <!-- Sección de contenido de película -->
       <div id="movie-content">
         <!-- Título de la película (imagen) -->
-        <img id="movie-title-image" src="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png" alt="Título de la Película" class="movie-title">
+        <img
+          id="movie-title-image"
+          src="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
+          alt="Título de la Película"
+          class="movie-title"
+        />
         <!-- Título de la película (texto) -->
         <h2 id="movie-title-text" class="movie-title-text">Pobres criaturas</h2>
         <!-- Sección de puntuación y detalles de película -->
@@ -723,12 +1245,23 @@
         <!-- Sección de género de película -->
         <div id="genero" class="genre-section" data-genre-ids="3,8"></div>
         <!-- Descripción de la película -->
-        <div id="descripcion" class="movie-description"><p>El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad.</p></div>
+        <div id="descripcion" class="movie-description">
+          <p>
+            El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su
+            lado. Sin embargo, ella huye en compañía de un abogado porque quiere
+            recorrer el mundo, sedienta de deseo de igualdad y libertad.
+          </p>
+        </div>
 
         <!-- Botones de acción -->
         <div class="movie-buttons">
-          <a id="video1" href="go:pobrcria"><ion-icon name="play"></ion-icon>Ver Ahora</a>
-          <a id="video2" href="https://ok.ru/videoembed/7265557088999?autoplay=1">
+          <a id="video1" href="go:pobrcria"
+            ><ion-icon name="play"></ion-icon>Ver Ahora</a
+          >
+          <a
+            id="video2"
+            href="https://ok.ru/videoembed/7265557088999?autoplay=1"
+          >
             <ion-icon name="play"></ion-icon>Ver Ahora opc. 2
           </a>
         </div>
@@ -964,13 +1497,35 @@
           // Verifica si el elemento bottomMenu existe
           if (bottomMenu) {
             // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
-            if (window.innerWidth <= 700) {
+            if (window.innerWidth <= 700 && window.innerWidth > 390) {
               if (newIcon === closeIcon) {
                 bottomMenu.style.display = "flex";
                 localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
                 // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
                 if (movieContent) {
                   movieContent.style.marginTop = "100%";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              } else {
+                bottomMenu.style.display = "none";
+                localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+                // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado
+                if (movieContent) {
+                  movieContent.style.marginTop = "";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              }
+            } else if (window.innerWidth <= 390) {
+              if (newIcon === closeIcon) {
+                bottomMenu.style.display = "flex";
+                localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+                // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
+                if (movieContent) {
+                  movieContent.style.marginTop = "70%";
                 }
                 if (addButton) {
                   addButton.style.bottom = "";
@@ -998,7 +1553,11 @@
         // Verifica si hay un estado guardado para el menú inferior al cargar la página
         const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
         if (bottomMenuVisible === "true") {
-          if (window.innerWidth <= 700 && bottomMenu) {
+          if (
+            window.innerWidth <= 700 &&
+            window.innerWidth > 390 &&
+            bottomMenu
+          ) {
             bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
             menuToggle
               .querySelector("ion-icon")
@@ -1006,6 +1565,18 @@
             // Aplica estilos cuando el menú inferior está activo al cargar la página
             if (movieContent) {
               movieContent.style.marginTop = "100%";
+            }
+            if (addButton) {
+              addButton.style.bottom = "";
+            }
+          } else if (window.innerWidth <= 390 && bottomMenu) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+            // Aplica estilos cuando el menú inferior está activo al cargar la página
+            if (movieContent) {
+              movieContent.style.marginTop = "70%";
             }
             if (addButton) {
               addButton.style.bottom = "";
@@ -1027,7 +1598,7 @@
           const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
           if (bottomMenuVisible === "true") {
             // Si la pantalla es pequeña, muestra el menú
-            if (window.innerWidth <= 700) {
+            if (window.innerWidth <= 700 && window.innerWidth > 390) {
               bottomMenu.style.display = "flex";
               if (menuToggle) {
                 menuToggle
@@ -1037,6 +1608,20 @@
               // Aplica estilos cuando el menú inferior está activo al cambiar el tamaño de la pantalla
               if (movieContent) {
                 movieContent.style.marginTop = "100%";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            } else if (window.innerWidth <= 390) {
+              bottomMenu.style.display = "flex";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+              }
+              // Aplica estilos cuando el menú inferior está activo al cambiar el tamaño de la pantalla
+              if (movieContent) {
+                movieContent.style.marginTop = "70%";
               }
               if (addButton) {
                 addButton.style.bottom = "";
@@ -1060,7 +1645,14 @@
             }
           } else {
             // Si el menú estaba inactivo, ocúltalo en pantallas grandes
-            if (window.innerWidth > 700) {
+            if (window.innerWidth > 700 && bottomMenu) {
+              bottomMenu.style.display = "none";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "menu"); // Cambia el icono del botón a menu
+              }
+            } else if (window.innerWidth > 390 && bottomMenu) {
               bottomMenu.style.display = "none";
               if (menuToggle) {
                 menuToggle
@@ -1118,8 +1710,13 @@
     </script>
 
     <!-- Agrega aquí tus scripts JavaScript u otros elementos necesarios -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  
-
-</body></html>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

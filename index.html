@@ -1,368 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tu Web</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
       rel="stylesheet"
     />
-    <title>Tu Web</title>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-.ubuntu-regular {
-        font-family: "Ubuntu", sans-serif;
-        font-weight: 400;
-        font-style: normal;
+      /* Estilos generales */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Ubuntu";
+        overflow-x: hidden; /* Para evitar la barra de desplazamiento horizontal */
       }
 
-      .ubuntu-bold {
-        font-family: "Ubuntu", sans-serif;
-        font-weight: 700;
-        font-style: normal;
+      /* Estilo del fondo con degradado */
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 0px);
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 1) 6%,
+          /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+            /* Termina el degradado al 30% desde abajo */
+        );
+        z-index: -1;
       }
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            overflow: hidden;
-        }
 
-        .data {
-    position: fixed;
-    top: 0;
-    left: 70px;
-    height: 420px;
-    width: calc(100% - 70px);
-    background-image: linear-gradient(transparent 35%, #121212 100px), url('enlace_para_fondo_del_data.jpg'); /* Gradiente de transparente a #121212 de 0 a 100px */
-    background-size: cover; /* Ajusta la imagen para cubrir todo el div */
-    background-position: top; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    z-index: 1000;
-    overflow: hidden; /* Ocultar el degradado que se desborda */
-    display: flex; /* Cambiar a flex para alinear en columna */
-    align-items: flex-start; /* Alinear los elementos en la parte superior */
-    padding-left: 20px; /* Añadir un pequeño espacio a la izquierda */
-transition: opacity 0.3s ease-in-out; /* Agregar una transición suave de opacidad */
-}
+      /* Estilo de la imagen de ejemplo */
+      #example-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Para que la imagen cubra todo el contenedor */
+        z-index: -2; /* Detrás del fondo */
+      }
 
+      /* Estilo del sidebar */
+      #sidebar {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        /* Cambia el color de fondo aquí */
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-    .data-content {
-    display: flex; /* Cambiar a flex para alinear en columna */
-    flex-direction: column; /* Alinear los elementos en columna */
-    margin-top: 30px; /* Espacio desde la parte superior */
-margin-left: 20px;
-}
+        z-index: 1000;
+      }
 
+      #sidebar a:hover {
+        background-color: transparent; /* Cambio a transparente al posicionar el mouse */
+        color: #fff; /* Cambio de color del texto al posicionar el mouse */
+      }
 
-
-.image-container {
-    margin-bottom: 10px; /* Espacio entre la imagen y el título */
-}
-.image-container img{
-    width: 300px;
-}
-.title {
-    margin: 0;
-color: white;
-}
-
-.additional-info {
-    margin: 5px 0; /* Espacio entre la información adicional y la descripción */
-color: white;
-}
-
-.description {
-    width: 450px; /* Ancho fijo */
-    text-align: justify; /* Alinear justificado */
-color: white;
-}
-        header {
-            height: 50px; /* Altura del encabezado */
-            background-color: #121212;
-    color: #121212; /* Color del texto del encabezado */
-            position: fixed; /* Fijar el encabezado en la parte superior */
-            top: 420px; /* Alinear el encabezado después de la sección data */
-            left: 95px; /* Dejar espacio para el sidebar */
-            width: calc(100% - 125px); /* Ancho total menos el espacio del sidebar */
-            z-index: 1000; /* Z-index alto para que esté encima de otros elementos */
-        }
-
-        #main {
-    overflow-y: scroll; /* Agregar scrollbar solo en dirección vertical */
-    height: calc(100vh - 470px); /* Altura del área principal, restando la altura del header y la sección data */
-    margin-top: 470px; /* Espacio para el header y la sección data */
-    margin-left: 70px; /* Dejar espacio para el sidebar */
-    z-index: 999; /* Aseguramos que el contenido del div main esté por encima de div data */
-}
-#main::-webkit-scrollbar {
-    width: 10px; /* Ancho de la barra de desplazamiento */
-}
-
-#main::-webkit-scrollbar-track {
-    background-color: #222; /* Color de fondo de la barra de desplazamiento */
-}
-
-#main::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color del "pulgón" de la barra de desplazamiento */
-    border-radius: 5px; /* Borde redondeado */
-}
-
-#main::-webkit-scrollbar-thumb:hover {
-    background-color: #666; /* Color del "pulgón" al pasar el cursor */
-}
-
-        header::-webkit-scrollbar {
-            display: none; /* Oculta la barra de desplazamiento en Chrome, Safari y Opera */
-        }
-
-        .quick-search-buttons {
-            display: flex;
-            height: 100%;
-            overflow-x: auto; /* Agregar desplazamiento horizontal */
-        }
-.quick-search-wrapper {
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    margin: 5px; /* Espacio inferior para evitar que los botones se superpongan al contenido */
-}
-       .card-container a{
-        text-decoration: none;
-       }
-
-        .quick-search-button:last-child {
-            margin-right: 0;
-        }
-
-        .quick-search-buttons a {
-    display: inline-block;
-    padding: 10px 10px; /* Ajusta el relleno vertical */
-    margin-right: 10px; /* Margen derecho entre botones */
-    background-color: #454555;
-    color: #fff;
-    border-radius: 25px; /* Bordos redondeados */
-    text-decoration: none;
-    transition: background-color 0.3s;
-    text-align: center; /* Centrar texto */
-    white-space: nowrap; /* Evita que el texto se desplace a la siguiente línea */
-}
-
-        .scroll-btn:hover {
-            background-color: #777;
-        }
-.scroll-left-btn,
-.scroll-right-btn {
-    border: none;
-    color: transparent; /* Hacemos el color transparente por defecto */
-    font-size: 24px;
-    padding: 0;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    transition: color 0.3s; /* Transición suave para el color */
-    height: 50px;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%; /* Bordes redondeados */
-    border: 2px solid transparent; /* Borde transparente por defecto */
-    background-color: transparent; /* Fondo transparente por defecto */
-}
-
-.scroll-left-btn {
-    left: -35px;
-}
-
-.scroll-right-btn {
-    right: -35px;
-}
-
-
-
-.scroll-left-btn:hover,
-.scroll-right-btn:hover {
-    color: #ffffff; /* Cambio de color al pasar el cursor */
-    
-}
-
-        .quick-search-buttons a:hover {
-            background-color: #777; /* Cambiar color de fondo al pasar el mouse */
-        }
-.quick-search-buttons::-webkit-scrollbar {
-            display: none; /* Ocultar la barra de desplazamiento horizontal de WebKit */
-        }
-        #sidebar {
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 70px;
-    position: fixed;
-    background-color: #121212; /* Cambia el color de fondo aquí */
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  
-    z-index: 1000;
-}
-
-
-        
-
-        #sidebar a:hover {
-            background-color: transparent; /* Cambio a transparente al posicionar el mouse */
-            color: #fff; /* Cambio de color del texto al posicionar el mouse */
-        }
-
-        .menu-icon {
+      .menu-icon {
         width: 30px;
         height: 40px;
         border-radius: 0;
         position: relative;
-        color: #ffffff0a;
+        color: #ffffff7a;
         margin-bottom: 20px;
         transition: color 0.3s;
       }
-.menu-icon:hover {
-    color: #818181; /* Cambio de color al pasar el cursor */
-}
+      .menu-icon:hover {
+        color: #818181; /* Cambio de color al pasar el cursor */
+      }
 
-        #sidebar:hover {
-            opacity: 1;
-        }
-/* Línea horizontal */
-        .menu-icon::after {
-    content: '';
-    position: absolute;
-    top: 38px; /* Establece un margen superior para la línea */
-    left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
-    transform: translateX(-50%); /* Centra la línea horizontalmente */
-    width: 0;
-    height: 2px;
-    background-color: red; /* Color de la línea */
-    transition: width 0.3s ease; /* Transición suave para el ancho */
-}
+      #sidebar:hover {
+        opacity: 1;
+      }
+      /* Línea horizontal */
+      .menu-icon::after {
+        content: "";
+        position: absolute;
+        top: 38px; /* Establece un margen superior para la línea */
+        left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
+        transform: translateX(-50%); /* Centra la línea horizontalmente */
+        width: 0;
+        height: 2px;
+        background-color: red; /* Color de la línea */
+        transition: width 0.3s ease; /* Transición suave para el ancho */
+      }
 
-        /* Cuando se posicione el mouse sobre el enlace */
-        .menu-icon:hover::after {
-    width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
-}
+      /* Cuando se posicione el mouse sobre el enlace */
+      .menu-icon:hover::after {
+        width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
+      }
 
-        #menu-toggle {
-            cursor: pointer;
-            position: fixed;
-            z-index: 3;
-            top: 10px;
-            left: 15px;
-            display: none;
-        }
+      #menu-toggle {
+        cursor: pointer;
+        position: fixed;
+        z-index: 3;
+        top: 10px;
+        left: 15px;
+        display: none;
+      }
 
-        #user-icon {
-            margin-bottom: 8px;
-border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
-        }
+      #user-icon {
+        margin-bottom: 8px;
+        border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
+      }
+      /* Estilo del contenido principal */
 
-        
+      #information {
+        margin-left: 100px;
+        margin-top: 10px;
+        height: 260px;
+        margin-bottom: 40px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
 
-        .carousel {
-            margin-left: 5px; /* Ajuste para dejar espacio al sidebar */
-            overflow: hidden;
-            position: relative; /* Para posicionar los botones */
-            margin-left: 5px; /* Margen izquierdo de 5px */
-        }
+      #title-container {
+        max-width: 300px; /* Establece un ancho máximo para el título */
+        overflow: hidden; /* Oculta el contenido que excede el ancho máximo */
+      }
 
-        .carousel h3 {
-            margin: 0;
-            color: #333;
-            text-align: left;
-            padding: 20px 20px 0px; /* Añadido para separar los botones del contenido */
-        }
+      .movie-title {
+        max-width: 100%; /* Asegura que la imagen del título se ajuste al contenedor */
+        height: auto; /* Permite que la altura se ajuste automáticamente */
+      }
 
-        .card-container {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding: 0 20px; /* Añadido para separar los botones del contenido */
-    
-}
+      #movie-title-image {
+        width: 250px;
+      }
 
+      #movie-title-text {
+        width: 400px;
+        text-transform: uppercase;
+        word-wrap: break-word;
+        margin: 3px 0 3px;
+      }
 
-        .card {
-    width: 200px;
-    height: 100px;
-    background-color: #ddd;
-    margin: 10px; /* Modificado para un margen uniforme */
-    display: inline-block;
-    transition: transform 0.3s ease; /* Transición suave */
-    
-}
+      .movie-description {
+        font-size: 12px;
+        width: 300px;
+        margin: 3px 0 10px;
+        text-align: justify;
+      }
+      h4 {
+        margin: 10px 0 10px;
+      }
+      #ver-mas {
+        display: none; /*inline-block; /* Muestra el botón en pantallas pequeñas */
+        background-color: #3f51b5;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px; /* Ajusta según el redondeo deseado */
 
-.card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        cursor: pointer;
+        outline: none; /* Para quitar el contorno al hacer clic */
+        margin-bottom: 10px;
+        width: 100px;
+        height: 40px;
+      }
+      #ver-mas a {
+        font-size: 16px;
+        text-decoration: none;
+        color: #fff;
+      }
 
+      #ver-mas:hover {
+        background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
+      }
 
-        .card:hover {
-            transform: scale(1.1); /* Agrandar suavemente al pasar el cursor */
-        }
-
- .scroll-btn {
-    background-color: rgb(128 128 128 / 12%);
-    border: none;
-    color: #fff;
-    font-size: 28px;
-    padding: 0;
-    cursor: pointer;
-    position: absolute;
-    top: 63%;
-    transform: translateY(-50%);
-    z-index: 100;
-    transition: color 0.5s, background-color 0.5s;
-    height: 100px;
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-        .scroll-btn.left {
-            left: 0;
-            opacity: 0; /* Botón izquierdo inicialmente invisible */
-        }
-
-        .scroll-btn.right {
-            right: 0;
-        }
-
-.scroll-btn:hover {
-    color: #ffffff; /* Cambio de color al pasar el cursor */
-    background-color: rgba(128, 128, 128, 0.7); /* Hacer el fondo más claro */
-}
-.scroll-btn:hover:before {
-    transform: scale(1.5); /* Hacer el icono más grueso al pasar el cursor */
-}
-        .card-container:hover .scroll-btn {
-            opacity: 1; /* Mostrar botones al pasar el ratón sobre el contenedor */
-        }
-
-        .card:first-child {
-            margin-left: 20px; /* Añadido para que el primer card no quede pegado al borde del contenedor */
-        }
-        #bottom-menu {
+      /* Estilo del menú inferior (para pantallas pequeñas) */
+      #bottom-menu {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -383,954 +208,1029 @@ border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
         font-size: 14px;
         text-decoration: none;
       }
-/* Estilos por defecto */
-.ver-mas {
-  display: none; /* Inicialmente oculto */
-}
-/* Estilos para pantallas pequeñas como tablet y móviles */
-@media only screen and (max-width: 384px) {
-  /* Mueve el sidebar a la parte inferior en modo horizontal */
-  .description {
-    display: none; /* Oculta la descripción en pantallas pequeñas */
-  }
+      /* estilos para los botones de busqueda rapida*/
+      .quick-search-buttons {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer y Edge */
+      }
+      .quick-search-buttons::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+      .quick-search-wrapper {
+        display: flex;
+        align-items: center;
+        overflow-x: auto;
+        margin: 5px;
+        margin-left: 7%;
+      }
 
-  .ver-mas {
-    display: inline-block; /* Muestra el botón en pantallas pequeñas */
-    background-color: #3f51b5;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 20px; /* Ajusta según el redondeo deseado */
-    
-    cursor: pointer;
-    outline: none; /* Para quitar el contorno al hacer clic */
-    margin-bottom: 10px;
-    width: 100px;
-    height: 40px;
-}
-.ver-mas a{
-    font-size: 16px;
-    text-decoration: none;
-    color: #fff;
-}
+      .quick-search-buttons a {
+        display: inline-block;
+        padding: 6px 14px;
+        margin-right: 10px;
+        font-size: 14px;
+        background-color: #454555;
+        color: #fff;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+      }
 
+      .quick-search-buttons a:hover {
+        background-color: #777;
+      }
+      /* Estilos para los botones de desplazamiento del carrusel dentro del contenedor de búsqueda rápida */
+      .quick-search-wrapper .scroll-left-btn,
+      .quick-search-wrapper .scroll-right-btn {
+        background-color: rgba(128, 128, 128, 0.12);
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        padding: 0;
+        cursor: pointer;
+        transition: color 0.5s, background-color 0.5s;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
 
-.ver-mas:hover {
-    background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
-}
-.data {    
-    top: 0; 
-    height: 420px;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 1000;
-    overflow: hidden;
-    display: flex; /* Cambiado a flex */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: flex-end;
-    padding-left: 0px;
-    align-content: center;
-}
-/* Quita el margen izquierdo de los elementos y los posiciona como columna */
-#main, header, .data {
-    margin-left: 0;
-    left: 0px;
-  }
-  .image-container img{
-    width: 250px;
-  }
-  #main, header{
-    margin-top: 480px;
-  }
- #main {
-height: calc(100vh - 485px);
-}
-header{
-    margin-top: 10px;
-  }
-  .data, header {
-    width: 100%;
-  }
-.title {
-    text-align: center;
-}
-.data-content {  
-    margin-top: 0px;
-    margin-left: 0px;
-align-items: center;
-width: 100%;
-}
-/* Ajuste del botón de menú */
-  #menu-toggle {
-    display: block; /* Hace visible el botón en pantallas pequeñas */
-    position: fixed;
-    z-index: 1001; /* Lo coloca adelante del div data */
-    top: 10px;
-    left: 15px;
-    background-color: transparent; /* Fondo transparente */
-    border: none; /* Sin borde */
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  /* Estilos para el ícono del menú */
-  #menu-toggle ion-icon {
-    font-size: 40px; /* Tamaño del ícono */
-    color: white; /* Color del ícono */
-  }
-  /* Ajuste del sidebar */
-  #sidebar {
-    display: none; /* Oculta el sidebar en pantallas pequeñas */
-  }
+        z-index: 1;
+      }
 
-  /* Ajuste del contenido principal */
-  #content {
-    margin-bottom: 50px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
-  }
+      .quick-search-wrapper .scroll-left-btn {
+        left: 0;
+      }
 
-  /* Estilos para el menú inferior */
-  #bottom-menu {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background-color: #222;
-          padding-top: 10px;
-          padding-bottom: 0px;
-          justify-content: space-around;
-          align-items: center;
-          z-index: 1000;
-        }
-        #bottom-menu ul {
-          display: flex;
-          flex-direction: row;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-        }
+      .quick-search-wrapper .scroll-right-btn {
+        right: 0;
+      }
 
-        #bottom-menu ul li {
-          padding: 17px;
-        }
+      .quick-search-wrapper .scroll-left-btn:hover,
+      .quick-search-wrapper .scroll-right-btn:hover {
+        background-color: rgba(128, 128, 128, 0.7);
+      }
 
-  #bottom-menu .menu-icon {
-    color: white; /* Cambia el color de los iconos a blanco */
-  }
+      /* Mostrar botones de desplazamiento al pasar el mouse sobre el contenedor de búsqueda rápida */
+      .quick-search-wrapper:hover .scroll-left-btn,
+      .quick-search-wrapper:hover .scroll-right-btn {
+        opacity: 1;
+      }
 
-  .menu-icon::after {
-    display: none; /* Oculta la línea horizontal en pantallas móviles */
-  }
-.menu-icon.selected {
-    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-  }
+      /* Estilos para el carusel de peliculas */
+      .carousel-container {
+        width: calc(100% - 20px); /* Ajustar según sea necesario */
+        height: 170px; /* Ajustar según sea necesario */
+        overflow-x: auto; /* Scroll horizontal */
+        overflow-y: auto; /* Scroll vertical */
+        margin-left: 7%; /* Alineación con el div de información */
+      }
 
-  .menu-icon {
-          width: 20px;
-          height: 20px;
-          margin-bottom: 0px;
-          transition: color 0.3s;
-        }
+      .carousel {
+        overflow: hidden;
+        position: relative; /* Para posicionar los botones */
+        margin-right: 32px;
+      }
+      .carousel h3 {
+        margin: 0;
+        color: #ffffff;
+        text-align: left;
+        padding: 5px 20px 0px;
+      }
 
-  
-  .card-container {
-    padding: 0;
-  }
-  .card:first-child {
-    margin-left: 0px;
-  }
-  .card {
-    width: 163px;
-    height: 95px;
-  }
+      .card-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 0px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .card-container::-webkit-scrollbar {
+        display: none;
+      }
+      .scroll-btn {
+        background-color: rgb(128 128 128 / 12%);
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        padding: 0;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        transition: color 0.5s, background-color 0.5s;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .scroll-btn.left {
+        left: 0;
+        opacity: 0;
+      }
 
-  /* Define el estilo del scrollbar */
-  #main::-webkit-scrollbar {
-    width: 6px; /* Ancho del scrollbar */
-  }
+      .scroll-btn.right {
+        right: 0;
+      }
 
-  #main::-webkit-scrollbar-thumb {
-    background-color: transparent; /* Color del scrollbar */
-    border-radius: 6px; /* Radio de borde del scrollbar */
-  }
+      .scroll-btn:hover {
+        color: #ffffff;
+        background-color: rgba(128, 128, 128, 0.7);
+      }
 
-  #main::-webkit-scrollbar-track {
-    background-color: transparent; /* Color de fondo del scrollbar */
-  }
-#bottom-menu .menu-icon[name="home"] {
-    color: #4c65b1; /* Cambia el color del icono de película a rojo */
-}
-}
+      .scroll-btn:hover:before {
+        transform: scale(1.5);
+      }
 
-/* Estilos para pantallas pequeñas como tablet y móviles */
-@media only screen and (min-width: 385px) and (max-width: 600px) {
-  /* Mueve el sidebar a la parte inferior en modo horizontal */
-  .description {
-    display: none; /* Oculta la descripción en pantallas pequeñas */
-  }
+      .card {
+        width: 200px;
+        height: 100px;
+        background-color: #ddd;
+        margin: 10px; /* Modificado para un margen uniforme */
+        display: inline-block;
+        transition: transform 0.3s ease; /* Transición suave */
+      }
 
-  .ver-mas {
-    display: inline-block; /* Muestra el botón en pantallas pequeñas */
-    background-color: #3f51b5;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 20px; /* Ajusta según el redondeo deseado */
-    
-    cursor: pointer;
-    outline: none; /* Para quitar el contorno al hacer clic */
-    margin-bottom: 10px;
-    width: 100px;
-    height: 40px;
-}
-.ver-mas a{
-    font-size: 16px;
-    text-decoration: none;
-    color: #fff;
-}
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
+      .card:hover {
+        transform: scale(1.1);
+      }
 
-.ver-mas:hover {
-    background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
-}
-.data {    
-    top: 0; 
-    height: 500px;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 1000;
-    overflow: hidden;
-    display: flex; /* Cambiado a flex */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: flex-end;
-    padding-left: 0px;
-    align-content: center;
-}
+      .card-container:hover .scroll-btn {
+        opacity: 1;
+      }
 
-.data-content {  
-    margin-top: 0px;
-    margin-left: 0px;
-align-items: center;
-width: 100%;
-}
-/* Ajuste del botón de menú */
-  #menu-toggle {
-    display: block; /* Hace visible el botón en pantallas pequeñas */
-    position: fixed;
-    z-index: 1001; /* Lo coloca adelante del div data */
-    top: 10px;
-    left: 15px;
-    background-color: transparent; /* Fondo transparente */
-    border: none; /* Sin borde */
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  /* Estilos para el ícono del menú */
-  #menu-toggle ion-icon {
-    font-size: 40px; /* Tamaño del ícono */
-    color: white; /* Color del ícono */
-  }
-  /* Ajuste del sidebar */
-  #sidebar {
-    display: none; /* Oculta el sidebar en pantallas pequeñas */
-  }
-
-  /* Ajuste del contenido principal */
-  #content {
-    margin-bottom: 50px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
-  }
-
-  /* Estilos para el menú inferior */
-  #bottom-menu {
-    right: 0;
-    text-align: center;
-    position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background-color: #222;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          justify-content: space-around;
-          align-items: center;
-          z-index: 1000;
-  }
-
-  #bottom-menu ul {
-    display: flex;
-          flex-direction: row;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-  }
-
-  #bottom-menu ul li {
-          padding: 25px;
-        }
-
-  #bottom-menu .menu-icon {
-    color: white; /* Cambia el color de los iconos a blanco */
-  }
-
-  .menu-icon::after {
-    display: none; /* Oculta la línea horizontal en pantallas móviles */
-  }
-.menu-icon.selected {
-    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-  }
-
-.menu-icon{
-    width: 20px;
-          height: 20px;
-          margin-bottom: 0px;
-          transition: color 0.3s; /* posicionar al centro los botones del menu inferior */
-  }
-
-  /* Quita el margen izquierdo de los elementos y los posiciona como columna */
-  #main, header, .data {
-    margin-left: 0;
-    left: 0px;
-  }
-  #main, header{
-    margin-top: 550px;
-  }
- #main {
-height: calc(100vh - 550px);
-}
-header{
-    margin-top: 90px;
-  }
-  .data, header {
-    width: 100%;
-  }
-.title {
-    text-align: center;
-}
-  .card-container {
-    padding: 0;
-  }
-  .card:first-child {
-    margin-left: 0px;
-  }
-  .card {
-    width: 163px;
-    height: 95px;
-  }
-
-  /* Define el estilo del scrollbar */
-  #main::-webkit-scrollbar {
-    width: 6px; /* Ancho del scrollbar */
-  }
-
-  #main::-webkit-scrollbar-thumb {
-    background-color: transparent; /* Color del scrollbar */
-    border-radius: 6px; /* Radio de borde del scrollbar */
-  }
-
-  #main::-webkit-scrollbar-track {
-    background-color: transparent; /* Color de fondo del scrollbar */
-  }
-#bottom-menu .menu-icon[name="home"] {
-    color: #4c65b1; /* Cambia el color del icono de película a rojo */
-}
-}
-
-/* Estilos para pantallas de televisión HD */
-    @media only screen and (min-width: 601px) and (max-width: 730px) {
-        /* Agrega estilos adicionales según sea necesario */
-        /* Agrega estilos para informacion de cabecera */
-        .image-container img {
-    width: 250px;
-}
-.description {
-    font-size: 11px;
-    font-family: "Ubuntu";
-    
-}
-#sidebar {
-    width: 50px;
-	}
-.data {
-    position: fixed;
-    top: 0;
-    left: 50px;
-    height: 300px;
-    width: calc(100% - 50px);
-    padding-left: 0px;
-	}
-.data-content {
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    margin-left: 17px;
-}
-.description {
-    width: 320px;  
-}
-header {
-height: 30px;
-    left: 67px;
-    top: 300px;
-    width: calc(100% - 89px);
-}
-#main {
-    
-    height: calc(100vh - 332px);
-    margin-top: 330px;
-    margin-left: 30px;    
-	}
-.quick-search-buttons a {
-    font-size: 11px;
-    
-    padding: 5px 10px;
-    margin-right: 8px;
-	}
-.scroll-left-btn, .scroll-right-btn {   
-    font-size: 19px;
-    top: 50%;
-    transform: translateY(-65%);  
-    height: 30px;
-    width: 30px;
-	}
-.scroll-left-btn {
-    left: -25px;
-	}
-.scroll-right-btn {
-    right: -25px;
-	}
-    }
-    /* Estilos para pantallas de televisión HD */
-    @media only screen and (min-width: 962px) and (max-width: 1279px) {
-        /* Agrega estilos adicionales según sea necesario */
-        .data {
-    
-    height: 335px;
-    width: calc(100% - 87px);
-    
-}
-header {
-    
-    top: 335px;
-    
-    
-    
-    }
-    #main {
-    
-    height: calc(100vh - 389px);
-    margin-top: 385px;
-    
-}
-.description {
-    
-    font-size: 12px;
-}
-  }
-    /* Estilos para pantallas de televisión Full HD */
-    @media only screen and (min-width: 1366px) and (max-width: 1920px) {
-        /* Agrega estilos adicionales según sea necesario */
-    }
-
-    /* Estilos para pantallas de televisión 4K */
-    @media only screen and (min-width: 1921px) {
-        /* Agrega estilos adicionales según sea necesario */
-    }
+      .card:first-child {
+        margin-left: 20px;
+      }
     </style>
-</head>
-<body>
-
-<div class="data">
-    <div class="data-content">
-        <div class="image-container">
-            <img src="ejemplo.jpg" alt="Imagen de ejemplo">
-        </div>
-        <h2 class="title">Text Title</h2>
-        <p class="additional-info">Información adicional</p>
-        <p class="description">Descripción del texto que se alinea justificadamente con un ancho de 450px y alto automático según la cantidad de palabras. Descripción del texto que se alinea justificadamente con un ancho de 450px y alto automático según la cantidad de palabras.</p>
-        <button class="ver-mas">
-            <a href="#" target="_self">Ver +</a>
-        </button>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <a href="editarusuario.html" id="enlace1">
+        <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+      </a>
+      <a href="buscar.html" id="enlace2">
+        <ion-icon name="search" class="menu-icon"></ion-icon>
+      </a>
+      <a href="index.html" id="enlace3">
+        <ion-icon name="home" class="menu-icon"></ion-icon>
+      </a>
+      <a href="peliculas.html" id="enlace4">
+        <ion-icon name="film" class="menu-icon"></ion-icon>
+      </a>
+      <a href="series.html" id="enlace5">
+        <ion-icon name="albums" class="menu-icon"></ion-icon>
+      </a>
+      <a href="tv.html" id="enlace6">
+        <ion-icon name="tv" class="menu-icon"></ion-icon>
+      </a>
+      <a href="donar.html" id="enlace6">
+        <ion-icon name="cafe" class="menu-icon"></ion-icon>
+      </a>
     </div>
-</div>
+    <!-- Menú inferior -->
+    <div id="bottom-menu" class="hidden">
+      <ul>
+        <li>
+          <a href="peliculas.html" title="Películas">
+            <ion-icon name="film" class="menu-icon"></ion-icon>
+            <span class="menu-title">Pelís</span>
+          </a>
+        </li>
+        <li>
+          <a href="series.html" title="Álbumes">
+            <ion-icon name="albums" class="menu-icon"></ion-icon>
+            <span class="menu-title">Series</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html" title="Inicio">
+            <ion-icon name="home" class="menu-icon"></ion-icon>
+            <span class="menu-title">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="tv.html" title="Programas de TV">
+            <ion-icon name="tv" class="menu-icon"></ion-icon>
+            <span class="menu-title">TV</span>
+          </a>
+        </li>
+        <li>
+          <a id="usericon" href="editarusuario.html" title="Editar Usuario">
+            <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+            <span class="menu-title">Tú</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button id="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!-- Informacion de cada card -->
 
-<header>
+    <div id="information">
+      <div id="title-container">
+        <!-- Título de la Película -->
+        <img
+          src="..."
+          alt="Título de la Película"
+          id="movie-title-image"
+          class="movie-title"
+        />
+      </div>
+
+      <!-- Título de la película (texto) -->
+      <h2 id="movie-title-text" class="movie-title-text">
+        Titulo de la pelicula
+      </h2>
+      <!-- Puntuación de la película -->
+      <div id="puntuacion" class="movie-rating" data-puntuacion="0">
+        <span class="stars"></span>
+      </div>
+      <!-- Detalles de la película -->
+      <div class="movie-details">
+        <h4>
+          <span id="edad"><i>12</i></span>
+          <span id="año">2022</span>
+          <span id="duracion-horas">1h</span>
+          <span id="duracion-minutos">34min</span>
+        </h4>
+      </div>
+      <!-- Género de película -->
+      <div id="genero" class="genre-section"></div>
+      <!-- Descripción de la película -->
+      <!--<div id="descripcion" class="movie-description">
+        La ciudad de Nueva York se llena de balas cuando John Wick, un exasesino
+        a sueldo, regresa de su retiro para enfrentar a los mafiosos rusos,
+        liderados por Viggo Tarasov, que destruyeron todo aquello que él amaba y
+        pusieron precio a su cabeza.
+      </div>-->
+      <!-- Botón Ver más -->
+      <button id="ver-mas">Ver más</button>
+    </div>
+
+    <!-- Carrusel de búsqueda rápida -->
     <div class="quick-search-wrapper">
-<button class="scroll-left-btn"><ion-icon name="chevron-back"></ion-icon></button>
-        <div class="quick-search-buttons">
-            <a href="#carousel1">Populares</a>
-            <a href="#carousel2">Recomendada</a>
-            <a href="#carousel3">Series</a>
-            <a href="#carousel4">Zombie</a>
-            <a href="#carousel5">Acción</a>
-            <a href="#carousel1">Comedia</a>
-            <a href="#carousel2">Familiares</a>
-            <a href="#carousel3">Terror</a>
-            <a href="#carousel4">Series netflix</a>
-            <a href="#carousel5">Series Disney</a>
-<a href="#carousel5">Ganadoras de Oscar</a>
-<a href="#carousel5">Series Animadas</a>
-        </div>
-        
-        <button class="scroll-right-btn"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+      <button class="scroll-left-btn">
+        <ion-icon name="chevron-back"></ion-icon>
+      </button>
+      <div class="quick-search-buttons">
+        <a href="#carousel1">Populares</a>
+        <a href="#carousel2">Recomendada</a>
+        <a href="#carousel3">Series</a>
+        <a href="#carousel4">Zombie</a>
+        <a href="#carousel5">Acción</a>
+        <a href="#carousel1">Comedia</a>
+        <a href="#carousel2">Familiares</a>
+        <a href="#carousel3">Terror</a>
+        <a href="#carousel4">Series netflix</a>
+        <a href="#carousel5">Series Disney</a>
+        <a href="#carousel5">Ganadoras de Oscar</a>
+        <a href="#carousel5">Desastres naturales</a>
+        <a href="#carousel5">Animaciones</a>
+        <a href="#carousel5">Recien subidas</a>
+        <a href="#carousel5">Adolescentes</a>
+        <a href="#carousel5">Marvel</a>
+        <a href="#carousel5">Clasicas</a>
+      </div>
+
+      <button class="scroll-right-btn">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
     </div>
 
-
-</header>
-
-<div id="sidebar">
-    <a href="editarusuario.html" id="enlace1">
-    <ion-icon name="person-circle" class="menu-icon"></ion-icon>
-</a>
-<a href="buscar.html" id="enlace2">
-    <ion-icon name="search" class="menu-icon"></ion-icon>
-</a>
-<a href="index.html" id="enlace3">
-    <ion-icon name="home" class="menu-icon"></ion-icon>
-</a>
-<a href="peliculas.html" id="enlace4">
-    <ion-icon name="film" class="menu-icon"></ion-icon>
-</a>
-<a href="series.html" id="enlace5">
-    <ion-icon name="albums" class="menu-icon"></ion-icon>
-</a>
-<a href="tv.html" id="enlace6">
-    <ion-icon name="tv" class="menu-icon"></ion-icon>
-</a>
-<a href="donar.html" id="enlace6">
-    <ion-icon name="cafe" class="menu-icon"></ion-icon>
-</a>
-
-</div>
-<!-- Menú inferior -->
-<div id="bottom-menu" class="hidden">
-    <ul>
-      <li>
-        <a href="peliculas.html" title="Películas">
-          <ion-icon name="film" class="menu-icon"></ion-icon>
-          <span class="menu-title">Pelís</span>
-        </a>
-      </li>
-      <li>
-        <a href="series.html" title="Álbumes">
-          <ion-icon name="albums" class="menu-icon"></ion-icon>
-          <span class="menu-title">Series</span>
-        </a>
-      </li>
-      <li>
-        <a href="index.html" title="Inicio">
-          <ion-icon name="home" class="menu-icon"></ion-icon>
-          <span class="menu-title">Inicio</span>
-        </a>
-      </li>
-      <li>
-        <a href="tv.html" title="Programas de TV">
-          <ion-icon name="tv" class="menu-icon"></ion-icon>
-          <span class="menu-title">TV</span>
-        </a>
-      </li>
-      <li>
-        <a id="usericon" href="editarusuario.html" title="Editar Usuario">
-          <ion-icon name="person-circle" class="menu-icon"></ion-icon>
-          <span class="menu-title">Tú</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <button id="menu-toggle">
-    <ion-icon name="menu"></ion-icon>
-  </button>
-
-<div id="main">
-    <div class="carousel" id="carousel1">
+    <!-- Carruseles de películas -->
+    <div id="carousel-container" class="carousel-container">
+      <div class="carousel" id="carousel1">
         <h3>Populares 2024</h3>
-        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
+        <button class="scroll-btn left">
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
         <div class="card-container">
-            <!-- 10 Cards -->
-            <a class="card-link" href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html">
-              <div class="card" data-pelicula="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html" data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas" data-additional-info="13+ | 2024 | 2h 3min | Ciencia Ficción" data-description="Mientras los rebeldes se preparan para combatir las despiadadas fuerzas del Mundo Madre, se forjan lazos inquebrantables, emergen héroes... y nacen leyendas." data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg" data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko" data-cover-img="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg">
-                <img src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html">
-              <div class="card" data-pelicula="./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html" data-text-title="Imaginario: Juguete diabólico" data-additional-info="14+ | 2024 | 1h 45min | Terror/Suspenso" data-description="Jessica se muda al hogar en el que creció con su familia. Allí, su pequeña hijastra, Alice, encuentra un osito de peluche llamado Chauncey. Poco a poco, el comportamiento de Alice se va volviendo perturbador, por lo que Alice sospecha del juguete." data-bg="https://images.thedirect.com/media/article_full/imaginary-filmmakers-reveal-similar-horror-movies-inspirations-exclusive.jpg" data-title-img="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/imaginary/images/regions/us/updates/tt.png" data-cover-img="https://www.bizcochito.es/Films/Movil/tt26658104.webp">
-                <img src="https://www.bizcochito.es/Films/Movil/tt26658104.webp" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-007-5-1-Hipnosis_Armainvisible.html">
-              <div class="card" data-pelicula="./peliculas/P-007-5-1-Hipnosis_Armainvisible.html" data-text-title="Hipnosis: Arma invisible" data-additional-info="14+ | 2023 | 1h 34min | Suspenso/Acción" data-description="El detective Danny Rourke busca a su hija desaparecida. Mientras investiga una serie de asesinatos desconcertantes, Rourke descubre, con la ayuda de una psíquica, un programa secreto del Gobierno que podría conducirlo hasta su hija." data-bg="https://www.citicinemas.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fciticinemas-store%2FMovie-1625%2Fbanner%2FoB9RJ9D7Oowt%2FHIPNO.jpg&w=1920&q=75" data-title-img="https://image.tmdb.org/t/p/original/cXrY3E9QcTzgDSCh1styJc96lZe.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/692feb76603b5f1d8db1ab460313ad65fbb16c68a221ac10437e66f3515f7b25.png">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/692feb76603b5f1d8db1ab460313ad65fbb16c68a221ac10437e66f3515f7b25.png" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
-              <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Ricky Stanicky" data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía" data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky." data-bg="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html">
-              <div class="card" data-pelicula="./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html" data-text-title="Cómo conquistar a Billy Walsh" data-additional-info="16+ | 2024 | 1h 40min | Comedia/Romance" data-description="Los mejores amigos Archie y Amelia están enamorados. Por desgracia, no el uno del otro. Archie quiere a Amelia, pero ella sólo tiene ojos para el nuevo estudiante americano, Billy Walsh. Archie decide ayudarla a conquistar al chico de sus sueños." data-bg="https://is1-ssl.mzstatic.com/image/thumb/xmDg311eJ9UM29lQsEG3bA/1200x675mf.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/97c71ae7bb94a8b3cef5dd2e9abd617af75b087cd8a69f479869be1f9dfabb9a.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/a43d68d2f3b159fbca2ca6336fcae97f80572e95f392e0995983ab0f4d5687c1.jpg">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/a43d68d2f3b159fbca2ca6336fcae97f80572e95f392e0995983ab0f4d5687c1.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-016-1-5-Codigo8parteII.html">
-              <div class="card" data-pelicula="./peliculas/P-016-1-5-Codigo8parteII.html" data-text-title="Codigo 8 parte II" data-additional-info="16+ | 2024 | 1h 40min | Acción/Suspenso" data-description="En una ciudad donde las personas con poderes son vigiladas y oprimidas, un ex criminal debe recurrir a un narcotraficante al que desprecia para proteger a un adolescente de un policía corrupto." data-bg="https://laestatuilla.com/wp-content/uploads/2024/02/codigo-8-renegados-parte-ii.jpg" data-title-img="https://dnm.nflximg.net/api/v6/S4oi7EPZbv2UEPaukW54OORa0S8/AAAABX_6SXO4vS8x9OiYECwS6dajcL4aRYiH37xcxF80LVPVW39EO0iGFE3CbX4wydtnXirBmSdTuoYuC1rLL14I2Lu-hPrHmzokiAE.png" data-cover-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSLmLKCp4-hDm0wkQRoP0lyhwmTQ5Maow1bG5RK0UcupXXOMzFYmjvLgWuHh0cOA4hheY0x6BhLMjXtwsqRh2CiLRf9OkhU_UMa5WhSFL03_uxz4CmFVDhFICHYLkMoNowCTop3kgQibuCClAi0zZHYjT_KBQ4u4OqFHfPZM5p3e-2NLWiyYruv6gaEjzqmwymoqf2C0fsyyiFugra0-Dad_dMzuOM-htzvFkP68svHbMu0K2da7uo9GLm0UqLtTPc0kbFpjOFfPDazr6pOxLBiUjY3wUOVxGM_tYL-xRJOKDq-KVlMhQXLEtWU.jpg?r=214">
-                <img src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSLmLKCp4-hDm0wkQRoP0lyhwmTQ5Maow1bG5RK0UcupXXOMzFYmjvLgWuHh0cOA4hheY0x6BhLMjXtwsqRh2CiLRf9OkhU_UMa5WhSFL03_uxz4CmFVDhFICHYLkMoNowCTop3kgQibuCClAi0zZHYjT_KBQ4u4OqFHfPZM5p3e-2NLWiyYruv6gaEjzqmwymoqf2C0fsyyiFugra0-Dad_dMzuOM-htzvFkP68svHbMu0K2da7uo9GLm0UqLtTPc0kbFpjOFfPDazr6pOxLBiUjY3wUOVxGM_tYL-xRJOKDq-KVlMhQXLEtWU.jpg?r=214" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html">
-              <div class="card" data-pelicula="./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html" data-text-title="Ghostbusters: apocalipsis fantasma" data-additional-info="12+ | 2024 | 1h 56min | Comedia/Fantasía" data-description="La familia Spengler regresa a la famosa estación de bomberos de la ciudad de Nueva York con los cazafantasmas originales. Cuando un antiguo artefacto desata una fuerza maligna, los cazafantasmas nuevos y antiguos deben unirse para proteger el mundo." data-bg="https://img.optimalcdn.com/www.posta.com.mx/2024/03/c00abe9db559b10230781d96ce97d3d56077e7f0/GHOSTBUSTERS_APOLIPSIS_FANTASMA.webp" data-title-img="https://admin.cineflick.com.gt/wp-content/uploads/2024/04/dgfb6j0-cb71151a-b8ed-4ca3-aac3-9587c7058e3e.png" data-cover-img="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg">
-                <img src="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html">
-              <div class="card" data-pelicula="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html" data-text-title="la liga de la justicia crisis en las tierras infinitas parte 2" data-additional-info="14+ | 2024 | 1h 33min | Acción/Aventura/Superhéroes" data-description="Un ejército interminable de demonios de las sombras busca destruir todas las realidades. Los secretos de Monitor y Supergirl amenazan con destruir la última defensa de los héroes." data-bg="https://image.tmdb.org/t/p/original/tBmJCH9llj1Q9jDOS7vGWnl7GVj.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/82/01/3e/82013e96-863f-be14-d6e4-8fe126997bf5/tff2880198494073204467.png/480x180.webp" data-cover-img="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg">
-                <img src="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-021-3-Elpajarolocosevadecampamento.html">
-              <div class="card" data-pelicula="./peliculas/P-021-3-Elpajarolocosevadecampamento.html" data-text-title="El pájaro loco se va de campamento" data-additional-info="07+ | 2024 | 1h 40min | Comedia" data-description="Después de ser expulsado del bosque, Woody cree haber encontrado un hogar permanente en el Campamento Woo Hoo, hasta que un inspector amenaza con cerrar el campamento." data-bg="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABYU7139iFky2exXOgxjsUpu0GIdmF4Z9fBhssWUXUb7OpoyTKk036MVAQX3kDCpTnAUmUUnlS-vz-h2Sxwxb0UM9LjrFKavOEQV8.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/tx1O544a9T7n8Z_G12qaboulQQE/AAAABS1rNm_a7knzVjlrsceveY33w1_-vo1wcwU2VZURCM3HXH6d9zwR3yzaoTQO3gtC_MTEKoNY9GpQekv-nHpx5aE8cpBhUkyEI1l_QKcZxAVvsZWMf6uLnm-QvNK7p8qhXiSNWPxC4LAJvIIVPBoVMrEvjZdALAkom67A7Af62LQrvWKlFEgN2Q.png" data-cover-img="https://i.ytimg.com/vi/x5LLP8NxC9c/maxresdefault.jpg">
-                <img src="https://i.ytimg.com/vi/x5LLP8NxC9c/maxresdefault.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-022-2-ArthurtheKing.html">
-              <div class="card" data-pelicula="./peliculas/P-022-2-ArthurtheKing.html" data-text-title="Arthur the King" data-additional-info="10+ | 2024 | 1h 48min | Aventura" data-description="Michael Light y su equipo compiten en un campeonato mundial de aventuras extremas. En el momento de mayor desesperación, cuando las fuerzas y la moral parecen haber desaparecido, surge un perro que los hará reinterpretar el significado de victoria." data-bg="https://deadline.com/wp-content/uploads/2023/11/atk-01912rc.jpeg" data-title-img="https://bestfriends.org/sites/default/files/media-icon/ATK_TT.png" data-cover-img="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/arthur-the-king/images/regions/us/header.jpg">
-                <img src="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/arthur-the-king/images/regions/us/header.jpg" alt="Card">
-              </div>
-            </a>
+          <!-- Tarjetas de películas para el primer carusel -->
+          <!-- 10 Cards -->
+          <a class="card-link" href="./peliculas/P-022-2-ArthurtheKing.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-022-2-ArthurtheKing.html"
+              data-text-title="Arthur the King"
+              data-puntuacion=""
+              data-edad="10+"
+              data-año="2024"
+              data-duracion-horas="2024"
+              data-duarcion
+              minutos="48min"
+              data-genero="Aventura"
+              data-bg="https://deadline.com/wp-content/uploads/2023/11/atk-01912rc.jpeg"
+              data-title-img="https://bestfriends.org/sites/default/files/media-icon/ATK_TT.png"
+            >
+              <img
+                src="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/arthur-the-king/images/regions/us/header.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a
+            class="card-link"
+            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="Rebel Moon (Parte dos): La guerrera que deja marcas"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
+            >
+              <img
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
         </div>
-        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-    </div>
-<div class="carousel" id="carousel2">
-        <h3>Recomendada</h3>
-        <button class="scroll-btn left"><ion-icon name="chevron-back"></button>
+        <button class="scroll-btn right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="carousel" id="carousel2">
+        <h3>Recomendadas</h3>
+        <button class="scroll-btn left">
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
         <div class="card-container">
-            <!-- 10 Cards -->
-            <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
-              <div class="card" data-pelicula="./peliculas/P-002-1-5-JohnWick.html" data-text-title="John Wick" data-additional-info="14+ | 2014 | 1h 41min | Acción/Suspenso" data-description="La ciudad de Nueva York se llena de balas cuando John Wick, un exasesino a sueldo, regresa de su retiro para enfrentar a los mafiosos rusos, liderados por Viggo Tarasov, que destruyeron todo aquello que él amaba y pusieron precio a su cabeza." data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg" data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-003-9-8-Constantine.html">
-              <div class="card" data-pelicula="./peliculas/P-003-9-8-Constantine.html" data-text-title="Constantine" data-additional-info="13+ | 2005 | 2h 1min | Terror/Fantasía" data-description="Un hombre que puede ver demonios ayuda a una mujer policía escéptica a investigar la misteriosa muerte de su hermana gemela." data-bg="https://images-2.rakuten.tv/storage/snapshot/shot/5e5f73a2-836e-4add-bba6-984484df9777-snapshot-1590658118.jpeg" data-title-img="https://picfiles.alphacoders.com/595/59547.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/ae295e840707af4f3f88e0c41a2b69b7d2c65b13c99da30537341487b6a1d800.jpg">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/ae295e840707af4f3f88e0c41a2b69b7d2c65b13c99da30537341487b6a1d800.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-005-5-Siberia.html">
-              <div class="card" data-pelicula="./peliculas/P-005-5-Siberia.html" data-text-title="Siberia" data-additional-info="16+ | 2018 | 1h 44min | Suspenso" data-description="Lucas Hill, un comerciante de diamantes estadounidense, viaja a Siberia en busca de un socio que ha desaparecido, pero terminará dejando todos sus objetivos a un lado cuando una mujer se cruza en su destino." data-bg="https://static01.nyt.com/images/2018/07/13/arts/13siberia1/siberia1-superJumbo.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABezp_lBzVF7uaKIbIb2wfnCwpfBYSyDaG1HSJIzjG7KzgrhH-WcWqfrSv4_-bG6aqY-9XQeDhwW8VNgitdZABEdxTfjohnPZlyt8ppRhp5dl.png" data-cover-img="https://resizing.flixster.com/yQZR0HQGutj-igG7xAdIlQSUncM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15595606_v_h8_ab.jpg">
-                <img src="https://resizing.flixster.com/yQZR0HQGutj-igG7xAdIlQSUncM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15595606_v_h8_ab.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-006-3-4-Labodademiex.html">
-              <div class="card" data-pelicula="./peliculas/P-006-3-4-Labodademiex.html" data-text-title="La boda de mi ex" data-additional-info="14+ | 2018 | 1h 26min | Comedia/Drama" data-description="Los invitados a la boda, Frank y Lindsay, descubren que tienen mucho en común: no les cae bien ni la novia, ni el novio, ni les gusta la ceremonia, ni ellos mismos, ni los demás." data-bg="https://es.web.img3.acsta.net/pictures/18/07/05/14/42/0391084.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABV1b2Wwxw7JmSOd1KQ4MgIXR6IxEdsLYi1yIBkbruZ6_onI_UGHxnKYUADR8_CQeIhOt4vjbmzPCv-vxjN_DPTA02-mJvNjCpwNDTkl1-E-q.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/3f5815ac5e551083ccade3fad296519ba965ef2ffbdbd299da876e9c41d046d8.png">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/3f5815ac5e551083ccade3fad296519ba965ef2ffbdbd299da876e9c41d046d8.png" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
-              <div class="card" data-pelicula="./peliculas/P-010-3-8-RickyStanicky.html" data-text-title="Ricky Stanicky" data-additional-info="14+ | 2024 | 1h 53min | Comedia/Fantasía" data-description="Tres chicos crean a un amigo imaginario, Ricky Stanicky, para justificar su comportamiento inmaduro. Veinte años después, siguen usándolo como excusa para todo, pero, cuando sus esposas les exigen que se lo presenten, tienen que contratar a un actor que lo interprete. No obstante, el actor se toma demasiado en serio el papel y los hombres terminan arrepintiéndose de haber inventado a Ricky." data-bg="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg" data-title-img="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/6947d22fb97a03ced1f41dac93423f8713b6d01df7fabdb2dabf8c4950b45ac6.png" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-011-3-8-Pobrescriaturas.html">
-              <div class="card" data-pelicula="./peliculas/P-011-3-8-Pobrescriaturas.html" data-text-title="Pobres criaturas" data-additional-info="18+ | 2023 | 2h 21min | Comedia/Fantasía" data-description="El Dr. Godwin resucita a la bella Bella Baxter para que aprenda a su lado. Sin embargo, ella huye en compañía de un abogado porque quiere recorrer el mundo, sedienta de deseo de igualdad y libertad." data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg" data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png" data-cover-img="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg">
-                <img src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-012-4-Siempreatulado.html">
-              <div class="card" data-pelicula="./peliculas/P-012-4-Siempreatulado.html" data-text-title="Siempre a tu lado" data-additional-info="10+ | 2009 | 1h 33min | Drama" data-description="Un perro fiel llamado Hachiko acompaña cada mañana a su amo a la estación de tren y regresa cada tarde para darle la bienvenida después del trabajo. Sin embargo, esta rutina se ve rota por una desgracia." data-bg="https://s3.amazonaws.com/rtvc-assets-parrilla.rtvc.gov.co/s3fs-public/siempre-a-tu-lado-hachiko-p1.jpg" data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABTp5APPcT01f1QC_nlVDQU-JgFjXi4LBM_8qcgylDKZTpY4MAI34pHR5ekySzqPlU47NbOD7Jkm2kL2tQSMglm0UeMDAjRYRm1NfmBf-n12b.png" data-cover-img="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg">
-                <img src="https://img.static-ottera.com/prod/run/video/thumbnails/widescreen/siempre_a_tu_lado_hachiko_thumbnail_16x9_widescreen_es.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-013-3-1-Planfamiliar.html">
-              <div class="card" data-pelicula="./peliculas/P-013-3-1-Planfamiliar.html" data-text-title="Plan familiar" data-additional-info="14+ | 2023 | 1h 59min | Comedia/Acción" data-description="Dan Morgan es un marido devoto, un padre cariñoso, un buen trabajador y también un exasesino. Y, cuando su pasado alcanza su presente, se ve obligado a embarcar a su ingenua familia en un viaje por carretera sin igual." data-bg="https://i0.wp.com/www.themoviedb.org/t/p/w1280/r9oTasGQofvkQY5vlUXglneF64Z.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/9BiWiFQu0mBEfNodXKnRhg/480x180.webp" data-cover-img="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg">
-                <img src="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html">
-              <div class="card" data-pelicula="./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html" data-text-title="Soltera, casada, viuda, divorciada" data-additional-info="16+ | 2023 | 1h 49min | Comedia" data-description="Unas amigas, tras la muerte del esposo de una de ellas, deciden realizar un viaje por carretera hacia la ciudad de Pacasmayo, Trujillo, el lugar donde vivieron los mejores momentos de sus vidas durante la infancia." data-bg="https://portal.andina.pe/EDPfotografia3/Thumbnail/2022/07/13/000883079W.jpg" data-title-img="https://occ-0-1822-3418.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABStwOyOr0rVzik1lS-lpZJ5wvkRWjld10uUlLMQdXQIhTa-WmzuLoRUfSX-VVrjYzpNR3Mm1XKkkOkBv9pF4xRe__zpaaMuWKtgNbESy2nx0.png" data-cover-img="https://image.tmdb.org/t/p/w780/ouzWgXKgSnBOIdvWAjbRSTvPiqp.jpg">
-                <img src="https://image.tmdb.org/t/p/w780/ouzWgXKgSnBOIdvWAjbRSTvPiqp.jpg" alt="Card">
-              </div>
-            </a>
-<a class="card-link" href="./peliculas/P-019-1-3-Nochesinpaz.html">
-              <div class="card" data-pelicula="./peliculas/P-019-1-3-Nochesinpaz.html" data-text-title=" Noche sin paz" data-additional-info="16+ | 2022 | 1h 52min | Acción/Comedia" data-description="Un grupo de mercenarios de élite irrumpe en la casa de una familia rica en la noche de Navidad. Lo que no esperaban encontrar era al enemigo más improbable, y sin embargo violento, posible: Santa Claus." data-bg="https://images.reporteindigo.com/wp-content/uploads/2022/12/noche-sin-paz-pelicula.jpg" data-title-img="https://is1-ssl.mzstatic.com/image/thumb/4Wbf3aqP2GxoLyArpZw93Q/480x180.webp" data-cover-img="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg">
-                <img src="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg" alt="Card">
-              </div>
-            </a>
+          <!-- Tarjetas de películas para el segundo carusel -->
+          <!-- 10 Cards -->
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
+          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion=""
+              data-edad=""
+              data-año=""
+              data-duracion-horas=""
+              data-duarcion
+              minutos=""
+              data-genero="/"
+              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
+              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+            >
+              <img
+                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                alt="Card"
+              />
+            </div>
+          </a>
         </div>
-        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+        <button class="scroll-btn right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Agregar más caruseles según sea necesario -->
     </div>
-<div class="carousel" id="carousel3">
-        <h3>Carrusel 3</h3>
-        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
-        <div class="card-container">
-            <!-- 10 Cards -->
-            <div class="card">Card 1</div>
-            <div class="card">Card 2</div>
-            <div class="card">Card 3</div>
-            <div class="card">Card 4</div>
-            <div class="card">Card 5</div>
-            <div class="card">Card 6</div>
-            <div class="card">Card 7</div>
-            <div class="card">Card 8</div>
-            <div class="card">Card 9</div>
-            <div class="card">Card 10</div>
-        </div>
-        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-    </div>
-<div class="carousel" id="carousel4">
-        <h3>Carrusel 4</h3>
-        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
-        <div class="card-container">
-            <!-- 10 Cards -->
-            <div class="card">Card 1</div>
-            <div class="card">Card 2</div>
-            <div class="card">Card 3</div>
-            <div class="card">Card 4</div>
-            <div class="card">Card 5</div>
-            <div class="card">Card 6</div>
-            <div class="card">Card 7</div>
-            <div class="card">Card 8</div>
-            <div class="card">Card 9</div>
-            <div class="card">Card 10</div>
-        </div>
-        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-    </div>
-<div class="carousel" id="carousel5">
-        <h3>Carrusel 5</h3>
-        <button class="scroll-btn left"><ion-icon name="chevron-back"></ion-icon></button>
-        <div class="card-container">
-            <!-- 10 Cards -->
-            <div class="card">Card 1</div>
-            <div class="card">Card 2</div>
-            <div class="card">Card 3</div>
-            <div class="card">Card 4</div>
-            <div class="card">Card 5</div>
-            <div class="card">Card 6</div>
-            <div class="card">Card 7</div>
-            <div class="card">Card 8</div>
-            <div class="card">Card 9</div>
-            <div class="card">Card 10</div>
-        </div>
-        <button class="scroll-btn right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-    </div>
-    <!-- Otros carruseles aquí -->
-</div>
 
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const carousels = document.querySelectorAll('.carousel');
+    <!-- Fondo con degradado -->
+    <div id="background"></div>
 
-            carousels.forEach(carousel => {
-                const cardContainer = carousel.querySelector('.card-container');
-                const leftBtn = carousel.querySelector('.scroll-btn.left');
-                const rightBtn = carousel.querySelector('.scroll-btn.right');
+    <!-- Imagen de ejemplo -->
+    <img src="" alt="Ejemplo" id="example-image" />
+    <script>
+      $(document).ready(function () {
+        const quickSearchWrapper = $(".quick-search-buttons");
+        const scrollLeftBtn = $(".scroll-left-btn");
+        const scrollRightBtn = $(".scroll-right-btn");
 
-                cardContainer.addEventListener('scroll', () => {
-                    // Mostrar u ocultar botones según la posición del scroll
-                    leftBtn.style.opacity = cardContainer.scrollLeft > 0 ? '1' : '0';
-                    rightBtn.style.display = cardContainer.scrollLeft < cardContainer.scrollWidth - cardContainer.clientWidth ? 'block' : 'none';
-                });
-
-                leftBtn.addEventListener('click', () => {
-                    cardContainer.scrollBy({ left: -cardContainer.offsetWidth, behavior: 'smooth' });
-                });
-
-                rightBtn.addEventListener('click', () => {
-                    cardContainer.scrollBy({ left: cardContainer.offsetWidth, behavior: 'smooth' });
-                });
-            });
-
-            const quickSearchWrapper = document.querySelector('.quick-search-buttons');
-            const scrollLeftBtn = document.querySelector('.scroll-left-btn');
-            const scrollRightBtn = document.querySelector('.scroll-right-btn');
-
-            let animationFrameId;
-
-            function smoothScrollToLeft() {
-                if (quickSearchWrapper.scrollLeft > 0) {
-                    quickSearchWrapper.scrollLeft -= 10; // Ajusta la velocidad de desplazamiento cambiando este valor
-                    animationFrameId = requestAnimationFrame(smoothScrollToLeft);
-                }
-            }
-
-            function smoothScrollToRight() {
-                if (quickSearchWrapper.scrollLeft < quickSearchWrapper.scrollWidth - quickSearchWrapper.offsetWidth) {
-                    quickSearchWrapper.scrollLeft += 10; // Ajusta la velocidad de desplazamiento cambiando este valor
-                    animationFrameId = requestAnimationFrame(smoothScrollToRight);
-                }
-            }
-
-            scrollLeftBtn.addEventListener('click', function() {
-                cancelAnimationFrame(animationFrameId);
-                smoothScrollToLeft();
-            });
-
-            scrollRightBtn.addEventListener('click', function() {
-                cancelAnimationFrame(animationFrameId);
-                smoothScrollToRight();
-            });
-
-            const cards = document.querySelectorAll('.card');
-            const dataContent = document.querySelector('.data-content');
-            const title = dataContent.querySelector('.title');
-            const additionalInfo = dataContent.querySelector('.additional-info');
-            const description = dataContent.querySelector('.description');
-            const imageContainer = dataContent.querySelector('.image-container img');
-            const dataBg = document.querySelector('.data');
-            const verMasBtn = document.querySelector('.ver-mas a');
-            
-
-
-            let currentCard = null; // Variable para almacenar el card actual
-
-            function mostrarDatosIniciales() {
-                // Obtener el primer card del primer carrusel
-                const primerCarousel = document.querySelector('.carousel');
-                const primerCard = primerCarousel.querySelector('.card');
-
-                // Obtener los datos del primer card
-                const textTitle = primerCard.getAttribute('data-text-title');
-                const additionalInfoText = primerCard.getAttribute('data-additional-info');
-                const descriptionText = primerCard.getAttribute('data-description');
-                const backgroundImage = primerCard.getAttribute('data-bg');
-                const titleImage = primerCard.getAttribute('data-title-img');
-
-
-                // Actualizar los datos del div .data con los del primer card
-                title.textContent = textTitle;
-                additionalInfo.textContent = additionalInfoText;
-                description.textContent = descriptionText;
-                imageContainer.src = titleImage;
-                dataBg.style.backgroundImage = `linear-gradient(transparent 70%, #121212 420px), url('${backgroundImage}')`; // Solo establecer la imagen de fondo sin gradiente
-                dataBg.style.display = 'flex'; // Mostrar el div .data
-	        // Obtener el enlace del primer card y establecerlo en el botón "Ver más"
-    const peliculaUrl = primerCard.getAttribute('data-pelicula');
-    verMasBtn.setAttribute('href', peliculaUrl);
-
-                // Almacenar el primer card como el actual
-                currentCard = primerCard;
-            }
-
-            // Llamar a la función para mostrar datos iniciales al iniciar la página
-            mostrarDatosIniciales();
-
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    // Obtener los datos del card actual
-                    const textTitle = card.getAttribute('data-text-title');
-                    const additionalInfoText = card.getAttribute('data-additional-info');
-                    const descriptionText = card.getAttribute('data-description');
-                    const backgroundImage = card.getAttribute('data-bg');
-                    const titleImage = card.getAttribute('data-title-img');
-      
-
-                    // Actualizar los datos del div .data
-                    title.textContent = textTitle;
-                    additionalInfo.textContent = additionalInfoText;
-                    description.textContent = descriptionText;
-                    imageContainer.src = titleImage;
-                    dataBg.style.backgroundImage = `linear-gradient(transparent 70%, #121212 420px), url('${backgroundImage}')`; // Solo establecer la imagen de fondo sin gradiente
-                    dataBg.style.display = 'flex'; // Mostrar el div .data
-		   // Obtener y actualizar el enlace del card actual en el botón "Ver más"
-           const peliculaUrl = card.getAttribute('data-pelicula');
-        verMasBtn.setAttribute('href', peliculaUrl);
-
-                    // Almacenar el card actual
-                    currentCard = card;
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    // Ocultar el div .data al salir del card solo si el puntero no está sobre otro card
-                    if (currentCard !== card) {
-                        dataBg.style.display = 'none';
-                    }
-                });
-            });           
+        scrollLeftBtn.on("click", function () {
+          quickSearchWrapper.animate(
+            {
+              scrollLeft: "-=300",
+            },
+            "slow"
+          );
         });
 
-document.addEventListener("DOMContentLoaded", function() {
-  const menuToggle = document.getElementById("menu-toggle");
-  const bottomMenu = document.getElementById("bottom-menu");
+        scrollRightBtn.on("click", function () {
+          quickSearchWrapper.animate(
+            {
+              scrollLeft: "+=300",
+            },
+            "slow"
+          );
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousels = document.querySelectorAll(".carousel");
 
-  // Función para cambiar la visibilidad del menú inferior
-  function toggleBottomMenu() {
-    const currentIcon = menuToggle.querySelector("ion-icon").getAttribute("name");
-    const menuIcon = "menu";
-    const closeIcon = "close-circle";
-    const newIcon = currentIcon === menuIcon ? closeIcon : menuIcon;
+        carousels.forEach((carousel) => {
+          const cardContainer = carousel.querySelector(".card-container");
+          const leftBtn = carousel.querySelector(".scroll-btn.left");
+          const rightBtn = carousel.querySelector(".scroll-btn.right");
 
-    // Cambia el icono del botón
-    menuToggle.querySelector("ion-icon").setAttribute("name", newIcon);
+          cardContainer.addEventListener("scroll", () => {
+            // Mostrar u ocultar botones según la posición del scroll
+            leftBtn.style.opacity = cardContainer.scrollLeft > 0 ? "1" : "0";
+            rightBtn.style.opacity =
+              cardContainer.scrollLeft <
+              cardContainer.scrollWidth - cardContainer.clientWidth
+                ? "1"
+                : "0";
+          });
 
-    // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
-    if (window.innerWidth <= 700) {
-      if (newIcon === closeIcon) {
-        bottomMenu.style.display = "flex";
-        localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
-      } else {
-        bottomMenu.style.display = "none";
-        localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
-      }
-    }
-  }
+          leftBtn.addEventListener("click", () => {
+            cardContainer.scrollBy({
+              left: -cardContainer.offsetWidth,
+              behavior: "smooth",
+            });
+          });
 
-  // Agrega el evento click al botón de menú
-  menuToggle.addEventListener("click", toggleBottomMenu);
+          rightBtn.addEventListener("click", () => {
+            cardContainer.scrollBy({
+              left: cardContainer.offsetWidth,
+              behavior: "smooth",
+            });
+          });
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".card");
+        const dataContent = document.getElementById("information");
+        const titleImage = dataContent.querySelector(".movie-title");
+        const titleText = dataContent.querySelector(".movie-title-text");
+        const puntuacion = dataContent.querySelector(".movie-rating");
+        const edad = dataContent.querySelector("#edad");
+        const año = dataContent.querySelector("#año");
+        const duracionHoras = dataContent.querySelector("#duracion-horas");
+        const duracionMinutos = dataContent.querySelector("#duracion-minutos");
+        const genero = dataContent.querySelector(".genre-section");
+        const verMasBtn = dataContent.querySelector("#ver-mas");
+        const exampleImage = document.getElementById("example-image");
 
-  // Verifica si hay un estado guardado para el menú inferior al cargar la página
-  const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
-  if (bottomMenuVisible === "true") {
-    if (window.innerWidth <= 700) {
-      bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
-      menuToggle.querySelector("ion-icon").setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
-    }
-  }
-});
+        let currentCard = null; // Variable para almacenar el card actual
 
-// Evento para verificar si el tamaño de la pantalla cambia
-window.addEventListener("resize", function() {
-  const bottomMenu = document.getElementById("bottom-menu");
-  const menuToggle = document.getElementById("menu-toggle");
+        function mostrarDatosIniciales(card) {
+          // Obtener los datos del card
+          const textTitle = card.getAttribute("data-text-title");
+          const puntuacionText = card.getAttribute("data-puntuacion");
+          const edadText = card.getAttribute("data-edad");
+          const añoText = card.getAttribute("data-año");
+          const duracionHorasText = card.getAttribute("data-duracion-horas");
+          const duracionMinutosText = card.getAttribute(
+            "data-duracion-minutos"
+          );
+          const generoText = card.getAttribute("data-genero");
+          const titleImageUrl = card.getAttribute("data-title-img");
+          const verMasUrl = card.getAttribute("data-vermas");
+          const exampleImageUrl = card.getAttribute("data-bg");
 
-  // Verifica si el menú estaba activo antes de cambiar el tamaño de la pantalla
-  const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
-  if (bottomMenuVisible === "true") {
-    // Si la pantalla es pequeña, muestra el menú
-    if (window.innerWidth <= 700) {
-      bottomMenu.style.display = "flex";
-      menuToggle.querySelector("ion-icon").setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
-    } else {
-      // Si la pantalla es grande, oculta el menú
-      bottomMenu.style.display = "none";
-      menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
-      localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
-    }
-  } else {
-    // Si el menú estaba inactivo, ocúltalo en pantallas grandes
-    if (window.innerWidth > 700) {
-      bottomMenu.style.display = "none";
-      menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
-    }
-  }
-});
+          // Actualizar los datos del div de información
+          titleText.textContent = textTitle;
+          titleImage.src = titleImageUrl;
+          puntuacion.setAttribute("data-puntuacion", puntuacionText);
+          edad.textContent = edadText;
+          año.textContent = añoText;
+          duracionHoras.textContent = duracionHorasText;
+          duracionMinutos.textContent = duracionMinutosText;
+          genero.textContent = generoText;
+          verMasBtn.setAttribute("href", verMasUrl);
+          exampleImage.src = exampleImageUrl;
 
+          // Mostrar el div de información
+          dataContent.style.display = "block";
+        }
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Recuperar la imagen de perfil guardada del almacenamiento local
-    var savedProfile = localStorage.getItem('userProfile');
-    if (savedProfile) {
-        savedProfile = JSON.parse(savedProfile);
-        var profileImage = savedProfile.image;
+        // Mostrar los datos del primer card al cargar la página
+        mostrarDatosIniciales(cards[0]);
 
-        // Actualizar el icono de usuario en el sidebar
-        var sidebarIcons = document.querySelectorAll('#sidebar ion-icon[name="person-circle"]');
-        sidebarIcons.forEach(function(icon) {
+        // Mostrar el div de información cuando el puntero está dentro de él
+        dataContent.addEventListener("mouseenter", function () {
+          dataContent.style.display = "block";
+        });
+
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            currentCard = card;
+            mostrarDatosIniciales(card);
+          });
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menu-toggle");
+        const bottomMenu = document.getElementById("bottom-menu");
+
+        // Función para cambiar la visibilidad del menú inferior
+        function toggleBottomMenu() {
+          const currentIcon = menuToggle
+            .querySelector("ion-icon")
+            .getAttribute("name");
+          const menuIcon = "menu";
+          const closeIcon = "close-circle";
+          const newIcon = currentIcon === menuIcon ? closeIcon : menuIcon;
+
+          // Cambia el icono del botón
+          menuToggle.querySelector("ion-icon").setAttribute("name", newIcon);
+
+          // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
+          if (window.innerWidth <= 700) {
+            if (newIcon === closeIcon) {
+              bottomMenu.style.display = "flex";
+              localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+            } else {
+              bottomMenu.style.display = "none";
+              localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+            }
+          }
+        }
+
+        // Agrega el evento click al botón de menú
+        menuToggle.addEventListener("click", toggleBottomMenu);
+
+        // Verifica si hay un estado guardado para el menú inferior al cargar la página
+        const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+        if (bottomMenuVisible === "true") {
+          if (window.innerWidth <= 700) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+          }
+        }
+      });
+
+      // Evento para verificar si el tamaño de la pantalla cambia
+      window.addEventListener("resize", function () {
+        const bottomMenu = document.getElementById("bottom-menu");
+        const menuToggle = document.getElementById("menu-toggle");
+
+        // Verifica si el menú estaba activo antes de cambiar el tamaño de la pantalla
+        const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+        if (bottomMenuVisible === "true") {
+          // Si la pantalla es pequeña, muestra el menú
+          if (window.innerWidth <= 700) {
+            bottomMenu.style.display = "flex";
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+          } else {
+            // Si la pantalla es grande, oculta el menú
+            bottomMenu.style.display = "none";
+            menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
+            localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+          }
+        } else {
+          // Si el menú estaba inactivo, ocúltalo en pantallas grandes
+          if (window.innerWidth > 700) {
+            bottomMenu.style.display = "none";
+            menuToggle.querySelector("ion-icon").setAttribute("name", "menu"); // Cambia el icono del botón a menu
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Recuperar la imagen de perfil guardada del almacenamiento local
+        var savedProfile = localStorage.getItem("userProfile");
+        if (savedProfile) {
+          savedProfile = JSON.parse(savedProfile);
+          var profileImage = savedProfile.image;
+
+          // Actualizar el icono de usuario en el sidebar
+          var sidebarIcons = document.querySelectorAll(
+            '#sidebar ion-icon[name="person-circle"]'
+          );
+          sidebarIcons.forEach(function (icon) {
             // Reemplazar ion-icon por div
-            var divIcon = document.createElement('div');
-            divIcon.classList.add('menu-icon');
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
             divIcon.style.backgroundImage = "url('" + profileImage + "')";
             divIcon.style.backgroundSize = "cover";
             divIcon.style.backgroundPosition = "center";
@@ -1338,14 +1238,16 @@ document.addEventListener("DOMContentLoaded", function() {
             divIcon.style.width = "35px"; // Nuevo tamaño
             divIcon.style.height = "35px"; // Nuevo tamaño
             icon.parentNode.replaceChild(divIcon, icon);
-        });
+          });
 
-        // Actualizar el icono de usuario en el bottom-menu
-        var bottomMenuIcons = document.querySelectorAll('#bottom-menu ion-icon[name="person-circle"]');
-        bottomMenuIcons.forEach(function(icon) {
+          // Actualizar el icono de usuario en el bottom-menu
+          var bottomMenuIcons = document.querySelectorAll(
+            '#bottom-menu ion-icon[name="person-circle"]'
+          );
+          bottomMenuIcons.forEach(function (icon) {
             // Reemplazar ion-icon por div
-            var divIcon = document.createElement('div');
-            divIcon.classList.add('menu-icon');
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
             divIcon.style.backgroundImage = "url('" + profileImage + "')";
             divIcon.style.backgroundSize = "cover";
             divIcon.style.backgroundPosition = "center";
@@ -1354,65 +1256,53 @@ document.addEventListener("DOMContentLoaded", function() {
             divIcon.style.height = "30px"; // Nuevo tamaño
             divIcon.style.marginTop = "0"; // Alinear con los demás iconos
             icon.parentNode.replaceChild(divIcon, icon);
-        });
-    }
-});
-// Función para desactivar el enlace cuando la pantalla es pequeña
-function desactivarEnlaceEnPantallaPequena() {
-    const links = document.querySelectorAll('.card-link');
-    links.forEach(link => {
-        if (window.innerWidth <= 715) {
-            link.removeAttribute('href');
-        }
-    });
-}
-
-// Función para reactivar el enlace cuando la pantalla es lo suficientemente grande
-function reactivarEnlaceEnPantallaGrande() {
-    const links = document.querySelectorAll('.card-link');
-    links.forEach(link => {
-        const pelicula = link.querySelector('.card').getAttribute('data-pelicula');
-        if (window.innerWidth > 715) {
-            link.setAttribute('href', pelicula);
-        }
-    });
-}
-
-// Ejecutar las funciones al cargar la página y cuando se redimensione la pantalla
-window.addEventListener('load', () => {
-    desactivarEnlaceEnPantallaPequena();
-    reactivarEnlaceEnPantallaGrande();
-});
-window.addEventListener('resize', () => {
-    desactivarEnlaceEnPantallaPequena();
-    reactivarEnlaceEnPantallaGrande();
-});
-
-// Ejecutar la función al cargar la página y cuando se redimensione la pantalla
-window.addEventListener('load', manejarEnlaceEnPantallaPequena);
-window.addEventListener('resize', manejarEnlaceEnPantallaPequena);
-    </script>
-    <script>
-      document.addEventListener("keydown", function (event) {
-        var key = event.key;
-      
-        if (key === "ArrowUp" || key === "ArrowDown") {
-          // Navegación vertical de la página
-          window.scrollBy(0, key === "ArrowUp" ? -100 : 100);
-        } else if (key === "ArrowLeft" || key === "ArrowRight") {
-          // Navegación horizontal de la página (opcional)
-          // window.scrollBy(key === "ArrowLeft" ? -100 : 100, 0);
-        } else if (key === "Enter") {
-          // Abrir enlace cuando esté enfocado
-          var focusedElement = document.activeElement;
-          if (focusedElement.tagName === "A") {
-            focusedElement.click();
-          }
+          });
         }
       });
-      </script>
-      
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
+      // Función para desactivar el enlace cuando la pantalla es pequeña
+      function desactivarEnlaceEnPantallaPequena() {
+        const links = document.querySelectorAll(".card-link");
+        links.forEach((link) => {
+          if (window.innerWidth <= 715) {
+            link.removeAttribute("href");
+          }
+        });
+      }
+
+      // Función para reactivar el enlace cuando la pantalla es lo suficientemente grande
+      function reactivarEnlaceEnPantallaGrande() {
+        const links = document.querySelectorAll(".card-link");
+        links.forEach((link) => {
+          const pelicula = link
+            .querySelector(".card")
+            .getAttribute("data-vermas");
+          if (window.innerWidth > 715) {
+            link.setAttribute("href", pelicula);
+          }
+        });
+      }
+
+      // Ejecutar las funciones al cargar la página y cuando se redimensione la pantalla
+      window.addEventListener("load", () => {
+        desactivarEnlaceEnPantallaPequena();
+        reactivarEnlaceEnPantallaGrande();
+      });
+      window.addEventListener("resize", () => {
+        desactivarEnlaceEnPantallaPequena();
+        reactivarEnlaceEnPantallaGrande();
+      });
+
+      // Ejecutar la función al cargar la página y cuando se redimensione la pantalla
+      window.addEventListener("load", manejarEnlaceEnPantallaPequena);
+      window.addEventListener("resize", manejarEnlaceEnPantallaPequena);
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
 </html>

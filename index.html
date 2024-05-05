@@ -1540,37 +1540,39 @@
     </script>
     <script>
       document.addEventListener("keydown", function (event) {
-        var key = event.key;
-        var focusedElement = document.activeElement;
+  var key = event.key;
+  var focusedElement = document.activeElement;
 
-        // Función para enfocar el siguiente card dentro del carrusel
-        function focusNextCard(direction) {
-          var currentCarousel = focusedElement.closest(".carousel");
-          var currentCards = currentCarousel.querySelectorAll(".card");
-          var currentIndex = Array.from(currentCards).indexOf(focusedElement);
-          var nextIndex;
+  // Función para enfocar el siguiente card dentro del carrusel
+  function focusNextCard(direction) {
+    var currentCarousel = focusedElement.closest(".carousel");
+    var currentCards = currentCarousel.querySelectorAll(".card");
+    var currentIndex = Array.from(currentCards).indexOf(focusedElement);
+    var nextIndex;
 
-          if (direction === "ArrowLeft") {
-            nextIndex = currentIndex - 1;
-          } else if (direction === "ArrowRight") {
-            nextIndex = currentIndex + 1;
-          }
+    if (direction === "ArrowLeft") {
+      nextIndex = currentIndex - 1;
+    } else if (direction === "ArrowRight") {
+      nextIndex = currentIndex + 1;
+    }
 
-          if (nextIndex >= currentCards.length) {
-            nextIndex = 0;
-          } else if (nextIndex < 0) {
-            nextIndex = currentCards.length - 1;
-          }
+    if (nextIndex >= currentCards.length) {
+      nextIndex = 0;
+    } else if (nextIndex < 0) {
+      nextIndex = currentCards.length - 1;
+    }
 
-          currentCards[nextIndex].focus();
-        }
+    currentCards[nextIndex].focus();
+  }
 
-        if (focusedElement.classList.contains("card")) {
-          if (key === "ArrowLeft" || key === "ArrowRight") {
-            focusNextCard(key);
-          }
-        }
-      });
+  if (focusedElement.classList.contains("card")) {
+    if (key === "ArrowLeft" || key === "ArrowRight") {
+      focusNextCard(key);
+      event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
+    }
+  }
+});
+
     </script>
 
     <script

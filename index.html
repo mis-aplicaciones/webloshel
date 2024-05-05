@@ -505,16 +505,19 @@
         #ver-mas {
           display: inline-block; /* Muestra el botón en pantallas pequeñas */
         }
+        .scroll-btn {
+          display: none;
+        }
       }
       /* aqui adaptamos los div para pantallas de smartphone */
       @media only screen and (max-width: 384px) {
         #information {
           display: flex;
           margin-left: 0px;
-          margin-top: 30%;
+          margin-top: 25%;
           width: 100%;
           height: 260px;
-          margin-bottom: 40px;
+          margin-bottom: 70px;
           color: white;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
           z-index: 999;
@@ -685,14 +688,15 @@
         <div class="card-container">
           <!-- Tarjetas de películas para el primer carusel -->
           <!-- 10 Cards -->
-          <a
+          <div
             class="card-link"
-            href="./peliculas/P-024-5-1-Atrapadodenloprofundo.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-024-5-1-Atrapadodenloprofundo.html';"
           >
             <div
               class="card"
               data-vermas="./peliculas/P-024-5-1-Atrapadodenloprofundo.html"
-              data-text-title="Atrapadod en lo profundo"
+              data-text-title="Atrapados en lo Profundo"
               data-puntuacion="2.5"
               data-edad="14+"
               data-año="2024"
@@ -707,10 +711,12 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a
+          </div>
+
+          <div
             class="card-link"
-            href="./peliculas/P-007-5-1-Hipnosis_Armainvisible.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-007-5-1-Hipnosis_Armainvisible.html';"
           >
             <div
               class="card"
@@ -732,10 +738,11 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a
+          </div>
+          <div
             class="card-link"
-            href="./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html';"
           >
             <div
               class="card"
@@ -757,7 +764,7 @@
                 alt="Card"
               />
             </div>
-          </a>
+          </div>
           <a
             class="card-link"
             href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
@@ -805,11 +812,11 @@
           </a>
           <a
             class="card-link"
-            href="./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html"
+            href="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html"
+              data-vermas="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html"
               data-text-title="
     Cómo conquistar a Billy Walsh
   "
@@ -852,11 +859,11 @@
           </a>
           <a
             class="card-link"
-            href="./peliculas/P-021-3-Elpajarolocosevadecampamento.html"
+            href="./peliculas/P-021-3-Elpájarolocosevadecampamento.html"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-021-3-Elpajarolocosevadecampamento.html"
+              data-vermas="./peliculas/P-021-3-Elpájarolocosevadecampamento.html"
               data-text-title="
     El pájaro loco se va de campamento
   "
@@ -877,11 +884,11 @@
           </a>
           <a
             class="card-link"
-            href="./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html"
+            href="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html"
+              data-vermas="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html"
               data-text-title="
     Ghostbusters: apocalipsis fantasma
   "
@@ -1539,40 +1546,40 @@
       window.addEventListener("resize", manejarEnlaceEnPantallaPequena);
     </script>
     <script>
-      document.addEventListener("keydown", function (event) {
-  var key = event.key;
-  var focusedElement = document.activeElement;
+            document.addEventListener("keydown", function (event) {
+              document.addEventListener("keydown", function (event) {
+        var key = event.key;
+        var focusedElement = document.activeElement;
 
-  // Función para enfocar el siguiente card dentro del carrusel
-  function focusNextCard(direction) {
-    var currentCarousel = focusedElement.closest(".carousel");
-    var currentCards = currentCarousel.querySelectorAll(".card");
-    var currentIndex = Array.from(currentCards).indexOf(focusedElement);
-    var nextIndex;
+        // Función para enfocar el siguiente card dentro del carrusel
+        function focusNextCard(direction) {
+          var currentCarousel = focusedElement.closest(".carousel");
+          var currentCards = currentCarousel.querySelectorAll(".card-container");
+          var currentIndex = Array.from(currentCards).indexOf(focusedElement.closest(".card-container"));
+          var nextIndex;
 
-    if (direction === "ArrowLeft") {
-      nextIndex = currentIndex - 1;
-    } else if (direction === "ArrowRight") {
-      nextIndex = currentIndex + 1;
-    }
+          if (direction === "ArrowLeft") {
+            nextIndex = currentIndex - 1;
+          } else if (direction === "ArrowRight") {
+            nextIndex = currentIndex + 1;
+          }
 
-    if (nextIndex >= currentCards.length) {
-      nextIndex = 0;
-    } else if (nextIndex < 0) {
-      nextIndex = currentCards.length - 1;
-    }
+          if (nextIndex >= currentCards.length) {
+            nextIndex = 0;
+          } else if (nextIndex < 0) {
+            nextIndex = currentCards.length - 1;
+          }
 
-    currentCards[nextIndex].focus();
-  }
+          currentCards[nextIndex].focus();
+        }
 
-  if (focusedElement.classList.contains("card")) {
-    if (key === "ArrowLeft" || key === "ArrowRight") {
-      focusNextCard(key);
-      event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
-    }
-  }
-});
-
+        if (focusedElement.classList.contains("card-container")) {
+          if (key === "ArrowLeft" || key === "ArrowRight") {
+            focusNextCard(key);
+            event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
+          }
+        }
+      });
     </script>
 
     <script
@@ -1585,3 +1592,4 @@
     ></script>
   </body>
 </html>
+

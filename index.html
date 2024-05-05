@@ -182,15 +182,15 @@
       #año::before {
         content: "·"; /* Punto medio */
         /* O bien, puedes usar una barra vertical en su lugar:
-      content: "|";
-      */
+            content: "|";
+            */
         margin: 0 5px; /* Espacio entre el punto y el texto */
       }
       #duracion-horas::before {
         content: "·"; /* Punto medio */
         /* O bien, puedes usar una barra vertical en su lugar:
-      content: "|";
-      */
+            content: "|";
+            */
         margin: 0 5px; /* Espacio entre el punto y el texto */
       }
       .movie-rating {
@@ -508,10 +508,26 @@
         .scroll-btn {
           display: none;
         }
-        .card-link {
-          pointer-events: none; /* Deshabilita los eventos del puntero */
-          cursor: default; /* Cambia el cursor a predeterminado */
-          /* Otros estilos adicionales si es necesario */
+        #movie-title-image {
+          display: none;
+        }
+        #information {
+          margin-left: 0px;
+          margin-top: 70%;
+        }
+        #information h2 {
+          font-size: 30px;
+          margin: 0px 10px 5px;
+        }
+        .movie-rating {
+          margin: 0 10px;
+        }
+        .movie-details h4 {
+          margin: 0 10px;
+        }
+        .genre-section {
+          margin: 10px;
+          text-align: center;
         }
       }
       /* aqui adaptamos los div para pantallas de smartphone */
@@ -519,10 +535,10 @@
         #information {
           display: flex;
           margin-left: 0px;
-          margin-top: 25%;
+          margin-top: 17%;
           width: 100%;
           height: 260px;
-          margin-bottom: 70px;
+          margin-bottom: 110px;
           color: white;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
           z-index: 999;
@@ -541,6 +557,13 @@
         }
         #movie-title-image {
           display: none;
+        }
+        #ver-mas {
+          margin-left: 40%;
+        }
+        #information h2 {
+          font-size: 25px;
+          margin: 0px 0px 5px 10px;
         }
       }
     </style>
@@ -650,7 +673,7 @@
         pusieron precio a su cabeza.
       </div>-->
       <!-- Botón Ver más -->
-      <button id="ver-mas">Ver más</button>
+      <button id="ver-mas"><a href="#" target="_self">Ver +</a></button>
     </div>
 
     <!-- Carrusel de búsqueda rápida -->
@@ -696,28 +719,29 @@
           <div
             class="card-link"
             tabindex="0"
-            onclick="window.location.href='./peliculas/P-024-5-1-Atrapadodenloprofundo.html';"
+            onclick="window.location.href='./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-024-5-1-Atrapadodenloprofundo.html"
-              data-text-title="Atrapados en lo Profundo"
-              data-puntuacion="2.5"
-              data-edad="14+"
+              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+              data-text-title="
+          Rebel Moon II: La guerrera que deja marcas
+        "
+              data-puntuacion="3.5"
+              data-edad="13+"
               data-año="2024"
-              data-duracion-horas="1h"
-              data-duracion-minutos="30min"
-              data-genero="Suspenso/Acción"
-              data-bg="https://suquia.ar/wp-content/uploads/2024/03/atrapados-en-lo-profundo.jpg"
-              data-title-img="https://image.tmdb.org/t/p/original/pIm2QhM4fxP3b3xVFBjFT74i0ek.png"
+              data-duracion-horas="2h"
+              data-duracion-minutos="3min"
+              data-genero="Ciencia Ficción"
+              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
+              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
             >
               <img
-                src="https://venusfilms.com.ec/wp-content/uploads/2024/02/VF_NOWAYUP_POSTER_WEB_1920X1080.jpg"
+                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
                 alt="Card"
               />
             </div>
           </div>
-
           <div
             class="card-link"
             tabindex="0"
@@ -727,14 +751,14 @@
               class="card"
               data-vermas="./peliculas/P-007-5-1-Hipnosis_Armainvisible.html"
               data-text-title="
-    Hipnosis: Arma invisible
-  "
+          Hipnosis: Arma invisible
+        "
               data-puntuacion="3"
               data-edad="14+"
               data-año="2023"
               data-duracion-horas="1h"
               data-duracion-minutos="34min"
-              data-genero="Suspenso/Acción"
+              data-genero="Suspenso / Acción"
               data-bg="https://www.citicinemas.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fciticinemas-store%2FMovie-1625%2Fbanner%2FoB9RJ9D7Oowt%2FHIPNO.jpg&w=1920&q=75"
               data-title-img="https://image.tmdb.org/t/p/original/cXrY3E9QcTzgDSCh1styJc96lZe.png"
             >
@@ -753,14 +777,14 @@
               class="card"
               data-vermas="./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html"
               data-text-title="
-    Imaginario: Juguete diabólico
-  "
+          Imaginario: Juguete diabólico
+        "
               data-puntuacion="2.5"
               data-edad="14+"
               data-año="2024"
               data-duracion-horas="1h"
               data-duracion-minutos="45min"
-              data-genero="Terror/Suspenso"
+              data-genero="Terror / Suspenso"
               data-bg="https://images.thedirect.com/media/article_full/imaginary-filmmakers-reveal-similar-horror-movies-inspirations-exclusive.jpg"
               data-title-img="https://dx35vtwkllhj9.cloudfront.net/lionsgateus/imaginary/images/regions/us/updates/tt.png"
             >
@@ -770,32 +794,11 @@
               />
             </div>
           </div>
-          <a
+          <div
             class="card-link"
-            href="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-010-3-8-RickyStanicky.html';"
           >
-            <div
-              class="card"
-              data-vermas="./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html"
-              data-text-title="
-    Rebel Moon (Parte dos): La guerrera que deja marcas
-  "
-              data-puntuacion="3.5"
-              data-edad="13+"
-              data-año="2024"
-              data-duracion-horas="2h"
-              data-duracion-minutos="3min"
-              data-genero="Ciencia Ficción"
-              data-bg="https://i.blogs.es/8cac64/rebel-moon-part-two-the-scargiver-2024-movie-3k/650_1200.jpeg"
-              data-title-img="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a58a7719-0dcf-4e0b-b7bb-d2b725dbbb8e/dg6v52k-e5a02ab3-58d1-4bdc-8702-8bfbf00c7d17.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E1OGE3NzE5LTBkY2YtNGUwYi1iN2JiLWQyYjcyNWRiYmI4ZVwvZGc2djUyay1lNWEwMmFiMy01OGQxLTRiZGMtODcwMi04YmZiZjAwYzdkMTcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.E2CvNUtyb3W-nSH_7kP4iUAJsudHWrQmq0x-7evM2ko"
-            >
-              <img
-                src="https://hips.hearstapps.com/hmg-prod/images/untitled-design-2023-12-27t111218-775-copia-658c1ae82da45.jpg"
-                alt="Card"
-              />
-            </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-010-3-8-RickyStanicky.html">
             <div
               class="card"
               data-vermas="./peliculas/P-010-3-8-RickyStanicky.html"
@@ -805,7 +808,7 @@
               data-año="2024"
               data-duracion-horas="1h"
               data-duracion-minutos="53min"
-              data-genero="Comedia/Fantasía"
+              data-genero="Comedia / Fantasía"
               data-bg="https://www.hollywoodreporter.com/wp-content/uploads/2024/03/STKY_2024_UT_230208_00022R-2.jpg"
               data-title-img="https://m.media-amazon.com/images/S/pv-target-images/2669fa3df9a103a97abe3c168fdd021a7b1bef282260506dca01df56d0bf7d52.png"
             >
@@ -814,23 +817,24 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a
+          </div>
+          <div
             class="card-link"
-            href="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-014-3-11-CómoconquistaraBillyWalsh.html"
+              data-vermas="./peliculas/P-014-3-11-ComoconquistaraBillyWalsh.html"
               data-text-title="
-    Cómo conquistar a Billy Walsh
-  "
+          Cómo conquistar a Billy Walsh
+        "
               data-puntuacion="3"
               data-edad="16+"
               data-año="2024"
               data-duracion-horas="1h"
               data-duracion-minutos="40min"
-              data-genero="Comedia/Romance"
+              data-genero="Comedia / Romance"
               data-bg="https://is1-ssl.mzstatic.com/image/thumb/xmDg311eJ9UM29lQsEG3bA/1200x675mf.jpg"
               data-title-img="https://m.media-amazon.com/images/S/pv-target-images/97c71ae7bb94a8b3cef5dd2e9abd617af75b087cd8a69f479869be1f9dfabb9a.png"
             >
@@ -839,20 +843,24 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-016-1-5-Codigo8parteII.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-016-1-5-Codigo8parteII.html';"
+          >
             <div
               class="card"
               data-vermas="./peliculas/P-016-1-5-Codigo8parteII.html"
               data-text-title="
-    Codigo 8 parte II
-  "
+          Codigo 8 parte II
+        "
               data-puntuacion="3"
               data-edad="16+"
               data-año="2024"
               data-duracion-horas="1h"
               data-duracion-minutos="40min"
-              data-genero="Acción/Suspenso"
+              data-genero="Acción / Suspenso"
               data-bg="https://laestatuilla.com/wp-content/uploads/2024/02/codigo-8-renegados-parte-ii.jpg"
               data-title-img="https://dnm.nflximg.net/api/v6/S4oi7EPZbv2UEPaukW54OORa0S8/AAAABX_6SXO4vS8x9OiYECwS6dajcL4aRYiH37xcxF80LVPVW39EO0iGFE3CbX4wydtnXirBmSdTuoYuC1rLL14I2Lu-hPrHmzokiAE.png"
             >
@@ -861,17 +869,44 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a
+          </div>
+          <div
             class="card-link"
-            href="./peliculas/P-021-3-Elpájarolocosevadecampamento.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-021-3-Elpájarolocosevadecampamento.html"
+              data-vermas="./peliculas/P-018-3-8-Ghostbusters_apocalipsisfantasma.html"
               data-text-title="
-    El pájaro loco se va de campamento
-  "
+          Ghostbusters: apocalipsis fantasma
+        "
+              data-puntuacion="3"
+              data-edad="12+"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="56min"
+              data-genero="Comedia / Fantasía"
+              data-bg="https://img.optimalcdn.com/www.posta.com.mx/2024/03/c00abe9db559b10230781d96ce97d3d56077e7f0/GHOSTBUSTERS_APOLIPSIS_FANTASMA.webp"
+              data-title-img="https://admin.cineflick.com.gt/wp-content/uploads/2024/04/dgfb6j0-cb71151a-b8ed-4ca3-aac3-9587c7058e3e.png"
+            >
+              <img
+                src="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg"
+                alt="Card"
+              />
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-021-3-Elpajarolocosevadecampamento.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-021-3-Elpajarolocosevadecampamento.html"
+              data-text-title="
+          El pájaro loco se va de campamento
+        "
               data-puntuacion="2"
               data-edad="07+"
               data-año="2024"
@@ -886,33 +921,36 @@
                 alt="Card"
               />
             </div>
-          </a>
-          <a
+          </div>
+          <div
             class="card-link"
-            href="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-024-5-1-Atrapadodenloprofundo.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-018-3-8-Ghostbusters:apocalipsisfantasma.html"
-              data-text-title="
-    Ghostbusters: apocalipsis fantasma
-  "
-              data-puntuacion="3"
-              data-edad="12+"
+              data-vermas="./peliculas/P-024-5-1-Atrapadodenloprofundo.html"
+              data-text-title="Atrapadod en lo profundo"
+              data-puntuacion="2.5"
+              data-edad="14+"
               data-año="2024"
               data-duracion-horas="1h"
-              data-duracion-minutos="56min"
-              data-genero="Comedia/Fantasía"
-              data-bg="https://img.optimalcdn.com/www.posta.com.mx/2024/03/c00abe9db559b10230781d96ce97d3d56077e7f0/GHOSTBUSTERS_APOLIPSIS_FANTASMA.webp"
-              data-title-img="https://admin.cineflick.com.gt/wp-content/uploads/2024/04/dgfb6j0-cb71151a-b8ed-4ca3-aac3-9587c7058e3e.png"
+              data-duracion-minutos="30min"
+              data-genero="Suspenso / Acción"
+              data-bg="https://suquia.ar/wp-content/uploads/2024/03/atrapados-en-lo-profundo.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/pIm2QhM4fxP3b3xVFBjFT74i0ek.png"
             >
               <img
-                src="https://diariodelcauca.com.co/wp-content/uploads/2024/01/portada-7.jpg"
+                src="https://venusfilms.com.ec/wp-content/uploads/2024/02/VF_NOWAYUP_POSTER_WEB_1920X1080.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-022-2-ArthurtheKing.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-022-2-ArthurtheKing.html';"
+          >
             <div
               class="card"
               data-vermas="./peliculas/P-022-2-ArthurtheKing.html"
@@ -931,7 +969,7 @@
                 alt="Card"
               />
             </div>
-          </a>
+          </div>
         </div>
         <button class="scroll-btn right">
           <ion-icon name="chevron-forward-outline"></ion-icon>
@@ -946,237 +984,252 @@
         <div class="card-container">
           <!-- Tarjetas de películas para el segundo carusel -->
           <!-- 10 Cards -->
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-011-3-8-Pobrescriaturas.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-011-3-8-Pobrescriaturas.html"
+              data-text-title="Pobres criaturas"
+              data-puntuacion="3.5"
+              data-edad="18+"
+              data-año="2023"
+              data-duracion-horas="2h"
+              data-duracion-minutos="21min"
+              data-genero="Comedia / Fantasía"
+              data-bg="https://cdn.cinencuentro.com/wp-content/uploads/2023/12/Poor-Things-1.jpeg"
+              data-title-img="https://images-1.rakuten.tv/storage/global-movie/translation/title-treatment/d76ff99a-d9eb-498d-b31a-65853367b0ff-width410-quality90.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://radio.uchile.cl/wp-content/uploads/2024/02/Pobres-Criaturas.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-003-9-8-Constantine.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-003-9-8-Constantine.html"
+              data-text-title="Constantine"
+              data-puntuacion="3.5"
+              data-edad="13+"
+              data-año="2005"
+              data-duracion-horas="2h"
+              data-duracion-minutos="1min"
+              data-genero="Terror / Fantasía"
+              data-bg="https://images-2.rakuten.tv/storage/snapshot/shot/5e5f73a2-836e-4add-bba6-984484df9777-snapshot-1590658118.jpeg"
+              data-title-img="https://picfiles.alphacoders.com/595/59547.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://m.media-amazon.com/images/S/pv-target-images/ae295e840707af4f3f88e0c41a2b69b7d2c65b13c99da30537341487b6a1d800.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-001-3-1-Planfamiliar.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-001-3-1-Planfamiliar.html"
+              data-text-title="Plan familiar"
+              data-puntuacion="3"
+              data-edad="14+"
+              data-año="2023"
+              data-duracion-horas="1h"
+              data-duracion-minutos="59min"
+              data-genero="Comedia / Acción"
+              data-bg="https://i0.wp.com/www.themoviedb.org/t/p/w1280/r9oTasGQofvkQY5vlUXglneF64Z.jpg"
+              data-title-img="https://is1-ssl.mzstatic.com/image/thumb/9BiWiFQu0mBEfNodXKnRhg/480x180.webp"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://es.digitaltrends.com/wp-content/uploads/2023/12/family-plan.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-004-9-Elladooscurodeldeseo.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-004-9-Elladooscurodeldeseo.html"
+              data-text-title="
+          El lado oscuro del deseo
+        "
+              data-puntuacion="2"
+              data-edad="16+"
+              data-año="2015"
+              data-duracion-horas="1h"
+              data-duracion-minutos="39min"
+              data-genero="Terror"
+              data-bg="https://m.media-amazon.com/images/S/pv-target-images/22a23117fbd43c9b0f2b37463161b6c6c831343754a3d23296718bc62de60fc8.jpg"
+              data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABanEHrgWHc0LGjJ1T2yPef8G4Uq2B4xjD-bmGYBbIN7zR5Qn1PryVqWktmncoGg_xDPY-WasMgC19KABbEQ-Rbk2Iohj7RG1C8TmqM2vUE_p.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://i.ytimg.com/vi/MuFoosTgeno/maxresdefault.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-006-3-4-Labodademiex.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-006-3-4-Labodademiex.html"
+              data-text-title="La boda de mi ex"
+              data-puntuacion="3.5"
+              data-edad="14+"
+              data-año="2018"
+              data-duracion-horas="1h"
+              data-duracion-minutos="26min"
+              data-genero="Comedia / Drama"
+              data-bg="https://es.web.img3.acsta.net/pictures/18/07/05/14/42/0391084.jpg"
+              data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABV1b2Wwxw7JmSOd1KQ4MgIXR6IxEdsLYi1yIBkbruZ6_onI_UGHxnKYUADR8_CQeIhOt4vjbmzPCv-vxjN_DPTA02-mJvNjCpwNDTkl1-E-q.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://m.media-amazon.com/images/S/pv-target-images/3f5815ac5e551083ccade3fad296519ba965ef2ffbdbd299da876e9c41d046d8.png"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-025-9-8-Aguassiniestras.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-025-9-8-Aguassiniestras.html"
+              data-text-title="Aguas siniestras"
+              data-puntuacion="2.5"
+              data-edad="14+"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="39min"
+              data-genero="Terror / Fantasía"
+              data-bg="https://megustaelcine.com/wp-content/uploads/2024/01/425900-819x1024.jpeg"
+              data-title-img="https://upload.wikimedia.org/wikipedia/commons/d/df/Night_Swim_Movie_Logo.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://upload.wikimedia.org/wikipedia/commons/d/df/Night_Swim_Movie_Logo.png"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-016-3-Soltera,casada,viuda,divorciada.html"
+              data-text-title="
+          Soltera, casada, viuda, divorciada
+        "
+              data-puntuacion="3"
+              data-edad="16+"
+              data-año="2023"
+              data-duracion-horas="1h"
+              data-duracion-minutos="49min"
+              data-genero="Comedia"
+              data-bg="https://portal.andina.pe/EDPfotografia3/Thumbnail/2022/07/13/000883079W.jpg"
+              data-title-img="https://occ-0-1822-3418.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABStwOyOr0rVzik1lS-lpZJ5wvkRWjld10uUlLMQdXQIhTa-WmzuLoRUfSX-VVrjYzpNR3Mm1XKkkOkBv9pF4xRe__zpaaMuWKtgNbESy2nx0.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://image.tmdb.org/t/p/w780/ouzWgXKgSnBOIdvWAjbRSTvPiqp.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html"
+              data-text-title="
+          la liga de la justicia crisis en las tierras infinitas parte 2
+        "
+              data-puntuacion="3"
+              data-edad="14+"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="33min"
+              data-genero="Acción / Aventura / Superhéroes"
+              data-bg="https://image.tmdb.org/t/p/original/tBmJCH9llj1Q9jDOS7vGWnl7GVj.jpg"
+              data-title-img="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/82/01/3e/82013e96-863f-be14-d6e4-8fe126997bf5/tff2880198494073204467.png/480x180.webp"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-005-5-Siberia.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-005-5-Siberia.html"
+              data-text-title="Siberia"
+              data-puntuacion="3"
+              data-edad="16+"
+              data-año="2018"
+              data-duracion-horas="1h"
+              data-duracion-minutos="44min"
+              data-genero="Suspenso"
+              data-bg="https://static01.nyt.com/images/2018/07/13/arts/13siberia1/siberia1-superJumbo.jpg"
+              data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABezp_lBzVF7uaKIbIb2wfnCwpfBYSyDaG1HSJIzjG7KzgrhH-WcWqfrSv4_-bG6aqY-9XQeDhwW8VNgitdZABEdxTfjohnPZlyt8ppRhp5dl.png"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://resizing.flixster.com/yQZR0HQGutj-igG7xAdIlQSUncM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15595606_v_h8_ab.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-019-1-3-Nochesinpaz.html';"
+          >
             <div
               class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
+              data-vermas="./peliculas/P-019-1-3-Nochesinpaz.html"
+              data-text-title="Noche sin paz"
+              data-puntuacion="4"
+              data-edad="16+"
+              data-año="2022"
+              data-duracion-horas="1h"
+              data-duracion-minutos="52min"
+              data-genero="Acción / Comedia"
+              data-bg="https://images.reporteindigo.com/wp-content/uploads/2022/12/noche-sin-paz-pelicula.jpg"
+              data-title-img="https://is1-ssl.mzstatic.com/image/thumb/4Wbf3aqP2GxoLyArpZw93Q/480x180.webp"
             >
               <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                src="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg"
                 alt="Card"
               />
             </div>
-          </a>
-          <a class="card-link" href="./peliculas/P-002-1-5-JohnWick.html">
-            <div
-              class="card"
-              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
-              data-text-title="John Wick"
-              data-puntuacion=""
-              data-edad=""
-              data-año=""
-              data-duracion-horas=""
-              data-duarcion
-              minutos=""
-              data-genero="/"
-              data-bg="https://i.blogs.es/819638/john-wick/1366_2000.jpeg"
-              data-title-img="https://imageservice.disco.peacocktv.com/uuid/b05b5f1e-4ce2-3a4c-a0ca-4bd0b9359ae1/TITLE_TREATMENT?language=eng&territory=US&proposition=NBCUOTT&version=e7c3ca5d-816b-3c08-87ad-1aa274e076f0"
-            >
-              <img
-                src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
-                alt="Card"
-              />
-            </div>
-          </a>
+          </div>
         </div>
         <button class="scroll-btn right">
           <ion-icon name="chevron-forward-outline"></ion-icon>
@@ -1307,7 +1360,7 @@
         const duracionHoras = dataContent.querySelector("#duracion-horas");
         const duracionMinutos = dataContent.querySelector("#duracion-minutos");
         const genero = dataContent.querySelector(".genre-section");
-        const verMasBtn = dataContent.querySelector("#ver-mas");
+        const verMasBtn = dataContent.querySelector("#ver-mas a");
         const exampleImage = document.getElementById("example-image");
 
         let currentCard = null; // Variable para almacenar el card actual
@@ -1327,22 +1380,18 @@
           const verMasUrl = card.getAttribute("data-vermas");
           const exampleImageUrl = card.getAttribute("data-bg");
 
-          // Obtener el contenido dentro de las etiquetas <i>
-
-          // Actualizar el contenido de la edad sin modificar
-
-          // Actualizar los datos del div de información
+          // Actualizar el contenido de los elementos en el DOM
           titleText.textContent = textTitle;
           titleImage.src = titleImageUrl;
           puntuacion.setAttribute("data-puntuacion", puntuacionText);
           puntuacion.innerHTML = calcularEstrellas(parseFloat(puntuacionText));
-          edad.innerHTML = edadText; // Actualizar el contenido dentro de <i>
+          edad.innerHTML = edadText;
           año.textContent = añoText;
           duracionHoras.textContent = duracionHorasText;
           duracionMinutos.textContent = duracionMinutosText;
           genero.textContent = generoText;
           verMasBtn.setAttribute("href", verMasUrl);
-          exampleImage.src = exampleImageUrl; // Actualizar la imagen de fondo
+          exampleImage.src = exampleImageUrl;
 
           // Mostrar el div de información
           dataContent.style.display = "block";
@@ -1517,83 +1566,66 @@
       function desactivarEnlaceEnPantallaPequena() {
         const links = document.querySelectorAll(".card-link");
         links.forEach((link) => {
-          if (window.innerWidth <= 715) {
-            link.removeAttribute("href");
+          if (window.innerWidth <= 600) {
+            link.removeAttribute("onclick");
+          } else {
+            const pelicula = link
+              .querySelector(".card")
+              .getAttribute("data-vermas");
+            link.setAttribute("onclick", `window.location.href='${pelicula}'`);
           }
         });
       }
-
-      // Función para reactivar el enlace cuando la pantalla es lo suficientemente grande
-      function reactivarEnlaceEnPantallaGrande() {
-        const links = document.querySelectorAll(".card-link");
-        links.forEach((link) => {
-          const pelicula = link
-            .querySelector(".card")
-            .getAttribute("data-vermas");
-          if (window.innerWidth > 715) {
-            link.setAttribute("href", pelicula);
-          }
-        });
-      }
-
-      // Ejecutar las funciones al cargar la página y cuando se redimensione la pantalla
-      window.addEventListener("load", () => {
-        desactivarEnlaceEnPantallaPequena();
-        reactivarEnlaceEnPantallaGrande();
-      });
-      window.addEventListener("resize", () => {
-        desactivarEnlaceEnPantallaPequena();
-        reactivarEnlaceEnPantallaGrande();
-      });
 
       // Ejecutar la función al cargar la página y cuando se redimensione la pantalla
-      window.addEventListener("load", manejarEnlaceEnPantallaPequena);
-      window.addEventListener("resize", manejarEnlaceEnPantallaPequena);
+      window.addEventListener("load", desactivarEnlaceEnPantallaPequena);
+      window.addEventListener("resize", desactivarEnlaceEnPantallaPequena);
     </script>
     <script>
       document.addEventListener("keydown", function (event) {
-  var key = event.key;
-  var focusedElement = document.activeElement;
+        var key = event.key;
+        var focusedElement = document.activeElement;
 
-  // Función para enfocar el siguiente card dentro del carrusel
-  function focusNextCard(direction) {
-    var currentCarousel = focusedElement.closest(".carousel");
-    var currentCards = currentCarousel.querySelectorAll(".card-link");
-    var currentIndex = Array.from(currentCards).indexOf(focusedElement.closest(".card-link"));
-    var nextIndex;
+        // Función para enfocar el siguiente card dentro del carrusel
+        function focusNextCard(direction) {
+          var currentCarousel = focusedElement.closest(".carousel");
+          var currentCards = currentCarousel.querySelectorAll(".card-link");
+          var currentIndex = Array.from(currentCards).indexOf(
+            focusedElement.closest(".card-link")
+          );
+          var nextIndex;
 
-    if (direction === "ArrowLeft") {
-      nextIndex = currentIndex - 1;
-    } else if (direction === "ArrowRight") {
-      nextIndex = currentIndex + 1;
-    }
+          if (direction === "ArrowLeft") {
+            nextIndex = currentIndex - 1;
+          } else if (direction === "ArrowRight") {
+            nextIndex = currentIndex + 1;
+          }
 
-    if (nextIndex >= currentCards.length) {
-      nextIndex = 0;
-    } else if (nextIndex < 0) {
-      nextIndex = currentCards.length - 1;
-    }
+          if (nextIndex >= currentCards.length) {
+            nextIndex = 0;
+          } else if (nextIndex < 0) {
+            nextIndex = currentCards.length - 1;
+          }
 
-    var nextCard = currentCards[nextIndex].querySelector(".card");
-    if (nextCard) {
-      nextCard.focus();
-    }
-  }
+          var nextCard = currentCards[nextIndex].querySelector(".card");
+          if (nextCard) {
+            nextCard.focus();
+          }
+        }
 
-  // Verificar si el foco está en un elemento relevante
-  if (focusedElement.classList.contains("card")) {
-    if (key === "ArrowLeft" || key === "ArrowRight") {
-      focusNextCard(key);
-      event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
-    }
-  } else {
-    var cardContainers = document.querySelectorAll(".card-container");
-    cardContainers.forEach(function (container) {
-      container.setAttribute("tabindex", "0");
-    });
-  }
-});
-
+        // Verificar si el foco está en un elemento relevante
+        if (focusedElement.classList.contains("card")) {
+          if (key === "ArrowLeft" || key === "ArrowRight") {
+            focusNextCard(key);
+            event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
+          }
+        } else {
+          var cardContainers = document.querySelectorAll(".card-container");
+          cardContainers.forEach(function (container) {
+            container.setAttribute("tabindex", "0");
+          });
+        }
+      });
     </script>
 
     <script

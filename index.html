@@ -508,6 +508,11 @@
         .scroll-btn {
           display: none;
         }
+        .card-link {
+          pointer-events: none; /* Deshabilita los eventos del puntero */
+          cursor: default; /* Cambia el cursor a predeterminado */
+          /* Otros estilos adicionales si es necesario */
+        }
       }
       /* aqui adaptamos los div para pantallas de smartphone */
       @media only screen and (max-width: 384px) {
@@ -1508,77 +1513,47 @@
           });
         }
       });
-      // Función para desactivar el enlace cuando la pantalla es pequeña
-      function desactivarEnlaceEnPantallaPequena() {
-        const links = document.querySelectorAll(".card-link");
-        links.forEach((link) => {
-          if (window.innerWidth <= 715) {
-            link.removeAttribute("href");
-          }
-        });
-      }
-
-      // Función para reactivar el enlace cuando la pantalla es lo suficientemente grande
-      function reactivarEnlaceEnPantallaGrande() {
-        const links = document.querySelectorAll(".card-link");
-        links.forEach((link) => {
-          const pelicula = link
-            .querySelector(".card")
-            .getAttribute("data-vermas");
-          if (window.innerWidth > 715) {
-            link.setAttribute("href", pelicula);
-          }
-        });
-      }
-
-      // Ejecutar las funciones al cargar la página y cuando se redimensione la pantalla
-      window.addEventListener("load", () => {
-        desactivarEnlaceEnPantallaPequena();
-        reactivarEnlaceEnPantallaGrande();
-      });
-      window.addEventListener("resize", () => {
-        desactivarEnlaceEnPantallaPequena();
-        reactivarEnlaceEnPantallaGrande();
-      });
-
-      // Ejecutar la función al cargar la página y cuando se redimensione la pantalla
-      window.addEventListener("load", manejarEnlaceEnPantallaPequena);
-      window.addEventListener("resize", manejarEnlaceEnPantallaPequena);
     </script>
     <script>
-            
-              document.addEventListener("keydown", function (event) {
-        var key = event.key;
-        var focusedElement = document.activeElement;
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtener el contenedor del carrusel
+        var carouselContainer = document.querySelector(".carousel");
 
-        // Función para enfocar el siguiente card dentro del carrusel
-        function focusNextCard(direction) {
-          var currentCarousel = focusedElement.closest(".carousel");
-          var currentCards = currentCarousel.querySelectorAll(".card-container");
-          var currentIndex = Array.from(currentCards).indexOf(focusedElement.closest(".card-container"));
-          var nextIndex;
+        // Agregar evento keydown al contenedor del carrusel
+        carouselContainer.addEventListener("keydown", function (event) {
+          var key = event.key;
+          var focusedElement = document.activeElement;
 
-          if (direction === "ArrowLeft") {
-            nextIndex = currentIndex - 1;
-          } else if (direction === "ArrowRight") {
-            nextIndex = currentIndex + 1;
+          // Función para enfocar el siguiente card dentro del carrusel
+          function focusNextCard(direction) {
+            var currentCards = carouselContainer.querySelectorAll(".card-link");
+            var currentIndex = Array.from(currentCards).indexOf(
+              focusedElement.closest(".card-link")
+            );
+            var nextIndex;
+
+            if (direction === "ArrowLeft") {
+              nextIndex = currentIndex - 1;
+            } else if (direction === "ArrowRight") {
+              nextIndex = currentIndex + 1;
+            }
+
+            if (nextIndex >= currentCards.length) {
+              nextIndex = 0;
+            } else if (nextIndex < 0) {
+              nextIndex = currentCards.length - 1;
+            }
+
+            currentCards[nextIndex].focus();
           }
 
-          if (nextIndex >= currentCards.length) {
-            nextIndex = 0;
-          } else if (nextIndex < 0) {
-            nextIndex = currentCards.length - 1;
+          if (focusedElement.classList.contains("card-link")) {
+            if (key === "ArrowLeft" || key === "ArrowRight") {
+              focusNextCard(key);
+              event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
+            }
           }
-
-          currentCards[nextIndex].focus();
-        }
-
-        if (focusedElement.classList.contains("card-container")) {
-          if (key === "ArrowLeft" || key === "ArrowRight") {
-            focusNextCard(key);
-            event.preventDefault(); // Prevenir el comportamiento predeterminado de las teclas de flecha
-          }
-        }
+        });
       });
     </script>
 
@@ -1592,4 +1567,5 @@
     ></script>
   </body>
 </html>
+
 

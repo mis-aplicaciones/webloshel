@@ -1,0 +1,10 @@
+./peliculas/P-002-1-5-JohnWick.html
+./peliculas/P-003-9-8-Constantine.html
+./peliculas/P-004-9-Elladooscurodeldeseo.html
+./peliculas/P-005-5-Siberia.html
+./peliculas/P-006-3-4-Labodademiex.html
+./peliculas/P-007-5-1-Hipnosis_Armainvisible.html
+./peliculas/P-008-6-RebelMoon(Partedos)_Laguerreraquedejamarcas.html
+./peliculas/P-009-9-5-Imaginario_Juguetediabolico.html
+./peliculas/P-010-3-8-RickyStanicky.html
+./peliculas/P-011-3-8-Pobrescriaturas.html

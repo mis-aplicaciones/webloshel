@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Generado por Loshelsistem 1.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
     <style>
       .ubuntu-regular {
         font-family: "Ubuntu", sans-serif;
@@ -183,10 +190,22 @@
 
       .movie-details {
         margin-top: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .movie-details h4 {
+        display: flex;
+        align-items: center;
       }
 
       .movie-details h4 span {
-        margin-right: 20px;
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      .movie-details h4 span:not(:first-of-type)::before {
+        content: "•"; /* Utiliza un punto como contenido antes de cada span excepto el primero */
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
       }
 
       .movie-description {
@@ -257,7 +276,7 @@
         display: flex;
         left: 20px;
       }
-      
+
       .add-button a {
         display: block;
         width: 40px;
@@ -271,7 +290,7 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s;
       }
-      #botoncompartir {
+      #botonCompartir {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -284,7 +303,7 @@
         align-items: center;
       }
 
-      #botoncompartir ion-icon {
+      #botonCompartir ion-icon {
         font-size: 24px;
       }
       .canal {
@@ -354,6 +373,7 @@
 
       .movie-rating {
         font-size: x-large;
+        width: 80%;
         color: white;
         margin-bottom: 10px;
         display: flex;
@@ -408,7 +428,7 @@
         }
 
         #logo {
-          width: 10%;
+          width: 12%;
         }
         .movie-details-and-rating {
           width: 100%;
@@ -454,7 +474,7 @@
           font-size: 14px;
         }
         #movie-content {
-          margin-top: 94%;
+          margin-top: 88%;
           padding: 8px;
           transition: margin-top 0.5s ease;
         }
@@ -503,11 +523,11 @@
         .add-button a span {
           display: none;
         }
-        #botoncompartir {
+        #botonCompartir {
           transition: bottom 0.5s ease;
-left: 14px;
-        bottom: 465px;
-        position: fixed;
+          left: 14px;
+          bottom: 465px;
+          position: fixed;
           display: flex;
         }
         .canal {
@@ -1055,24 +1075,52 @@ left: 14px;
     <!-- Contenido principal -->
     <div id="content">
       <!-- Campo oculto para almacenar el ID de la película -->
-      <input type="hidden" id="ID_pelicula" value="P-035">
+      <input type="hidden" id="ID_pelicula" value="P-035" />
       <!-- Campo oculto para almacenar el cover de la película -->
-      <input type="hidden" id="cover-url" name="cover-url" value="https://m.media-amazon.com/images/S/pv-target-images/5382663c7d931a06bd81bbcc760da773424a1257da8fb9838e70c0fe630db82b.jpg">
-      <input type="hidden" id="cover-url-2" name="cover-url-2" value="https://pics.filmaffinity.com/Silent_Hill-713824812-large.jpg">
-      <input type="hidden" id="pagina-nombre" name="pagina-nombre" value="P-035-9-Silenthill.html">
+      <input
+        type="hidden"
+        id="cover-url"
+        name="cover-url"
+        value="https://m.media-amazon.com/images/S/pv-target-images/5382663c7d931a06bd81bbcc760da773424a1257da8fb9838e70c0fe630db82b.jpg"
+      />
+      <input
+        type="hidden"
+        id="cover-url-2"
+        name="cover-url-2"
+        value="https://pics.filmaffinity.com/Silent_Hill-713824812-large.jpg"
+      />
+      <input
+        type="hidden"
+        id="pagina-nombre"
+        name="pagina-nombre"
+        value="P-035-9-Silenthill.html"
+      />
 
       <!-- Sección para el fondo del cuerpo con degradado -->
       <div id="background-section"></div>
       <!-- Imagen 1 para el backbroud -->
-      <img src="https://gamersrd.com/wp-content/uploads/2020/02/Silent-Hill-pelicula-en-proceso-gamersrd.jpg" alt="img1" id="imagen-1">
+      <img
+        src="https://gamersrd.com/wp-content/uploads/2020/02/Silent-Hill-pelicula-en-proceso-gamersrd.jpg"
+        alt="img1"
+        id="imagen-1"
+      />
       <!-- Imagen 2 para el backbroud smartphone -->
-      <img src="https://i.pinimg.com/736x/85/a5/4b/85a54bf445ce44223c1b86e6292f024d.jpg" alt="img2" id="imagen-2">
+      <img
+        src="https://i.pinimg.com/736x/85/a5/4b/85a54bf445ce44223c1b86e6292f024d.jpg"
+        alt="img2"
+        id="imagen-2"
+      />
       <!-- Logo -->
-      <img id="logo" src="logo001.png" alt="Logo">
+      <img id="logo" src="logo001.png" alt="Logo" />
       <!-- Sección de contenido de película -->
       <div id="movie-content">
         <!-- Título de la película (imagen) -->
-        <img id="movie-title-image" src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABbAUlGBuOzSV79wo09vfQnTePduQC-Ig3bLfhTyfRrKtdfZDMIeE02UV2O8XLnx9KJ0fFqmpXyKsxErNJw8gcLKZPkIHOSTmBFmFv1MvjfQX.png" alt="Título de la Película" class="movie-title">
+        <img
+          id="movie-title-image"
+          src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABbAUlGBuOzSV79wo09vfQnTePduQC-Ig3bLfhTyfRrKtdfZDMIeE02UV2O8XLnx9KJ0fFqmpXyKsxErNJw8gcLKZPkIHOSTmBFmFv1MvjfQX.png"
+          alt="Título de la Película"
+          class="movie-title"
+        />
         <!-- Título de la película (texto) -->
         <h2 id="movie-title-text" class="movie-title-text">Silent hill</h2>
         <!-- Sección de puntuación y detalles de película -->
@@ -1095,12 +1143,26 @@ left: 14px;
         <!-- Sección de género de película -->
         <div id="genero" class="genre-section" data-genre-ids="9"></div>
         <!-- Descripción de la película -->
-        <div id="descripcion" class="movie-description"><p>Sin poder aceptar el hecho de que su hija se está muriendo, Rose decide llevar a la niña con un curandero. Durante el camino, las dos viajan a través de un portal que las conduce a un misterioso pueblo llamado Silent Hill. La ciudad es rodeada por una total oscuridad, y los sobrevivientes humanos enfrentan una batalla perdida en su contra.</p></div>
+        <div id="descripcion" class="movie-description">
+          <p>
+            Sin poder aceptar el hecho de que su hija se está muriendo, Rose
+            decide llevar a la niña con un curandero. Durante el camino, las dos
+            viajan a través de un portal que las conduce a un misterioso pueblo
+            llamado Silent Hill. La ciudad es rodeada por una total oscuridad, y
+            los sobrevivientes humanos enfrentan una batalla perdida en su
+            contra.
+          </p>
+        </div>
 
         <!-- Botones de acción -->
         <div class="movie-buttons">
-          <a id="video1" href="go:silenthill"><ion-icon name="play"></ion-icon>Ver Ahora</a>
-          <a id="video2" href="https://ok.ru/videoembed/3604440681077?autoplay=1">
+          <a id="video1" href="go:silenthill"
+            ><ion-icon name="play"></ion-icon>Ver Ahora</a
+          >
+          <a
+            id="video2"
+            href="https://ok.ru/videoembed/3604440681077?autoplay=1"
+          >
             <ion-icon name="play"></ion-icon>Ver Ahora opc. 2
           </a>
         </div>
@@ -1112,7 +1174,7 @@ left: 14px;
               <span>Añadir</span>
             </a>
           </div>
-          <button id="botoncompartir">
+          <button id="botonCompartir">
             <ion-icon name="arrow-redo"></ion-icon>
           </button>
           <div class="canal">
@@ -1151,27 +1213,11 @@ left: 14px;
     </script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const botonCompartir = document.getElementById("botoncompartir");
-
-        if (navigator.share) {
-          botonCompartir.addEventListener("click", function () {
-            const enlace =
-              "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file";
-            navigator
-              .share({
-                title: "LoShel Movie v. 9.9",
-                text: "Descarga la aplicación LoShel Movie v. 9.9",
-                url: enlace,
-              })
-              .then(() => console.log("Enlace compartido con éxito"))
-              .catch((error) => console.error("Error al compartir:", error));
-          });
-        } else {
-          // El navegador no soporta la API Web Share
-          botonCompartir.style.display = "none";
-          console.warn("El navegador no soporta la API Web Share");
-        }
+      const botonCompartir = document.getElementById("botonCompartir");
+      botonCompartir.addEventListener("click", function () {
+        const compartirUrl =
+          "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
+        window.open(`whatsapp://send?text=${compartirUrl}`);
       });
     </script>
     <script>
@@ -1548,8 +1594,13 @@ left: 14px;
     </script>
 
     <!-- Agrega aquí tus scripts JavaScript u otros elementos necesarios -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  
-
-</body></html>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

@@ -182,15 +182,15 @@
       #año::before {
         content: "·"; /* Punto medio */
         /* O bien, puedes usar una barra vertical en su lugar:
-            content: "|";
-            */
+              content: "|";
+              */
         margin: 0 5px; /* Espacio entre el punto y el texto */
       }
       #duracion-horas::before {
         content: "·"; /* Punto medio */
         /* O bien, puedes usar una barra vertical en su lugar:
-            content: "|";
-            */
+              content: "|";
+              */
         margin: 0 5px; /* Espacio entre el punto y el texto */
       }
       .movie-rating {
@@ -426,6 +426,7 @@
       .card:first-child {
         margin-left: 20px;
       }
+
       /* aqui adaptamos los div para pantallas de smartphone */
       @media only screen and (max-width: 412px) {
         #sidebar {
@@ -574,7 +575,7 @@
           margin-left: 0;
         }
       }
-      /* aqui quitamos el sidebar para dispositivos smartphone y tablet */
+      /* aqui quitamos el sidebar para dispositivos smartphone */
       @media only screen and (max-width: 360px) {
         #sidebar {
           display: none;
@@ -617,6 +618,131 @@
         .genre-section {
           margin: 10px;
           text-align: center;
+        }
+      }
+      /* Estilos para tabletas con una resolución de al menos 800x1200 */
+      @media screen and (min-width: 800px) and (min-height: 1200px) {
+        #movie-title-image {
+          width: 100%;
+        }
+        #information h2 {
+          font-size: 26px;
+        }
+        #movie-title-text {
+          width: 450px;
+        }
+        .movie-details-and-rating {
+          width: 65%;
+        }
+        .movie-rating {
+          font-size: xx-large;
+        }
+        h4 {
+          font-size: x-large;
+        }
+        .genre-section {
+          font-size: xx-large;
+        }
+        #information {
+          margin-top: 40%;
+          margin-bottom: 140px;
+        }
+        .quick-search-wrapper .scroll-left-btn,
+        .quick-search-wrapper .scroll-right-btn {
+          display: none;
+        }
+        .quick-search-wrapper {
+          margin-left: 9%;
+        }
+        .quick-search-buttons a {
+          padding: 15px 15px;
+
+          font-size: 20px;
+        }
+        .carousel-container {
+          height: 390px;
+        }
+        #background {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 30%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        #example-image {
+          height: 80%;
+        }
+        #ver-mas {
+          margin: 0 40%;
+          margin-top: 10px;
+          display: inline-block;
+          text-align: center;
+        }
+        #ver-mas a {
+          font-size: 22px;
+        }
+      }
+      @media screen and (min-width: 700px) and (max-width: 799px) {
+        #movie-title-image {
+          width: 100%;
+        }
+        #information h2 {
+          font-size: 26px;
+        }
+        #movie-title-text {
+          width: 450px;
+        }
+        .movie-details-and-rating {
+          width: 78%;
+        }
+        .movie-rating {
+          font-size: xx-large;
+        }
+        h4 {
+          font-size: x-large;
+        }
+        .genre-section {
+          font-size: xx-large;
+        }
+        #information {
+          margin-top: 40%;
+          margin-bottom: 140px;
+        }
+        .quick-search-wrapper .scroll-left-btn,
+        .quick-search-wrapper .scroll-right-btn {
+          display: none;
+        }
+        .quick-search-wrapper {
+          margin-left: 9%;
+        }
+        .quick-search-buttons a {
+          padding: 15px 15px;
+
+          font-size: 20px;
+        }
+        .carousel-container {
+          height: 390px;
+        }
+        #background {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 30%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        #example-image {
+          height: 80%;
+        }
+        #ver-mas {
+          margin: 0 40%;
+          margin-top: 10px;
+          display: inline-block;
+          text-align: center;
+        }
+        #ver-mas a {
+          font-size: 22px;
         }
       }
     </style>
@@ -1890,7 +2016,7 @@
       function desactivarEnlaceEnPantallaPequena() {
         const links = document.querySelectorAll(".card-link");
         links.forEach((link) => {
-          if (window.innerWidth <= 600) {
+          if (window.innerWidth <= 800) {
             link.removeAttribute("onclick");
           } else {
             const pelicula = link

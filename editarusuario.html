@@ -168,7 +168,7 @@
         font-size: 16px;
         color: #fff;
       }
-
+      /* Estilos para pantallas de tv */
       @media screen and (max-width: 1920px) {
         .container {
           max-width: 95%;
@@ -486,7 +486,6 @@
           placeholder="Nombre de usuario"
           maxlength="10"
           oninput="enableOKButton()"
-          inputmode="none"
         />
         <button id="okButton" onclick="saveProfile()" disabled>OK</button>
       </div>
@@ -599,7 +598,7 @@
 
       // Ir al index.html cuando se hace clic en el botón "Ir al inicio"
       function goToIndex() {
-        window.location.href = "../index.html";
+        window.location.href = "index.html";
       }
     </script>
   </body>

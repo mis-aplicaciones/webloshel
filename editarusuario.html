@@ -2,31 +2,57 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Editar Perfil</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Estilos generales */
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Ubuntu";
+        font-weight: 700;
         background-color: #000;
         margin: 0;
         padding: 0;
+        height: 100%;
       }
 
       .container {
         max-width: 800px;
-        margin: 50px auto;
+        margin: 0px auto;
         background: #12131a;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        padding: 20px;
       }
 
       .title {
-        color: white;
-        text-align: center;
-        padding: 10px;
+        font-size: 24px;
+        color: #007bff;
         font-weight: bold;
+        margin-bottom: 20px;
+        text-align: left;
+        padding-left: 20px;
+      }
+      .version {
+        position: absolute;
+        font-size: 16px;
+        color: #686868f6;
+        font-weight: bold;
+        margin-top: -41px;
+        margin-bottom: 20px;
+        right: 5px;
+        padding-left: 20px;
       }
 
       .profile {
@@ -35,11 +61,12 @@
       }
 
       .profile-image {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
+
+        margin: 0px auto;
         border-radius: 50%;
         overflow: hidden;
-        margin: 0 auto 10px;
         cursor: pointer;
         display: flex;
         justify-content: center;
@@ -55,9 +82,10 @@
       }
 
       #username {
-        width: 10%;
-        padding: 10px;
+        width: 35%;
+        padding: 5px;
         margin: 0 auto;
+        font-size: larger;
         margin-bottom: 10px;
         border: 1px solid white;
         border-radius: 5px;
@@ -71,6 +99,7 @@
       button {
         display: block;
         margin: 0 auto;
+        margin: 10px 0;
         padding: 10px 20px;
         background-color: #466497;
         color: #fff;
@@ -89,9 +118,11 @@
 
       .image-selection {
         display: none;
-        margin-top: 20px;
+        position: relative;
         background-color: #000;
         padding: 10px;
+        max-width: 90%;
+        margin: 0px auto;
         border-radius: 5px;
       }
 
@@ -133,35 +164,308 @@
         font-size: 15px;
         color: white;
       }
+      p {
+        font-size: 16px;
+        color: #fff;
+      }
 
+      @media screen and (max-width: 1920px) {
+        .container {
+          max-width: 95%;
+        }
+        .profile-image {
+          width: 300px;
+          height: 300px;
+        }
+        .title {
+          font-size: 36px;
+        }
+        h3 {
+          font-size: 34px;
+        }
+        p {
+          font-size: 24px;
+        }
+        #username {
+          font-size: xx-large;
+        }
+        button {
+          font-size: 36px;
+        }
+        .images img {
+          width: 140px;
+          height: 140px;
+        }
+        .images {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 20px;
+        }
+        .version {
+          font-size: 25px;
+          margin-top: -55px;
+        }
+      }
+      @media screen and (max-width: 1280px) {
+        .container {
+          max-width: 95%;
+        }
+        .profile-image {
+          width: 150px;
+          height: 150px;
+        }
+        .title {
+          font-size: 26px;
+        }
+        h3 {
+          font-size: 22px;
+        }
+        p {
+          font-size: 20px;
+        }
+        #username {
+          font-size: x-large;
+        }
+        button {
+          font-size: 22px;
+        }
+        .images img {
+          width: 100px;
+          height: 100px;
+        }
+        .images {
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 15px;
+        }
+        .version {
+          font-size: 22px;
+          margin-top: -39px;
+        }
+        .profile {
+          margin-bottom: 0px;
+        }
+      }
+      @media screen and (max-width: 962px) {
+        .container {
+          max-width: 95%;
+        }
+        .profile-image {
+          width: 110px;
+          height: 110px;
+        }
+        .title {
+          font-size: 20px;
+        }
+        h3 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 14px;
+        }
+        #username {
+          font-size: medium;
+        }
+        button {
+          font-size: 16px;
+        }
+        .images img {
+          width: 70px;
+          height: 70px;
+        }
+        .images {
+          grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+          gap: 15px;
+        }
+        .version {
+          font-size: 16px;
+          margin-top: -39px;
+        }
+        .profile {
+          margin-bottom: 0px;
+        }
+      }
       /* Estilos para pantallas pequeñas como tablet y móviles */
-      @media only screen and (max-width: 700px) {
-        .go-to-index-button {
-          position: relative;
-          display: block;
-          bottom: -72px;
-          left: 0px;
+      @media only screen and (max-width: 412px) {
+        .title {
+          text-align: center;
+        }
+        .container {
+          display: flex;
+
+          flex-direction: column;
+        }
+        h3 {
+          text-align: center;
+        }
+        #okButton {
+          margin: 0 auto;
+        }
+        .profile {
+          margin-bottom: 0px;
+        }
+        .profile-info {
+          display: flex;
+          flex-direction: column;
+        }
+        .version {
+          position: fixed;
+          display: flex;
+          margin-top: 194%;
+          right: 5px;
+          margin-bottom: 19px;
+        }
+      }
+
+      @media only screen and (max-width: 384px) {
+        .container {
+          padding: 0 20px 20px;
+        }
+        .title {
           font-size: 18px;
         }
-
         #username {
-          width: 25%;
+          font-size: medium;
         }
-
-        .image-selection h2 {
-          font-size: 15px;
+        .images {
+          display: flex;
+          overflow-x: auto;
         }
-
+        .profile-info h3 {
+          margin-top: 0px;
+        }
+        .version {
+          position: fixed;
+          display: flex;
+          margin-top: 140%;
+          right: 10px;
+          margin-bottom: 19px;
+        }
+      }
+      @media only screen and (max-width: 360px) {
+        .version {
+          margin-top: 177%;
+        }
+      }
+      @media only screen and (max-width: 354px) {
+        .version {
+          margin-top: 171%;
+        }
+      }
+      @media screen and (min-width: 712px) and (min-height: 1138px) {
+        .title {
+          text-align: center;
+        }
         .container {
-          margin: 0;
-          padding: 0px;
+          display: flex;
+
+          flex-direction: column;
+        }
+        h3 {
+          font-size: 26px;
+          text-align: center;
+        }
+        #okButton {
+          margin: 0 auto;
+          margin-top: 10px;
+          font-size: 22px;
+        }
+        .profile-image {
+          width: 150px;
+          height: 150px;
+          margin: 0px auto;
+        }
+        .profile-info {
+          display: flex;
+          flex-direction: column;
+        }
+        #username {
+          font-size: x-large;
+        }
+        .go-to-index-button {
+          font-size: 20px;
+        }
+        .images img {
+          width: 100px;
+          height: 100px;
+        }
+        .images {
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 20px;
+        }
+        .image-selection h2 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 24px;
+        }
+        .version {
+          position: fixed;
+          display: flex;
+          margin-top: 142%;
+          right: 10px;
+          margin-bottom: 19px;
+        }
+      }
+      @media screen and (min-width: 800px) and (min-height: 1200px) {
+        .title {
+          text-align: center;
+        }
+        .container {
+          display: flex;
+
+          flex-direction: column;
+        }
+        h3 {
+          font-size: 26px;
+          text-align: center;
+        }
+        #okButton {
+          margin: 0 auto;
+          margin-top: 10px;
+          font-size: 22px;
+        }
+        .profile-image {
+          width: 150px;
+          height: 150px;
+          margin: 0px auto;
+        }
+        .profile-info {
+          display: flex;
+          flex-direction: column;
+        }
+        #username {
+          font-size: x-large;
+        }
+        .go-to-index-button {
+          font-size: 20px;
+        }
+        .images img {
+          width: 120px;
+          height: 120px;
+        }
+        .images {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          gap: 20px;
+        }
+        .image-selection h2 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 24px;
+        }
+        .version {
+          position: fixed;
+          display: flex;
+          margin-top: 135%;
+          right: 10px;
+          margin-bottom: 19px;
         }
       }
     </style>
   </head>
   <body>
+    <h1 class="title">Editar Perfil</h1>
+    <h1 class="version">vers. 9.9.0</h1>
     <div class="container">
-      <h1 class="title">Editar Perfil</h1>
       <div class="profile">
         <h3>Imagen de Usuario</h3>
         <div class="profile-image" onclick="showImageSelection()">
@@ -172,6 +476,9 @@
             width="120"
           />
         </div>
+        <p>Pulsa para cambiar la imagen de usuario</p>
+      </div>
+      <div class="profile-info">
         <h3>Nombre de Usuario</h3>
         <input
           type="text"
@@ -179,73 +486,73 @@
           placeholder="Nombre de usuario"
           maxlength="10"
           oninput="enableOKButton()"
+          inputmode="none"
         />
         <button id="okButton" onclick="saveProfile()" disabled>OK</button>
       </div>
-      <div id="imageSelection" class="image-selection">
-        <h2>Seleccione una imagen para usuario:</h2>
-        <div class="images">
-          <img
-            src="https://s3-us-west-2.amazonaws.com/prd-rteditorial/wp-content/uploads/2020/09/15102156/the_mandalorian_season_2_key_art_700x380.jpg"
-            alt="Imagen 1"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://img.europapress.es/fotoweb/fotonoticia_20160216110346_690.jpg"
-            alt="Imagen 2"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://i.blogs.es/c937a5/lisapersonajes/840_560.jpeg"
-            alt="Imagen 3"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://lavisionweb.com/wp-content/uploads/2023/03/Jenna-Ortega-3-e1670013587688-1024x752-1.jpg"
-            alt="Imagen 4"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://img.europapress.es/fotoweb/fotonoticia_20220611150449_1200.jpg"
-            alt="Imagen 5"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://static1.srcdn.com/wordpress/wp-content/uploads/2024/03/x-men-97-1.jpg"
-            alt="Imagen 6"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2016/07/15/14685832909163.jpg"
-            alt="Imagen 7"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://media.glamour.mx/photos/619062822d97bd4c522a4f3b/master/w_1600%2Cc_limit/244079.jpg"
-            alt="Imagen 8"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://cinefilosoficial.com/wp-content/uploads/2024/04/fallout-serie-tv-3289518.png"
-            alt="Imagen 9"
-            onclick="selectImage(this)"
-          />
-          <img
-            src="https://static.fore.4pcdn.de/premium/News/45/75/2207484-teaser1.jpg"
-            alt="Imagen 10"
-            onclick="selectImage(this)"
-          />
-        </div>
-      </div>
-      <button
-        id="goToIndexButton"
-        class="go-to-index-button"
-        onclick="goToIndex()"
-      >
-        Ir al inicio
-      </button>
     </div>
-
+    <div id="imageSelection" class="image-selection">
+      <h2>Seleccione una imagen para usuario:</h2>
+      <div class="images">
+        <img
+          src="https://s3-us-west-2.amazonaws.com/prd-rteditorial/wp-content/uploads/2020/09/15102156/the_mandalorian_season_2_key_art_700x380.jpg"
+          alt="Imagen 1"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://img.europapress.es/fotoweb/fotonoticia_20160216110346_690.jpg"
+          alt="Imagen 2"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://i.blogs.es/c937a5/lisapersonajes/840_560.jpeg"
+          alt="Imagen 3"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://lavisionweb.com/wp-content/uploads/2023/03/Jenna-Ortega-3-e1670013587688-1024x752-1.jpg"
+          alt="Imagen 4"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://img.europapress.es/fotoweb/fotonoticia_20220611150449_1200.jpg"
+          alt="Imagen 5"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://static1.srcdn.com/wordpress/wp-content/uploads/2024/03/x-men-97-1.jpg"
+          alt="Imagen 6"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2016/07/15/14685832909163.jpg"
+          alt="Imagen 7"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://media.glamour.mx/photos/619062822d97bd4c522a4f3b/master/w_1600%2Cc_limit/244079.jpg"
+          alt="Imagen 8"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://cinefilosoficial.com/wp-content/uploads/2024/04/fallout-serie-tv-3289518.png"
+          alt="Imagen 9"
+          onclick="selectImage(this)"
+        />
+        <img
+          src="https://static.fore.4pcdn.de/premium/News/45/75/2207484-teaser1.jpg"
+          alt="Imagen 10"
+          onclick="selectImage(this)"
+        />
+      </div>
+    </div>
+    <button
+      id="goToIndexButton"
+      class="go-to-index-button"
+      onclick="goToIndex()"
+    >
+      Ir al inicio
+    </button>
     <script>
       // Verificar si hay datos de perfil guardados en el almacenamiento local
       var savedProfile = localStorage.getItem("userProfile");
@@ -262,13 +569,6 @@
       // Mostrar la selección de imágenes cuando se hace clic en la imagen de usuario
       function showImageSelection() {
         document.getElementById("imageSelection").style.display = "block";
-        enableOKButton();
-      }
-
-      // Seleccionar imagen de usuario
-      function selectImage(image) {
-        var profileImage = document.getElementById("profileImage");
-        profileImage.src = image.src;
         enableOKButton();
       }
 
@@ -299,7 +599,7 @@
 
       // Ir al index.html cuando se hace clic en el botón "Ir al inicio"
       function goToIndex() {
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
       }
     </script>
   </body>

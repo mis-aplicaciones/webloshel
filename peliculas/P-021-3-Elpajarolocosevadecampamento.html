@@ -408,8 +408,212 @@
         position: relative;
         bottom: 15px;
       }
+      @media only screen and (max-width: 412px) {
+        #sidebar {
+          display: none;
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
 
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 65%;
+          object-fit: cover;
+          z-index: -2;
+        }
+        #logo {
+          width: 12%;
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 24px;
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+        }
+        .movie-details h4 span {
+          margin-right: 8px;
+          font-size: 14px;
+        }
+        #movie-content {
+          margin-top: 150%;
+          padding: 8px;
+          transition: margin-top 0.5s ease;
+        }
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 16px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 20px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 88%;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        #botonCompartir {
+          transition: bottom 0.5s ease;
+          left: 14px;
+          bottom: 80%;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 71%;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 18px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+      }
       @media only screen and (max-width: 384px) {
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 15%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
         /* Mueve el sidebar a la parte inferior en modo horizontal */
         .description {
           display: none; /* Oculta la descripción en pantallas pequeñas */
@@ -425,7 +629,7 @@
           top: 0;
           left: 0;
           width: 100%;
-          height: 100%;
+          height: 80%;
           object-fit: cover;
           z-index: -2;
         }
@@ -614,272 +818,79 @@
           bottom: 475px;
         }
       }
-      @media only screen and (min-width: 385px) and (max-width: 700px) {
-        /* Mueve el sidebar a la parte inferior en modo horizontal */
-        .description {
-          display: none; /* Oculta la descripción en pantallas pequeñas */
-        }
 
-        /* Ajuste del botón de menú */
-        #menu-toggle {
-          display: block; /* Hace visible el botón en pantallas pequeñas */
-          position: fixed;
-          z-index: 1001; /* Lo coloca adelante del div data */
-          top: 10px;
-          left: 15px;
-          background-color: transparent; /* Fondo transparente */
-          border: none; /* Sin borde */
-          cursor: pointer;
-          padding: 0;
+      @media screen and (min-width: 712px) and (min-height: 1138px) {
+        #logo {
+          width: 10%;
         }
-
-        /* Estilos para el ícono del menú */
-        #menu-toggle ion-icon {
-          font-size: 40px; /* Tamaño del ícono */
-          color: white; /* Color del ícono */
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
         }
-        /* Ajuste del sidebar */
-        #sidebar {
-          display: none; /* Oculta el sidebar en pantallas pequeñas */
-        }
-
-        /* Ajuste del contenido principal */
-        #content {
-          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
-          width: 100%;
-          height: 100%;
-        }
-        .movie-title-text {
-          font-size: 30px;
-          text-align: center;
-        }
-        #movie-content {
-          margin-top: 120%;
-          padding: 10px;
-          transition: margin-top 0.5s ease;
-        }
-        .movie-rating {
-          font-size: 30px;
-        }
-
-        h4 {
-          display: flex;
-
-          position: absolute;
-          margin: -11px;
-          right: 30px;
-        }
-        .movie-title {
-          display: none;
-        }
-        .donar-button {
-          width: 0px;
-          left: 100%;
-          align-self: auto;
-          padding: 0px;
-        }
-        .donar-button a {
-          position: fixed;
-          top: 8px;
-          font-weight: 700;
-          font-size: 18px;
-          width: 150px;
-          left: 100px;
-        }
-        .add-button {
-          left: 14px;
-          bottom: 775px;
-          transition: bottom 0.5s ease;
-          position: fixed;
-          display: flex;
-        }
-        .add-button a span {
-          display: none;
-        }
-        .compartir {
-          left: 14px;
-          bottom: 700px;
-          transition: bottom 0.5s ease;
-          position: fixed;
-          display: flex;
-        }
-        .canal {
-          left: 14px;
-          bottom: 620px;
-          transition: bottom 0.5s ease;
-          position: fixed;
-          display: flex;
-        }
-        /* Estilos para el menú inferior */
-        #bottom-menu {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background-color: #222;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          justify-content: space-around;
-          align-items: center;
-          z-index: 1000;
-        }
-
-        #bottom-menu ul {
-          display: flex;
-          flex-direction: row;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-        }
-
-        #bottom-menu ul li {
-          padding: 25px;
-        }
-
-        #bottom-menu .menu-icon {
-          color: white; /* Cambia el color de los iconos a blanco */
-        }
-
-        .menu-icon::after {
-          display: none; /* Oculta la línea horizontal en pantallas móviles */
-        }
-        .menu-icon.selected {
-          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-        }
-
-        .menu-icon {
-          width: 20px;
-          height: 20px;
-          margin-bottom: 0px;
-          transition: color 0.3s; /* posicionar al centro los botones del menu inferior */
-        }
-
-        /* Define el estilo del scrollbar */
-        #main::-webkit-scrollbar {
-          width: 6px; /* Ancho del scrollbar */
-        }
-
-        #main::-webkit-scrollbar-thumb {
-          background-color: transparent; /* Color del scrollbar */
-          border-radius: 6px; /* Radio de borde del scrollbar */
-        }
-
-        #main::-webkit-scrollbar-track {
-          background-color: transparent; /* Color de fondo del scrollbar */
-        }
-      }
-
-      /* Estilos para pantallas de televisión SD */
-      @media only screen and (min-width: 480px) and (max-width: 767px) {
-        /* Agrega estilos adicionales según sea necesario */
+        /* Estilos para pantallas de hasta 384px de ancho */
         #imagen-1 {
-          display: block; /* Mostrar la imagen-1 en pantallas grandes */
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
         }
 
         #imagen-2 {
-          display: none; /* Ocultar la imagen-2 en pantallas grandes */
-        }
-        #movie-content > * {
-          margin-bottom: 3px;
-        }
-        .movie-title-text {
-          margin-top: 5px;
-
-          font-size: 22px;
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
         }
         #movie-content {
-          margin-top: 30px;
-
-          padding: 10px;
+          margin-top: 80%;
         }
-        p {
-          font-size: 10px;
-          font-family: "Ubuntu";
-          font-weight: 400;
-          margin: 10px 0 0;
-          text-align: justify;
-        }
-        .movie-rating {
-          font-size: large;
-        }
-        .movie-description {
-          max-width: 375px;
-        }
-        .movie-details h4 span {
-          margin-right: 7px;
-          font-size: 11px;
-        }
-        .genre-section {
-          font-size: 14px;
-        }
-        .movie-buttons a,
-        .movie-buttons button {
-          padding: 7px 10px;
-
-          font-size: 12px;
-        }
-        .donar-button a {
-          width: 105px;
-          height: 33px;
-
-          font-size: 12px;
-        }
-        #content {
-          margin-left: 50px;
-
-          width: calc(100% - 50px);
-        }
-        .menu-icon {
-          width: 25px;
-          height: 20px;
-        }
-        .button-aditional {
-          left: 5px;
-          top: 13px;
-        }
-        .add-button a {
-          width: 30px;
-          height: 30px;
-
-          line-height: 40px;
-
-          font-size: 24px;
-        }
-        .add-button a span {
-          font-size: 9px;
-        }
-        .donar-button {
-          left: 82px;
-        }
-        .movie-title {
-          max-width: 290px;
-        }
-
-        #sidebar {
-          width: 50px;
-        }
-
-        .description {
-          width: 320px;
-        }
-        header {
-          height: 30px;
-          left: 67px;
-          top: 300px;
-          width: calc(100% - 89px);
-        }
-
-        .quick-search-buttons a {
-          font-size: 11px;
-
-          padding: 5px 10px;
-          margin-right: 8px;
+        .movie-details-and-rating {
+          width: 100%;
         }
       }
+      @media screen and (min-width: 800px) and (min-height: 1200px) {
+        #logo {
+          width: 10%;
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
+        }
+        #movie-content {
+          margin-top: 80%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+      }
+      /* Estilos para pantallas de televisión SD */
+
       /* Estilos para pantallas de televisión HD */
-      @media only screen and (min-width: 768px) and (max-width: 1280px) {
+      @media only screen and (min-width: 801px) and (max-width: 1280px) {
         /* Agrega estilos adicionales según sea necesario */
         #imagen-1 {
           display: block; /* Mostrar la imagen-1 en pantallas grandes */
@@ -1099,11 +1110,20 @@
         value="P-021-3-Elpájarolocosevadecampamento.html"
       />
 
-      <!-- Sección para el fondo del cuerpo -->
-      <div
-        id="background-section"
-        data-background-url="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABYU7139iFky2exXOgxjsUpu0GIdmF4Z9fBhssWUXUb7OpoyTKk036MVAQX3kDCpTnAUmUUnlS-vz-h2Sxwxb0UM9LjrFKavOEQV8.jpg"
-      ></div>
+      <!-- Sección para el fondo del cuerpo con degradado -->
+      <div id="background-section"></div>
+      <!-- Imagen 1 para el backbroud -->
+      <img
+        src="https://image.tmdb.org/t/p/original/swxCQLkP1PPBAIdngEot3p76lzA.jpg"
+        alt="img1"
+        id="imagen-1"
+      />
+      <!-- Imagen 2 para el backbroud smartphone -->
+      <img
+        src="https://image.tmdb.org/t/p/original/wq1wLWvbRRt9ZYtV5nWRV7xj4gC.jpg"
+        alt="img2"
+        id="imagen-2"
+      />
 
       <!-- Logo -->
       <img id="logo" src="logo001.png" alt="Logo" />
@@ -1188,25 +1208,6 @@
       <div id="carrusel-title">También puedes ver</div>
     </div>
     <script>
-      // Obtener referencia al elemento HTML
-      const backgroundSection = document.getElementById("background-section");
-
-      // Función para establecer el fondo del div según el URL proporcionado
-      function setBackground() {
-        const backgroundURL = backgroundSection.getAttribute(
-          "data-background-url"
-        );
-        // Establecer el fondo del div con el URL proporcionado
-
-        backgroundSection.style.background = `linear-gradient(to top right, rgb(18 18 18) 35%, rgba(0, 0, 0, 0)), url("${backgroundURL}") no-repeat center center fixed`;
-        backgroundSection.style.backgroundSize = "cover";
-      }
-
-      // Llamar a la función al cargar la página
-      setBackground();
-    </script>
-
-    <script>
       const botonCompartir = document.getElementById("botonCompartir");
       botonCompartir.addEventListener("click", function () {
         const compartirUrl =
@@ -1276,6 +1277,7 @@
         12: "Crimen",
         13: "Documental",
         14: "Superhéroes",
+        15: "Infantil",
       };
 
       // Obtener el elemento de género
@@ -1375,7 +1377,29 @@
           // Verifica si el elemento bottomMenu existe
           if (bottomMenu) {
             // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
-            if (window.innerWidth <= 700 && window.innerWidth > 361) {
+            if (window.innerWidth <= 700 && window.innerWidth > 384) {
+              if (newIcon === closeIcon) {
+                bottomMenu.style.display = "flex";
+                localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+                // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
+                if (movieContent) {
+                  movieContent.style.marginTop = "133%";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              } else {
+                bottomMenu.style.display = "none";
+                localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+                // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado
+                if (movieContent) {
+                  movieContent.style.marginTop = "";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              }
+            } else if (window.innerWidth <= 384 && window.innerWidth > 361) {
               if (newIcon === closeIcon) {
                 bottomMenu.style.display = "flex";
                 localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
@@ -1433,6 +1457,22 @@
         if (bottomMenuVisible === "true") {
           if (
             window.innerWidth <= 700 &&
+            window.innerWidth > 384 &&
+            bottomMenu
+          ) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+            // Aplica estilos cuando el menú inferior está activo al cargar la página
+            if (movieContent) {
+              movieContent.style.marginTop = "133%";
+            }
+            if (addButton) {
+              addButton.style.bottom = "";
+            }
+          } else if (
+            window.innerWidth <= 384 &&
             window.innerWidth > 361 &&
             bottomMenu
           ) {
@@ -1463,27 +1503,35 @@
         }
       });
 
-      // Evento para verificar si el tamaño de la pantalla cambia
       window.addEventListener("resize", function () {
         const bottomMenu = document.getElementById("bottom-menu");
         const menuToggle = document.getElementById("menu-toggle");
         const movieContent = document.getElementById("movie-content");
         const addButton = document.querySelector(".add-button");
 
-        // Verifica si el elemento bottomMenu existe
         if (bottomMenu) {
-          // Verifica si el menú estaba activo antes de cambiar el tamaño de la pantalla
           const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
           if (bottomMenuVisible === "true") {
-            // Si la pantalla es pequeña, muestra el menú
-            if (window.innerWidth <= 700 && window.innerWidth > 361) {
+            if (window.innerWidth <= 700 && window.innerWidth > 384) {
               bottomMenu.style.display = "flex";
               if (menuToggle) {
                 menuToggle
                   .querySelector("ion-icon")
-                  .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+                  .setAttribute("name", "close-circle");
               }
-              // Aplica estilos cuando el menú inferior está activo al cambiar el tamaño de la pantalla
+              if (movieContent) {
+                movieContent.style.marginTop = "133%";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            } else if (window.innerWidth <= 384 && window.innerWidth > 361) {
+              bottomMenu.style.display = "flex";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "close-circle");
+              }
               if (movieContent) {
                 movieContent.style.marginTop = "75%";
               }
@@ -1495,9 +1543,8 @@
               if (menuToggle) {
                 menuToggle
                   .querySelector("ion-icon")
-                  .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+                  .setAttribute("name", "close-circle");
               }
-              // Aplica estilos cuando el menú inferior está activo al cambiar el tamaño de la pantalla
               if (movieContent) {
                 movieContent.style.marginTop = "88%";
               }
@@ -1505,15 +1552,13 @@
                 addButton.style.bottom = "";
               }
             } else {
-              // Si la pantalla es grande, oculta el menú
               bottomMenu.style.display = "none";
               if (menuToggle) {
                 menuToggle
                   .querySelector("ion-icon")
-                  .setAttribute("name", "menu"); // Cambia el icono del botón a menu
+                  .setAttribute("name", "menu");
               }
-              localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
-              // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado al cambiar el tamaño de la pantalla
+              localStorage.setItem("bottomMenuVisible", "false");
               if (movieContent) {
                 movieContent.style.marginTop = "";
               }
@@ -1522,20 +1567,19 @@
               }
             }
           } else {
-            // Si el menú estaba inactivo, ocúltalo en pantallas grandes
             if (window.innerWidth > 700 && bottomMenu) {
               bottomMenu.style.display = "none";
               if (menuToggle) {
                 menuToggle
                   .querySelector("ion-icon")
-                  .setAttribute("name", "menu"); // Cambia el icono del botón a menu
+                  .setAttribute("name", "menu");
               }
-            } else if (window.innerWidth > 361 && bottomMenu) {
+            } else if (window.innerWidth > 384 && bottomMenu) {
               bottomMenu.style.display = "none";
               if (menuToggle) {
                 menuToggle
                   .querySelector("ion-icon")
-                  .setAttribute("name", "menu"); // Cambia el icono del botón a menu
+                  .setAttribute("name", "menu");
               }
             }
           }

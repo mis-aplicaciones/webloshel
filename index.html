@@ -448,13 +448,24 @@
         #background {
           background: linear-gradient(
             to top,
-            rgba(0, 0, 0, 1) 34%,
+            rgba(0, 0, 0, 1) 40%,
             /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
               /* Termina el degradado al 30% desde abajo */
           );
         }
         #example-image {
-          height: 66%;
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #example-image2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 60%;
+          object-fit: cover;
+          z-index: -2;
         }
         /* Ajuste del botón de menú */
         #menu-toggle {
@@ -568,13 +579,24 @@
         #background {
           background: linear-gradient(
             to top,
-            rgba(0, 0, 0, 1) 25%,
+            rgba(0, 0, 0, 1) 40%,
             /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
               /* Termina el degradado al 30% desde abajo */
           );
         }
         #example-image {
-          height: 80%;
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #example-image2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 60%;
+          object-fit: cover;
+          z-index: -2;
         }
         #title-container {
           display: none;
@@ -711,7 +733,20 @@
         #sidebar {
           display: none;
         }
+        #example-image {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
 
+        #example-image2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 60%;
+          object-fit: cover;
+          z-index: -2;
+        }
         .carousel {
           margin-right: 0px;
         }
@@ -783,7 +818,7 @@
           display: none;
         }
         .quick-search-wrapper {
-          margin-left: 9%;
+          margin-left: 13%;
         }
         .quick-search-buttons a {
           padding: 15px 15px;
@@ -802,7 +837,18 @@
           );
         }
         #example-image {
-          height: 80%;
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #example-image2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
         }
         #ver-mas {
           margin: 0 40%;
@@ -845,7 +891,7 @@
           display: none;
         }
         .quick-search-wrapper {
-          margin-left: 9%;
+          margin-left: 13%;
         }
         .quick-search-buttons a {
           padding: 15px 15px;
@@ -864,7 +910,18 @@
           );
         }
         #example-image {
-          height: 80%;
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #example-image2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
         }
         #ver-mas {
           margin: 0 40%;
@@ -874,6 +931,17 @@
         }
         #ver-mas a {
           font-size: 22px;
+        }
+      }
+      /* Estilos para pantallas de televisión HD */
+      @media screen and (min-width: 801px) and (max-width: 1280px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #example-image {
+          display: block; /* Mostrar la imagen-1 en pantallas grandes */
+        }
+
+        #example-image2 {
+          display: none; /* Ocultar la imagen-2 en pantallas grandes */
         }
       }
     </style>
@@ -1328,12 +1396,14 @@
               data-duracion-minutos="6min"
               data-genero="Acción / Ciencia Ficción"
               data-bg="https://sextafila.com/wp-content/uploads/2015/10/sextafila-texto-snowpiercer2.jpg"
-              data-title-img="https://picfiles.alphacoders.com/662/66273.png"
+              data-bg2="https://es.web.img3.acsta.net/r_1280_720/pictures/210/204/21020429_20130717162635856.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/233abhqwFtzGhcWStY4eonwpVnn.png"
             >
-              <img
-                src="https://www.eloriente.net/home/wp-content/uploads/2015/10/snow-piercer12.jpg"
-                alt="Card"
-              />
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://i0.wp.com/de-pata-de-perro.yolol.net/wp-content/uploads/2018/04/snowpiercer.jpg"
+                  alt="Card"
+              /></a>
             </div>
           </div>
           <div
@@ -1476,12 +1546,14 @@
               data-duracion-minutos="27min"
               data-genero="Terror / Acción"
               data-bg="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/crawl/images/tab_bg_landscape.jpg"
+              data-bg2="https://dx35vtwkllhj9.cloudfront.net/paramountpictures/crawl/images/tab_bg_landscape.jpg"
               data-title-img="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABU9zAqzYuEzcVPqg6x3-V4JXRI-1oGrIJ2uBx_kCmsoy4BCD4ZjhMqUrskAAgg8891tfkZ1Jx5kpII27oB8e-3Z9lbAPWNuFeI-NHvIqpzrE.png"
             >
-              <img
-                src="https://i.ytimg.com/vi/VDneCGA1dQE/maxresdefault.jpg"
-                alt="Card"
-              />
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://i.ytimg.com/vi/VDneCGA1dQE/maxresdefault.jpg"
+                  alt="Card"
+              /></a>
             </div>
           </div>
           <div
@@ -1617,6 +1689,344 @@
                 src="https://facts.net/wp-content/uploads/2023/11/47-facts-about-the-movie-30-days-of-night-1698931558.jpg"
                 alt="Card"
               />
+            </div>
+          </div>
+        </div>
+        <button class="scroll-btn right">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="carousel" id="carousel5">
+        <h3>Acción</h3>
+        <button class="scroll-btn left">
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
+        <div class="card-container">
+          <!-- Tarjetas de películas para el segundo carusel -->
+          <!-- 10 Cards -->
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-047-1-6-GodzillayKong_Elnuevoimperio.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-047-1-6-GodzillayKong_Elnuevoimperio.html"
+              data-text-title="Godzilla y Kong: El nuevo imperio"
+              data-puntuacion="4.5"
+              data-edad="<i>13+</i>"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="55min"
+              data-genero="Acción / Ciencia Ficción"
+              data-bg="https://image.tmdb.org/t/p/original/C0OZH0EAxd555TauZ1EbNsrpzl.jpg"
+              data-bg2="https://static-cinecolibri.cinesync.io/images/movie/j3Z3XktmWB1VhsS8iXNcrR86PXi.jpg1"
+              data-title-img="https://image.tmdb.org/t/p/original/tPBJogC57uX3CdegyW7lhvOkHMs.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://m.media-amazon.com/images/S/pv-target-images/7d22e4e61bcdba0d0ec66eb47b03831a170a2d3eb998e7cbd05e5159a4e9c827.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-019-1-3-Nochesinpaz.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-019-1-3-Nochesinpaz.html"
+              data-text-title="Noche sin paz"
+              data-puntuacion="4"
+              data-edad="<i>16+</i>"
+              data-año="2022"
+              data-duracion-horas="1h"
+              data-duracion-minutos="52min"
+              data-genero="Acción / Comedia"
+              data-bg="https://image.tmdb.org/t/p/original/zCmf96PYMXEsCOuCiavPpbkKmgt.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/utGt9pYG7Ege20lQ8AA1RiC4Pv5.jpg"
+              data-title-img="https://is1-ssl.mzstatic.com/image/thumb/4Wbf3aqP2GxoLyArpZw93Q/480x180.webp"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://m.media-amazon.com/images/S/pv-target-images/8657a8b0749b4b043f822e590e6e52f6f2b77cd823cd66815ba48159ac7753b8.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-002-1-5-JohnWick.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-002-1-5-JohnWick.html"
+              data-text-title="John Wick"
+              data-puntuacion="4"
+              data-edad="<i>14+</i>"
+              data-año="2014"
+              data-duracion-horas="1h"
+              data-duracion-minutos="41min"
+              data-genero="Acción / Suspenso"
+              data-bg="https://image.tmdb.org/t/p/original/7dzngS8pLkGJpyeskCFcjPO9qLF.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/p1tPm6lB5i1oDjkRonCtiBsyXVo.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/2XVpZM2dsuYBOcYFYh3UdtgVsGl.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://m.media-amazon.com/images/S/pv-target-images/338941c5fb4291923caa3fa4b7eecfe24a3fc17b519d42cc8bb68aaa3fd96951.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-028-1-6-Elexpresodelmiedo.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-028-1-6-Elexpresodelmiedo.html"
+              data-text-title="
+          El expreso del miedo
+        "
+              data-puntuacion="3.5"
+              data-edad="<i>18+</i>"
+              data-año="2013"
+              data-duracion-horas="2h"
+              data-duracion-minutos="6min"
+              data-genero="Acción / Ciencia Ficción"
+              data-bg="https://sextafila.com/wp-content/uploads/2015/10/sextafila-texto-snowpiercer2.jpg"
+              data-bg2="https://es.web.img3.acsta.net/r_1280_720/pictures/210/204/21020429_20130717162635856.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/233abhqwFtzGhcWStY4eonwpVnn.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://i0.wp.com/de-pata-de-perro.yolol.net/wp-content/uploads/2018/04/snowpiercer.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-020-1-2-14-laligadelajusticiacrisisenlastierrasinfinitasparte2.html"
+              data-text-title="
+          liga de la justicia: crisis en las tierras infinitas 2
+        "
+              data-puntuacion="3"
+              data-edad="<i>14+</i>"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="33min"
+              data-genero="Acción / Aventura / Superhéroes"
+              data-bg="https://image.tmdb.org/t/p/original/8Hd8G8RCjGjvViH4nHRUzpd24Uo.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/9Sw3aHrmk5jb8BlwjTruTgGoygF.jpg"
+              data-title-img="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/82/01/3e/82013e96-863f-be14-d6e4-8fe126997bf5/tff2880198494073204467.png/480x180.webp"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://i.ytimg.com/vi/XXtJvrt6Z5U/maxresdefault.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-033-5-1-TerrorenlaAntartida.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-033-5-1-TerrorenlaAntartida.html"
+              data-text-title="
+          Terror en la Antártida
+        "
+              data-puntuacion="3"
+              data-edad="<i>16+</i>"
+              data-año="2009"
+              data-duracion-horas="1h"
+              data-duracion-minutos="41min"
+              data-genero="Suspenso / Acción"
+              data-bg="https://image.tmdb.org/t/p/original/AlYb0C4iQtId03AR3ZoSsilcPK4.jpg"
+              data-bg2="https://img-tomatazos.buscafs.com/168260/168260_800x616.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/qAYufReFyPHDMJH1frrZKtraZVX.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/1d680445-6148-41db-8397-5b65c13f2a32/25463357b854d0d62744d7ad75c8f11cbd76515a.jpg?host=wbd-images.prod-vod.h264.io&partner=beamcom"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-029-1-2-Rascacielos_rescateenlasalturas.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-029-1-2-Rascacielos_rescateenlasalturas.html"
+              data-text-title="
+          Rascacielos: rescate en las alturas
+        "
+              data-puntuacion="4"
+              data-edad="<i>12+</i>"
+              data-año="2018"
+              data-duracion-horas="1h"
+              data-duracion-minutos="43min"
+              data-genero="Acción / Aventura"
+              data-bg="https://image.tmdb.org/t/p/original/deiyoo66L1dwWvwoaMRqEvj1Hqi.jpg"
+              data-bg2="https://www.universalpictures.com.ar/tl_files/content/movies/skyscraper/skyscraper_header-mobile.jpg"
+              data-title-img="https://lh5.googleusercontent.com/proxy/tyunfupV74zIICRfZC2fjV1bgMHeMtBDdAOEFQN65hAqSmoenub3tfxqsUg0LnycYZPvOHVS9Wqu3SuF184RMlux8yYOwcIdZwJDYzy2"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/star/0FD4EDA39530B3C58DD7BE05B2651EB0A0FE6E104A5FDA6EF442292CD89038AC/scale?width=1200&aspectRatio=1.78&format=jpeg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-034-1-6-GodzillaMinusOne.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-034-1-6-GodzillaMinusOne.html"
+              data-text-title="
+          Godzilla Minus One
+        "
+              data-puntuacion="4.5"
+              data-edad="<i>16+</i>"
+              data-año="2023"
+              data-duracion-horas="2h"
+              data-duracion-minutos="5min"
+              data-genero="Acción / Ciencia Ficción"
+              data-bg="https://mxwebnuxtprod01.blob.core.windows.net/media/images/News/_1200x630_crop_center-center_82_none/20240131_Behind-the-Scenes-of-%E2%80%98Godzilla-Minus-One%E2%80%99-by-Toshihide-Miyata-01.jpg"
+              data-bg2="https://compote.slate.com/images/3ef6de7f-7114-4fe3-874f-bd898864af9e.jpeg"
+              data-title-img="https://www.godzillaminusonefyc.com/img/godzilla-minus-one-title.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://cdn.theplaylist.net/wp-content/uploads/2016/04/05095741/GodzillaMinusOne_PayoffPoster_FullRes_RGB.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-016-1-5-Codigo8parteII.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-016-1-5-Codigo8parteII.html"
+              data-text-title="
+          Codigo 8 parte II
+        "
+              data-puntuacion="3"
+              data-edad="<i>16+</i>"
+              data-año="2024"
+              data-duracion-horas="1h"
+              data-duracion-minutos="40min"
+              data-genero="Acción / Suspenso"
+              data-bg="https://image.tmdb.org/t/p/original/hKwMOnf7I2061ZsgBqctNaqSiz3.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/E8WRF90ByDw4XlzuNrnGvWtSoq.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/bWfG0L1kgjGJbFYflyowJRYrSCv.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABSLmLKCp4-hDm0wkQRoP0lyhwmTQ5Maow1bG5RK0UcupXXOMzFYmjvLgWuHh0cOA4hheY0x6BhLMjXtwsqRh2CiLRf9OkhU_UMa5WhSFL03_uxz4CmFVDhFICHYLkMoNowCTop3kgQibuCClAi0zZHYjT_KBQ4u4OqFHfPZM5p3e-2NLWiyYruv6gaEjzqmwymoqf2C0fsyyiFugra0-Dad_dMzuOM-htzvFkP68svHbMu0K2da7uo9GLm0UqLtTPc0kbFpjOFfPDazr6pOxLBiUjY3wUOVxGM_tYL-xRJOKDq-KVlMhQXLEtWU.jpg?r=214"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-046-1-3-BadBoysparaSiempre.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-046-1-3-BadBoysparaSiempre.html"
+              data-text-title="Bad Boys para Siempre"
+              data-puntuacion="4"
+              data-edad="<i>16+</i>"
+              data-año="2020"
+              data-duracion-horas="2h"
+              data-duracion-minutos="4min"
+              data-genero="Acción / Comedia"
+              data-bg="https://image.tmdb.org/t/p/original/mXYcMCaZ0KRmht7XKZhQjWyTRLL.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/eAIHqfS3kXm7kZl4j7ZBfdegyEz.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/mDt7AJV9NsaO6UxZgzdt4JEcMEN.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://image.tmdb.org/t/p/original/gDj2pexYOTNW702D6iCe9hBqmtb.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-038-1-6-ElJuez.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-038-1-6-ElJuez.html"
+              data-text-title="El Juez"
+              data-puntuacion="3"
+              data-edad="<i>14+</i>"
+              data-año="1995"
+              data-duracion-horas="1h"
+              data-duracion-minutos="36min"
+              data-genero="Acción / Ciencia Ficción"
+              data-bg="https://www.lavanguardia.com/peliculas-series/images/movie/backdrop/1995/6/w1280/baJHUXBcoaHnMf2sjwegbuhIjEV.jpg"
+              data-bg2="https://m.media-amazon.com/images/I/61hh5TOt++L._AC_UF894,1000_QL80_DpWeblab_.jpg"
+              data-title-img="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/7B9436F1E28CE05C947FDED5A6069A1A279EA46E0C69897DF401631DF57B9DE9/scale?width=600&aspectRatio=1.78&format=webp"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://m.media-amazon.com/images/S/pv-target-images/edb5af62176bc63f129eda3b9fda83440dab14dcdc0931927e678766e9dfca69.jpg"
+                  alt="Card"
+              /></a>
+            </div>
+          </div>
+
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-044-6-1-RebelMoon-Parte1_Laniñadelfuego.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-044-6-1-RebelMoon-Parte1_Laniñadelfuego.html"
+              data-text-title="Rebel Moon - Parte 1: La niña del fuego"
+              data-puntuacion="3"
+              data-edad="<i>14+</i>"
+              data-año="2023"
+              data-duracion-horas="2h"
+              data-duracion-minutos="14min"
+              data-genero="Ciencia Ficción / Acción"
+              data-bg="https://image.tmdb.org/t/p/original/58PlR5pIdgmEbRzP9yRaSskcmrW.jpg"
+              data-bg2="https://media.c5n.com/p/c2771bf3cab7fd8d1911520aef727de8/adjuntos/326/imagenes/000/235/0000235112/790x0/smart/rebel-moon-parte-uno-la-nina-del-fuego.jpeg"
+              data-title-img="https://image.tmdb.org/t/p/original/2MKFFwgVcpXvbboKBNaBzurKJS1.png"
+            >
+              <a class="imgcard" style="text-decoration: none">
+                <img
+                  src="https://img.peliplat.com/api/resize/v1?imagePath=peliplat/article/20231230/4349cb339dd06e57512f3c02b19e5565.jpeg&source=s3-peliplat"
+                  alt="Card"
+              /></a>
             </div>
           </div>
         </div>
@@ -1811,11 +2221,11 @@
           <div
             class="card-link"
             tabindex="0"
-            onclick="window.location.href='./peliculas/P-001-3-1-Planfamiliar.html';"
+            onclick="window.location.href='./peliculas/P-013-3-1-Planfamiliar.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-001-3-1-Planfamiliar.html"
+              data-vermas="./peliculas/P-013-3-1-Planfamiliar.html"
               data-text-title="Plan familiar"
               data-puntuacion="3"
               data-edad="<i>14+</i>"
@@ -2201,6 +2611,8 @@
 
     <!-- Imagen de ejemplo -->
     <img src="" alt="Ejemplo" id="example-image" />
+    <!-- Imagen de ejemplo -->
+    <img src="" alt="Ejemplo2" id="example-image2" />
     <script>
       $(document).ready(function () {
         const quickSearchWrapper = $(".quick-search-buttons");
@@ -2319,6 +2731,7 @@
         const genero = dataContent.querySelector(".genre-section");
         const verMasBtn = dataContent.querySelector("#ver-mas a");
         const exampleImage = document.getElementById("example-image");
+        const exampleImage2 = document.getElementById("example-image2");
 
         let currentCard = null; // Variable para almacenar el card actual
 
@@ -2336,6 +2749,7 @@
           const titleImageUrl = card.getAttribute("data-title-img");
           const verMasUrl = card.getAttribute("data-vermas");
           const exampleImageUrl = card.getAttribute("data-bg");
+          const exampleImage2Url = card.getAttribute("data-bg2");
 
           // Actualizar el contenido de los elementos en el DOM
           titleText.textContent = textTitle;
@@ -2349,6 +2763,7 @@
           genero.textContent = generoText;
           verMasBtn.setAttribute("href", verMasUrl);
           exampleImage.src = exampleImageUrl;
+          exampleImage2.src = exampleImage2Url;
 
           // Mostrar el div de información
           dataContent.style.display = "block";

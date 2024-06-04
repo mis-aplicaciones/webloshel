@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reproductor de Video</title>
-    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <title>Reproductor de Video con Shaka Player</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.8/video-js.min.css"
+    />
     <style>
       #my-video {
         position: fixed;
@@ -29,6 +30,8 @@
         color: #fff;
       }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.8/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.10/shaka-player.compiled.js"></script>
   </head>
   <body>
     <video
@@ -37,44 +40,31 @@
       controls
       preload="metadata"
       autoplay
+    ></video>
+    <button
+      id="cast-button"
+      class="vjs-control vjs-button"
+      title="Transmitir a dispositivo"
     >
-      <p class="vjs-no-js">
-        Para ver este video, activa JavaScript y considera actualizar a un
-        navegador web que
-        <a
-          href="https://videojs.com/html5-video-support/"
-          target="_blank"
-          rel="noopener"
-          >soporte video HTML5</a
-        >.
-      </p>
-      <button
-        id="cast-button"
-        class="vjs-control vjs-button"
-        title="Transmitir a dispositivo"
-      >
-        Cast
-      </button>
-    </video>
-
+      Cast
+    </button>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var videoElement = document.getElementById("my-video");
         var castButton = document.getElementById("cast-button");
 
-        // Integrar HLS.js
-        if (Hls.isSupported()) {
-          var hls = new Hls();
-          hls.loadSource("http://170.254.18.106/CINEMAX/index.m3u8");
-          hls.attachMedia(videoElement);
-          hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            videoElement.play();
-          });
-        } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
-          videoElement.src = "http://170.254.18.106/CINEMAX/index.m3u8";
-          videoElement.addEventListener("loadedmetadata", function () {
-            videoElement.play();
-          });
+        if (shaka.Player.isBrowserSupported()) {
+          var player = new shaka.Player(videoElement);
+          player
+            .load("http://170.254.18.106/CINEMAX/index.m3u8")
+            .then(function () {
+              console.log("The video has now been loaded!");
+            })
+            .catch(function (error) {
+              console.error("Error loading video:", error);
+            });
+        } else {
+          console.error("Browser not supported!");
         }
 
         // Funcionalidad de Cast
@@ -117,7 +107,7 @@
           console.error("Error initializing Cast API:", error);
         }
 
-        // Control de teclado para Android TV
+        // Control de Teclado para Android TV
         document.addEventListener("keydown", function (event) {
           var key = event.key;
 

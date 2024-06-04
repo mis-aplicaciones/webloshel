@@ -6,9 +6,8 @@
     <title>Reproductor de Video</title>
     <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.1/dist/videojs-contrib-hls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
-
     <style>
       #my-video {
         position: fixed;
@@ -89,8 +88,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var player = videojs("my-video", {
-          techOrder: ["html5", "flash"],
+        var videoElement = document.getElementById("my-video");
+        var player = videojs(videoElement, {
           html5: {
             hls: {
               overrideNative: true,
@@ -99,6 +98,21 @@
             nativeVideoTracks: false,
           },
         });
+
+        // Integrar HLS.js si es necesario
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource("http://170.254.18.106/CINEMAX/index.m3u8");
+          hls.attachMedia(videoElement);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            videoElement.play();
+          });
+        } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
+          videoElement.src = "http://170.254.18.106/CINEMAX/index.m3u8";
+          videoElement.addEventListener("loadedmetadata", function () {
+            videoElement.play();
+          });
+        }
 
         var castButton = document.getElementById("cast-button");
 

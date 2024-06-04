@@ -7,7 +7,6 @@
     <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
     <style>
       #my-video {
         position: fixed;
@@ -17,7 +16,6 @@
         height: 100%;
         z-index: 9999;
       }
-      /* Estilos personalizados */
       .video-js .vjs-big-play-button {
         background-color: #0077ff;
       }
@@ -30,29 +28,6 @@
       .video-js .vjs-control-text {
         color: #fff;
       }
-      .video-js .vjs-menu-button-popup .vjs-menu-content {
-        background-color: #333;
-        color: #fff;
-        border: 1px solid #fff;
-      }
-      .video-js .vjs-menu-button-popup:hover .vjs-menu-content {
-        background-color: #444;
-      }
-      .video-js .vjs-menu-button-popup .vjs-selected {
-        background-color: #0077ff;
-      }
-      .video-js .vjs-menu-button-popup .vjs-selected span {
-        color: #fff;
-      }
-      .video-js .vjs-button:hover {
-        background-color: #555;
-      }
-      .video-js .vjs-button:focus {
-        background-color: #555;
-      }
-      .video-js .vjs-volume-panel {
-        display: none;
-      }
     </style>
   </head>
   <body>
@@ -63,10 +38,6 @@
       preload="metadata"
       autoplay
     >
-      <source
-        src="http://170.254.18.106/CINEMAX/index.m3u8"
-        type="application/x-mpegURL"
-      />
       <p class="vjs-no-js">
         Para ver este video, activa JavaScript y considera actualizar a un
         navegador web que
@@ -89,17 +60,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var videoElement = document.getElementById("my-video");
-        var player = videojs(videoElement, {
-          html5: {
-            hls: {
-              overrideNative: true,
-            },
-            nativeAudioTracks: false,
-            nativeVideoTracks: false,
-          },
-        });
+        var castButton = document.getElementById("cast-button");
 
-        // Integrar HLS.js si es necesario
+        // Integrar HLS.js
         if (Hls.isSupported()) {
           var hls = new Hls();
           hls.loadSource("http://170.254.18.106/CINEMAX/index.m3u8");
@@ -114,27 +77,12 @@
           });
         }
 
-        var castButton = document.getElementById("cast-button");
-
-        // Obtener el estado del audio track seleccionado desde localStorage
-        var selectedAudioTrackIndex = localStorage.getItem(
-          "selectedAudioTrackIndex"
-        );
-
-        // Restaurar el audio track seleccionado si está almacenado
-        if (selectedAudioTrackIndex !== null) {
-          player.ready(function () {
-            player.audioTracks().selectedIndex = parseInt(
-              selectedAudioTrackIndex
-            );
-          });
-        }
-
+        // Funcionalidad de Cast
         castButton.addEventListener("click", function () {
-          castToReceiver(player);
+          castToReceiver();
         });
 
-        function castToReceiver(player) {
+        function castToReceiver() {
           if (chrome.cast.isAvailable) {
             var sessionRequest = new chrome.cast.SessionRequest(
               chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
@@ -169,15 +117,15 @@
           console.error("Error initializing Cast API:", error);
         }
 
+        // Control de teclado para Android TV
         document.addEventListener("keydown", function (event) {
           var key = event.key;
 
           if (key === "ArrowUp" || key === "ArrowDown") {
             // Navegar por los botones del reproductor
             var focusedButton = document.activeElement;
-            var buttons = player.controlBar
-              .el()
-              .querySelectorAll(".vjs-button");
+            var buttons =
+              videoElement.parentElement.querySelectorAll(".vjs-button");
 
             var index = Array.prototype.indexOf.call(buttons, focusedButton);
             var newIndex =
@@ -188,79 +136,33 @@
             buttons[newIndex].focus();
           } else if (key === "ArrowLeft" || key === "ArrowRight") {
             // Controlar el volumen del reproductor
-            var currentVolume = player.volume();
+            var currentVolume = videoElement.volume;
 
             if (key === "ArrowLeft") {
-              player.volume(Math.max(currentVolume - 0.1, 0.0));
+              videoElement.volume = Math.max(currentVolume - 0.1, 0.0);
             } else if (key === "ArrowRight") {
-              player.volume(Math.min(currentVolume + 0.1, 1.0));
+              videoElement.volume = Math.min(currentVolume + 0.1, 1.0);
             }
           } else if (key === "Enter") {
             // Reproducir / Pausar el video
-            if (player.paused()) {
-              player.play();
+            if (videoElement.paused) {
+              videoElement.play();
             } else {
-              player.pause();
+              videoElement.pause();
             }
           } else if (key === "MediaPlayPause") {
             // Reproducir / Pausar el video (botón de reproducción / pausa del control remoto)
-            if (player.paused()) {
-              player.play();
+            if (videoElement.paused) {
+              videoElement.play();
             } else {
-              player.pause();
+              videoElement.pause();
             }
           } else if (key === "MediaStop") {
             // Detener el video (botón de stop del control remoto)
-            player.pause();
-            player.currentTime(0);
+            videoElement.pause();
+            videoElement.currentTime = 0;
           }
         });
-
-        // Activar el modo de pantalla completa al iniciar la reproducción
-        player.ready(function () {
-          player.requestFullscreen();
-        });
-
-        // Ajustar automáticamente el tamaño del reproductor al tamaño de la ventana del navegador
-        window.addEventListener("resize", function () {
-          player.dimensions(window.innerWidth, window.innerHeight);
-        });
-
-        // Función para reintentar la carga del video en caso de error
-        function retryLoad() {
-          player.dispose(); // Liberar el reproductor existente para evitar problemas de carga
-          player = videojs("my-video"); // Crear un nuevo reproductor
-          player.ready(function () {
-            player.requestFullscreen(); // Activar el modo de pantalla completa al iniciar la reproducción
-            player.play(); // Comenzar la reproducción automáticamente
-            player.on("error", function () {
-              retryLoad(); // Reintentar cargar el video en caso de error
-            });
-          });
-        }
-
-        // Monitorear errores de carga y reintentar la carga del video
-        player.on("error", function () {
-          retryLoad(); // Reintentar cargar el video en caso de error
-        });
-
-        // Al cambiar la pista de audio, almacenar el índice seleccionado en localStorage
-        player.audioTracks().addEventListener("change", function () {
-          var selectedAudioTrackIndex = player.audioTracks().selectedIndex;
-          localStorage.setItem(
-            "selectedAudioTrackIndex",
-            selectedAudioTrackIndex
-          );
-        });
-
-        // Agregar botón de selección de resolución
-        player.controlBar.addChild("ResolutionMenuButton");
-
-        // Permitir que el reproductor se adapte a la resolución adecuada según el ancho de banda del usuario
-        player.tech_.hls.xhr.beforeRequest = function (options) {
-          options.uri += "?bandwidth=" + Math.floor(window.performance.now());
-          return options;
-        };
       });
     </script>
   </body>

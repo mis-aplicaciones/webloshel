@@ -3,11 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reproductor de Video con Shaka Player</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.8/video-js.min.css"
-    />
+    <title>Reproductor de Video con HLS.js</title>
     <style>
       #my-video {
         position: fixed;
@@ -16,64 +12,64 @@
         width: 100%;
         height: 100%;
         z-index: 9999;
+        background-color: black;
       }
-      .video-js .vjs-big-play-button {
+      .button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px;
         background-color: #0077ff;
+        color: white;
+        border: none;
+        cursor: pointer;
       }
-      .video-js {
-        background-color: #000000;
-      }
-      .video-js .vjs-control-bar {
-        background-color: #333;
-      }
-      .video-js .vjs-control-text {
-        color: #fff;
+      .button:focus {
+        outline: none;
       }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.8/video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.10/shaka-player.compiled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
   </head>
   <body>
-    <video
-      id="my-video"
-      class="video-js vjs-default-skin"
-      controls
-      preload="metadata"
-      autoplay
-    ></video>
-    <button
-      id="cast-button"
-      class="vjs-control vjs-button"
-      title="Transmitir a dispositivo"
-    >
-      Cast
-    </button>
+    <video id="my-video" controls autoplay></video>
+    <button id="cast-button" class="button">Transmitir</button>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var videoElement = document.getElementById("my-video");
+        var video = document.getElementById("my-video");
         var castButton = document.getElementById("cast-button");
+        var videoSrc = "http://170.254.18.106/CINEMAX/index.m3u8";
 
-        if (shaka.Player.isBrowserSupported()) {
-          var player = new shaka.Player(videoElement);
-          player
-            .load("http://170.254.18.106/CINEMAX/index.m3u8")
-            .then(function () {
-              console.log("The video has now been loaded!");
-            })
-            .catch(function (error) {
-              console.error("Error loading video:", error);
-            });
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(videoSrc);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+          });
+          hls.on(Hls.Events.ERROR, function (event, data) {
+            console.error("HLS.js error:", data);
+            hls.destroy();
+            hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+          });
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = videoSrc;
+          video.addEventListener("loadedmetadata", function () {
+            video.play();
+          });
         } else {
-          console.error("Browser not supported!");
+          console.error("HLS is not supported in this browser");
         }
 
-        // Funcionalidad de Cast
+        // Cast functionality
         castButton.addEventListener("click", function () {
-          castToReceiver();
+          castToReceiver(videoSrc);
         });
 
-        function castToReceiver() {
-          if (chrome.cast.isAvailable) {
+        function castToReceiver(videoSrc) {
+          if (chrome.cast && chrome.cast.isAvailable) {
             var sessionRequest = new chrome.cast.SessionRequest(
               chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
             );
@@ -84,38 +80,51 @@
             );
 
             chrome.cast.initialize(apiConfig, onInitSuccess, onError);
-          }
-        }
 
-        function sessionListener(session) {
-          // Manejar la conexión con el dispositivo receptor
-        }
+            function sessionListener(session) {
+              var mediaInfo = new chrome.cast.media.MediaInfo(
+                videoSrc,
+                "application/x-mpegURL"
+              );
+              var request = new chrome.cast.media.LoadRequest(mediaInfo);
 
-        function receiverListener(availability) {
-          if (availability === chrome.cast.ReceiverAvailability.AVAILABLE) {
-            castButton.style.display = "block"; // Mostrar el botón de Cast si hay dispositivos disponibles
+              session.loadMedia(request).then(
+                function () {
+                  console.log("Media loaded successfully");
+                },
+                function (errorCode) {
+                  console.log("Media load failed: " + errorCode);
+                }
+              );
+            }
+
+            function receiverListener(e) {
+              if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
+                castButton.style.display = "block";
+              } else {
+                castButton.style.display = "none";
+              }
+            }
+
+            function onInitSuccess() {
+              console.log("Cast API initialized");
+            }
+
+            function onError(error) {
+              console.error("Cast API initialization error:", error);
+            }
           } else {
-            castButton.style.display = "none"; // Ocultar el botón de Cast si no hay dispositivos disponibles
+            console.error("Cast is not available");
           }
         }
 
-        function onInitSuccess() {
-          console.log("Cast API initialized");
-        }
-
-        function onError(error) {
-          console.error("Error initializing Cast API:", error);
-        }
-
-        // Control de Teclado para Android TV
+        // Keyboard control for Android TV
         document.addEventListener("keydown", function (event) {
           var key = event.key;
 
           if (key === "ArrowUp" || key === "ArrowDown") {
-            // Navegar por los botones del reproductor
             var focusedButton = document.activeElement;
-            var buttons =
-              videoElement.parentElement.querySelectorAll(".vjs-button");
+            var buttons = document.querySelectorAll(".button");
 
             var index = Array.prototype.indexOf.call(buttons, focusedButton);
             var newIndex =
@@ -125,32 +134,28 @@
 
             buttons[newIndex].focus();
           } else if (key === "ArrowLeft" || key === "ArrowRight") {
-            // Controlar el volumen del reproductor
-            var currentVolume = videoElement.volume;
+            var currentVolume = video.volume;
 
             if (key === "ArrowLeft") {
-              videoElement.volume = Math.max(currentVolume - 0.1, 0.0);
+              video.volume = Math.max(currentVolume - 0.1, 0.0);
             } else if (key === "ArrowRight") {
-              videoElement.volume = Math.min(currentVolume + 0.1, 1.0);
+              video.volume = Math.min(currentVolume + 0.1, 1.0);
             }
           } else if (key === "Enter") {
-            // Reproducir / Pausar el video
-            if (videoElement.paused) {
-              videoElement.play();
+            if (video.paused) {
+              video.play();
             } else {
-              videoElement.pause();
+              video.pause();
             }
           } else if (key === "MediaPlayPause") {
-            // Reproducir / Pausar el video (botón de reproducción / pausa del control remoto)
-            if (videoElement.paused) {
-              videoElement.play();
+            if (video.paused) {
+              video.play();
             } else {
-              videoElement.pause();
+              video.pause();
             }
           } else if (key === "MediaStop") {
-            // Detener el video (botón de stop del control remoto)
-            videoElement.pause();
-            videoElement.currentTime = 0;
+            video.pause();
+            video.currentTime = 0;
           }
         });
       });

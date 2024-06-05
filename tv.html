@@ -112,7 +112,16 @@
       .channel-button:hover .channel-img {
         transform: scale(1.05);
       }
-
+      .hidden {
+        display: none;
+      }
+      .selected {
+        font-weight: bold;
+      }
+      .channel-button:focus {
+        border-radius: 5px;
+        outline: 3px solid yellow;
+      }
       .player {
         width: 70%;
         display: flex;
@@ -154,7 +163,7 @@
 
         .Container-playlist {
           width: 100%;
-          max-height: 360px; /* Establece una altura máxima para el contenedor del playlist */
+          max-height: 70vh; /* Establece una altura máxima para el contenedor del playlist */
           border-right: none;
           border-bottom: 2px solid #444;
           overflow-y: auto; /* Habilita el scroll vertical si es necesario */
@@ -337,6 +346,34 @@
       }
       var playerjs = new Playerjs(vs);
       playerjs.volume = 1;
+      // Focus en el primer botón
+      document.addEventListener("DOMContentLoaded", function () {
+        const channelButtons = document.querySelectorAll(".channel-button");
+        if (channelButtons.length > 0) {
+          channelButtons[0].focus();
+        }
+
+        // Navegación con el teclado
+        document.addEventListener("keydown", function (e) {
+          const focusedElement = document.activeElement;
+          if (focusedElement.classList.contains("channel-button")) {
+            let newIndex;
+            const currentIndex =
+              Array.from(channelButtons).indexOf(focusedElement);
+            if (e.key === "ArrowDown") {
+              newIndex = (currentIndex + 1) % channelButtons.length;
+              channelButtons[newIndex].focus();
+            } else if (e.key === "ArrowUp") {
+              newIndex =
+                (currentIndex - 1 + channelButtons.length) %
+                channelButtons.length;
+              channelButtons[newIndex].focus();
+            } else if (e.key === "Enter") {
+              focusedElement.click();
+            }
+          }
+        });
+      });
     </script>
     <script
       type="module"

@@ -208,9 +208,16 @@
         margin-right: 5px; /* Espacio entre los puntos y el texto */
       }
 
-      .movie-details h4 span:not(:first-of-type)::before {
-        content: "•"; /* Utiliza un punto como contenido antes de cada span excepto el primero */
+      /* Estilo específico para el punto antes de los span, excepto para el primer y último span */
+      .movie-details h4 span:not(:first-of-type):not(:last-of-type)::before {
+        content: "•"; /* Utiliza un punto como contenido antes de cada span excepto el primero y el último */
         margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      /* Estilo para que el primer y último span no tengan el punto */
+      .movie-details h4 span:first-of-type::before,
+      .movie-details h4 span:last-of-type::before {
+        content: none; /* Elimina el punto antes del primer y último span */
       }
 
       .movie-description {
@@ -1336,7 +1343,8 @@
             <h4>
               <span id="edad"><i>14+</i></span>
               <span id="año">2024</span>
-              <span id="temporada">1 Temporadas</span>
+              <span id="duracion-horas">1</span>
+              <span id="duracion-minutos">Temporada</span>
             </h4>
           </div>
         </div>
@@ -1892,6 +1900,7 @@
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        const uniqueSiteID = window.location.pathname; // Usar el pathname de la URL como ID único para cada página
         const seasonButtons = document.querySelectorAll(".season-btn");
         const episodesContainers =
           document.querySelectorAll(".episodes-buttons");
@@ -1899,21 +1908,34 @@
 
         // Load last selected season and episode from localStorage
         const lastSelectedSeason =
-          localStorage.getItem("selectedSeason") || "1";
-        const lastSelectedEpisode = localStorage.getItem("selectedEpisode");
+          localStorage.getItem(`${uniqueSiteID}_selectedSeason`) || "1";
+        const lastSelectedEpisode = localStorage.getItem(
+          `${uniqueSiteID}_selectedEpisode`
+        );
 
         // Set initial selection
-        document
-          .querySelector(`.season-btn[data-season="${lastSelectedSeason}"]`)
-          .classList.add("selected");
-        document
-          .querySelector(`.season-${lastSelectedSeason}`)
-          .classList.remove("hidden");
+        const initialSeasonButton = document.querySelector(
+          `.season-btn[data-season="${lastSelectedSeason}"]`
+        );
+        if (initialSeasonButton) {
+          initialSeasonButton.classList.add("selected");
+          document
+            .querySelector(`.season-${lastSelectedSeason}`)
+            .classList.remove("hidden");
+        } else {
+          document
+            .querySelector(`.season-btn[data-season="1"]`)
+            .classList.add("selected");
+          document.querySelector(`.season-1`).classList.remove("hidden");
+        }
 
         if (lastSelectedEpisode) {
-          document
-            .querySelector(`.episode-btn[data-url="${lastSelectedEpisode}"]`)
-            .classList.add("selected");
+          const initialEpisodeButton = document.querySelector(
+            `.episode-btn[data-url="${lastSelectedEpisode}"]`
+          );
+          if (initialEpisodeButton) {
+            initialEpisodeButton.classList.add("selected");
+          }
         }
 
         seasonButtons.forEach((button) => {
@@ -1935,11 +1957,11 @@
               .classList.remove("hidden");
 
             // Save the selected season to localStorage
-            localStorage.setItem("selectedSeason", season);
+            localStorage.setItem(`${uniqueSiteID}_selectedSeason`, season);
 
             // Clear selected episode
             episodeButtons.forEach((btn) => btn.classList.remove("selected"));
-            localStorage.removeItem("selectedEpisode");
+            localStorage.removeItem(`${uniqueSiteID}_selectedEpisode`);
           });
 
           button.addEventListener("keydown", function (e) {
@@ -1977,7 +1999,7 @@
 
             // Save the selected episode to localStorage
             const url = this.getAttribute("data-url");
-            localStorage.setItem("selectedEpisode", url);
+            localStorage.setItem(`${uniqueSiteID}_selectedEpisode`, url);
 
             // Navigate to the episode URL
             window.location.href = url;

@@ -303,7 +303,7 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s;
       }
-      #botoncompartir {
+      #botonCompartir {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -316,7 +316,7 @@
         align-items: center;
       }
 
-      #botoncompartir ion-icon {
+      #botonCompartir ion-icon {
         font-size: 24px;
       }
 
@@ -682,7 +682,7 @@
           left: 55%;
           top: 64%;
         }
-        #botoncompartir {
+        #botonCompartir {
           transition: bottom 0.5s ease;
 
           display: flex;
@@ -1368,7 +1368,7 @@
           <a id="video2" href="#">
             <ion-icon name="play"></ion-icon>Ver opc. 2
           </a>
-          <button id="botoncompartir">
+          <button id="botonCompartir">
             <ion-icon name="arrow-redo"></ion-icon>
           </button>
           <a
@@ -1574,11 +1574,17 @@
     </div>
 
     <script>
-      const botonCompartir = document.getElementById("botonCompartir");
-      botonCompartir.addEventListener("click", function () {
-        const compartirUrl =
-          "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
-        window.open(`whatsapp://send?text=${compartirUrl}`);
+      document.addEventListener("DOMContentLoaded", function () {
+        const botonCompartir = document.getElementById("botonCompartir");
+        botonCompartir.addEventListener("click", function () {
+          const compartirUrl =
+            "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
+          const movieTitle =
+            document.getElementById("movie-title-text").innerText;
+          const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
+
+          window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
+        });
       });
     </script>
     <script>
@@ -1771,7 +1777,7 @@
                 localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
                 // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
                 if (movieContent) {
-                  movieContent.style.marginTop = "75%";
+                  movieContent.style.marginTop = "35%";
                 }
                 if (addButton) {
                   addButton.style.bottom = "";
@@ -1793,7 +1799,7 @@
                 localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
                 // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
                 if (movieContent) {
-                  movieContent.style.marginTop = "88%";
+                  movieContent.style.marginTop = "52%";
                 }
                 if (addButton) {
                   addButton.style.bottom = "";
@@ -1848,7 +1854,7 @@
               .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
             // Aplica estilos cuando el menú inferior está activo al cargar la página
             if (movieContent) {
-              movieContent.style.marginTop = "75%";
+              movieContent.style.marginTop = "35%";
             }
             if (addButton) {
               addButton.style.bottom = "";
@@ -1860,7 +1866,7 @@
               .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
             // Aplica estilos cuando el menú inferior está activo al cargar la página
             if (movieContent) {
-              movieContent.style.marginTop = "88%";
+              movieContent.style.marginTop = "52%";
             }
             if (addButton) {
               addButton.style.bottom = "";
@@ -1899,7 +1905,7 @@
                   .setAttribute("name", "close-circle");
               }
               if (movieContent) {
-                movieContent.style.marginTop = "75%";
+                movieContent.style.marginTop = "35%";
               }
               if (addButton) {
                 addButton.style.bottom = "";
@@ -1912,7 +1918,7 @@
                   .setAttribute("name", "close-circle");
               }
               if (movieContent) {
-                movieContent.style.marginTop = "88%";
+                movieContent.style.marginTop = "52%";
               }
               if (addButton) {
                 addButton.style.bottom = "";

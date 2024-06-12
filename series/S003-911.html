@@ -303,7 +303,7 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s;
       }
-      #botoncompartir {
+      #botonCompartir {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -316,7 +316,7 @@
         align-items: center;
       }
 
-      #botoncompartir ion-icon {
+      #botonCompartir ion-icon {
         font-size: 24px;
       }
 
@@ -682,7 +682,7 @@
           left: 55%;
           top: 64%;
         }
-        #botoncompartir {
+        #botonCompartir {
           transition: bottom 0.5s ease;
 
           display: flex;
@@ -1699,8 +1699,9 @@
         botonCompartir.addEventListener("click", function () {
           const compartirUrl =
             "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
-          const coverUrl = document.getElementById("cover-url-2").value;
-          const mensaje = `Hola, te comparto este contenido. Lo encuentras en este enlace: ${compartirUrl}\n\nImagen de portada:\n${coverUrl}`;
+          const movieTitle =
+            document.getElementById("movie-title-text").innerText;
+          const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
 
           window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
         });

@@ -1366,7 +1366,7 @@
           <a id="video2" href="#">
             <ion-icon name="play"></ion-icon>Ver opc. 2
           </a>
-          <button id="botoncompartir">
+          <button id="botonCompartir">
             <ion-icon name="arrow-redo"></ion-icon>
           </button>
           <a
@@ -1694,11 +1694,16 @@
     </div>
 
     <script>
-      const botonCompartir = document.getElementById("botonCompartir");
-      botonCompartir.addEventListener("click", function () {
-        const compartirUrl =
-          "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
-        window.open(`whatsapp://send?text=${compartirUrl}`);
+      document.addEventListener("DOMContentLoaded", function () {
+        const botonCompartir = document.getElementById("botonCompartir");
+        botonCompartir.addEventListener("click", function () {
+          const compartirUrl =
+            "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
+          const coverUrl = document.getElementById("cover-url-2").value;
+          const mensaje = `Hola, te comparto este contenido. Lo encuentras en este enlace: ${compartirUrl}\n\nImagen de portada:\n${coverUrl}`;
+
+          window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
+        });
       });
     </script>
     <script>

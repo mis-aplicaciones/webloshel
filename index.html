@@ -367,17 +367,19 @@
 
       /* Estilos para el carusel de peliculas */
       .carousel-container {
-        width: calc(100% - 20px); /* Ajustar según sea necesario */
+        /* Ajustar según sea necesario */
         height: 170px; /* Ajustar según sea necesario */
         overflow-x: auto; /* Scroll horizontal */
         overflow-y: auto; /* Scroll vertical */
         margin-left: 7%; /* Alineación con el div de información */
       }
-
+      .carousel-container::-webkit-scrollbar {
+        display: none;
+      }
       .carousel {
         overflow: hidden;
         position: relative; /* Para posicionar los botones */
-        margin-right: 48px;
+        margin-right: 14px;
       }
       .carousel h3 {
         margin: 0;
@@ -633,7 +635,7 @@
         }
 
         #example-image2 {
-          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          display: none; /* Mostrar la imagen-2 en pantallas pequeñas */
           position: fixed;
           top: 0;
           left: 0;
@@ -2882,11 +2884,11 @@
           <div
             class="card-link"
             tabindex="0"
-            onclick="window.location.href='./peliculas/P-060-9-5-6-V/H/S/2.html';"
+            onclick="window.location.href='./peliculas/P-060-9-5-6-V_H_S_2.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-060-9-5-6-V/H/S/2.html"
+              data-vermas="./peliculas/P-060-9-5-6-V_H_S_2.html"
               data-text-title="V/H/S/2"
               data-puntuacion="3"
               data-edad="<i>18+</i>"
@@ -2907,11 +2909,11 @@
           <div
             class="card-link"
             tabindex="0"
-            onclick="window.location.href='./peliculas/P-049-9-12-Elteléfononegro.html';"
+            onclick="window.location.href='./peliculas/P-049-9-12-Eltelefononegro.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-049-9-12-Elteléfononegro.html"
+              data-vermas="./peliculas/P-049-9-12-Eltelefononegro.html"
               data-text-title="El teléfono negro"
               data-puntuacion="4"
               data-edad="<i>14+</i>"
@@ -3263,11 +3265,11 @@
           <div
             class="card-link"
             tabindex="0"
-            onclick="window.location.href='./peliculas/P-036-9-TerrorenSilentHill2_larevelación.html';"
+            onclick="window.location.href='./peliculas/P-036-9-TerrorenSilentHill2_larevelacion.html';"
           >
             <div
               class="card"
-              data-vermas="./peliculas/P-036-9-TerrorenSilentHill2_larevelación.html"
+              data-vermas="./peliculas/P-036-9-TerrorenSilentHill2_larevelacion.html"
               data-text-title="
           Terror en Silent Hill 2: la revelación
         "

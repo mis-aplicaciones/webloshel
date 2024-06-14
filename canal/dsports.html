@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canal Deportivo</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #130e27;
+      }
+      #video-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="video-container">
+      <iframe
+        src="https://tucanaldeportivo.com/directvsports.php"
+        sandbox="allow-scripts allow-same-origin"
+        allow="autoplay"
+      ></iframe>
+    </div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const iframe = document.querySelector("iframe");
+        iframe.addEventListener("load", () => {
+          iframe.contentWindow.postMessage("play", "*");
+        });
+      });
+    </script>
+  </body>
+</html>

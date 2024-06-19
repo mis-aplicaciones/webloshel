@@ -1,0 +1,1200 @@
+
+      .ubuntu-regular {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .ubuntu-bold {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      /* Estilos CSS */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Ubuntu";
+        background-color: #121212;
+        overflow: hidden;
+      }
+
+      #sidebar {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        background-color: #121212;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      #sidebar a:hover {
+        background-color: transparent;
+        color: #fff;
+      }
+
+      .menu-icon {
+        width: 30px;
+        height: 40px;
+        border-radius: 0;
+        position: relative;
+        color: #ffffff0a;
+        margin-bottom: 20px;
+        transition: color 0.3s;
+      }
+
+      .menu-icon:hover {
+        color: #818181;
+      }
+
+      .menu-icon::after {
+        content: "";
+        position: absolute;
+        top: 38px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: red;
+        transition: width 0.3s ease;
+      }
+
+      .menu-icon:hover::after {
+        width: 100%;
+      }
+
+      #menu-toggle {
+        cursor: pointer;
+        position: fixed;
+        z-index: 3;
+        top: 10px;
+        left: 15px;
+        display: none;
+      }
+
+      #user-icon {
+        margin-bottom: 8px;
+        border-radius: 50%;
+      }
+
+      #bottom-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        text-align: center;
+        display: none;
+      }
+
+      #bottom-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #bottom-menu ul li a {
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      #content {
+        margin-left: 70px;
+        padding: 0;
+        width: calc(100% - 70px);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        display: block;
+      }
+
+      #background-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 0px);
+        background: linear-gradient(
+          to top right,
+          rgb(0, 0, 0) 35%,
+          rgba(0, 0, 0, 0)
+        );
+
+        z-index: -1;
+      }
+      /* Estilo de la imagen 1 */
+      #imagen-1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Para que la imagen cubra todo el contenedor */
+        z-index: -2; /* Detrás del fondo */
+      }
+
+      #logo {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 5%;
+
+        z-index: 1001;
+      }
+
+      #movie-content {
+        position: relative;
+        z-index: 1;
+        margin-top: 5px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .movie-title {
+        max-width: 350px;
+      }
+
+      .movie-title-text {
+        font-weight: 700;
+        margin-top: 8px;
+        font-size: 22px;
+        text-transform: uppercase;
+      }
+
+      .movie-details {
+        margin-top: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .movie-details h4 {
+        display: flex;
+        align-items: center;
+      }
+
+      .movie-details h4 span {
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      /* Estilo específico para el punto antes de los span, excepto para el primer y último span */
+      .movie-details h4 span:not(:first-of-type):not(:last-of-type)::before {
+        content: "•"; /* Utiliza un punto como contenido antes de cada span excepto el primero y el último */
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      /* Estilo para que el primer y último span no tengan el punto */
+      .movie-details h4 span:first-of-type::before,
+      .movie-details h4 span:last-of-type::before {
+        content: none; /* Elimina el punto antes del primer y último span */
+      }
+
+      .movie-description {
+        margin-top: 0px;
+        max-width: 500px;
+        line-height: 1.1;
+      }
+
+      .movie-buttons {
+        margin-top: 29px;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        display: none;
+      }
+
+      .movie-buttons a,
+      .movie-buttons button {
+        background-color: white;
+        color: black;
+        border: 2px solid transparent;
+        border-radius: 2px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        text-decoration: none;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      }
+
+      .movie-buttons a:hover,
+      .movie-buttons button:hover {
+        background-color: #747dfc;
+        color: white;
+      }
+      .button-aditional {
+        display: flex;
+        position: relative;
+        justify-content: space-between; /* Distribuir botones horizontalmente */
+        left: 30px;
+        top: 16px;
+      }
+      .donar-button {
+        display: none;
+        width: 150px;
+        position: relative;
+        left: 108px;
+        bottom: 10px;
+        padding: 10px;
+        text-align: center; /* Alinear contenido al centro */
+      }
+      .donar-button a {
+        display: flex;
+        width: 120px;
+        height: 40px;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        align-items: center; /* Alinear contenido verticalmente */
+        justify-content: center; /* Alinear contenido horizontalmente */
+        background-color: #3f51b5; /* Color de fondo */
+        color: white; /* Color del texto */
+        border: none; /* Sin borde */
+        border-radius: 8px; /* Esquinas ligeramente redondeadas */
+        text-decoration: none; /* Sin subrayado */
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Transición suave */
+      }
+      .add-button {
+        text-align: center;
+        position: relative;
+        display: none; /* flex */
+        left: 20px;
+      }
+
+      .add-button a {
+        display: block;
+        width: 40px;
+        height: 40px;
+        background-color: #3f51b5;
+        border-radius: 50%;
+        line-height: 50px;
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+      #botonCompartir {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #botonCompartir ion-icon {
+        font-size: 24px;
+      }
+
+      #canal {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+      #canal a {
+        text-decoration: none;
+      }
+      #canal ion-icon {
+        font-size: 24px;
+      }
+      .add-button a:hover,
+      .donar-button a:hover {
+        background-color: #303f9f; /* Color de fondo al pasar el mouse */
+      }
+
+      .add-button a ion-icon {
+        margin-bottom: 0px;
+      }
+
+      .add-button a span {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        display: block;
+        font-size: 12px;
+        margin-top: -16px;
+      }
+
+      #carrusel-container {
+        display: none;
+      }
+
+      #movie-content > * {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        margin: 0;
+      }
+
+      h4 i {
+        background-color: #3f51b5;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      p {
+        font-size: 17px;
+        font-family: "Ubuntu";
+        font-weight: 400;
+        margin: 20px 0 0;
+        text-align: justify;
+      }
+
+      .movie-rating {
+        font-size: x-large;
+        color: white;
+        margin-bottom: 10px;
+        display: flex;
+        width: 42%;
+        align-items: center; /* Alinea los elementos en el centro verticalmente */
+      }
+
+      .movie-details-and-rating {
+        display: flex;
+        justify-content: space-between; /* Espacio uniforme entre los elementos */
+        align-items: center; /* Alinea los elementos en el centro verticalmente */
+        width: 90%; /* Ocupa todo el ancho disponible */
+      }
+
+      .movie-details-and-rating .movie-details,
+      .movie-details-and-rating .movie-rating {
+        flex-grow: 1; /* Distribuye el espacio disponible uniformemente */
+      }
+
+      /* Estilos para pantallas normales */
+      .genre-section {
+        font-size: larger;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        color: #3f51b5;
+      }
+
+      .genre-section span {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        position: relative;
+        bottom: 15px;
+      }
+
+      #main-container {
+        width: 100%;
+      }
+
+      #seasons-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        padding: 0 0 10px;
+        overflow-x: auto;
+        scrollbar-width: none; /* For Firefox */
+      }
+
+      #seasons-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Opera */
+      }
+
+      #seasons-title {
+        color: white;
+        background-color: transparent;
+        margin-right: 20px;
+        margin-left: 5px;
+        white-space: nowrap;
+      }
+
+      #seasons-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .season-btn {
+        background-color: transparent;
+        color: white;
+        border: none;
+        position: relative;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        outline: none; /* Remove default outline */
+      }
+
+      .season-btn.selected::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 2px;
+        background-color: red;
+      }
+
+      .season-btn:focus {
+        background-color: #4e4e4e; /* Custom focus style */
+      }
+
+      #episodes-container {
+        width: 100%;
+        overflow-x: auto;
+        padding: 10px 0;
+        white-space: nowrap;
+      }
+
+      #episodes-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Opera */
+      }
+
+      .episodes-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .episode-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        outline: none; /* Remove default outline */
+      }
+
+      .episode-btn img {
+        width: 140px;
+        height: 80px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .episode-btn .title {
+        position: absolute;
+        bottom: 10px; /* Positioning the title 10px from the bottom */
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        background: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Adds a background for better readability */
+        padding: 5px 10px; /* Adds some padding around the text */
+        border-radius: 5px; /* Rounds the corners of the background */
+        z-index: 1; /* Ensures the title appears above the image */
+        width: calc(
+          100% - 20px
+        ); /* Ensures the title spans almost the full width */
+        text-align: center; /* Centers the text horizontally */
+      }
+      .episode-btn.selected img {
+        opacity: 0.5;
+      }
+
+      .episode-btn:focus img {
+        outline: 2px solid red; /* Custom focus style */
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media only screen and (max-width: 384px) {
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgb(0, 0, 0) 35%,
+            rgba(0, 0, 0, 0)
+          );
+
+          z-index: -1;
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
+        }
+
+        #logo {
+          width: 10%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        .movie-details {
+          margin-bottom: 3px;
+        }
+        .movie-buttons {
+          margin-top: 10px;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+          flex-direction: column;
+          align-items: flex-start;
+          overflow-y: auto;
+        }
+        .movie-title-text {
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+          width: 63%;
+        }
+        .movie-details h4 span {
+          margin-right: 13px;
+          font-size: 13px;
+        }
+        #movie-content {
+          margin-top: 70%;
+          padding: 8px;
+          transition: margin-top 0.5s ease;
+        }
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 15px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 15px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          display: flex;
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 530px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: none;
+        }
+        .add-button a span {
+          display: none;
+        }
+        .button-aditional {
+          position: fixed;
+          left: 55%;
+          top: 64%;
+        }
+        #botonCompartir {
+          transition: bottom 0.5s ease;
+
+          display: flex;
+        }
+        #canal {
+          left: 70%;
+          bottom: none;
+          transition: bottom 0.5s ease;
+
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 17px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+        #seasons-carousel-container {
+          background-color: #12121200;
+          padding: 0;
+          width: 100%;
+          border-radius: 0;
+          position: static;
+          max-height: 80vh;
+        }
+
+        .episodes {
+          max-height: none; /* Remove max-height restriction */
+          display: none; /* para ocultar los episodios */
+          flex-direction: row; /* Arrange episodes in a row */
+          overflow-x: auto; /* Enable horizontal scrolling */
+          overflow-y: hidden; /* Prevent vertical scrolling */
+          margin-left: 0;
+          white-space: nowrap; /* Prevent episodes from wrapping to the next line */
+        }
+
+        .expanded .episodes {
+          display: flex; /* para expandir los episodios en horizontal */
+        }
+
+        .episode {
+          flex: 0 0 auto;
+          margin-right: 10px; /* Add spacing between episodes */
+          display: block;
+          position: relative; /* Ensure the title is positioned relative to the episode */
+        }
+
+        .episode img {
+          display: block;
+        }
+
+        .episode-info {
+          display: none; /* Hide the additional info on small screens */
+        }
+
+        .episode-title {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background-color: rgba(
+            0,
+            0,
+            0,
+            0.7
+          ); /* Add background for better visibility */
+          color: #fff;
+          padding: 2px 5px;
+          border-radius: 3px;
+          font-size: 12px; /* Adjust font size for smaller screens */
+          z-index: 1; /* Ensure the title appears above the image */
+        }
+      }
+
+      @media only screen and (max-width: 360px) {
+        #movie-content {
+          margin-top: 88%;
+        }
+        .add-button {
+          bottom: 625px;
+        }
+        .compartir {
+          bottom: 555px;
+        }
+        .canal {
+          bottom: 485px;
+        }
+      }
+      @media only screen and (min-width: 385px) and (max-width: 700px) {
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 30px;
+          text-align: center;
+        }
+        #movie-content {
+          margin-top: 120%;
+          padding: 10px;
+          transition: margin-top 0.5s ease;
+        }
+        .movie-rating {
+          font-size: 30px;
+        }
+
+        h4 {
+          display: flex;
+
+          position: absolute;
+          margin: -11px;
+          right: 30px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 18px;
+          width: 150px;
+          left: 100px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 775px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        .compartir {
+          left: 14px;
+          bottom: 700px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 620px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 25px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s; /* posicionar al centro los botones del menu inferior */
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+      }
+
+      /* Estilos para pantallas de televisión SD */
+      @media only screen and (min-width: 480px) and (max-width: 767px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #imagen-1 {
+          display: block; /* Mostrar la imagen-1 en pantallas grandes */
+        }
+
+        #imagen-2 {
+          display: none; /* Ocultar la imagen-2 en pantallas grandes */
+        }
+        #movie-content > * {
+          margin-bottom: 3px;
+        }
+        .movie-title-text {
+          margin-top: 5px;
+
+          font-size: 22px;
+        }
+        #movie-content {
+          margin-top: 30px;
+
+          padding: 10px;
+        }
+        p {
+          font-size: 10px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 10px 0 0;
+          text-align: justify;
+        }
+        .movie-rating {
+          font-size: large;
+        }
+        .movie-description {
+          max-width: 375px;
+        }
+        .movie-details h4 span {
+          margin-right: 7px;
+          font-size: 11px;
+        }
+        .genre-section {
+          font-size: 14px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 7px 10px;
+
+          font-size: 12px;
+        }
+        .donar-button a {
+          width: 105px;
+          height: 33px;
+
+          font-size: 12px;
+        }
+        #content {
+          margin-left: 50px;
+
+          width: calc(100% - 50px);
+        }
+        .menu-icon {
+          width: 25px;
+          height: 20px;
+        }
+        .button-aditional {
+          left: 5px;
+          top: 13px;
+        }
+        .add-button a {
+          width: 30px;
+          height: 30px;
+
+          line-height: 40px;
+
+          font-size: 24px;
+        }
+        .add-button a span {
+          font-size: 9px;
+        }
+        .donar-button {
+          left: 82px;
+        }
+        .movie-title {
+          max-width: 290px;
+        }
+
+        #sidebar {
+          width: 50px;
+        }
+
+        .description {
+          width: 320px;
+        }
+        header {
+          height: 30px;
+          left: 67px;
+          top: 300px;
+          width: calc(100% - 89px);
+        }
+
+        .quick-search-buttons a {
+          font-size: 11px;
+
+          padding: 5px 10px;
+          margin-right: 8px;
+        }
+      }
+      /* Estilos para pantallas de televisión HD */
+      @media only screen and (min-width: 768px) and (max-width: 1280px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #imagen-1 {
+          display: block; /* Mostrar la imagen-1 en pantallas grandes */
+        }
+
+        #imagen-2 {
+          display: none; /* Ocultar la imagen-2 en pantallas grandes */
+        }
+        .movie-title {
+          max-width: 250px;
+        }
+        #movie-content > * {
+          margin-bottom: 5px;
+        }
+        .movie-details h4 span {
+          margin-right: 5px;
+        }
+
+        p {
+          font-size: 14px;
+
+          margin: 10px 0 0;
+        }
+        #movie-content {
+          padding: 15px;
+        }
+        .genre-section {
+          font-size: 19px;
+        }
+
+        .movie-buttons {
+          margin-top: 10px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 7px 12px;
+
+          margin-right: 18px;
+        }
+        .donar-button {
+          left: 87px;
+          bottom: 6px;
+          padding: 4px;
+        }
+        .button-aditional {
+          left: 24px;
+          top: 15px;
+        }
+        .add-button a {
+          width: 35px;
+          height: 35px;
+
+          line-height: 43px;
+
+          font-size: 20px;
+        }
+        #content {
+          margin-left: 70px;
+          width: calc(100% - 70px);
+        }
+        #sidebar {
+          width: 70px;
+        }
+        .movie-description {
+          max-width: 440px;
+          line-height: 1.05;
+        }
+      }
+
+      /* Estilos para pantallas de televisión Full HD */
+      @media only screen and (min-width: 1281px) and (max-width: 1920px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #imagen-2 {
+          display: none;
+        }
+        .movie-title {
+          max-width: 650px;
+        }
+        .movie-title-text {
+          font-size: 42px;
+        }
+        #movie-content {
+          margin-top: 180px;
+        }
+        .movie-description {
+          max-width: 830px;
+        }
+        p {
+          font-size: 25px;
+        }
+        .genre-section {
+          font-size: 32px;
+        }
+        .movie-rating {
+          font-size: xxx-large;
+        }
+        h4 {
+          font-size: 28px;
+        }
+        .movie-buttons {
+          font-size: 35px;
+        }
+        .donar-button a {
+          width: 280px;
+
+          height: 76px;
+          font-size: 30px;
+        }
+        .add-button a {
+          width: 80px;
+          height: 80px;
+          font-size: 60px;
+          line-height: 100px;
+        }
+        .add-button a span {
+          font-size: 26px;
+          margin-top: -35px;
+        }
+      }
+
+      /* Estilos para pantallas de televisión 4K */
+      @media only screen and (min-width: 1921px) {
+        /* Agrega estilos adicionales según sea necesario */
+      }
+ 

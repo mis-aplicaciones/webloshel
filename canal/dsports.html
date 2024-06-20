@@ -46,6 +46,8 @@
     </div>
 
     <script>
+      let isAndroidTV = false;
+
       function reloadIframe() {
         const iframe = document.getElementById("videoFrame");
         const src = iframe.src;
@@ -54,7 +56,6 @@
       }
 
       function blockPopups() {
-        const open = window.open;
         window.open = function () {
           console.log("Popup blocked");
           return null;
@@ -72,10 +73,33 @@
       }
 
       function handleOverlayClick() {
-        document.getElementById("overlay").style.display = "none";
+        // Delay interaction to avoid triggering popups
+        setTimeout(() => {
+          document.getElementById("overlay").style.display = "none";
+        }, 3000); // 3 seconds delay
+      }
+
+      function detectAndroidTV() {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes("Android") && userAgent.includes("TV")) {
+          isAndroidTV = true;
+        }
+      }
+
+      function handleKeyDown(event) {
+        if (isAndroidTV && event.key === "Enter") {
+          const overlay = document.getElementById("overlay");
+          if (overlay.style.display !== "none") {
+            handleOverlayClick();
+          } else {
+            const iframe = document.getElementById("videoFrame");
+            iframe.contentWindow.postMessage("play", "*");
+          }
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
+        detectAndroidTV();
         blockPopups();
 
         const iframe = document.getElementById("videoFrame");
@@ -83,12 +107,12 @@
 
         overlay.addEventListener("click", handleOverlayClick);
 
-        // Add event listener for reload logic
+        document.addEventListener("keydown", handleKeyDown);
+
         iframe.addEventListener("load", function () {
           console.log("Iframe loaded");
         });
 
-        // Check for video errors periodically
         setInterval(() => {
           const iframeDoc =
             iframe.contentDocument || iframe.contentWindow.document;

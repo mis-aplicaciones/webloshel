@@ -294,7 +294,7 @@
             </button>
             <button
               class="channel-button"
-              onclick="openFullScreenWindow('https://betzta.com/canales.php?stream=ds')"
+              onclick="window.location.href='./canal/dsports.html'"
             >
               <div class="channel-img">
                 <img src="./canal icon/CANAL dsports.jpg" alt="CDK" />
@@ -492,17 +492,6 @@
           }
         });
       });
-    </script>
-    <script>
-      function openFullScreenWindow(url) {
-        var width = screen.width;
-        var height = screen.height;
-        window.open(
-          url,
-          "popupWindow",
-          `width=${width},height=${height},left=0,top=0`
-        );
-      }
     </script>
     <script
       type="module"

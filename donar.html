@@ -3,41 +3,201 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="donaciones.css" />
     <title>Donar</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background: url("https://i.blogs.es/e7c3e3/yt-efilm/1366_2000.jpg")
+          no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 70px;
+        height: auto;
+      }
+      .fondo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+      .metodo1 {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 800px;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        margin: 10px;
+      }
+      .descripcion {
+        flex: 1;
+        padding-right: 20px;
+      }
+      .descripcion p {
+        margin: 0px 0px 35px;
+        color: #333;
+        font-size: 1.1em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+      .paypal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .paypal .qr {
+        width: 200px;
+        height: 200px;
+        background: url("LoShel Movie-qrcode.png") no-repeat center center;
+        background-size: contain;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .paypal .paypal-logo {
+        width: 200px;
+        height: auto;
+      }
+      .paypal-btn {
+        display: none;
+        width: 200px;
+        height: auto;
+        cursor: pointer;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .paypal-btn img {
+        width: 100%;
+        height: auto;
+      }
+      .paypal-btn-text {
+        margin-top: 10px;
+        font-size: 1em;
+        color: #0070ba;
+      }
+      .volver-btn {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #0070ba;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .volver-btn:focus,
+      .volver-btn:hover {
+        outline: none;
+        background-color: #004b7c;
+        box-shadow: 0 0 10px rgba(0, 62, 104, 0.7);
+      }
+      h1 {
+        color: #333;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 720px) {
+        .metodo1 {
+          flex-direction: column;
+          align-items: center;
+          padding: 20px;
+          margin: 10px;
+        }
+        .descripcion {
+          padding: 0;
+          margin-bottom: 20px;
+        }
+        .descripcion p {
+          margin: 0px;
+        }
+        .paypal .qr,
+        .paypal .paypal-logo {
+          display: none;
+        }
+        .paypal-btn {
+          display: block;
+        }
+        h1 {
+          margin-bottom: 10px;
+          margin-top: 0;
+        }
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <h1>Donaciones</h1>
-    </header>
-    <div class="contenedor">
-      <div class="descripcion">
-        <p>
-          Estimado usuario: Por favor, no ignore este mensaje. LoShel Movie es
-          una aplicación sin fines de lucro que cuenta con contenido vareado y
-          no tiene publicidad molesta, impulsado por donaciones en línea con un
-          promedio de $9. Únase con una pequeña donación y haga que el contenido
-          crezca día a día. Si nuestra aplicación le resulta útil, porfavor
-          colabore. Tu apoyo es importante para la plataforma, con él podemos
-          mejorar y subir mas contenido de buena calidad y añadir mas funciones.
-        </p>
-      </div>
-      <div class="metodos">
-        <div class="paypal">
-          <a
-            href="https://www.paypal.com/donate/?hosted_button_id=7WFZ29UM2R3P6"
-          
-            ><img
-              src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-              alt="paypal"
-          /></a>
-          <h2>Valido para cualquier parte del mundo</h2>
+    <img src="logo001.png" alt="Logo de la página" class="logo" />
+    <div class="fondo">
+      <div class="metodo1">
+        <div class="descripcion">
+          <h1>Donar</h1>
+          <p>
+            LoShel Movie es una aplicación sin fines de lucro que ofrece
+            contenido variado sin publicidad molesta. Nos sostenemos con
+            donaciones de usuarios como tú, con un promedio de $3. Tu donación
+            nos ayuda a mejorar y aumentar nuestro contenido de calidad. Si
+            encuentras útil nuestra aplicación, por favor, considera apoyar.
+            ¡Gracias por tu contribución!
+          </p>
         </div>
-        <div class="yape">
-          <a href="#"><img src="imagenes/qr yape.jpeg" alt="yape" /></a>
-          <h3>Solo valido para Perú</h3>
+        <div class="paypal">
+          <div class="qr"></div>
+          <img
+            src="https://psspeech.com/wp-content/uploads/2018/03/paypal-logo-small-min-1.png"
+            alt="PayPal Logo"
+            class="paypal-logo"
+          />
+          <div class="paypal-btn" onclick="openPaypal()">
+            <img
+              src="https://s3-us-west-1.amazonaws.com/donorbox/froala_images/5f479641-bc60-43d9-b19b-42d90f5909e0.jpg"
+              alt="Donar con PayPal"
+            />
+            <div class="paypal-btn-text">Haz click aquí para donar</div>
+          </div>
         </div>
       </div>
     </div>
+    <button class="volver-btn" onclick="window.history.back()">Volver</button>
+    <script>
+      function openPaypal() {
+        window.open(
+          "https://www.paypal.com/ncp/payment/DW9PQPQDC8JWN",
+          "paypal",
+          "width=600,height=600"
+        );
+      }
+
+      // Soporte para control remoto
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.key === "Enter" &&
+          document.activeElement === document.querySelector(".volver-btn")
+        ) {
+          window.history.back();
+        }
+      });
+    </script>
   </body>
 </html>

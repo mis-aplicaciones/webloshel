@@ -56,6 +56,7 @@
       }
 
       function blockPopups() {
+        const open = window.open;
         window.open = function () {
           console.log("Popup blocked");
           return null;
@@ -87,7 +88,7 @@
       }
 
       function handleKeyDown(event) {
-        if (isAndroidTV && event.key === "Enter") {
+        if (isAndroidTV && (event.key === "Enter" || event.keyCode === 13)) {
           const overlay = document.getElementById("overlay");
           if (overlay.style.display !== "none") {
             handleOverlayClick();
@@ -96,6 +97,32 @@
             iframe.contentWindow.postMessage("play", "*");
           }
         }
+      }
+
+      function monitorIframe() {
+        const iframe = document.getElementById("videoFrame");
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node.tagName === "A" ||
+                node.tagName === "SCRIPT" ||
+                node.tagName === "IFRAME"
+              ) {
+                node.parentNode.removeChild(node);
+                console.log("Ad element removed");
+              }
+            });
+          });
+        });
+
+        observer.observe(
+          iframe.contentDocument || iframe.contentWindow.document,
+          {
+            childList: true,
+            subtree: true,
+          }
+        );
       }
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -110,6 +137,7 @@
         document.addEventListener("keydown", handleKeyDown);
 
         iframe.addEventListener("load", function () {
+          monitorIframe();
           console.log("Iframe loaded");
         });
 

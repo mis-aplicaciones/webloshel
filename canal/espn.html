@@ -24,6 +24,15 @@
         height: 100%;
         border: none;
       }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0);
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
@@ -33,9 +42,12 @@
         src="https://betzta.com/tv/espnco.php"
         allowfullscreen
       ></iframe>
+      <div id="overlay" class="overlay"></div>
     </div>
 
     <script>
+      let isAndroidTV = false;
+
       function reloadIframe() {
         const iframe = document.getElementById("videoFrame");
         const src = iframe.src;
@@ -44,23 +56,91 @@
       }
 
       function blockPopups() {
+        const open = window.open;
         window.open = function () {
           console.log("Popup blocked");
           return null;
         };
+        document.addEventListener(
+          "click",
+          function (event) {
+            if (event.target.tagName === "A") {
+              event.preventDefault();
+              console.log("Link click blocked");
+            }
+          },
+          true
+        );
+      }
+
+      function handleOverlayClick() {
+        // Delay interaction to avoid triggering popups
+        setTimeout(() => {
+          document.getElementById("overlay").style.display = "none";
+        }, 3000); // 3 seconds delay
+      }
+
+      function detectAndroidTV() {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes("Android") && userAgent.includes("TV")) {
+          isAndroidTV = true;
+        }
+      }
+
+      function handleKeyDown(event) {
+        if (isAndroidTV && (event.key === "Enter" || event.keyCode === 13)) {
+          const overlay = document.getElementById("overlay");
+          if (overlay.style.display !== "none") {
+            handleOverlayClick();
+          } else {
+            const iframe = document.getElementById("videoFrame");
+            iframe.contentWindow.postMessage("play", "*");
+          }
+        }
+      }
+
+      function monitorIframe() {
+        const iframe = document.getElementById("videoFrame");
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node.tagName === "A" ||
+                node.tagName === "SCRIPT" ||
+                node.tagName === "IFRAME"
+              ) {
+                node.parentNode.removeChild(node);
+                console.log("Ad element removed");
+              }
+            });
+          });
+        });
+
+        observer.observe(
+          iframe.contentDocument || iframe.contentWindow.document,
+          {
+            childList: true,
+            subtree: true,
+          }
+        );
       }
 
       document.addEventListener("DOMContentLoaded", () => {
+        detectAndroidTV();
         blockPopups();
 
         const iframe = document.getElementById("videoFrame");
+        const overlay = document.getElementById("overlay");
 
-        // Add event listener for reload logic
+        overlay.addEventListener("click", handleOverlayClick);
+
+        document.addEventListener("keydown", handleKeyDown);
+
         iframe.addEventListener("load", function () {
+          monitorIframe();
           console.log("Iframe loaded");
         });
 
-        // Check for video errors periodically
         setInterval(() => {
           const iframeDoc =
             iframe.contentDocument || iframe.contentWindow.document;

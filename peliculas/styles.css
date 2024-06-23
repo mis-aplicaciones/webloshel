@@ -1,0 +1,1008 @@
+
+      .ubuntu-regular {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      .ubuntu-bold {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+      /* Estilos CSS */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Ubuntu";
+        background-color: #121212;
+        overflow: hidden;
+      }
+      #sidebar {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        background-color: #121212;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      #sidebar a:hover {
+        background-color: transparent;
+        color: #fff;
+      }
+
+      .menu-icon {
+        width: 30px;
+        height: 40px;
+        border-radius: 0;
+        position: relative;
+        color: #ffffff0a;
+        margin-bottom: 20px;
+        transition: color 0.3s;
+      }
+
+      .menu-icon:hover {
+        color: #818181;
+      }
+
+      .menu-icon::after {
+        content: "";
+        position: absolute;
+        top: 38px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: red;
+        transition: width 0.3s ease;
+      }
+
+      .menu-icon:hover::after {
+        width: 100%;
+      }
+
+      #menu-toggle {
+        cursor: pointer;
+        position: fixed;
+        z-index: 3;
+        top: 10px;
+        left: 15px;
+        display: none;
+      }
+
+      #user-icon {
+        margin-bottom: 8px;
+        border-radius: 50%;
+      }
+
+      #bottom-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        text-align: center;
+        display: none;
+      }
+
+      #bottom-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #bottom-menu ul li a {
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      #content {
+        margin-left: 70px;
+        padding: 0;
+        width: calc(100% - 70px);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+
+      #background-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 0px);
+        background: linear-gradient(
+          to top right,
+          rgb(0, 0, 0) 40%,
+          rgba(0, 0, 0, 0)
+        );
+
+        z-index: -1;
+      }
+      /* Estilo de la imagen 1 */
+      #imagen-1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Para que la imagen cubra todo el contenedor */
+        z-index: -2; /* Detrás del fondo */
+      }
+
+      #logo {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 5%;
+
+        z-index: 1001;
+      }
+
+      #movie-content {
+        position: relative;
+        z-index: 1;
+        margin-top: 100px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+
+      .movie-title {
+        max-width: 350px;
+      }
+
+      .movie-title-text {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .movie-details {
+        margin-top: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      /* Estilo para los puntos en los detalles de la película */
+      .movie-details h4 span {
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      /* Estilo específico para el punto antes de los span, excepto para el primer y último span */
+      .movie-details h4 span:not(:first-of-type):not(:last-of-type)::before {
+        content: "•"; /* Utiliza un punto como contenido antes de cada span excepto el primero y el último */
+        margin-right: 5px; /* Espacio entre los puntos y el texto */
+      }
+
+      /* Estilo para que el primer y último span no tengan el punto */
+      .movie-details h4 span:first-of-type::before,
+      .movie-details h4 span:last-of-type::before {
+        content: none; /* Elimina el punto antes del primer y último span */
+      }
+
+      .movie-description {
+        margin-top: 0px;
+        max-width: 500px;
+        line-height: 1.1;
+      }
+
+      .movie-buttons {
+        margin-top: 29px;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        display: flex;
+      }
+
+      .movie-buttons a,
+      .movie-buttons button {
+        background-color: white;
+        color: black;
+        border: 2px solid transparent;
+        border-radius: 2px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        text-decoration: none;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      }
+
+      .movie-buttons a:hover,
+      .movie-buttons button:hover {
+        background-color: #747dfc;
+        color: white;
+      }
+      .button-aditional {
+        display: flex;
+        position: relative;
+        justify-content: space-between; /* Distribuir botones horizontalmente */
+        left: 30px;
+        top: 16px;
+      }
+      .donar-button {
+        width: 150px;
+        position: relative;
+        left: 108px;
+        bottom: 10px;
+        padding: 10px;
+        text-align: center; /* Alinear contenido al centro */
+      }
+      .donar-button a {
+        display: flex;
+        width: 120px;
+        height: 40px;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        align-items: center; /* Alinear contenido verticalmente */
+        justify-content: center; /* Alinear contenido horizontalmente */
+        background-color: #3f51b5; /* Color de fondo */
+        color: white; /* Color del texto */
+        border: none; /* Sin borde */
+        border-radius: 8px; /* Esquinas ligeramente redondeadas */
+        text-decoration: none; /* Sin subrayado */
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Transición suave */
+      }
+      .add-button {
+        text-align: center;
+        position: relative;
+        display: flex;
+        left: 20px;
+      }
+
+      .add-button a {
+        display: block;
+        width: 40px;
+        height: 40px;
+        background-color: #3f51b5;
+        border-radius: 50%;
+        line-height: 50px;
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+      #botonCompartir {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #3f51b5;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #botonCompartir ion-icon {
+        font-size: 24px;
+      }
+      .canal {
+        display: none;
+      }
+      .canal a {
+        display: block;
+        width: 40px;
+        height: 40px;
+        background-color: #3f51b5;
+        border-radius: 50%;
+        line-height: 50px;
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+      .canal a ion-icon {
+        margin-bottom: 2px;
+        margin-left: 8px;
+      }
+      .add-button a:hover,
+      .donar-button a:hover {
+        background-color: #303f9f; /* Color de fondo al pasar el mouse */
+      }
+
+      .add-button a ion-icon {
+        margin-bottom: 0px;
+      }
+
+      .add-button a span {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        display: block;
+        font-size: 12px;
+        margin-top: -16px;
+      }
+
+      #carrusel-container {
+        display: none;
+      }
+
+      #movie-content > * {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        margin: 0;
+      }
+
+      h4 i {
+        background-color: #3f51b5;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      p {
+        font-size: 17px;
+        font-family: "Ubuntu";
+        font-weight: 400;
+        margin: 20px 0 0;
+        text-align: justify;
+      }
+
+      .movie-rating {
+        font-size: x-large;
+        width: 80%;
+        color: white;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center; /* Alinea los elementos en el centro verticalmente */
+      }
+
+      .movie-details-and-rating {
+        display: flex;
+        justify-content: space-between; /* Espacio uniforme entre los elementos */
+        align-items: center; /* Alinea los elementos en el centro verticalmente */
+        width: 40%; /* Ocupa todo el ancho disponible */
+      }
+
+      .movie-details-and-rating .movie-details,
+      .movie-details-and-rating .movie-rating {
+        flex-grow: 1; /* Distribuye el espacio disponible uniformemente */
+      }
+
+      .genre-section {
+        font-size: larger;
+        font-family: "Ubuntu";
+        font-weight: 700;
+        color: #3f51b5;
+      }
+
+      .genre-section span {
+        font-family: "Ubuntu";
+        font-weight: 700;
+        position: relative;
+        bottom: 15px;
+      }
+      @media only screen and (max-width: 412px) {
+        #sidebar {
+          display: none;
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 65%;
+          object-fit: cover;
+          z-index: -2;
+        }
+        #logo {
+          width: 12%;
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 24px;
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+        }
+        .movie-details h4 span {
+          margin-right: 8px;
+          font-size: 14px;
+        }
+        #movie-content {
+          position: absolute;
+          bottom: 10px;
+          top: auto; /* Para asegurar que la parte superior no afecte la posición */
+          padding: 8px;
+          width: calc(100% - 16px); /* Ajustamos el ancho para el padding */
+          max-height: calc(
+            100% - 10px
+          ); /* Aseguramos que el contenido no exceda la altura */
+          overflow-y: auto; /* Añadimos scroll si el contenido excede la altura */
+        }
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 16px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 20px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 88%;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        #botonCompartir {
+          transition: bottom 0.5s ease;
+          left: 14px;
+          bottom: 80%;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 71%;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 18px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+        #movie-content {
+          transition: bottom 0.3s ease; /* Agrega transición suave */
+        }
+
+        #bottom-menu {
+          display: none; /* Inicialmente oculto */
+          transition: bottom 0.3s ease, display 0.3s ease; /* Agrega transición suave */
+        }
+      }
+      @media only screen and (max-width: 398px) {
+      }
+      @media only screen and (max-width: 384px) {
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 15%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        /* Mueve el sidebar a la parte inferior en modo horizontal */
+        .description {
+          display: none; /* Oculta la descripción en pantallas pequeñas */
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: -2;
+        }
+
+        #logo {
+          width: 12%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+        /* Ajuste del botón de menú */
+        #menu-toggle {
+          display: block; /* Hace visible el botón en pantallas pequeñas */
+          position: fixed;
+          z-index: 1001; /* Lo coloca adelante del div data */
+          top: 10px;
+          left: 15px;
+          background-color: transparent; /* Fondo transparente */
+          border: none; /* Sin borde */
+          cursor: pointer;
+          padding: 0;
+        }
+
+        /* Estilos para el ícono del menú */
+        #menu-toggle ion-icon {
+          font-size: 40px; /* Tamaño del ícono */
+          color: white; /* Color del ícono */
+        }
+        /* Ajuste del sidebar */
+        #sidebar {
+          display: none; /* Oculta el sidebar en pantallas pequeñas */
+        }
+        /* Ajuste del contenido principal */
+        #content {
+          margin-left: 0px; /* Ajusta el margen inferior para evitar que el contenido quede detrás del menú inferior */
+          width: 100%;
+          height: 100%;
+        }
+        .movie-title-text {
+          font-size: 24px;
+          text-align: center;
+        }
+        .movie-rating {
+          font-size: 24px;
+          margin-bottom: 0px;
+        }
+        .movie-details h4 span {
+          margin-right: 8px;
+          font-size: 14px;
+        }
+
+        p {
+          font-size: 12px;
+          font-family: "Ubuntu";
+          font-weight: 400;
+          margin: 0px 0 0;
+          text-align: justify;
+        }
+        .genre-section {
+          font-size: 16px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 8px 10px;
+
+          margin-right: 20px;
+          font-size: 14px;
+        }
+        .movie-title {
+          display: none;
+        }
+        .donar-button {
+          width: 0px;
+          left: 100%;
+          align-self: auto;
+          padding: 0px;
+        }
+        .donar-button a {
+          position: fixed;
+          top: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          width: 116px;
+          height: 34px;
+          left: 90px;
+        }
+        .add-button {
+          left: 14px;
+          bottom: 530px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        .add-button a span {
+          display: none;
+        }
+        #botonCompartir {
+          transition: bottom 0.5s ease;
+          left: 14px;
+          bottom: 465px;
+          position: fixed;
+          display: flex;
+        }
+        .canal {
+          left: 14px;
+          bottom: 400px;
+          transition: bottom 0.5s ease;
+          position: fixed;
+          display: flex;
+        }
+        /* Estilos para el menú inferior */
+        #bottom-menu {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #222;
+          padding-top: 10px;
+          padding-bottom: 0px;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #bottom-menu ul {
+          display: flex;
+          flex-direction: row;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          list-style-type: none;
+        }
+
+        #bottom-menu ul li {
+          padding: 17px;
+        }
+
+        #bottom-menu .menu-icon {
+          color: white; /* Cambia el color de los iconos a blanco */
+        }
+
+        .menu-icon::after {
+          display: none; /* Oculta la línea horizontal en pantallas móviles */
+        }
+        .menu-icon.selected {
+          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+        }
+
+        .menu-icon {
+          width: 20px;
+          height: 20px;
+          margin-bottom: 0px;
+          transition: color 0.3s;
+        }
+
+        /* Define el estilo del scrollbar */
+        #main::-webkit-scrollbar {
+          width: 6px; /* Ancho del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-thumb {
+          background-color: transparent; /* Color del scrollbar */
+          border-radius: 6px; /* Radio de borde del scrollbar */
+        }
+
+        #main::-webkit-scrollbar-track {
+          background-color: transparent; /* Color de fondo del scrollbar */
+        }
+      }
+      @media only screen and (max-width: 360px) {
+      }
+
+      @media screen and (min-width: 712px) and (min-height: 1138px) {
+        #logo {
+          width: 10%;
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
+        }
+        #movie-content {
+          margin-top: 80%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+      }
+      @media screen and (min-width: 800px) and (min-height: 1200px) {
+        #logo {
+          width: 10%;
+        }
+        #background-section {
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1) 36%,
+            /* Comienza el degradado al 5% desde abajo */ rgba(0, 0, 0, 0) 100%
+              /* Termina el degradado al 30% desde abajo */
+          );
+        }
+        /* Estilos para pantallas de hasta 384px de ancho */
+        #imagen-1 {
+          display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
+        }
+
+        #imagen-2 {
+          display: block; /* Mostrar la imagen-2 en pantallas pequeñas */
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+          z-index: -2;
+        }
+        #movie-content {
+          margin-top: 80%;
+        }
+        .movie-details-and-rating {
+          width: 100%;
+        }
+      }
+      /* Estilos para pantallas de televisión SD */
+
+      /* Estilos para pantallas de televisión HD */
+      @media only screen and (min-width: 801px) and (max-width: 1280px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #imagen-1 {
+          display: block; /* Mostrar la imagen-1 en pantallas grandes */
+        }
+
+        #imagen-2 {
+          display: none; /* Ocultar la imagen-2 en pantallas grandes */
+        }
+        .movie-title {
+          max-width: 250px;
+        }
+        #movie-content > * {
+          margin-bottom: 5px;
+        }
+        .movie-details h4 span {
+          margin-right: 5px;
+        }
+        .movie-details-and-rating {
+          width: 50%;
+        }
+        p {
+          font-size: 14px;
+
+          margin: 10px 0 0;
+        }
+        #movie-content {
+          margin-top: 40px;
+
+          padding: 15px 0 0 40px;
+        }
+        .genre-section {
+          font-size: 19px;
+        }
+
+        .movie-buttons {
+          margin-top: 10px;
+        }
+        .movie-buttons a,
+        .movie-buttons button {
+          padding: 7px 12px;
+
+          margin-right: 18px;
+        }
+        .donar-button {
+          left: 87px;
+          bottom: 6px;
+          padding: 4px;
+        }
+        .button-aditional {
+          left: 24px;
+          top: 15px;
+        }
+        .add-button a {
+          width: 35px;
+          height: 35px;
+
+          line-height: 43px;
+
+          font-size: 20px;
+        }
+        #content {
+          margin-left: 70px;
+
+          width: calc(100% - 70px);
+        }
+        #sidebar {
+          width: 70px;
+        }
+        .movie-description {
+          max-width: 440px;
+          line-height: 1.05;
+        }
+      }
+
+      /* Estilos para pantallas de televisión Full HD */
+      @media only screen and (min-width: 1281px) and (max-width: 1920px) {
+        /* Agrega estilos adicionales según sea necesario */
+        #imagen-2 {
+          display: none;
+        }
+        .movie-title {
+          max-width: 650px;
+        }
+        .movie-title-text {
+          font-size: 42px;
+        }
+        #movie-content {
+          margin-top: 180px;
+        }
+        .movie-description {
+          max-width: 830px;
+        }
+        p {
+          font-size: 25px;
+        }
+        .genre-section {
+          font-size: 32px;
+        }
+        .movie-rating {
+          font-size: xxx-large;
+        }
+        h4 {
+          font-size: 28px;
+        }
+        .movie-buttons {
+          font-size: 35px;
+        }
+        .donar-button a {
+          width: 280px;
+
+          height: 76px;
+          font-size: 30px;
+        }
+        .add-button a {
+          width: 80px;
+          height: 80px;
+          font-size: 60px;
+          line-height: 100px;
+        }
+        .add-button a span {
+          font-size: 26px;
+          margin-top: -35px;
+        }
+      }
+
+      /* Estilos para pantallas de televisión 4K */
+      @media only screen and (min-width: 1921px) {
+        /* Agrega estilos adicionales según sea necesario */
+      }
+    

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generado por Loshelsistem 1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+  </head>
+  <body>
+    <!-- Barra lateral -->
+    <div id="sidebar">
+      <a href="../editarusuario.html" id="enlace1">
+        <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../buscar.html" id="enlace2">
+        <ion-icon name="search" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../index.html" id="enlace3">
+        <ion-icon name="home" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../peliculas.html" id="enlace4">
+        <ion-icon name="film" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../series.html" id="enlace5">
+        <ion-icon name="albums" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../tv.html" id="enlace6">
+        <ion-icon name="tv" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../donar.html" id="enlace7">
+        <ion-icon name="cafe" class="menu-icon"></ion-icon>
+      </a>
+    </div>
+
+    <!-- Menú inferior -->
+    <div id="bottom-menu" class="hidden">
+      <ul>
+        <li>
+          <a href="../peliculas.html" title="Películas">
+            <ion-icon name="film" class="menu-icon"></ion-icon>
+            <span class="menu-title">Pelís</span>
+          </a>
+        </li>
+        <li>
+          <a href="../series.html" title="Álbumes">
+            <ion-icon name="albums" class="menu-icon"></ion-icon>
+            <span class="menu-title">Series</span>
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" title="Inicio">
+            <ion-icon name="home" class="menu-icon"></ion-icon>
+            <span class="menu-title">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="../tv.html" title="Programas de TV">
+            <ion-icon name="tv" class="menu-icon"></ion-icon>
+            <span class="menu-title">TV</span>
+          </a>
+        </li>
+        <li>
+          <a href="../editarusuario.html" title="Editar Usuario">
+            <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+            <span class="menu-title">Tú</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button id="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!-- Contenido principal -->
+    <div id="content">
+      <!-- Campo oculto para almacenar el ID de la película -->
+      <input type="hidden" id="ID_pelicula" value="P-082">
+      <!-- Campo oculto para almacenar el cover de la película -->
+      <input type="hidden" id="cover-url" name="cover-url" value="https://image.tmdb.org/t/p/original/umunWbkQ6xMWlGOpp4Tt0QuhMSz.jpg">
+      <input type="hidden" id="cover-url-2" name="cover-url-2" value="https://image.tmdb.org/t/p/original/fbrKZSm8Pkhll5e1tYosh56FajT.jpg">
+      <input type="hidden" id="pagina-nombre" name="pagina-nombre" value="P-082-8-4-12-Milagrosinesperados.html">
+
+      <!-- Sección para el fondo del cuerpo con degradado -->
+      <div id="background-section"></div>
+      <!-- Imagen 1 para el backbroud -->
+      <img src="https://image.tmdb.org/t/p/original/xMIyotorUv2Yz7zpQz2QYc8wkWB.jpg" alt="img1" id="imagen-1">
+      <!-- Imagen 2 para el backbroud smartphone -->
+      <img src="https://image.tmdb.org/t/p/original/vxJ08SvwomfKbpboCWynC3uqUg4.jpg" alt="img2" id="imagen-2">
+      <!-- Logo -->
+      <img id="logo" src="logo001.png" alt="Logo">
+      <!-- Sección de contenido de película -->
+      <div id="movie-content">
+        <!-- Título de la película (imagen) -->
+        <img id="movie-title-image" src="https://image.tmdb.org/t/p/original/rr2nQMagxwQ3P37FLF3P3teYvtj.png" alt="Título de la Película" class="movie-title">
+        <!-- Título de la película (texto) -->
+        <h2 id="movie-title-text" class="movie-title-text">Milagros inesperados</h2>
+        <!-- Sección de puntuación y detalles de película -->
+        <div class="movie-details-and-rating">
+          <!-- Puntuación de la película -->
+          <div id="puntuacion" class="movie-rating" data-puntuacion="4">
+            <span class="stars"></span>
+          </div>
+
+          <!-- Detalles de la película -->
+          <div class="movie-details">
+            <h4>
+              <span id="edad"><i>18+</i></span>
+              <span id="año">1999</span>
+              <span id="duracion-horas">3 h</span>
+              <span id="duracion-minutos">9 min</span>
+            </h4>
+          </div>
+        </div>
+        <!-- Sección de género de película -->
+        <div id="genero" class="genre-section" data-genre-ids="8,4,12"></div>
+        <!-- Descripción de la película -->
+        <div id="descripcion" class="movie-description"><p>John Coffey es un gentil reo gigante con poderes sobrenaturales, los cuales cambiarán la vida de sus compañeros de prisión.</p></div>
+
+        <!-- Botones de acción -->
+        <div class="movie-buttons">
+          <a id="video1" href="go:milagrine"><ion-icon name="play"></ion-icon>Ver Ahora</a>
+          <a id="video2" href="https://ok.ru/videoembed/7943026838126?autoplay=1">
+            <ion-icon name="play"></ion-icon>Ver Ahora opc. 2
+          </a>
+        </div>
+        <!-- Botón de añadir -->
+        <div class="button-aditional">
+          <div class="add-button">
+            <a href="#">
+              <ion-icon name="add"></ion-icon>
+              <span>Añadir</span>
+            </a>
+          </div>
+          <button id="botonCompartir">
+            <ion-icon name="arrow-redo"></ion-icon>
+          </button>
+          <div class="canal">
+            <a href="https://whatsapp.com/channel/0029VaFwj295kg6xQ8thvM2s">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+            </a>
+          </div>
+          <div class="donar-button">
+            <a href="../donar.html" id="donar-button">Quiero donar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+    <div id="carrusel-container">
+      <div id="carrusel-title">También puedes ver</div>
+    </div>
+<!-- Referencia al archivo JavaScript -->
+    <script src="javascript.js" type="module"></script>
+
+    <!-- Agrega aquí tus scripts JavaScript u otros elementos necesarios -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
+
+</body></html>

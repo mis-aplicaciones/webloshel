@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Generado por Loshelsistem 1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styleserie.css">
+  </head>
+  <body>
+    <!-- Barra lateral -->
+    <div id="sidebar">
+      <a href="../editarusuario.html" id="enlace1">
+        <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../buscar.html" id="enlace2">
+        <ion-icon name="search" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../index.html" id="enlace3">
+        <ion-icon name="home" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../peliculas.html" id="enlace4">
+        <ion-icon name="film" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../series.html" id="enlace5">
+        <ion-icon name="albums" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../tv.html" id="enlace6">
+        <ion-icon name="tv" class="menu-icon"></ion-icon>
+      </a>
+      <a href="../donar.html" id="enlace7">
+        <ion-icon name="cafe" class="menu-icon"></ion-icon>
+      </a>
+    </div>
+
+    <!-- Menú inferior -->
+    <div id="bottom-menu" class="hidden">
+      <ul>
+        <li>
+          <a href="../peliculas.html" title="Películas">
+            <ion-icon name="film" class="menu-icon"></ion-icon>
+            <span class="menu-title">Pelís</span>
+          </a>
+        </li>
+        <li>
+          <a href="../series.html" title="Álbumes">
+            <ion-icon name="albums" class="menu-icon"></ion-icon>
+            <span class="menu-title">Series</span>
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" title="Inicio">
+            <ion-icon name="home" class="menu-icon"></ion-icon>
+            <span class="menu-title">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="../tv.html" title="Programas de TV">
+            <ion-icon name="tv" class="menu-icon"></ion-icon>
+            <span class="menu-title">TV</span>
+          </a>
+        </li>
+        <li>
+          <a href="../editarusuario.html" title="Editar Usuario">
+            <ion-icon name="person-circle" class="menu-icon"></ion-icon>
+            <span class="menu-title">Tú</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button id="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!-- Logo -->
+    <img id="logo" src="logo001.png" alt="Logo">
+    <!-- Contenido principal -->
+    <div id="content">
+      <!-- Campo oculto para almacenar el ID de la película -->
+      <input type="hidden" id="ID_Series" value="S-007">
+      <!-- Campo oculto para almacenar el cover de la película -->
+      <input type="hidden" id="cover-url" name="cover-url" value="https://image.tmdb.org/t/p/original/frBmrEXytYo6tlgZb5NJ2UnPzRU.jpg">
+      <input type="hidden" id="cover-url-2" name="cover-url-2" value="https://image.tmdb.org/t/p/original/ywbacot78IuNhGW4uVZPxxxVTkm.jpg">
+      <input type="hidden" id="pagina-nombre" name="pagina-nombre" value="S-007-6-4-thewalkingdead:Sobrevivientes.html">
+
+      <!-- Sección para el fondo del cuerpo con degradado -->
+      <div id="background-section"></div>
+      <!-- Imagen 1 para el backbroud -->
+      <img src="https://image.tmdb.org/t/p/original/8yQjxIlAeVeqkuBKq3FUQGVqfIB.jpg" alt="img1" id="imagen-1">
+      <!-- Imagen 2 para el backbroud smartphone -->
+      <img src="https://image.tmdb.org/t/p/original/dvfSm0wpqT6qgS6hGay3gPrVs6m.jpg" alt="img2" id="imagen-2">
+
+      <!-- Sección de contenido de película -->
+      <div id="movie-content">
+        <!-- Título de la película (imagen) -->
+        <img id="movie-title-image" src="https://image.tmdb.org/t/p/original/hrGO5uJzaeNDZe1gNzaBPg9Xwin.png" alt="Título de la Película" class="movie-title">
+        <!-- Título de la película (texto) -->
+        <h2 id="movie-title-text" class="movie-title-text">the walking dead: Sobrevivientes</h2>
+        <!-- Sección de puntuación y detalles de película -->
+        <div class="movie-details-and-rating">
+          <!-- Puntuación de la película -->
+          <div id="puntuacion" class="movie-rating" data-puntuacion="4">
+            <span class="stars"></span>
+          </div>
+
+          <!-- Detalles de la película -->
+          <div class="movie-details">
+            <h4>
+              <span id="edad"><i>18+</i></span>
+              <span id="año">2024</span>
+              <span id="duracion-horas">1</span>
+              <span id="duracion-minutos">Temporada</span>
+            </h4>
+          </div>
+        </div>
+        <!-- Sección de género de película -->
+        <div id="genero" class="genre-section" data-genre-ids="6,4"></div>
+        <!-- Descripción de la película -->
+        <div id="descripcion" class="movie-description"><p>La historia de amor de Rick Grimes y Michonne cambia gracias a un mundo cambiado. Separados por la distancia. Por un poder imparable. ¿Podrán encontrarse y descubrir quiénes eran en una situación diferente a cualquier otra que hayan conocido?</p></div>
+
+        <!-- Botones de acción -->
+        <div class="movie-buttons">
+          <a id="video1" href="#"><ion-icon name="play"></ion-icon>T1 E1</a>
+          <a id="video2" href="#">
+            <ion-icon name="play"></ion-icon>Ver opc. 2
+          </a>
+          <button id="botonCompartir">
+            <ion-icon name="arrow-redo"></ion-icon>
+          </button>
+          <a id="canal" class="boton" href="https://whatsapp.com/channel/0029VaFwj295kg6xQ8thvM2s">
+            <ion-icon name="logo-whatsapp"></ion-icon>
+          </a>
+        </div>
+        <!-- Botón de añadir -->
+        <div class="add-button">
+          <a href="#">
+            <ion-icon name="add"></ion-icon>
+            <span>Añadir</span>
+          </a>
+        </div>
+        <div class="button-aditional"></div>
+        <div class="donar-button">
+          <a href="donar.html" id="donar-button">Quiero donar</a>
+        </div>
+      </div>
+
+      <!-- Contenedor del carrusel -->
+      <div id="main-container"><div id="seasons-container">
+  <div id="seasons-title">Temporadas</div>
+  <div id="seasons-buttons">
+    <button class="season-btn" data-season="1">1</button>
+  </div>
+</div>
+<div id="episodes-container">
+  <div class="episodes-buttons season-1 hidden">
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8145767631409?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/8WrLYjzukBMeeSN9QYPw28qVA6h.jpg" alt="Episode 1">
+      <div class="title">Episode 1</div>
+    </button>
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8145767500337?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/bcp6gmyQuoRdkpJFCHpJYDJVyO9.jpg" alt="Episode 2">
+      <div class="title">Episode 2</div>
+    </button>
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8145767565873?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/o1Qw7o1ab4tAzMUh5esJ41TNpZF.jpg" alt="Episode 3">
+      <div class="title">Episode 3</div>
+    </button>
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8174142884401?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/93RqOHVclGyBoH4FIi3VmHnlxXe.jpg" alt="Episode 4">
+      <div class="title">Episode 4</div>
+    </button>
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8174143015473?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/q6Vqo90TAbu9NbuIhPgxzgIZogh.jpg" alt="Episode 5">
+      <div class="title">Episode 5</div>
+    </button>
+    <button class="episode-btn" data-url="https://ok.ru/videoembed/8174142949937?autoplay=1">
+      <img src="https://media.themoviedb.org/t/p/w227_and_h127_bestv2/lJNkVYOsxOmEXcCvbC8SeQYjdL4.jpg" alt="Episode 6">
+      <div class="title">Episode 6</div>
+    </button>
+  </div>
+</div>
+</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const botonCompartir = document.getElementById("botonCompartir");
+        botonCompartir.addEventListener("click", function () {
+          const compartirUrl =
+            "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
+          const movieTitle =
+            document.getElementById("movie-title-text").innerText;
+          const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
+
+          window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
+        });
+      });
+    </script>
+    <script>
+      // Función para convertir la puntuación numérica a estrellas
+      function calcularEstrellas(puntuacion) {
+        const MAX_ESTRELLAS = 5; // Máximo de estrellas permitidas
+        const puntuacionRedondeada = Math.round(puntuacion * 2) / 2; // Redondear la puntuación a la mitad más cercana
+        const estrellasEnteras = Math.floor(puntuacionRedondeada); // Obtener la cantidad de estrellas enteras
+        const estrellaMitad = puntuacionRedondeada % 1 !== 0; // Verificar si hay una estrella mitad
+
+        let starsHTML = ""; // String para almacenar las etiquetas HTML de las estrellas
+
+        // Agregar estrellas enteras
+        for (let i = 0; i < estrellasEnteras; i++) {
+          starsHTML += '<ion-icon name="star"></ion-icon>';
+        }
+
+        // Agregar estrella mitad si corresponde
+        if (estrellaMitad) {
+          starsHTML += '<ion-icon name="star-half"></ion-icon>';
+        }
+
+        // Completar con estrellas vacías si no se alcanzó el máximo
+        const estrellasRestantes =
+          MAX_ESTRELLAS - estrellasEnteras - (estrellaMitad ? 1 : 0);
+        for (let i = 0; i < estrellasRestantes; i++) {
+          starsHTML += '<ion-icon name="star-outline"></ion-icon>';
+        }
+
+        return starsHTML; // Retornar el HTML de las estrellas
+      }
+
+      // Obtener el elemento donde se mostrarán las estrellas
+      const puntuacionElemento = document.getElementById("puntuacion");
+
+      // Obtener la puntuación numérica del atributo de datos
+      const puntuacionNumerica = parseFloat(
+        puntuacionElemento.dataset.puntuacion
+      );
+
+      // Calcular las estrellas según la puntuación
+      const estrellasHTML = calcularEstrellas(puntuacionNumerica);
+
+      // Mostrar las estrellas en el elemento correspondiente
+      puntuacionElemento.querySelector(".stars").innerHTML = estrellasHTML;
+    </script>
+    <!-- Scripts y otros elementos... -->
+    <script>
+      // Mapeo de IDs de género a nombres de género
+      const generos = {
+        1: "Acción",
+        2: "Aventura",
+        3: "Comedia",
+        4: "Drama",
+        5: "Suspenso",
+        6: "Ciencia Ficción",
+        7: "Animación",
+        8: "Fantasía",
+        9: "Terror",
+        10: "Bélico",
+        11: "Romance",
+        12: "Crimen",
+        13: "Documental",
+        14: "Superhéroes",
+        15: "Infantil",
+      };
+
+      // Obtener el elemento de género
+      const generoElemento = document.getElementById("genero");
+
+      // Obtener los IDs de género del atributo de datos
+      const idsGenero = generoElemento.dataset.genreIds
+        .split(",")
+        .map((id) => parseInt(id.trim()));
+
+      // Obtener los nombres de género correspondientes a los IDs
+      const nombresGenero = idsGenero.map((id) => generos[id]);
+
+      // Mostrar los nombres de género separados por " / "
+      generoElemento.textContent = nombresGenero.join(" / ");
+    </script>
+    <script>
+      // Buscamos el botón de añadir por su clase
+      const addButton = document.querySelector(".add-button a");
+
+      // Agregamos un evento de clic al botón
+      addButton.addEventListener("click", function (event) {
+        // Evitamos el comportamiento predeterminado del enlace
+        event.preventDefault();
+
+        // Llamamos a la función agregarFavorito
+        agregarFavorito();
+      });
+      function agregarFavorito() {
+        // Obtenemos el ID único de la película desde el valor del input hidden
+        let idUnico = document.getElementById("ID_pelicula").value;
+
+        // Obtenemos el URL del cover desde el valor del input hidden
+        let coverUrl = document.getElementById("cover-url").value;
+        // Obtenemos el URL del cover desde el valor del input hidden
+        let coverUrl2 = document.getElementById("cover-url-2").value;
+
+        // Obtenemos el nombre de la página desde el valor del input hidden
+        let paginaNombre = document.getElementById("pagina-nombre").value;
+
+        // Obtenemos la lista de favoritos almacenada en el almacenamiento local
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+        // Verificamos si la película ya está en la lista de favoritos
+        if (!favoritos.some((movie) => movie.id === idUnico)) {
+          // Si no está en la lista, la agregamos
+          favoritos.push({
+            id: idUnico,
+            coverUrl: coverUrl,
+            coverUrl2: coverUrl2,
+            paginaNombre: paginaNombre,
+          });
+
+          // Actualizamos la lista de favoritos en el almacenamiento local
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+
+          // Notificamos al usuario que la película se agregó a favoritos (opcional)
+          alert("Película añadida a favoritos.");
+
+          // Registro en la consola
+          console.log("Película agregada a favoritos:", {
+            id: idUnico,
+            coverUrl: coverUrl,
+            coverUrl2: coverUrl2,
+            paginaNombre: paginaNombre,
+          });
+        } else {
+          // Si la película ya está en la lista, mostramos un mensaje de alerta (opcional)
+          alert("Esta película ya está en tus favoritos.");
+
+          // Registro en la consola
+          console.log(
+            "Intento de agregar una película que ya está en favoritos:",
+            { id: idUnico }
+          );
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menu-toggle");
+        const bottomMenu = document.getElementById("bottom-menu");
+        const movieContent = document.getElementById("movie-content");
+        const addButton = document.querySelector(".add-button");
+
+        // Función para cambiar la visibilidad del menú inferior
+        function toggleBottomMenu() {
+          const currentIcon = menuToggle
+            .querySelector("ion-icon")
+            .getAttribute("name");
+          const menuIcon = "menu";
+          const closeIcon = "close-circle";
+          const newIcon = currentIcon === menuIcon ? closeIcon : menuIcon;
+
+          // Cambia el icono del botón
+          menuToggle.querySelector("ion-icon").setAttribute("name", newIcon);
+
+          // Verifica si el elemento bottomMenu existe
+          if (bottomMenu) {
+            // Cambia la visibilidad del menú inferior dependiendo del tamaño de la pantalla
+            if (window.innerWidth <= 700 && window.innerWidth > 384) {
+              if (newIcon === closeIcon) {
+                bottomMenu.style.display = "flex";
+                localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+                // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
+                if (movieContent) {
+                  movieContent.style.marginTop = "133%";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              } else {
+                bottomMenu.style.display = "none";
+                localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+                // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado
+                if (movieContent) {
+                  movieContent.style.marginTop = "";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              }
+            } else if (window.innerWidth <= 384 && window.innerWidth > 361) {
+              if (newIcon === closeIcon) {
+                bottomMenu.style.display = "flex";
+                localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+                // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
+                if (movieContent) {
+                  movieContent.style.marginTop = "35%";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              } else {
+                bottomMenu.style.display = "none";
+                localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+                // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado
+                if (movieContent) {
+                  movieContent.style.marginTop = "";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              }
+            } else if (window.innerWidth <= 360) {
+              if (newIcon === closeIcon) {
+                bottomMenu.style.display = "flex";
+                localStorage.setItem("bottomMenuVisible", "true"); // Guarda el estado del menú en el almacenamiento local
+                // Cambia los estilos de #movie-content y .add-button cuando el menú inferior está activo
+                if (movieContent) {
+                  movieContent.style.marginTop = "52%";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              } else {
+                bottomMenu.style.display = "none";
+                localStorage.setItem("bottomMenuVisible", "false"); // Guarda el estado del menú en el almacenamiento local
+                // Restaura los estilos de #movie-content y .add-button cuando el menú inferior está desactivado
+                if (movieContent) {
+                  movieContent.style.marginTop = "";
+                }
+                if (addButton) {
+                  addButton.style.bottom = "";
+                }
+              }
+            }
+          }
+        }
+
+        // Agrega el evento click al botón de menú
+        if (menuToggle) {
+          menuToggle.addEventListener("click", toggleBottomMenu);
+        }
+
+        // Verifica si hay un estado guardado para el menú inferior al cargar la página
+        const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+        if (bottomMenuVisible === "true") {
+          if (
+            window.innerWidth <= 700 &&
+            window.innerWidth > 384 &&
+            bottomMenu
+          ) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+            // Aplica estilos cuando el menú inferior está activo al cargar la página
+            if (movieContent) {
+              movieContent.style.marginTop = "133%";
+            }
+            if (addButton) {
+              addButton.style.bottom = "";
+            }
+          } else if (
+            window.innerWidth <= 384 &&
+            window.innerWidth > 361 &&
+            bottomMenu
+          ) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+            // Aplica estilos cuando el menú inferior está activo al cargar la página
+            if (movieContent) {
+              movieContent.style.marginTop = "35%";
+            }
+            if (addButton) {
+              addButton.style.bottom = "";
+            }
+          } else if (window.innerWidth <= 360 && bottomMenu) {
+            bottomMenu.style.display = "flex"; // Muestra el menú si estaba activo y la pantalla es pequeña
+            menuToggle
+              .querySelector("ion-icon")
+              .setAttribute("name", "close-circle"); // Cambia el icono del botón a close-circle
+            // Aplica estilos cuando el menú inferior está activo al cargar la página
+            if (movieContent) {
+              movieContent.style.marginTop = "52%";
+            }
+            if (addButton) {
+              addButton.style.bottom = "";
+            }
+          }
+        }
+      });
+
+      window.addEventListener("resize", function () {
+        const bottomMenu = document.getElementById("bottom-menu");
+        const menuToggle = document.getElementById("menu-toggle");
+        const movieContent = document.getElementById("movie-content");
+        const addButton = document.querySelector(".add-button");
+
+        if (bottomMenu) {
+          const bottomMenuVisible = localStorage.getItem("bottomMenuVisible");
+          if (bottomMenuVisible === "true") {
+            if (window.innerWidth <= 700 && window.innerWidth > 384) {
+              bottomMenu.style.display = "flex";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "close-circle");
+              }
+              if (movieContent) {
+                movieContent.style.marginTop = "133%";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            } else if (window.innerWidth <= 384 && window.innerWidth > 361) {
+              bottomMenu.style.display = "flex";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "close-circle");
+              }
+              if (movieContent) {
+                movieContent.style.marginTop = "35%";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            } else if (window.innerWidth <= 360) {
+              bottomMenu.style.display = "flex";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "close-circle");
+              }
+              if (movieContent) {
+                movieContent.style.marginTop = "52%";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            } else {
+              bottomMenu.style.display = "none";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "menu");
+              }
+              localStorage.setItem("bottomMenuVisible", "false");
+              if (movieContent) {
+                movieContent.style.marginTop = "";
+              }
+              if (addButton) {
+                addButton.style.bottom = "";
+              }
+            }
+          } else {
+            if (window.innerWidth > 700 && bottomMenu) {
+              bottomMenu.style.display = "none";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "menu");
+              }
+            } else if (window.innerWidth > 384 && bottomMenu) {
+              bottomMenu.style.display = "none";
+              if (menuToggle) {
+                menuToggle
+                  .querySelector("ion-icon")
+                  .setAttribute("name", "menu");
+              }
+            }
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Recuperar la imagen de perfil guardada del almacenamiento local
+        var savedProfile = localStorage.getItem("userProfile");
+        if (savedProfile) {
+          savedProfile = JSON.parse(savedProfile);
+          var profileImage = savedProfile.image;
+
+          // Actualizar el icono de usuario en el sidebar
+          var sidebarIcons = document.querySelectorAll(
+            '#sidebar ion-icon[name="person-circle"]'
+          );
+          sidebarIcons.forEach(function (icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "35px"; // Nuevo tamaño
+            divIcon.style.height = "35px"; // Nuevo tamaño
+            icon.parentNode.replaceChild(divIcon, icon);
+          });
+
+          // Actualizar el icono de usuario en el bottom-menu
+          var bottomMenuIcons = document.querySelectorAll(
+            '#bottom-menu ion-icon[name="person-circle"]'
+          );
+          bottomMenuIcons.forEach(function (icon) {
+            // Reemplazar ion-icon por div
+            var divIcon = document.createElement("div");
+            divIcon.classList.add("menu-icon");
+            divIcon.style.backgroundImage = "url('" + profileImage + "')";
+            divIcon.style.backgroundSize = "cover";
+            divIcon.style.backgroundPosition = "center";
+            divIcon.style.borderRadius = "50%";
+            divIcon.style.width = "27px"; // Nuevo tamaño
+            divIcon.style.height = "27px"; // Nuevo tamaño
+            divIcon.style.marginTop = "calc(1.25em - 21px)"; // Alinear con los demás iconos
+            icon.parentNode.replaceChild(divIcon, icon);
+          });
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const uniqueSiteID = window.location.pathname; // Usar el pathname de la URL como ID único para cada página
+        const seasonButtons = document.querySelectorAll(".season-btn");
+        const episodesContainers =
+          document.querySelectorAll(".episodes-buttons");
+        const episodeButtons = document.querySelectorAll(".episode-btn");
+
+        // Load last selected season and episode from localStorage
+        const lastSelectedSeason =
+          localStorage.getItem(`${uniqueSiteID}_selectedSeason`) || "1";
+        const lastSelectedEpisode = localStorage.getItem(
+          `${uniqueSiteID}_selectedEpisode`
+        );
+
+        // Set initial selection
+        const initialSeasonButton = document.querySelector(
+          `.season-btn[data-season="${lastSelectedSeason}"]`
+        );
+        if (initialSeasonButton) {
+          initialSeasonButton.classList.add("selected");
+          document
+            .querySelector(`.season-${lastSelectedSeason}`)
+            .classList.remove("hidden");
+        } else {
+          document
+            .querySelector(`.season-btn[data-season="1"]`)
+            .classList.add("selected");
+          document.querySelector(`.season-1`).classList.remove("hidden");
+        }
+
+        if (lastSelectedEpisode) {
+          const initialEpisodeButton = document.querySelector(
+            `.episode-btn[data-url="${lastSelectedEpisode}"]`
+          );
+          if (initialEpisodeButton) {
+            initialEpisodeButton.classList.add("selected");
+          }
+        }
+
+        seasonButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const season = this.getAttribute("data-season");
+
+            // Deselect all season buttons
+            seasonButtons.forEach((btn) => btn.classList.remove("selected"));
+            // Select the clicked season button
+            this.classList.add("selected");
+
+            // Hide all episode containers
+            episodesContainers.forEach((container) =>
+              container.classList.add("hidden")
+            );
+            // Show the episodes for the selected season
+            document
+              .querySelector(`.season-${season}`)
+              .classList.remove("hidden");
+
+            // Save the selected season to localStorage
+            localStorage.setItem(`${uniqueSiteID}_selectedSeason`, season);
+
+            // Clear selected episode
+            episodeButtons.forEach((btn) => btn.classList.remove("selected"));
+            localStorage.removeItem(`${uniqueSiteID}_selectedEpisode`);
+          });
+
+          button.addEventListener("keydown", function (e) {
+            let newIndex;
+            const currentIndex = Array.from(seasonButtons).indexOf(this);
+            if (e.key === "ArrowRight") {
+              newIndex = (currentIndex + 1) % seasonButtons.length;
+              seasonButtons[newIndex].focus();
+            } else if (e.key === "ArrowLeft") {
+              newIndex =
+                (currentIndex - 1 + seasonButtons.length) %
+                seasonButtons.length;
+              seasonButtons[newIndex].focus();
+            } else if (e.key === "ArrowDown") {
+              // Focus on the first episode button of the selected season
+              const selectedSeason = document
+                .querySelector(".season-btn.selected")
+                .getAttribute("data-season");
+              const firstEpisodeButton = document.querySelector(
+                `.season-${selectedSeason} .episode-btn`
+              );
+              if (firstEpisodeButton) {
+                firstEpisodeButton.focus();
+              }
+            }
+          });
+        });
+
+        episodeButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Deselect all episode buttons
+            episodeButtons.forEach((btn) => btn.classList.remove("selected"));
+            // Select the clicked episode button
+            this.classList.add("selected");
+
+            // Save the selected episode to localStorage
+            const url = this.getAttribute("data-url");
+            localStorage.setItem(`${uniqueSiteID}_selectedEpisode`, url);
+
+            // Navigate to the episode URL
+            window.location.href = url;
+          });
+
+          button.addEventListener("keydown", function (e) {
+            let newIndex;
+            const currentIndex = Array.from(episodeButtons).indexOf(this);
+            if (e.key === "ArrowRight") {
+              newIndex = (currentIndex + 1) % episodeButtons.length;
+              episodeButtons[newIndex].focus();
+            } else if (e.key === "ArrowLeft") {
+              newIndex =
+                (currentIndex - 1 + episodeButtons.length) %
+                episodeButtons.length;
+              episodeButtons[newIndex].focus();
+            } else if (e.key === "ArrowUp") {
+              document.querySelector(".season-btn.selected").focus();
+            }
+          });
+        });
+
+        // Set initial focus to the selected season button
+        document
+          .querySelector(`.season-btn[data-season="${lastSelectedSeason}"]`)
+          .focus();
+      });
+    </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
+
+</body></html>

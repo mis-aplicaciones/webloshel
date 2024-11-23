@@ -4,8 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tu Web</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link rel="stylesheet" href="style.css" />
+
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ionicons@7.1.1/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/ionicons@7.1.1/dist/ionicons/ionicons.js"
+    ></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
       rel="stylesheet"
@@ -49,115 +67,12 @@
         z-index: -2; /* Detrás del fondo */
       }
 
-      /* Estilo del sidebar */
-      #sidebar {
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 70px;
-        position: fixed;
-        /* Cambia el color de fondo aquí */
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        z-index: 1000;
-      }
-
-      #sidebar a:hover {
-        background-color: transparent; /* Cambio a transparente al posicionar el mouse */
-        color: #fff; /* Cambio de color del texto al posicionar el mouse */
-      }
-      /* Estilos para el focus del contenido del sidebar */
-      #sidebar .menu-item:hover,
-      #sidebar .menu-item:focus {
-        background-color: transparent; /* Cambio a transparente al posicionar el mouse o tener el foco */
-        color: #fff; /* Cambio de color del texto al posicionar el mouse o tener el foco */
-        outline: none; /* Quita el contorno predeterminado */
-      }
-
-      #sidebar .menu-icon,
-      #sidebar .menu-icon:focus {
-        color: #ffffff5d;
-        transition: color 0.3s;
-      }
-
-      #sidebar .menu-icon:hover,
-      #sidebar .menu-icon:focus {
-        color: #ffffffd3; /* Cambio de color al pasar el cursor o tener el foco */
-        outline: none; /* Quita el contorno predeterminado */
-      }
-
-      /* Línea horizontal */
-      #sidebar .menu-item:hover .menu-icon::after,
-      #sidebar .menu-item:focus .menu-icon::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        height: 2px;
-        background-color: red;
-        transition: width 0.3s ease;
-      }
-      .menu-icon {
-        width: 30px;
-        height: 40px;
-        border-radius: 0;
-        position: relative;
-        color: #ffffff5d;
-        margin-bottom: 20px;
-        transition: color 0.3s;
-      }
-      .menu-icon:hover {
-        color: #ffffffd3; /* Cambio de color al pasar el cursor */
-      }
-
-      #sidebar:hover {
-        opacity: 1;
-      }
-      /* Línea horizontal */
-      .menu-icon::after {
-        content: "";
-        position: absolute;
-        top: 38px; /* Establece un margen superior para la línea */
-        left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
-        transform: translateX(-50%); /* Centra la línea horizontalmente */
-        width: 0;
-        height: 2px;
-        background-color: red; /* Color de la línea */
-        transition: width 0.3s ease; /* Transición suave para el ancho */
-      }
-
-      /* Cuando se posicione el mouse sobre el enlace */
-      .menu-icon:hover::after {
-        width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
-      }
-
-      #menu-toggle {
-        cursor: pointer;
-        position: fixed;
-        z-index: 3;
-        top: 10px;
-        left: 15px;
-        display: none;
-      }
-
-      #user-icon {
-        margin-bottom: 8px;
-        border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
-      }
       /* Estilo del contenido principal */
 
       #information {
         margin-left: 100px;
         margin-top: 10px;
-        height: 260px;
+        height: 210px;
         margin-bottom: 30px;
         color: white;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -167,9 +82,9 @@
         font-size: 20px;
       }
       #title-container {
-        max-width: 300px;
+        max-width: 190px;
         overflow: hidden; /* Oculta el contenido que excede el ancho máximo */
-        min-height: 170px;
+        min-height: 140px;
         display: flex;
         align-items: center;
       }
@@ -268,28 +183,6 @@
         background-color: darkblue; /* Cambia el color al pasar el cursor sobre el botón */
       }
 
-      /* Estilo del menú inferior (para pantallas pequeñas) */
-      #bottom-menu {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-
-        text-align: center;
-        display: none;
-      }
-
-      #bottom-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      #bottom-menu ul li a {
-        color: #fff;
-        font-size: 14px;
-        text-decoration: none;
-      }
       /* estilos para los botones de busqueda rapida*/
       .quick-search-buttons {
         display: flex;
@@ -368,7 +261,7 @@
       /* Estilos para el carusel de peliculas */
       .carousel-container {
         /* Ajustar según sea necesario */
-        height: 170px; /* Ajustar según sea necesario */
+        height: 220px; /* Ajustar según sea necesario */
         overflow-x: auto; /* Scroll horizontal */
         overflow-y: auto; /* Scroll vertical */
         margin-left: 7%; /* Alineación con el div de información */
@@ -475,9 +368,6 @@
 
       /* aqui adaptamos los div para pantallas de smartphone */
       @media only screen and (max-width: 412px) {
-        #sidebar {
-          display: none;
-        }
         #movie-title-image {
           margin-left: 10px;
         }
@@ -513,69 +403,7 @@
           object-fit: cover;
           z-index: -2;
         }
-        /* Ajuste del botón de menú */
-        #menu-toggle {
-          display: block; /* Hace visible el botón en pantallas pequeñas */
-          position: fixed;
-          z-index: 1001; /* Lo coloca adelante del div data */
-          top: 10px;
-          left: 15px;
-          background-color: transparent; /* Fondo transparente */
-          border: none; /* Sin borde */
-          cursor: pointer;
-          padding: 0;
-        }
 
-        /* Estilos para el ícono del menú */
-        #menu-toggle ion-icon {
-          font-size: 40px; /* Tamaño del ícono */
-          color: white; /* Color del ícono */
-        }
-        #bottom-menu {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background-color: #222;
-          padding-top: 10px;
-          padding-bottom: 0px;
-          justify-content: space-around;
-          align-items: center;
-          z-index: 1000;
-        }
-        #bottom-menu ul {
-          display: flex;
-          flex-direction: row;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-        }
-
-        #bottom-menu ul li {
-          padding: 17px;
-        }
-
-        #bottom-menu .menu-icon {
-          color: white; /* Cambia el color de los iconos a blanco */
-        }
-
-        .menu-icon::after {
-          display: none; /* Oculta la línea horizontal en pantallas móviles */
-        }
-        .menu-icon.selected {
-          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-        }
-        .menu-icon {
-          width: 20px;
-          height: 20px;
-          margin-bottom: 0px;
-          transition: color 0.3s;
-        }
-        #bottom-menu .menu-icon[name="home"] {
-          color: #4c65b1; /* Cambia el color del icono de película a rojo */
-        }
         .genre-section {
           text-align: center;
           font-size: 16px;
@@ -648,72 +476,6 @@
           display: none;
         }
 
-        #sidebar {
-          display: none;
-        }
-        /* Ajuste del botón de menú */
-        #menu-toggle {
-          display: block; /* Hace visible el botón en pantallas pequeñas */
-          position: fixed;
-          z-index: 1001; /* Lo coloca adelante del div data */
-          top: 10px;
-          left: 15px;
-          background-color: transparent; /* Fondo transparente */
-          border: none; /* Sin borde */
-          cursor: pointer;
-          padding: 0;
-        }
-
-        /* Estilos para el ícono del menú */
-        #menu-toggle ion-icon {
-          font-size: 40px; /* Tamaño del ícono */
-          color: white; /* Color del ícono */
-        }
-        #bottom-menu {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background-color: #222;
-          padding-top: 10px;
-          padding-bottom: 0px;
-          justify-content: space-around;
-          align-items: center;
-          z-index: 1000;
-        }
-        #bottom-menu ul {
-          display: flex;
-          flex-direction: row;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-          list-style-type: none;
-        }
-
-        #bottom-menu ul li {
-          padding: 17px;
-        }
-
-        #bottom-menu .menu-icon {
-          color: white; /* Cambia el color de los iconos a blanco */
-        }
-
-        .menu-icon::after {
-          display: none; /* Oculta la línea horizontal en pantallas móviles */
-        }
-        .menu-icon.selected {
-          color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-        }
-        .menu-icon {
-          width: 20px;
-          height: 20px;
-          margin-bottom: 0px;
-          transition: color 0.3s;
-        }
-        #bottom-menu .menu-icon[name="home"] {
-          color: #4c65b1; /* Cambia el color del icono de película a rojo */
-        }
         .genre-section {
           text-align: center;
           font-size: 16px;
@@ -776,9 +538,6 @@
       }
       /* aqui quitamos el sidebar para dispositivos smartphone */
       @media only screen and (max-width: 360px) {
-        #sidebar {
-          display: none;
-        }
         #example-image {
           display: none; /* Ocultar la imagen-1 en pantallas pequeñas */
         }
@@ -1005,10 +764,10 @@
         <ion-icon name="home" class="menu-icon"></ion-icon>
       </a>
       <a href="peliculas.html" id="enlace4" class="menu-item" tabindex="0">
-        <ion-icon name="film" class="menu-icon"></ion-icon>
+        <ion-icon name="play-circle-outline" class="menu-icon"></ion-icon>
       </a>
       <a href="series.html" id="enlace5" class="menu-item" tabindex="0">
-        <ion-icon name="albums" class="menu-icon"></ion-icon>
+        <ion-icon name="folder-open-outline" class="menu-icon"></ion-icon>
       </a>
       <a href="tv.html" id="enlace6" class="menu-item" tabindex="0">
         <ion-icon name="tv" class="menu-icon"></ion-icon>
@@ -1022,8 +781,8 @@
       <ul>
         <li>
           <a href="peliculas.html" title="Películas">
-            <ion-icon name="film" class="menu-icon"></ion-icon>
-            <span class="menu-title">Pelís</span>
+            <ion-icon name="play-circle-outline"></ion-icon>
+            <span class="menu-title">Movies</span>
           </a>
         </li>
         <li>
@@ -1160,6 +919,31 @@
         <div class="card-container">
           <!-- Tarjetas de películas para el primer carusel -->
           <!-- 10 Cards -->
+          <div
+            class="card-link"
+            tabindex="0"
+            onclick="window.location.href='./peliculas/P-124-9-5-Smile2.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-124-9-5-Smile2.html"
+              data-text-title="Smile 2"
+              data-puntuacion="3"
+              data-edad="<i>18+</i>"
+              data-año="2024"
+              data-duracion-horas="2 h"
+              data-duracion-minutos="7 min"
+              data-genero="Terror / Suspenso"
+              data-bg="https://image.tmdb.org/t/p/original/wpUqaNkxNrtctDILAWU0nDGCEGl.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/ditakJQbOLWVsyYZnKtz054fJhz.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/r9SsXx4ZQC7n0uWHiFinNTbp5jB.svg"
+            >
+              <img
+                src="https://image.tmdb.org/t/p/original/7zjn7tAITW8786sTx57zWEPbN5K.jpg"
+                alt="Card"
+              />
+            </div>
+          </div>
           <div
             class="card-link"
             tabindex="0"
@@ -5685,11 +5469,11 @@
 
     <script
       type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      src="https://unpkg.com/ionicons@7.1.1/dist/ionicons/ionicons.esm.js"
     ></script>
     <script
       nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      src="https://unpkg.com/ionicons@7.1.1/dist/ionicons/ionicons.js"
     ></script>
   </body>
 </html>

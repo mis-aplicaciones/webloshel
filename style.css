@@ -1,400 +1,272 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
-@import "mainsecciones.css";
-:root{
-    --color-barra-lateral:rgb(17,17,17);
+ /* Estilo del sidebar */
+ #sidebar {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  /* Cambia el color de fondo aquí */
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    --color-texto:rgb(255,255,255);
-    --color-texto-menu:rgb(110,110,117);
-
-    --color-menu-hover:rgb(0,0,0);
-    --color-menu-hover-texto:rgb(238,238,238);
-
-    --color-boton:rgb(0,0,0);
-    --color-boton-texto:rgb(255,255,255);
-
-    --color-linea:rgb(90,90,90);
-
-    --color-switch-base :rgb(130,39,205);
-    --color-switch-circulo:rgb(255,255,255);
-
-    --color-scroll:rgb(68,69,74);
-    --color-scroll-hover:rgb(85,85,85);
+  z-index: 1000;
 }
 
-.dark-mode{
-    --color-barra-lateral:rgb(255, 255, 255);
-
-    --color-texto:rgb(0,0,0);
-    --color-texto-menu:rgb(134,136,144);
-
-    --color-menu-hover:rgb(238,238,238);
-    --color-menu-hover-texto:rgb(0,0,0);
-
-    --color-boton:rgba(0, 0, 0, 0.267);
-    --color-boton-texto:rgb(255,255,255);
-
-    --color-linea:rgb(180,180,180);
-
-    --color-switch-base :rgb(201,202,206);
-    --color-switch-circulo:rgb(241,241,241);
-
-    --color-scroll:rgb(192,192,192);
-    --color-scroll-hover:rgb(134,134,134);
+#sidebar a:hover {
+  background-color: transparent; /* Cambio a transparente al posicionar el mouse */
+  color: #fff; /* Cambio de color del texto al posicionar el mouse */
+}
+/* Estilos para el focus del contenido del sidebar */
+#sidebar .menu-item:hover,
+#sidebar .menu-item:focus {
+  background-color: transparent; /* Cambio a transparente al posicionar el mouse o tener el foco */
+  color: #fff; /* Cambio de color del texto al posicionar el mouse o tener el foco */
+  outline: none; /* Quita el contorno predeterminado */
 }
 
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
-    
-}
-body{
-    height: 100vh;
-    width: 100%;
-    background-color: rgb(22, 22, 22);
-    overflow-x: hidden;
+#sidebar .menu-icon,
+#sidebar .menu-icon:focus {
+  color: #ffffff5d;
+  transition: color 0.3s;
 }
 
-/*-----------------Menu*/
-.menu{
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    font-size: 30px;
+#sidebar .menu-icon:hover,
+#sidebar .menu-icon:focus {
+  color: #ffffffd3; /* Cambio de color al pasar el cursor o tener el foco */
+  outline: none; /* Quita el contorno predeterminado */
+}
+
+/* Línea horizontal */
+#sidebar .menu-item:hover .menu-icon::after,
+#sidebar .menu-item:focus .menu-icon::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  background-color: red;
+  transition: width 0.3s ease;
+}
+.menu-icon {
+  width: 30px;
+  height: 40px;
+  border-radius: 0;
+  position: relative;
+  color: #ffffff5d;
+  margin-bottom: 20px;
+  transition: color 0.3s;
+}
+.menu-icon:hover {
+  color: #ffffffd3; /* Cambio de color al pasar el cursor */
+}
+
+#sidebar:hover {
+  opacity: 1;
+}
+/* Línea horizontal */
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  top: 38px; /* Establece un margen superior para la línea */
+  left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
+  transform: translateX(-50%); /* Centra la línea horizontalmente */
+  width: 0;
+  height: 2px;
+  background-color: red; /* Color de la línea */
+  transition: width 0.3s ease; /* Transición suave para el ancho */
+}
+
+/* Cuando se posicione el mouse sobre el enlace */
+.menu-icon:hover::after {
+  width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
+}
+
+#menu-toggle {
+  cursor: pointer;
+  position: fixed;
+  z-index: 3;
+  top: 10px;
+  left: 15px;
+  display: none;
+}
+
+#user-icon {
+  margin-bottom: 8px;
+  border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
+}
+/* Estilo del menú inferior (para pantallas pequeñas) */
+#bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  text-align: center;
+  display: none;
+}
+
+#bottom-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#bottom-menu ul li a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+}
+/* aqui adaptamos los div para pantallas de smartphone */
+@media only screen and (max-width: 412px) {
+  #sidebar {
     display: none;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: var(--color-boton);
-    color: var(--color-boton-texto);
-    right: 15px;
-    top: 15px;
-    z-index: 100;
-}
-
-
-/*----------------Barra Lateral*/
-.barra-lateral{
+  }
+  
+  /* Ajuste del botón de menú */
+  #menu-toggle {
+    display: block; /* Hace visible el botón en pantallas pequeñas */
     position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 200px; /*---ancho del menu lateral cuando esta abierto--*/
-    height: 100%;
-    overflow: hidden;
-    padding: 20px 15px;
-    background-color: var(--color-barra-lateral);
-    transition: width 0.5s ease,background-color 0.3s ease,left 0.5s ease;
-    z-index: 50;
-}
-
-.mini-barra-lateral{
-    width: 80px; /*--engrosar menu lateral cuando esta cerrado--*/
-}
-.barra-lateral span{
-    width: 100px;
-    white-space: nowrap;
-    font-size: 18px; /*---tamaño de las letras del menu lateral--*/
-    text-align: left;
-    opacity: 1;
-    transition: opacity 0.5s ease,width 0.5s ease;
-}
-.barra-lateral span.oculto{
-    opacity: 0;
-    width: 0;
-}
-
-/*------------> Nombre de la página */
-.barra-lateral .nombre-pagina{
-    width: 100%;
-    height: 45px;
-    color: var(--color-texto);
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-}
-.barra-lateral .nombre-pagina ion-icon{
-    min-width: 50px;
-    font-size: 40px;
-    cursor: pointer;
-}
-.barra-lateral .nombre-pagina span{
-    margin-left: 5px;
-    font-size: 25px;
-}
-
-
-/*------------> Botón*/
-.barra-lateral .boton{
-    width: 100%;
-    height: 45px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--color-boton);
-    color: var(--color-boton-texto);
-}
-.barra-lateral .boton ion-icon{
-    min-width: 50px;
-    font-size: 25px;
-}
-
-
-/*--------------> Menu Navegación*/
-.barra-lateral .navegacion{
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-.barra-lateral .navegacion::-webkit-scrollbar{
-    width: 5px;
-}
-.barra-lateral .navegacion::-webkit-scrollbar-thumb{
-    background-color: var(--color-scroll);
-    border-radius: 5px;
-}
-.barra-lateral .navegacion::-webkit-scrollbar-thumb:hover{
-    background-color: var(--color-scroll-hover);
-}
-.barra-lateral .navegacion li{  
-    list-style: none;
-    display: flex;
-    margin-bottom: 5px;
-}
-.barra-lateral .navegacion a{
-    width: 100%;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    border-radius: 10px;
-    color: var(--color-texto-menu);
-}
-.barra-lateral .navegacion a:hover{
-    background-color: var(--color-menu-hover);
-    color: var(--color-menu-hover-texto);
-}
-.barra-lateral .navegacion ion-icon{
-    min-width: 50px;
-    font-size: 20px;
-}
-
-/*-----------------> Linea*/
-.barra-lateral .linea{
-    width: 100%;
-    height: 1px;
-    margin-top: 15px;
-    background-color: var(--color-linea);
-}
-
-/*----------------> Modo Oscuro*/
-.barra-lateral .modo-oscuro{
-    width: 100%;
-    margin-bottom: 80px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-.barra-lateral .modo-oscuro .info{
-    width: 150px;
-    height: 45px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    color: var(--color-texto-menu);
-}
-.barra-lateral .modo-oscuro ion-icon{
-
-    width: 50px;
-    font-size: 20px;
-}
-
-/*--->switch*/
-.barra-lateral .modo-oscuro .switch{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 50px;
-    height: 45px;
-    cursor: pointer;
-}
-.barra-lateral .modo-oscuro .base{
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 35px;
-    height: 20px;
-    background-color: var(--color-switch-base);
-    border-radius: 50px;
-}
-.barra-lateral .modo-oscuro .circulo{
-    position: absolute;
-    width: 18px;
-    height: 90%;
-    background-color: var(--color-switch-circulo);
-    border-radius: 50%;
-    left: 2px;
-    transition: left 0.5s ease;
-}
-.barra-lateral .modo-oscuro .circulo .prendido{
+    z-index: 1001; /* Lo coloca adelante del div data */
+    top: 10px;
     left: 15px;
-}
-
-/*---------------> Usuario*/
-.barra-lateral .usuario{
-    width: 100%;
-    display: flex;
-}
-.barra-lateral .usuario img{
-    width: 50px;
-    min-width: 50px;
-    border-radius: 50%;
-    border-color: #42424242;
-    border-style:solid;
-    
-}
-.barra-lateral .usuario .info-usuario{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--color-texto);
-    overflow: hidden;
-}
-.barra-lateral .usuario .nombre-email{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 5px;
-}
-.barra-lateral .usuario .nombre{
-    font-size: 15px;
-    font-weight: 600;
-}
-.barra-lateral .usuario .email{
-    font-size: 11px;
-}
-.barra-lateral .usuario ion-icon{
-    font-size: 20px;
-}
-
-
-/*-------------main*/
-/*------active para activar el boton en js------*/
-.active{
-    background-color: var(--color-menu-hover);
-    color: var(--color-menu-hover-texto);
-}
-
-main{
-    margin-left: 140px; /*---mueve el margen izquierdo del main al abrir el menu--*/
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    cursor: pointer;
     padding: 0;
-    transition: margin-left 0.5s ease;
+  }
+
+  /* Estilos para el ícono del menú */
+  #menu-toggle ion-icon {
+    font-size: 40px; /* Tamaño del ícono */
+    color: white; /* Color del ícono */
+  }
+  #bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #222;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+  }
+  #bottom-menu ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  #bottom-menu ul li {
+    padding: 17px;
+  }
+
+  #bottom-menu .menu-icon {
+    color: white; /* Cambia el color de los iconos a blanco */
+  }
+
+  .menu-icon::after {
+    display: none; /* Oculta la línea horizontal en pantallas móviles */
+  }
+  .menu-icon.selected {
+    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+  }
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 0px;
+    transition: color 0.3s;
+  }
+  #bottom-menu .menu-icon[name="home"] {
+    color: #4c65b1; /* Cambia el color del icono de película a rojo */
+  }
+
 }
-main.min-main{
-    margin-left: 20px; /*margen izquierdo para todo el main incluye el carrusel--*/
+@media only screen and (max-width: 384px) {
+  #sidebar {
+    display: none;
+  }
+  /* Ajuste del botón de menú */
+  #menu-toggle {
+    display: block; /* Hace visible el botón en pantallas pequeñas */
+    position: fixed;
+    z-index: 1001; /* Lo coloca adelante del div data */
+    top: 10px;
+    left: 15px;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /* Estilos para el ícono del menú */
+  #menu-toggle ion-icon {
+    font-size: 40px; /* Tamaño del ícono */
+    color: white; /* Color del ícono */
+  }
+  #bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #222;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+  }
+  #bottom-menu ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  #bottom-menu ul li {
+    padding: 17px;
+  }
+
+  #bottom-menu .menu-icon {
+    color: white; /* Cambia el color de los iconos a blanco */
+  }
+
+  .menu-icon::after {
+    display: none; /* Oculta la línea horizontal en pantallas móviles */
+  }
+  .menu-icon.selected {
+    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
+  }
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 0px;
+    transition: color 0.3s;
+  }
+  #bottom-menu .menu-icon[name="home"] {
+    color: #4c65b1; /* Cambia el color del icono de película a rojo */
+  }
+  
 }
-
-
-
-/*------------------> Responsive*/
-@media (max-height: 660px){
-    .barra-lateral .nombre-pagina{
-        margin-bottom: 5px;
-    }
-    .barra-lateral .modo-oscuro{
-        margin-bottom: 3px;
-    }
-    .banner{
-        background-position:top center;
-        padding-bottom: 0.8rem;
-    }
-    .banner .content p{
-        font-size: 0.84em;
-        font-weight: 100;
-        line-height: 1.2em;
-        color: #fff;
-        margin: 2px 0 10px;
-        
-    }
-    .content{
-        padding-top: 3rem; /*---dar espacio entre la imagen de titulo y toda la aprte de arriba--*/
-        padding-bottom: 2rem;
-    }
-    .banner .content p{
-        padding-top: .5em;
-    }
-}
-@media (max-width: 600px){
-    .barra-lateral{
-        position: fixed;
-        left: -250px;
-    }
-    .max-barra-lateral{
-        left: 0;
-    }
-    .menu{
-        display: flex;
-    }
-    .menu ion-icon:nth-child(2){
-        display: none;
-    }
-    main{
-        margin-left: 0;
-    }
-    main.min-main{
-        margin-left: 0;
-    }
-    .row{
-        margin-left: 10px;
-    }
-    
-    .banner{
-        min-height: 55vh;
-        padding-left: 15px;
-        padding-bottom: 2.5rem
-    }
-    .banner .bg{
-        left: 10px; /*margen izquierdo entre la descripcion y la pantalla--*/
-    }
-    .content{
-        padding-top: 6rem; /*---dar espacio entre la imagen de titulo y toda la aprte de arriba--*/
-    }
-    /*.banner .content h4 span{
-       color: #fff;
-    }------cambia el color del año y edad de pelicula*/
-
-    .movieTitle{
-        max-width: 140px;
-    }
-    .banner .content p{
-        font-size: 0.84em;
-        font-weight: 100;
-        line-height: 1em;
-        color: #fff;
-        margin: 2px 0 10px;
-        
-    }
-    .banner .content p{
-        margin-top: 0;
-        padding-top: 0.6rem;
-    }
-    .nav{
-        justify-content: start;
-        padding-left: 10px;
-        opacity: 1;
-    }
-    #version {
-        
-        font-size: 13px;
-        justify-content: start;
-        opacity: 1;
-    
-    }
+/* aqui quitamos el sidebar para dispositivos smartphone */
+@media only screen and (max-width: 360px) {
+  #sidebar {
+    display: none;
+  }
+  
 }

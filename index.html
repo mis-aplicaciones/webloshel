@@ -922,6 +922,31 @@
           <div
             class="card-link"
             tabindex="0"
+            onclick="window.location.href='./peliculas/P-125-1-2-GladiatorII.html';"
+          >
+            <div
+              class="card"
+              data-vermas="./peliculas/P-125-1-2-GladiatorII.html"
+              data-text-title="Gladiator II"
+              data-puntuacion="3"
+              data-edad="<i>18+</i>"
+              data-año="2024"
+              data-duracion-horas="2 h"
+              data-duracion-minutos="28 min"
+              data-genero="Acción / Aventura"
+              data-bg="https://image.tmdb.org/t/p/original/3fhfGexgMMAOkw9CVNjuOuvRxJr.jpg"
+              data-bg2="https://image.tmdb.org/t/p/original/euYIwmwkmz95mnXvufEmbL6ovhZ.jpg"
+              data-title-img="https://image.tmdb.org/t/p/original/phliRHzrDQapwqLFKuCDDNDYbXH.png"
+            >
+              <img
+                src="https://image.tmdb.org/t/p/original/oMJBJZ5N4J84Z56B6oYNc77C1wL.jpg"
+                alt="Card"
+              />
+            </div>
+          </div>
+          <div
+            class="card-link"
+            tabindex="0"
             onclick="window.location.href='./peliculas/P-124-9-5-Smile2.html';"
           >
             <div
@@ -4959,30 +4984,48 @@
           const cardContainer = carousel.querySelector(".card-container");
           const leftBtn = carousel.querySelector(".scroll-btn.left");
           const rightBtn = carousel.querySelector(".scroll-btn.right");
+          const cards = Array.from(cardContainer.querySelectorAll(".card")); // Todas las tarjetas
 
-          cardContainer.addEventListener("scroll", () => {
-            // Mostrar u ocultar botones según la posición del scroll
-            leftBtn.style.opacity = cardContainer.scrollLeft > 0 ? "1" : "0";
-            rightBtn.style.opacity =
-              cardContainer.scrollLeft <
-              cardContainer.scrollWidth - cardContainer.clientWidth
-                ? "1"
-                : "0";
-          });
+          // Calcular el ancho del *card* considerando márgenes
+          const cardWidth =
+            cards[0].getBoundingClientRect().width +
+            parseFloat(getComputedStyle(cards[0]).marginRight);
 
-          leftBtn.addEventListener("click", () => {
-            cardContainer.scrollBy({
-              left: -cardContainer.offsetWidth,
+          // Función para actualizar la visibilidad de los botones
+          const updateButtonsVisibility = () => {
+            const scrollLeft = cardContainer.scrollLeft;
+            const maxScroll =
+              cardContainer.scrollWidth - cardContainer.clientWidth;
+
+            leftBtn.style.opacity = scrollLeft > 0 ? "1" : "0";
+            rightBtn.style.opacity = scrollLeft < maxScroll ? "1" : "0";
+          };
+
+          // Función para centrar siempre un *card*
+          const scrollToCard = (direction) => {
+            const currentScroll = cardContainer.scrollLeft;
+            const cardIndex = Math.round(currentScroll / cardWidth); // Índice actual del *card*
+
+            let targetIndex =
+              direction === "right" ? cardIndex + 1 : cardIndex - 80;
+            targetIndex = Math.max(0, Math.min(targetIndex, cards.length - 80)); // Restringir a los límites
+
+            const newScroll = targetIndex * cardWidth;
+            cardContainer.scrollTo({
+              left: newScroll,
               behavior: "smooth",
             });
-          });
+          };
 
-          rightBtn.addEventListener("click", () => {
-            cardContainer.scrollBy({
-              left: cardContainer.offsetWidth,
-              behavior: "smooth",
-            });
-          });
+          // Asignar eventos a los botones
+          leftBtn.addEventListener("click", () => scrollToCard("left"));
+          rightBtn.addEventListener("click", () => scrollToCard("right"));
+
+          // Actualizar visibilidad de botones al hacer scroll manual
+          cardContainer.addEventListener("scroll", updateButtonsVisibility);
+
+          // Configuración inicial
+          updateButtonsVisibility();
         });
       });
     </script>

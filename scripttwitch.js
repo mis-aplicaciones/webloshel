@@ -6,11 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentTimeSpan = document.getElementById("currentTime");
   let timeout;
 
-  // Inicializar el reproductor de Twitch
+  // Obtener el nombre del canal inicial desde el primer botón de canales
+  const initialChannel = channels[0]?.getAttribute("data-channel") || "default";
+
+  // Inicializar el reproductor de Twitch con el canal inicial
   const embed = new Twitch.Embed("twitch-embed", {
     width: "100%",
     height: "100%",
-    channel: "sonnycc1",
+    channel: initialChannel,
     parent: [window.location.hostname],
     layout: "video",
     muted: false,
@@ -89,6 +92,16 @@ document.addEventListener("DOMContentLoaded", () => {
         embed.setChannel(channelName);
       }
     }
+  });
+
+  // Cambiar canal al hacer clic en un botón
+  channels.forEach((channel) => {
+    channel.addEventListener("click", () => {
+      const channelName = channel.getAttribute("data-channel");
+      if (channelName) {
+        embed.setChannel(channelName);
+      }
+    });
   });
 
   // Mostrar contenedores al pasar el ratón sobre ellos

@@ -110,7 +110,7 @@ body {
 }
 
 /* Responsiveness */
-@media (max-width: 1250px) {
+@media (max-width: 719px) {
   .main-container {
     height: calc(100vh - 70px);
     margin: 0;

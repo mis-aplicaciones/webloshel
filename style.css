@@ -130,7 +130,7 @@ body {
     display: none;
 }
 /* Footer for smaller screens */
-@media (max-width: 1250px) {
+@media (max-width: 719px) {
     .footer {
         position: fixed;
         bottom: 0;
@@ -202,7 +202,7 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 380px) {
     .footer {
         height: 50px;
     }

@@ -134,7 +134,7 @@ body {
 }
 
 /* Layout vertical para pantallas pequeñas */
-@media (max-width: 1250px) {
+@media (max-width: 719px) {
   .container {
     flex-direction: column;
     height: 100%;

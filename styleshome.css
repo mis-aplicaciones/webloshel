@@ -335,7 +335,7 @@ scrollbar-width: none; /* Hide scrollbar for Firefox */
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1250px) {
+@media (max-width: 719px) {
   .home-container {
   margin: 0;
   /*height: auto; /* Allow the container to expand vertically */
@@ -361,7 +361,7 @@ scrollbar-width: none; /* Hide scrollbar for Firefox */
   }
   }
 /* Responsividad */
-@media (max-width: 768px) {
+@media (max-width: 380px) {
   .carousel-title {
     font-size: 0.8rem;
     }

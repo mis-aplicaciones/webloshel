@@ -14,7 +14,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 60px;
+    width: 5%;
     height: 100vh;
     background-color: transparent;
     display: flex;
@@ -34,7 +34,7 @@ body {
     width: 100%;
   }
 .sidebar .logo img {
-    max-width: 80%;
+    max-width: 60%;
     height: auto;
     display: block;
 }
@@ -80,7 +80,7 @@ body {
 
 .sidebar .menu-item i,
 .sidebar .user i {
-    font-size: 1rem; /* Reduced size for minimalistic look */
+    font-size: 3vh; /* Reduced size for minimalistic look */
     color: white;
     transition: color 0.3s, transform 0.3s;
 }
@@ -93,7 +93,7 @@ body {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 6px; /* Neon stripe width */
+    width: 10%;; /* Neon stripe width */
     height: 80%; /* Extend to fit the button height */
     background-color: transparent;
     border-radius: 4px;

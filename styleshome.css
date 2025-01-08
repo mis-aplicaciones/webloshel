@@ -18,6 +18,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  
 }
 
 /* Grid dentro de info-content */
@@ -32,6 +33,7 @@ body {
 .info-title{
   width: 45vh;
   padding: 0 10px 15px;
+  
 }
 .info-item,
 .info-genero {
@@ -45,22 +47,21 @@ body {
   color:#ffffff;
   margin: 0;
   font-weight: bold;
-  font-size: small;
+  font-size: 2vh;
 }
 .info-item h4 i{
   background-color: #6e6abd;
   padding: 5px;
   border-radius: 5px;
 }
-.info-genero .genre{
-  font-size: small;
-}
+
 .info-title img {
   width: 100%;
   height: 70%;
 }
 
 .info-genero .genre {
+  font-size: 2vh;
   padding: 5px 10px;
   border: 1.5px solid #8a2be2;
   border-radius: 15px;
@@ -186,8 +187,7 @@ body {
 /*fin de slider*/
 .home-container{
   width: 100%; 
-    margin: 0% 0px 0px 60px;
-    
+    margin: 0% 0px 0px 5%;    
     overflow-y: auto;
     min-height: 100vh;
     display: flex;
@@ -335,20 +335,28 @@ scrollbar-width: none; /* Hide scrollbar for Firefox */
 }
 
 /* Responsive Adjustments */
-@media (max-width: 719px) {
-  .home-container {
-  margin: 0;
-  /*height: auto; /* Allow the container to expand vertically */
+@media (max-width: 720px) {
+
+  .info-content {
+    height: 60vh;
+}
+  .carousel-section {
+    margin-top: 60vh; 
+    height: calc(100vh - 60vh);
+}
+.inicio-fixed {
+  font-size:small;
+  padding: 5px 15px;
   
-  }
-  
+}
+
   .carousel-track {
     overflow-x: auto;
   scroll-snap-type: x mandatory; /* Smooth snapping for smaller screens */
   }
   
   .card {
-  width: 120px;
+  width: 48%;
   height: 80px; /* Adjust for smaller screens */
   }
   

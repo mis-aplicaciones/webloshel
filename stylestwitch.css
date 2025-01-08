@@ -39,13 +39,12 @@ body {
   top: 0;
   bottom: 0;
   z-index: 2;
-  transition: opacity 0.5s ease;
-  opacity: 1;
+  
 }
 
 .channel-list {
   list-style: none;
-  padding: 35px;
+  padding: 2vh;
   margin: 0;
 }
 
@@ -67,19 +66,20 @@ body {
 }
 
 .channel-card img {
-  width: 50px;
-  height: 50px;
+  width: 6vh;
+  height: 6vh;
   margin-right: 10px;
   border-radius: 50%;
 }
 
 .channel-card p {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2vh;
 }
 .channel-list-title {
-  font-size: 1.5rem;
-  padding: 0 1.9rem;
+  font-size: 2.5vh;
+    text-align: center;
+    padding: 0 1.9rem;
 }
 /* Scrollbar moderno */
 .channels-container::-webkit-scrollbar {
@@ -99,6 +99,26 @@ body {
 .channels-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8); /* Color al pasar hover */
 }
+/* Contenedor del tiempo */
+.time-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  font-size: 4vh;
+  z-index: 2;
+  border-radius: 5px;
+}
+/* Asegurar que la opacidad se aplique correctamente */
+.channels-container,
+.time-container {
+  transition: opacity 0.5s ease-in-out; /* Suaviza el cambio de opacidad */
+  opacity: 0; /* Por defecto, oculto */
+}
+
+
 /* Escala de card y tiempo en pantallas grandes */
 @media (min-width: 1250px) {
   .channel-card {
@@ -111,27 +131,8 @@ body {
     width: 4rem;
     height: 4rem;
   }
-
-  .time-container {
-    font-size: 3.5rem;
-    padding: 15px;
-  }
 }
 
-/* Contenedor del tiempo */
-.time-container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 10px;
-  font-size: 3rem;
-  z-index: 2;
-  border-radius: 5px;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-}
 
 /* Layout vertical para pantallas pequeñas */
 @media (max-width: 719px) {
@@ -149,7 +150,6 @@ body {
     width: 100%;
     height: 70%;
     position: relative;
-    opacity: 1;
   }
 
   .time-container {

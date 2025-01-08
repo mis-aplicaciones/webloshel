@@ -110,38 +110,82 @@ body {
 }
 
 /* Responsiveness */
-@media (max-width: 719px) {
+@media (max-width: 720px) {
+  /* Ajustar contenedor principal */
   .main-container {
-    height: calc(100vh - 70px);
+    width: 100%;
     margin: 0;
-    overflow-y: auto;
+    padding: 10px;
+    height: auto; /* Permitir scroll si es necesario */
   }
 
-  .grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  }
-
-  .card {
-    font-size: 0.8rem;
-    padding: 3px;
+  /* Ajustar títulos */
+  .tv-title {
+    font-size: 1.2rem;
+    margin: 8px 0;
   }
 
   .block-title {
     font-size: 1rem;
+    margin: 0 0 8px 8px;
   }
 
-  /* Disable title overlay hover effect */
-  #collection .card .card-title {
-    display: none;
-  }
-}
-
-@media (min-width: 1250px) {
+  /* Ajustar rejilla */
   .grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Reducir tamaño mínimo */
   }
 
+  /* Ajustar tarjetas generales */
   .card {
-    font-size: 1.2rem;
+    border-radius: 8px; /* Reducir el radio */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  /* Ajustar tarjetas frecuentes */
+  #frequent-channels .card {
+    aspect-ratio: 2 / 1; /* Ajustar relación de aspecto */
+  }
+
+  #frequent-channels .card img {
+    object-fit: cover; /* Ajustar tamaño de la imagen */
+  }
+
+  /* Ajustar tarjetas de colección */
+  #collection .card {
+    aspect-ratio: 16 / 9; /* Relación de aspecto más común */
+  }
+
+  #collection .card img {
+    object-fit: cover;
+    transform: scale(1); /* Sin zoom por defecto */
+  }
+
+  #collection .card .card-title {
+    font-size: 0.9rem;
+    padding: 8px;
+    transform: translateY(110%); /* Ajustar posición inicial */
+  }
+
+  #collection .card:hover img {
+    transform: scale(1.05); /* Efecto de zoom moderado */
+  }
+
+  #collection .card:hover .card-title {
+    transform: translateY(0); /* Mostrar título */
+  }
+
+  /* Ajustar efectos hover y focus */
+  .card:hover,
+  .card:focus {
+    transform: scale(1.03); /* Menor efecto de escala */
+  }
+
+  /* Ajustar contenedor de imágenes de fondo */
+  #background-section {
+    background-position: center center;
+    background-size: cover;
+    height: 50vh; /* Reducir altura para dispositivos más pequeños */
   }
 }
+

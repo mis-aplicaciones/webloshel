@@ -1,272 +1,213 @@
- /* Estilo del sidebar */
- #sidebar {
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 70px;
-  position: fixed;
-  /* Cambia el color de fondo aquí */
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 1000;
+/* General */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #121212;
+    color: white;
+    overflow: hidden;
 }
 
-#sidebar a:hover {
-  background-color: transparent; /* Cambio a transparente al posicionar el mouse */
-  color: #fff; /* Cambio de color del texto al posicionar el mouse */
-}
-/* Estilos para el focus del contenido del sidebar */
-#sidebar .menu-item:hover,
-#sidebar .menu-item:focus {
-  background-color: transparent; /* Cambio a transparente al posicionar el mouse o tener el foco */
-  color: #fff; /* Cambio de color del texto al posicionar el mouse o tener el foco */
-  outline: none; /* Quita el contorno predeterminado */
-}
-
-#sidebar .menu-icon,
-#sidebar .menu-icon:focus {
-  color: #ffffff5d;
-  transition: color 0.3s;
-}
-
-#sidebar .menu-icon:hover,
-#sidebar .menu-icon:focus {
-  color: #ffffffd3; /* Cambio de color al pasar el cursor o tener el foco */
-  outline: none; /* Quita el contorno predeterminado */
-}
-
-/* Línea horizontal */
-#sidebar .menu-item:hover .menu-icon::after,
-#sidebar .menu-item:focus .menu-icon::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 2px;
-  background-color: red;
-  transition: width 0.3s ease;
-}
-.menu-icon {
-  width: 30px;
-  height: 40px;
-  border-radius: 0;
-  position: relative;
-  color: #ffffff5d;
-  margin-bottom: 20px;
-  transition: color 0.3s;
-}
-.menu-icon:hover {
-  color: #ffffffd3; /* Cambio de color al pasar el cursor */
-}
-
-#sidebar:hover {
-  opacity: 1;
-}
-/* Línea horizontal */
-.menu-icon::after {
-  content: "";
-  position: absolute;
-  top: 38px; /* Establece un margen superior para la línea */
-  left: 50%; /* Posiciona la línea en el centro horizontal del ícono */
-  transform: translateX(-50%); /* Centra la línea horizontalmente */
-  width: 0;
-  height: 2px;
-  background-color: red; /* Color de la línea */
-  transition: width 0.3s ease; /* Transición suave para el ancho */
-}
-
-/* Cuando se posicione el mouse sobre el enlace */
-.menu-icon:hover::after {
-  width: 100%; /* Expandimos la línea al 100% del ancho del ícono */
-}
-
-#menu-toggle {
-  cursor: pointer;
-  position: fixed;
-  z-index: 3;
-  top: 10px;
-  left: 15px;
-  display: none;
-}
-
-#user-icon {
-  margin-bottom: 8px;
-  border-radius: 50%; /* Bordes redondeados solo para el icono de usuario */
-}
-/* Estilo del menú inferior (para pantallas pequeñas) */
-#bottom-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  text-align: center;
-  display: none;
-}
-
-#bottom-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#bottom-menu ul li a {
-  color: #fff;
-  font-size: 14px;
-  text-decoration: none;
-}
-/* aqui adaptamos los div para pantallas de smartphone */
-@media only screen and (max-width: 412px) {
-  #sidebar {
-    display: none;
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    border-right: 1px solid transparent;
+    border-image: linear-gradient(to bottom, transparent, #8a2be2, transparent) 1; /* Degradado arriba y abajo */
   }
   
-  /* Ajuste del botón de menú */
-  #menu-toggle {
-    display: block; /* Hace visible el botón en pantallas pequeñas */
-    position: fixed;
-    z-index: 1001; /* Lo coloca adelante del div data */
-    top: 10px;
-    left: 15px;
-    background-color: transparent; /* Fondo transparente */
-    border: none; /* Sin borde */
-    cursor: pointer;
-    padding: 0;
-  }
-
-  /* Estilos para el ícono del menú */
-  #menu-toggle ion-icon {
-    font-size: 40px; /* Tamaño del ícono */
-    color: white; /* Color del ícono */
-  }
-  #bottom-menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #222;
-    padding-top: 10px;
-    padding-bottom: 0px;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-  }
-  #bottom-menu ul {
+.sidebar .logo {
+    margin-top: 1.1vh; /* Top margin */
     display: flex;
-    flex-direction: row;
-    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+.sidebar .logo img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+}
+.sidebar .menu {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
     padding: 0;
     margin: 0;
-    list-style-type: none;
-  }
-
-  #bottom-menu ul li {
-    padding: 17px;
-  }
-
-  #bottom-menu .menu-icon {
-    color: white; /* Cambia el color de los iconos a blanco */
-  }
-
-  .menu-icon::after {
-    display: none; /* Oculta la línea horizontal en pantallas móviles */
-  }
-  .menu-icon.selected {
-    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-  }
-  .menu-icon {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 0px;
-    transition: color 0.3s;
-  }
-  #bottom-menu .menu-icon[name="home"] {
-    color: #4c65b1; /* Cambia el color del icono de película a rojo */
-  }
-
+    list-style: none;
 }
-@media only screen and (max-width: 384px) {
-  #sidebar {
-    display: none;
-  }
-  /* Ajuste del botón de menú */
-  #menu-toggle {
-    display: block; /* Hace visible el botón en pantallas pequeñas */
-    position: fixed;
-    z-index: 1001; /* Lo coloca adelante del div data */
-    top: 10px;
-    left: 15px;
-    background-color: transparent; /* Fondo transparente */
-    border: none; /* Sin borde */
-    cursor: pointer;
-    padding: 0;
-  }
 
-  /* Estilos para el ícono del menú */
-  #menu-toggle ion-icon {
-    font-size: 40px; /* Tamaño del ícono */
-    color: white; /* Color del ícono */
-  }
-  #bottom-menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #222;
-    padding-top: 10px;
-    padding-bottom: 0px;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-  }
-  #bottom-menu ul {
+.sidebar .menu-item{
     display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-  }
-
-  #bottom-menu ul li {
-    padding: 17px;
-  }
-
-  #bottom-menu .menu-icon {
-    color: white; /* Cambia el color de los iconos a blanco */
-  }
-
-  .menu-icon::after {
-    display: none; /* Oculta la línea horizontal en pantallas móviles */
-  }
-  .menu-icon.selected {
-    color: red; /* Cambia el color del icono a rojo cuando está seleccionado */
-  }
-  .menu-icon {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 0px;
-    transition: color 0.3s;
-  }
-  #bottom-menu .menu-icon[name="home"] {
-    color: #4c65b1; /* Cambia el color del icono de película a rojo */
-  }
-  
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+    outline: none; /* Prevent focus outline */
 }
-/* aqui quitamos el sidebar para dispositivos smartphone */
-@media only screen and (max-width: 360px) {
-  #sidebar {
+.sidebar .user {
+    margin-bottom: 1.5vh; /* Small separation from the bottom */
+    
+}
+
+
+
+.sidebar .user:hover i,
+.sidebar .user:focus i {
+    color: #8a2be2;
+}
+
+.sidebar .menu-item:focus,
+.sidebar .user:focus {
+    outline: none; /* Prevent white borders on focus */
+    box-shadow: none; /* Ensure no extra visual effects */
+}
+
+.sidebar .menu-item i,
+.sidebar .user i {
+    font-size: 1rem; /* Reduced size for minimalistic look */
+    color: white;
+    transition: color 0.3s, transform 0.3s;
+}
+
+
+.sidebar .menu-item::before,
+.sidebar .user::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px; /* Neon stripe width */
+    height: 80%; /* Extend to fit the button height */
+    background-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .menu-item:hover::before,
+.sidebar .menu-item:focus::before,
+.sidebar .menu-item.active::before,
+.sidebar .user:hover::before,
+.sidebar .user:focus::before,
+.sidebar .user.active::before {
+    background-color: #8a2be2; /* Neon purple stripe */
+}
+
+.sidebar .menu-item:hover i,
+.sidebar .menu-item:focus i,
+.sidebar .menu-item.active i,
+.sidebar .user:hover i,
+.sidebar .user:focus i,
+.sidebar .user.active i  {
+    color: #8a2be2;
+}
+
+/* Content */
+.content {
+    margin:0;
+    flex: 1;
+    display: flex;
+    overflow-y: auto;
+    width: 100%;
+}
+.footer{
     display: none;
+}
+/* Footer for smaller screens */
+@media (max-width: 1250px) {
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.40);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+      }
+      .footer .menu {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+    .footer .menu-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 25px;
+        border-radius: 15px; /* Rounded rectangular buttons */
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        color: white;
+    }
+
+    .footer .menu-item i {
+        font-size: 1.5rem;
+        color: white;
+        transition: color 0.3s, transform 0.3s;
+      }
+
+    .footer .menu-item:hover,
+    .footer .menu-item:focus,
+    .footer .menu-item.active {
+        background-color: #8a2be2; /* Purple background for hover */
+        color: #e0b3ff; /* Light purple for icon */
+        transform: scale(1.1); /* Slight zoom */
+    }
+/* Hover Effect: Change Icon to Filled Version */
+.footer .menu-item:hover i.bi-house-door::before {
+    content: "\F422"; /* Filled version */
   }
-  
+
+  .footer .menu-item:hover i.bi-play-circle::before {
+    content: "\F4F2"; /* Filled version */
+  }
+
+  .footer .menu-item:hover i.bi-collection-play::before {
+    content: "\F2CA"; /* Filled version */
+  }
+
+  .footer .menu-item:hover i.bi-tv::before {
+    content: "\F5EC"; /* Filled version */
+  }
+  .header .time {
+    
+    display: none;
+}
+
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        height: 50px;
+    }
+
+    .footer .menu-item i {
+        font-size: 1.1rem;
+    }     
 }

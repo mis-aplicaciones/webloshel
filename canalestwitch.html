@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TV Grid Responsiva</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="stylestwitch.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="grid-item time-container">
+        <span id="currentTime">00:00:00</span>
+      </div>
+      <div class="grid-item video-container" id="twitch-embed">
+        <!-- El reproductor se insertará aquí -->
+      </div>
+      <div class="grid-item channels-container">
+        <h2 class="channel-list-title">Canales Online</h2>
+        <ul class="channel-list" id="channelList">
+          <li class="channel-card channel" data-channel="sonnycc1" tabindex="0">
+            <img src="sonnycc1.jpg" alt="Sonnycc1" />
+            <p>Full Comedia</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="peliculas17"
+            tabindex="0"
+          >
+            <img src="otrocanal.jpg" alt="Otro Canal" />
+            <p>Full Series</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="peliculason01"
+            tabindex="0"
+          >
+            <img src="peliculason01.jpg" alt="peliculason01" />
+            <p>Full Movie 1</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="hd_latino"
+            tabindex="0"
+          >
+            <img src="hd_latino.jpg" alt="hd_latino" />
+            <p>Full Movie 2</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="hecatonquiro18"
+            tabindex="0"
+          >
+            <img src="hecatonquiro18.jpg" alt="hecatonquiro18" />
+            <p>Malcolm Channel 1</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="pelispedrin"
+            tabindex="0"
+          >
+            <img src="pelispedrin.jpg" alt="pelispedrincine__terror" />
+            <p>Cine Terror</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="televisionmxhd"
+            tabindex="0"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Las_estrellas_2017.jpg"
+              alt="televisionmxhd"
+            />
+            <p>Las Estrellas</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="castrill0n"
+            tabindex="0"
+          >
+            <img src="castrill0n.jpg" alt="castrill0n" />
+            <p>Chespirito</p>
+          </li>
+          <li class="channel-card channel" data-channel="chavo8tv" tabindex="0">
+            <img src="chavo8tv.jpg" alt="chavo8tv" />
+            <p>Chavo Channel</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="chapulincoloradotv"
+            tabindex="0"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/El_Chapul%C3%ADn_Colorado_logo.svg/1024px-El_Chapul%C3%ADn_Colorado_logo.svg.png"
+              alt="chapulincoloradotv"
+            />
+            <p>Chapulin Channel</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="estebanssj111"
+            tabindex="0"
+          >
+            <img src="estebanssj111.jpg" alt="estebanssj111" />
+            <p>Bob Esponja</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="fullmalcolm"
+            tabindex="0"
+          >
+            <img src="fullmalcolm.jpg" alt="fullmalcolm" />
+            <p>Malcolm Channel 2</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="serena200502"
+            tabindex="0"
+          >
+            <img src="serena200502.jpg" alt="serena200502" />
+            <p>Spiderman</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="peliculas_m4k"
+            tabindex="0"
+          >
+            <img src="peliculas_m4k.jpg" alt="peliculas_m4k" />
+            <p>Marvel Movie</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="dragonballhd1244"
+            tabindex="0"
+          >
+            <img src="dragonballhd1244.jpg" alt="dragonballhd1244" />
+            <p>Dragon Ball Super</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="enefectoescine_"
+            tabindex="0"
+          >
+            <img src="enefectoescine_.jpg" alt="enefectoescine_" />
+            <p>Full Movie 3</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="animemax1234"
+            tabindex="0"
+          >
+            <img src="animemax1234.jpg" alt="animemax1234" />
+            <p>Full Movie 4</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="miercolas_1"
+            tabindex="0"
+          >
+            <img src="miercolas_1.jpg" alt="miercolas_1" />
+            <p>Full Movie 5</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="animereelstream"
+            tabindex="0"
+          >
+            <img src="animereelstream.jpg" alt="animereelstream" />
+            <p>Animación</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="cuevanatv"
+            tabindex="0"
+          >
+            <img src="cuevanatv.jpg" alt="cuevanatv" />
+            <p>Cuevana TV</p>
+          </li>
+          <li class="channel-card channel" data-channel="plzfnky" tabindex="0">
+            <img src="plzfnky.jpg" alt="plzfnky" />
+            <p>Jackie Channel</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="p3liculas24hs"
+            tabindex="0"
+          >
+            <img src="p3liculas24hs.jpg" alt="p3liculas24hs" />
+            <p>Full Movie 6</p>
+          </li>
+          <li
+            class="channel-card channel"
+            data-channel="peliculas_tv__"
+            tabindex="0"
+          >
+            <img src="peliculas_tv__.jpg" alt="peliculas_tv__" />
+            <p>Full Movie 6</p>
+          </li>
+          <!-- Agrega más canales aquí -->
+        </ul>
+      </div>
+    </div>
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    <script src="scripttwitch.js"></script>
+  </body>
+</html>

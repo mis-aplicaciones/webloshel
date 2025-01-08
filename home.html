@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styleshome.css" />
+    <title>Home - Web App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="home-container">
+      <!-- Fondo dinámico -->
+      <div class="background">
+        <div class="background-gradient"></div>
+      </div>
+
+      <!-- Nuevo Contenedor Info -->
+      <div class="info-content">
+        <div class="info-grid">
+          <div class="info-title">
+            <img
+              src="https://via.placeholder.com/300x200"
+              alt="Imagen Ejemplo"
+            />
+          </div>
+          <div class="info-item">
+            <h4>
+              <span id="edad"><i>12+</i></span>
+              <span id="año">2022</span>
+              <span id="duracion-horas">1h</span>
+              <span id="duracion-minutos">34min</span>
+            </h4>
+          </div>
+          <div class="info-genero">
+            <div class="genre">Acción</div>
+            <div class="genre">Drama</div>
+            <div class="genre">Ciencia Ficción</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Carruseles -->
+      <div class="carousel-section">
+        <!-- Carrusel 1 -->
+
+        <section class="carousel-container" id="carousel-1">
+          <h2 class="carousel-title">Películas Recomendadas</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-1">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg"
+                data-title="https://image.tmdb.org/t/p/original/2o48U3kMXGIqRAkKZQ3n5OTWSBy.png"
+                data-edad="<i>18+</i>"
+                data-año="2024"
+                data-duracion-horas="2 h"
+                data-duracion-minutos="28 min"
+                data-genre="Acción, heroes, Ciencia Ficción"
+              >
+                <a
+                  href="sections/P-002-1-5-JohnWick.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/jxjIKaABRNvhO9mXlfCrAQQFZdL.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/mxfsf20XYMKA8zcyhO4VuT1z0GS.jpg"
+                data-title="https://image.tmdb.org/t/p/original/dA8P5sURCCNGNucmnrCRN6zSvij.png"
+                data-edad="<i>07+</i>"
+                data-año="2024"
+                data-duracion-horas="2 h"
+                data-duracion-minutos="28 min"
+                data-genre="Drama, Animación"
+              >
+                <a href="peliculas/prueba01.html" rel="noopener noreferrer"></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/hB6YAC3vx3pGfFrwNbeaY17thN7.jpg"
+                  alt="Card 1"
+                />
+              </div>
+            </div>
+            <button class="nav-button next" data-carousel="carousel-1">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel 2 -->
+        <section class="carousel-container" id="carousel-2">
+          <h2 class="carousel-title">Estrenos</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-2">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track"></div>
+            <div
+              class="card"
+              tabindex="0"
+              data-background="https://image.tmdb.org/t/p/original/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg"
+              data-title="https://image.tmdb.org/t/p/original/2o48U3kMXGIqRAkKZQ3n5OTWSBy.png"
+              data-edad="<i>18+</i>"
+              data-año="2024"
+              data-duracion-horas="2 h"
+              data-duracion-minutos="28 min"
+              data-genre="Acción, heroes, Ciencia Ficción"
+            >
+              <a
+                href="sections/P-002-1-5-JohnWick.html"
+                rel="noopener noreferrer"
+              ></a>
+              <img
+                src="https://image.tmdb.org/t/p/original/jxjIKaABRNvhO9mXlfCrAQQFZdL.jpg"
+                alt="Card 1"
+              />
+            </div>
+            <button class="nav-button next" data-carousel="carousel-2">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel 3 -->
+        <section class="carousel-container" id="carousel-3">
+          <h2 class="carousel-title">Películas Recomendadas</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-3">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track"></div>
+            <button class="nav-button next" data-carousel="carousel-3">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Div fijo para Inicio -->
+    <div class="inicio-fixed">Inicio</div>
+    <script src="scripthome.js"></script>
+  </body>
+</html>

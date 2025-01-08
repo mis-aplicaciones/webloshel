@@ -3,500 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons.min.css"
-      rel="stylesheet"
-    />
-    <title>TV Online</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Ubuntu";
-        font-weight: 700;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #130e27;
-        color: #fff;
-      }
-
-      #Container {
-        display: flex;
-        width: 100%;
-        height: 100vh;
-      }
-
-      .Container-playlist {
-        width: 30%;
-        height: 100%;
-        border-right: 2px solid #000000;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .header {
-        z-index: 10;
-      }
-
-      .header .row .AllLessons {
-        font-size: 24px;
-        font-weight: 700;
-        margin: 10px 0;
-        padding: 10px;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        position: sticky;
-        top: 0;
-      }
-
-      .header .row .AllLessons ion-icon {
-        margin-right: 10px;
-      }
-
-      .playlistBx {
-        flex: 1;
-        overflow-y: auto;
-      }
-
-      .playlist {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-      }
-
-      .playlist::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .playlist::-webkit-scrollbar-track {
-        background: #111;
-      }
-
-      .playlist::-webkit-scrollbar-thumb {
-        background-color: #444;
-        border-radius: 10px;
-      }
-
-      .channel-button {
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 10px 0;
-        width: 90%;
-        height: 50px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-      }
-
-      .channel-img {
-        background-color: white;
-        width: 85px;
-        height: 50px;
-        border-radius: 5px 0 0 5px;
-        background-size: cover;
-        background-position: center;
-        overflow: hidden; /* Para asegurarte de que la imagen no se desborde */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .channel-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ajusta la imagen dentro del contenedor manteniendo las proporciones */
-        object-position: center; /* Centra la imagen dentro del contenedor */
-      }
-
-      .channel-title {
-        font-family: "Ubuntu";
-        font-weight: 700;
-        font-size: 18px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        padding: 0 10px;
-        background-color: #000000;
-        color: #fff;
-        border-radius: 0 5px 5px 0;
-        transition: background-color 0.3s;
-        flex-grow: 1;
-      }
-
-      .channel-button:hover .channel-title {
-        background-color: #666;
-      }
-
-      .channel-button:focus .channel-title {
-        background-color: #666;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .selected {
-        font-weight: bold;
-      }
-
-      .player {
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 10px;
-        background-color: #130e27;
-      }
-
-      #reproductor {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #playerjs {
-        width: 100%;
-      }
-
-      .playlistBx::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .playlistBx::-webkit-scrollbar-track {
-        background: #111;
-      }
-
-      .playlistBx::-webkit-scrollbar-thumb {
-        background-color: #444;
-        border-radius: 10px;
-      }
-
-      /* Responsive Design */
-
-      @media (max-width: 768px) {
-        #Container {
-          flex-direction: column-reverse;
-          height: 100%;
-        }
-
-        .Container-playlist {
-          width: 100%;
-          max-height: 70vh; /* Establece una altura máxima para el contenedor del playlist */
-          border-right: none;
-          border-bottom: 2px solid #444;
-          overflow-y: auto; /* Habilita el scroll vertical si es necesario */
-        }
-
-        .player {
-          width: 100%;
-          height: auto;
-          padding: 0;
-        }
-
-        .header .row .AllLessons {
-          font-size: 18px;
-        }
-      }
-      @media only screen and (max-width: 412px) {
-        .Container-playlist {
-          max-height: 68vh;
-        }
-      }
-      @media only screen and (max-width: 384px) {
-        .Container-playlist {
-          max-height: 57vh;
-        }
-      }
-      @media only screen and (max-width: 360px) {
-        .Container-playlist {
-          max-height: 65vh;
-        }
-      }
-      @media only screen and (max-width: 354px) {
-        .Container-playlist {
-          max-height: 63vh;
-        }
-      }
-    </style>
+    <title>TV Live</title>
+    <link rel="stylesheet" href="stylestv.css" />
   </head>
   <body>
-    <div id="Container">
-      <div class="Container-playlist">
-        <div class="header">
-          <div class="row">
-            <span class="AllLessons"
-              ><ion-icon name="tv-outline"></ion-icon> Canales Premium</span
-            >
+    <div class="main-container">
+      <h1 class="tv-title">TV Live</h1>
+
+      <div class="content-container">
+        <!-- Contenedor de Canales Frecuentes -->
+        <div class="block-container">
+          <h2 class="block-title">Canales Frecuentes</h2>
+          <div class="grid-container" id="frequent-channels">
+            <div class="card" tabindex="0" data-link="canal1.html">
+              <img src="img/CANAL ATV.jpg" alt="Canal 1" />
+            </div>
+            <div class="card" tabindex="0" data-link="canal2.html">
+              <img src="img/CANAL COSMOS TV.jpg" alt="Canal 2" />
+            </div>
+            <div class="card" tabindex="0" data-link="canal3.html">
+              <img src="canal3.jpg" alt="Canal 3" />
+            </div>
+            <div class="card" tabindex="0" data-link="canal4.html">
+              <img src="canal4.jpg" alt="Canal 4" />
+            </div>
+            <div class="card" tabindex="0" data-link="canal5.html">
+              <img src="canal5.jpg" alt="Canal 5" />
+            </div>
           </div>
         </div>
-        <div class="playlistBx">
-          <div class="playlist" id="playlist">
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=americatv_envivo&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL-AMERICATV.jpg" alt="AmericaTV" />
-              </div>
-              <div class="channel-title">AMERICA TV</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='go:atv'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL ATV.jpg" alt="ATV" />
-              </div>
-              <div class="channel-title">ATV</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=peliculas17&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL TNT HD.jpg" alt="tnt" />
-              </div>
-              <div class="channel-title">TNT</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=peliculason01&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL SPACE.jpg" alt="SPACE" />
-              </div>
-              <div class="channel-title">SPACE</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=id_15q&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div class="channel-img">
-                <img
-                  src="./canal icon/CANAL INVESTIGACION DISCOVERY.jpg"
-                  alt="ID"
-                />
-              </div>
-              <div class="channel-title">IDiscovery</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=peliculas_yolo50&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL cinemax.jpg" alt="cinemax" />
-              </div>
-              <div class="channel-title">CINEMAX</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='./canal/dsports.html'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL dsports.jpg" alt="CDK" />
-              </div>
-              <div class="channel-title">DSPORTS</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='./canal/caracol.html'"
-            >
-              <div class="channel-img">
-                <img src="./canal icon/CANAL CARACOL.jpg" alt="CDK" />
-              </div>
-              <div class="channel-title">CARACOL</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='./canal/dw-español.html'"
-            >
-              <div
-                class="channel-img"
-                style="background-image: url('./canal icon/CANAL DW2.jpg')"
-              ></div>
-              <div class="channel-title">DW Español</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='./canal/cosmos-tv.html'"
-            >
-              <div
-                class="channel-img"
-                style="
-                  background-image: url('./canal icon/CANAL COSMOS TV.jpg');
-                "
-              ></div>
-              <div class="channel-title">Cosmos TV</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=vc_59tt&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="
-                  background-image: url('./canal icon/CANAL HISTORIAHD.jpg');
-                "
-              ></div>
-              <div class="channel-title">Historia HD</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=spanishmoviestv&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="background-image: url('./canal icon/CANAL\ HBO.jpg')"
-              ></div>
-              <div class="channel-title">HBO</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=dox171xc&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="background-image: url('./canal icon/CANAL HBO2.jpg')"
-              ></div>
-              <div class="channel-title">HBO2</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=n45_ndd&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="
-                  background-image: url('./canal icon/CANAL-UNIVERSAL.jpg');
-                "
-              ></div>
-              <div class="channel-title">UNIVERSAL</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=nll_0001&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="
-                  background-image: url('./canal icon/CANAL-TNT-SERIES.jpg');
-                "
-              ></div>
-              <div class="channel-title">TNT SERIES</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=nty_555&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="background-image: url('./canal icon/CANAL\ H&H.jpg')"
-              ></div>
-              <div class="channel-title">H&H</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='https://player.twitch.tv/?channel=dnewsok&enableExtensions=true&muted=false&parent=twitch.tv&player=popout&quality=auto&volume=1'"
-            >
-              <div
-                class="channel-img"
-                style="background-image: url('./canal icon/CANAL\ DNEWSOK.jpg')"
-              ></div>
-              <div class="channel-title">DNEWSOK</div>
-            </button>
-            <button
-              class="channel-button"
-              onclick="window.location.href='./canal/hbo-signature.html'"
-            >
-              <div
-                class="channel-img"
-                style="
-                  background-image: url('./canal icon/CANAL HBO-signature.jpg');
-                "
-              ></div>
-              <div class="channel-title">HBO Signature</div>
-            </button>
+
+        <!-- Contenedor de Colección -->
+        <div class="block-container" style="margin-top: 3%">
+          <h2 class="block-title">Colección</h2>
+          <div class="grid-container" id="collection">
+            <div class="card" data-link="canalestwitch.html">
+              <img
+                src="https://variety.com/wp-content/uploads/2015/03/twitch-logo.jpg"
+                alt="Card Image 1"
+              />
+              <div class="card-title">Canal Twitch</div>
+            </div>
+            <div class="card">
+              <img src="example2.jpg" alt="Card Image 2" />
+              <div class="card-title">Card Title 2</div>
+            </div>
+            <div class="card">
+              <img src="example3.jpg" alt="Card Image 3" />
+              <div class="card-title">Card Title 3</div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="player">
-        <div class="header">
-          <div class="row">
-            <span class="AllLessons"
-              ><ion-icon name="tv-outline"></ion-icon> Más Canales</span
-            >
-          </div>
-        </div>
-        <div id="reproductor">
-          <script src="playerjs.js" type="text/javascript"></script>
-          <link rel="stylesheet" href="styleplayers.css" />
-          <div id="playerjs"></div>
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      var ps = location.href
-        .substr(location.href.indexOf("html?") + 5)
-        .split("&");
-      var vs = { id: "playerjs" };
-      for (var i = 0; i < ps.length; i++) {
-        var p = ps[i].substr(0, ps[i].indexOf("="));
-        var v = ps[i].substr(ps[i].indexOf("=") + 1);
-        if (p != v) {
-          vs[p] = decodeURIComponent(v);
-        }
-      }
-      var playerjs = new Playerjs(vs);
-      playerjs.volume = 1;
-      // Focus en el primer botón
-      document.addEventListener("DOMContentLoaded", function () {
-        const channelButtons = document.querySelectorAll(".channel-button");
-        if (channelButtons.length > 0) {
-          channelButtons[0].focus();
-        }
 
-        // Navegación con el teclado
-        document.addEventListener("keydown", function (e) {
-          const focusedElement = document.activeElement;
-          if (focusedElement.classList.contains("channel-button")) {
-            let newIndex;
-            const currentIndex =
-              Array.from(channelButtons).indexOf(focusedElement);
-            if (e.key === "ArrowDown") {
-              newIndex = (currentIndex + 1) % channelButtons.length;
-              channelButtons[newIndex].focus();
-            } else if (e.key === "ArrowUp") {
-              newIndex =
-                (currentIndex - 1 + channelButtons.length) %
-                channelButtons.length;
-              channelButtons[newIndex].focus();
-            } else if (e.key === "Enter") {
-              focusedElement.click();
-            }
-          }
-        });
-      });
-    </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule=""
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="scripttv.js"></script>
   </body>
 </html>

@@ -1,0 +1,383 @@
+/* General */
+body {
+  margin: 0;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #121124;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* Contenedor info-content */
+.info-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Grid dentro de info-content */
+.info-grid {
+  display: flex;
+    
+    gap: 5px;
+    margin-left: 12%;
+    flex-direction: column;
+}
+
+.info-title{
+  width: 45vh;
+  padding: 0 10px 15px;
+}
+.info-item,
+.info-genero {
+  display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 0 10px 10px;
+}
+.info-item h4{
+  color:#ffffff;
+  margin: 0;
+  font-weight: bold;
+  font-size: small;
+}
+.info-item h4 i{
+  background-color: #6e6abd;
+  padding: 5px;
+  border-radius: 5px;
+}
+.info-genero .genre{
+  font-size: small;
+}
+.info-title img {
+  width: 100%;
+  height: 70%;
+}
+
+.info-genero .genre {
+  padding: 5px 10px;
+  border: 1.5px solid #8a2be2;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0);
+  margin: 5px;
+}
+
+/* Fondo dinámico */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.background-gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #121124 30%, rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+/* Slider Styles */
+.slider-frame {
+  position: relative;
+  width: 99%;
+  height: 45vh;
+  margin: auto;
+  background-color: transparent;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.66);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.slider-content {
+  display: flex;
+  width: 300%;
+  height: 100%;
+}
+
+.slider-item {
+  flex: 0 0 33.33%;
+  position: relative;
+}
+
+.slider-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-info {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  color: white;
+}
+
+.slider-title {
+  max-width: 70%;
+}
+
+.slider-genres {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.genre {
+  padding: 5px 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background: transparent;
+}
+
+.watch-now {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: purple;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-left,
+.btn-right {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #ffffff81;
+    transform: translate(0,-50%);
+    transition: .5s ease;
+    user-select: none;
+}
+
+.btn-left:hover,
+.btn-right:hover {
+    background-color: #333333d4;
+    color: #fff;
+}
+
+.btn-left {
+    left: 10px;
+}
+
+.btn-right {
+    right: 10px;
+}
+/*fin de slider*/
+.home-container{
+  width: 100%; 
+    margin: 0% 0px 0px 60px;
+    
+    overflow-y: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer/Edge */
+scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+/* Resalte de card activo */
+.active-card {
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco transparente */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6); /* Sombra */
+  transform: scale(1.05); /* Pequeño agrandado */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Sección de carruseles */
+.carousel-section {
+  margin-top: 50vh; /* Compensa la altura de info-content */
+  overflow-y: auto;
+  height: calc(100vh - 50vh);
+}
+
+/* Ajustes para carruseles */
+.carousel-container {
+  margin-bottom: 20px;
+  padding: 0 10px 10px;
+}
+
+.carousel-title {
+  font-size: 1.1rem;
+  margin: 0 29px 10px;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Carrusel */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 10px; /* Espaciado inicial */
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer/Edge */
+scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+.carousel-track::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit browsers */
+  }
+
+.card {
+  flex: 0 0 auto; /* Tamaño fijo */
+  width: 203px; /* Mantener el tamaño fijo */
+  height: 114px;
+  border-radius: 10px;
+  overflow: hidden;
+  
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card:hover,
+.card:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  
+}
+
+/* Botones de navegación */
+.nav-button {
+  background: rgba(255, 255, 255, 0.089); /* Fondo transparente */
+  color: white;
+  border: 0;
+  width: 20px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  transition: transform 0.2s, background-color 0.3s;
+  z-index: 2;
+}
+
+.nav-button.next {
+  right: 10px;
+}
+
+.nav-button.prev {
+  left: 10px;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco */
+  color: black;
+  transform: scale(1.2); /* Agrandado */
+}
+
+
+.nav-button:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+/* Estilos para los span con icono de punto */
+ /* Estilos para los span con icono de punto */
+ .info-item h4 span:not(#edad):not(#duracion-minutos)::before {
+  content: '\2022'; /* Punto como icono */
+  margin-right: 5px;
+ color: #8a2be2;
+}
+
+/* Estilos para el div fijo "Inicio" */
+.inicio-fixed {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  background: linear-gradient(to right, transparent, #8a2be2);
+  border-radius: 5px;
+  user-select: none;
+  pointer-events: none;
+}
+.carousel-section {
+  margin-top: 50vh; /* Compensa la altura de info-content */
+  overflow-y: auto;
+  height: calc(100vh - 50vh);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Scrollbar transparente */
+}
+
+.carousel-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.carousel-section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1250px) {
+  .home-container {
+  margin: 0;
+  /*height: auto; /* Allow the container to expand vertically */
+  
+  }
+  
+  .carousel-track {
+    overflow-x: auto;
+  scroll-snap-type: x mandatory; /* Smooth snapping for smaller screens */
+  }
+  
+  .card {
+  width: 120px;
+  height: 80px; /* Adjust for smaller screens */
+  }
+  
+  .nav-button {
+  display: none; /* Hide navigation buttons on smaller screens */
+  }
+  
+  .carousel-title {
+  font-size: 0.9rem;
+  }
+  }
+/* Responsividad */
+@media (max-width: 768px) {
+  .carousel-title {
+    font-size: 0.8rem;
+    }
+    .info-grid {
+      grid-template-columns: 1fr;
+      margin-left: 20px;
+    }
+    .card {
+    width: 100px;
+    height: 70px; /* Further reduce card size */
+    }
+}
+
+
+
+
+
+
+

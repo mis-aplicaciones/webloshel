@@ -1,0 +1,147 @@
+/* General */
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #121124;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content-container {
+  padding: 20px;
+}
+
+/* Main Container */
+.main-container {
+  width: 100%;
+  margin: 0 0 0 50px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+  overflow: hidden;
+}
+
+/* Titles */
+.tv-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.block-title {
+  font-size: 1.2rem;
+  text-align: left;
+  margin: 0 0 10px 10px;
+}
+
+/* Grid for Blocks */
+.grid-container {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-items: stretch;
+}
+
+/* General Cards */
+.card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+/* Frequent Channels Cards */
+#frequent-channels .card {
+  aspect-ratio: 1.7 / 1;
+}
+
+#frequent-channels .card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Collection Cards */
+#collection .card {
+  aspect-ratio: 2 / 1;
+}
+
+#collection .card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Title Overlay */
+#collection .card .card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  padding: 10px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+#collection .card:hover img {
+  transform: scale(1.1); /* Zoom effect */
+}
+
+#collection .card:hover .card-title {
+  opacity: 1;
+  transform: translateY(0); /* Slide up into view */
+}
+
+/* Hover and Focus Effects */
+.card:hover,
+.card:focus {
+  transform: scale(1.05);
+}
+
+/* Responsiveness */
+@media (max-width: 1250px) {
+  .main-container {
+    height: calc(100vh - 70px);
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+
+  .card {
+    font-size: 0.8rem;
+    padding: 3px;
+  }
+
+  .block-title {
+    font-size: 1rem;
+  }
+
+  /* Disable title overlay hover effect */
+  #collection .card .card-title {
+    display: none;
+  }
+}
+
+@media (min-width: 1250px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .card {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,166 @@
+/* General */
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #121124;
+  color: #ffffff;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+}
+
+/* Contenedor del reproductor */
+.video-container {
+  flex: 1;
+  background: black;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor de lista de canales */
+.channels-container {
+  width: 25%;
+  background: rgba(0, 0, 0, 0.7);
+  overflow-y: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+.channel-list {
+  list-style: none;
+  padding: 35px;
+  margin: 0;
+}
+
+.channel-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #444;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.channel-card:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.channel-card img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.channel-card p {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.channel-list-title {
+  font-size: 1.5rem;
+  padding: 0 1.9rem;
+}
+/* Scrollbar moderno */
+.channels-container::-webkit-scrollbar {
+  width: 10px; /* Ancho del scrollbar */
+}
+
+.channels-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3); /* Fondo del track */
+  border-radius: 10px;
+}
+
+.channels-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.6); /* Color del scroll */
+  border-radius: 10px;
+}
+
+.channels-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8); /* Color al pasar hover */
+}
+/* Escala de card y tiempo en pantallas grandes */
+@media (min-width: 1250px) {
+  .channel-card {
+    padding: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 22px;
+  }
+
+  .channel-card img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .time-container {
+    font-size: 3.5rem;
+    padding: 15px;
+  }
+}
+
+/* Contenedor del tiempo */
+.time-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  font-size: 3rem;
+  z-index: 2;
+  border-radius: 5px;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+/* Layout vertical para pantallas pequeñas */
+@media (max-width: 1250px) {
+  .container {
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .video-container {
+    height: 30%;
+    width: 100%;
+  }
+
+  .channels-container {
+    width: 100%;
+    height: 70%;
+    position: relative;
+    opacity: 1;
+  }
+
+  .time-container {
+    display: none;
+  }
+  .channel-card p {
+    margin: 0;
+    font-size: 1rem;
+}
+.channel-list-title {
+  
+  display: none;
+}
+}

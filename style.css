@@ -65,8 +65,6 @@ body {
     
 }
 
-
-
 .sidebar .user:hover i,
 .sidebar .user:focus i {
     color: #8a2be2;
@@ -84,7 +82,6 @@ body {
     color: white;
     transition: color 0.3s, transform 0.3s;
 }
-
 
 .sidebar .menu-item::before,
 .sidebar .user::before {
@@ -140,7 +137,7 @@ body {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        background: rgba(0, 0, 0, 0.40);
+        background: rgba(71, 40, 88, 0.4);
         backdrop-filter: blur(10px);
         z-index: 1000;
       }
@@ -172,7 +169,7 @@ body {
     .footer .menu-item:hover,
     .footer .menu-item:focus,
     .footer .menu-item.active {
-        background-color: #8a2be2; /* Purple background for hover */
+        background-color: #892be286; /* Purple background for hover */
         color: #e0b3ff; /* Light purple for icon */
         transform: scale(1.1); /* Slight zoom */
     }

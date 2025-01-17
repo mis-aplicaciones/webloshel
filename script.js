@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const menuItems = document.querySelectorAll(".menu-item");
   const content = document.querySelector(".content");
+  const footerMenuItems = document.querySelectorAll(".footer .menu-item");
 
   let currentFocus = "content"; // Start focus on the content
   let activeSection = "home.html";
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scriptPath = "scripthome.js";
         initializeFunction = "initializeHome";
         break;
-      case "movie.html":
+      case "movies.html":
         scriptPath = "scriptmovie.js";
         initializeFunction = "initializeMovie";
         break;
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         content.innerHTML = html;
         initializeSectionScripts(section);
         activeSection = section;
+        updateFooterActiveState(section);
       })
       .catch((error) => {
         console.error(error);
@@ -75,6 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
+  const updateFooterActiveState = (section) => {
+    footerMenuItems.forEach((item) => {
+      if (item.getAttribute("data-section") === section) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  };
+
+  // Key navigation for sidebar
   document.addEventListener("keydown", (e) => {
     const activeMenuItem = document.querySelector(".menu-item.active");
     const menuItemsArray = Array.from(menuItems);
@@ -108,9 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  [...menuItems].forEach((item) => {
+  // Click events for sidebar and footer
+  [...menuItems, ...footerMenuItems].forEach((item) => {
     item.addEventListener("click", () => {
       menuItems.forEach((menuItem) => menuItem.classList.remove("active"));
+      footerMenuItems.forEach((menuItem) => menuItem.classList.remove("active"));
+
       item.classList.add("active");
       const section = item.getAttribute("data-section");
       loadContent(section);
@@ -118,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Initial focus state for content
+  // Initial focus and footer state
   menuItems[0].classList.add("active");
-  loadContent("home.html"); // Load the home section by default
+  loadContent("home.html");
 });

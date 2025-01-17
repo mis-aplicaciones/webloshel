@@ -168,6 +168,87 @@ function initializeHome() {
       }
     });
   });
-
+  // ** funciones para slider **
+  document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".carousel-wrapper");
+    const items = document.querySelectorAll(".carousel-item");
+    const dots = document.querySelectorAll(".pagination .dot");
+    const itemCount = items.length;
+    let activeIndex = 0;
+    let isScrolling = false;
+  
+    // Actualizar el estado activo de los dots
+    const updateDots = () => {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === activeIndex);
+      });
+    };
+  
+    // Mover el carrusel al card correspondiente
+    const scrollToItem = (index) => {
+      if (isScrolling) return; // Evitar múltiples desplazamientos simultáneos
+      isScrolling = true;
+  
+      activeIndex = index;
+      slider.scrollTo({
+        left: items[activeIndex].offsetLeft,
+        behavior: "smooth",
+      });
+  
+      updateDots();
+  
+      setTimeout(() => {
+        isScrolling = false;
+      }, 600); // Tiempo de transición
+    };
+  
+    // Cambiar al siguiente card
+    const goToNext = () => {
+      if (activeIndex < itemCount - 1) {
+        scrollToItem(activeIndex + 1);
+      } else {
+        scrollToItem(0); // Volver al inicio
+      }
+    };
+  
+    // Cambiar al card anterior
+    const goToPrev = () => {
+      if (activeIndex > 0) {
+        scrollToItem(activeIndex - 1);
+      } else {
+        scrollToItem(itemCount - 1); // Ir al final
+      }
+    };
+  
+    // Manejar clics en los dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        scrollToItem(index);
+      });
+    });
+  
+    // Soporte para gestos táctiles
+    let startX = 0;
+  
+    slider.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+  
+    slider.addEventListener("touchend", (e) => {
+      const endX = e.changedTouches[0].clientX;
+  
+      if (startX > endX + 50) goToNext(); // Deslizar hacia la izquierda
+      else if (startX < endX - 50) goToPrev(); // Deslizar hacia la derecha
+    });
+  
+    // Auto-scroll cada 5 segundos
+    setInterval(() => {
+      goToNext();
+    }, 5000);
+  
+    // Inicializar estado de los dots
+    updateDots();
+  });
+  
   console.log("Home inicializado correctamente");
 }

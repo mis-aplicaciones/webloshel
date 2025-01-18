@@ -18,46 +18,58 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
 }
 
-/* Grid dentro de info-content */
 .info-grid {
   display: flex;
-    
-    gap: 5px;
-    margin-left: 12%;
-    flex-direction: column;
+  gap: 5px;
+  margin-left: 12%;
+  flex-direction: column;
+  opacity: 0; /* Inicialmente invisible */
+  transform: translateX(-10px); /* Posición inicial fuera de vista */
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Transiciones */
 }
 
-.info-title{
+.info-grid.active {
+  opacity: 1; /* Visible */
+  transform: translateX(0); /* En su posición original */
+}
+
+.info-title {
   width: 45vh;
   padding: 0 10px 15px;
-  
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suavizar cambios */
 }
+
 .info-item,
 .info-genero {
   display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-start;
-    padding: 0 10px 10px;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 10px 10px;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
-.info-item h4{
-  color:#ffffff;
+
+.info-item h4 {
+  color: #ffffff;
   margin: 0;
   font-weight: bold;
   font-size: 2vh;
+  transition: color 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
-.info-item h4 i{
+
+.info-item h4 i {
   background-color: #6e6abd;
   padding: 5px;
   border-radius: 5px;
+  transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .info-title img {
   width: 100%;
   height: 70%;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .info-genero .genre {
@@ -67,6 +79,7 @@ body {
   border-radius: 15px;
   background: rgba(255, 255, 255, 0);
   margin: 5px;
+  transition: border-color 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
 /* Fondo dinámico */

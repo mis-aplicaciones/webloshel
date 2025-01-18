@@ -12,13 +12,21 @@ function initializeHome() {
 
   let isReturningToSidebar = false;
 
+  // ** Hacer elementos no interactivos no navegables **
+  const nonInteractiveElements = [background, infoGrid];
+  nonInteractiveElements.forEach((element) => {
+    if (element) {
+      element.setAttribute("tabindex", "-1");
+    }
+  });
+
   // ** Inicializar el primer card **
   const initializeFirstCard = () => {
     const firstCard = cards[0];
     if (firstCard) {
       firstCard.focus();
-      updateBackground(firstCard); // Actualizar fondo
-      updateInfoGrid(firstCard); // Actualizar info-grid
+      updateBackground(firstCard);
+      updateInfoGrid(firstCard);
       firstCard.classList.add("active-card");
     }
   };
@@ -31,40 +39,43 @@ function initializeHome() {
     }
   };
 
-  // ** Función para actualizar el contenedor de información **
+  // ** Función para actualizar el contenedor de información con transiciones **
   const updateInfoGrid = (card) => {
-    const titleImage = card.getAttribute("data-title") || "";
-    const age = card.getAttribute("data-edad") || "N/A";
-    const year = card.getAttribute("data-año") || "N/A";
-    const durationHours = card.getAttribute("data-duracion-horas") || "N/A";
-    const durationMinutes = card.getAttribute("data-duracion-minutos") || "N/A";
-    const genres = (card.getAttribute("data-genre") || "").split(",").map((g) => g.trim());
+    infoGrid.classList.remove("active");
 
-    // Actualizar imagen del título
-    const infoTitleImage = infoGrid.querySelector(".info-title img");
-    infoTitleImage.src = titleImage;
+    setTimeout(() => {
+      const titleImage = card.getAttribute("data-title") || "";
+      const age = card.getAttribute("data-edad") || "N/A";
+      const year = card.getAttribute("data-año") || "N/A";
+      const durationHours = card.getAttribute("data-duracion-horas") || "N/A";
+      const durationMinutes = card.getAttribute("data-duracion-minutos") || "N/A";
+      const genres = (card.getAttribute("data-genre") || "").split(",").map((g) => g.trim());
 
-    // Actualizar detalles de edad, año y duración
-    const infoItem = infoGrid.querySelector(".info-item h4");
-    infoItem.innerHTML = `
-      <span id="edad">${age}</span>
-      <span id="año">${year}</span>
-      <span id="duracion-horas">${durationHours}</span>
-      <span id="duracion-minutos">${durationMinutes}</span>
-    `;
+      const infoTitleImage = infoGrid.querySelector(".info-title img");
+      infoTitleImage.src = titleImage;
 
-    // Actualizar géneros
-    const genreContainer = infoGrid.querySelector(".info-genero");
-    genreContainer.innerHTML = ""; // Limpiar géneros previos
-    genres.forEach((genre) => {
-      const genreElement = document.createElement("div");
-      genreElement.classList.add("genre");
-      genreElement.textContent = genre;
-      genreContainer.appendChild(genreElement);
-    });
+      const infoItem = infoGrid.querySelector(".info-item h4");
+      infoItem.innerHTML = `
+        <span id="edad">${age}</span>
+        <span id="año">${year}</span>
+        <span id="duracion-horas">${durationHours}</span>
+        <span id="duracion-minutos">${durationMinutes}</span>
+      `;
+
+      const genreContainer = infoGrid.querySelector(".info-genero");
+      genreContainer.innerHTML = ""; // Limpiar géneros previos
+      genres.forEach((genre) => {
+        const genreElement = document.createElement("div");
+        genreElement.classList.add("genre");
+        genreElement.textContent = genre;
+        genreContainer.appendChild(genreElement);
+      });
+
+      infoGrid.classList.add("active");
+    }, 300);
   };
 
-  initializeFirstCard(); // Inicializar primer card al cargar la página
+  initializeFirstCard(); // Inicializar el primer card al cargar la página
 
   // ** Eventos para cada card **
   cards.forEach((card) => {
@@ -87,17 +98,6 @@ function initializeHome() {
 
     card.addEventListener("blur", () => {
       card.classList.remove("active-card");
-    });
-
-    // Abrir enlace con Enter
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const link = card.querySelector("a");
-        if (link) {
-          e.preventDefault();
-          window.location.href = link.href;
-        }
-      }
     });
 
     card.addEventListener("click", () => {
@@ -126,7 +126,6 @@ function initializeHome() {
   // ** Navegación dinámica entre carruseles y sidebar **
   carousels.forEach((carousel, index) => {
     const track = carousel.querySelector(".carousel-track");
-    const cards = carousel.querySelectorAll(".card");
     const nextButton = carousel.querySelector(".nav-button.next");
     const prevButton = carousel.querySelector(".nav-button.prev");
 
@@ -143,6 +142,9 @@ function initializeHome() {
     prevButton.addEventListener("click", () => {
       track.scrollLeft = Math.max(track.scrollLeft - cards[0].offsetWidth - 20, 0);
     });
+  
+
+  
 
     carousel.addEventListener("keydown", (e) => {
       const focusedCard = document.activeElement;
@@ -168,6 +170,25 @@ function initializeHome() {
       }
     });
   });
+// ** Eliminar bordes amarillos en Android sin afectar otros estilos **
+const style = document.createElement("style");
+style.textContent = `
+  /* Solo eliminar el borde amarillo predeterminado */
+  *:focus {
+    outline: none;
+  }
+
+  /* Reintroducir bordes personalizados si existen */
+  .active-card:focus {
+    outline: 2px solid white; /* Ejemplo de borde blanco para cards */
+  }
+
+  .nav-button:focus {
+    outline: 2px solid white; /* Ejemplo para botones */
+  }
+`;
+document.head.appendChild(style);
+
   // ** funciones para slider **
   document.addEventListener("DOMContentLoaded", () => {
     const slider = document.querySelector(".carousel-wrapper");

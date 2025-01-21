@@ -1,7 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menuItems = document.querySelectorAll(".menu-item");
-  const content = document.querySelector(".content");
-  const footerMenuItems = document.querySelectorAll(".footer .menu-item");
+  const loadingScreen = document.getElementById("loading-screen");
+
+  const hideLoadingScreen = () => {
+    setTimeout(() => {
+      loadingScreen.style.opacity = "0";
+      setTimeout(() => {
+        loadingScreen.style.display = "none";
+      }, 500); // Tiempo suficiente para la transición
+    }, 1000); // Retraso adicional para garantizar la estabilidad
+  };
+
+  const initializeApplication = () => {
+    // Tu lógica de inicialización
+    const menuItems = document.querySelectorAll(".menu-item");
+    const content = document.querySelector(".content");
+    const footerMenuItems = document.querySelectorAll(".footer .menu-item");
 
   let currentFocus = "content"; // Start focus on the content
   let activeSection = "home.html";
@@ -137,4 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial focus and footer state
   menuItems[0].classList.add("active");
   loadContent("home.html");
+};
+// Escuchar el evento `load` para asegurarnos de que todo está listo
+window.addEventListener("load", () => {
+  hideLoadingScreen();
+  initializeApplication();
+});
 });

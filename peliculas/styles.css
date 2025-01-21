@@ -39,32 +39,45 @@ body, html {
   #imagen-2{
     display: none;
   }
+
 /* Botón Volver */
 #back-button {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.6);
+    width: 5vh;
+    height: 5vh;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    border-radius: 5px;
-    z-index: 10;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    color: black;
+    font-size: 3vh;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+    outline: none;
 }
 
-#back-button:hover {
-    background-color: #8a2be2;
-    color: #e0b3ff;
+#back-button i {
+    font-size: 3vh;
+    color: #000;
 }
+
+#back-button:hover,
+#back-button:focus {
+    background-color: #e0b3ff;
+    transform: scale(1.1);
+}
+
 
 /* Contenedor Principal */
 #content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 10vh;
+    padding-left: 12vh;
     padding-top: 10vh;
 }
 
@@ -72,10 +85,9 @@ body, html {
 #movie-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     z-index: 2;
-    width: 90%; /* Flexible para pantallas pequeñas */
-    max-width: 800px; /* Máximo en pantallas grandes */
+    width: 60%;
 }
 
 #movie-title-image img {
@@ -89,6 +101,14 @@ body, html {
     color: white;
     margin: 0;
 }
+
+.movie-description {
+    font-size: 16px;
+    color: #ddd;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
 .movie-description p{
     font-size: 2.3vh;
 }
@@ -99,32 +119,73 @@ body, html {
     display: flex;
     gap: 15px;
 }
-
+.movie-details h4 span:not(#edad):not(#duracion-minutos)::before {
+    content: '\2022'; /* Punto como icono */
+    margin-right: 5px;
+   color: #8a2be2;
+  }
 .genre-section {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 }
-
+/* Estilos para Categorías */
 .genre-section .genre {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 10px;
-    border-radius: 5px;
+    border: 1.5px solid #8a2be2;
+    border-radius: 10px;
     color: white;
-    font-size: 14px;
+    font-size: 2vh;
+    padding: 5px 10px;
+    margin: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.movie-description {
-    font-size: 16px;
-    color: #ddd;
-    max-width: 600px;
-    line-height: 1.5;
+.genre-section .genre:hover,
+.genre-section .genre:focus {
+    background-color: #6e6abd;
+    border-color: #6e6abd;
 }
-
-.movie-details-and-buttons {
+.movie-rating {
     display: flex;
     align-items: center;
-    gap: 20px;
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* Estilos para Rating */
+.movie-rating .stars ion-icon {
+    color: white;
+    font-size: 2.5vh;
+}
+.movie-rating .stars {
+    display: flex;
+    gap: 5px; /* Espaciado entre las estrellas */
+    font-size: 20px; /* Tamaño de las estrellas */
+    color: gold;
+}
+
+/* Botón "Ver Ahora" */
+.movie-buttons a {
+    padding: 10px 20px;
+    background-color: #8a2be2;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 2vh;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.movie-buttons i{
+    font-size: 3vh;
+}
+
+.movie-buttons a:hover,
+.movie-buttons a:focus {
+    background-color: #6e23a6;
+    transform: scale(1.1);
 }
 
 /* Movie Details and Buttons */
@@ -136,41 +197,11 @@ body, html {
     margin-top: 10px; /* Separar del contenido superior */
 }
 
-.movie-rating {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #ccc;
-}
-
-.movie-rating .stars {
-    display: flex;
-    gap: 5px; /* Espaciado entre las estrellas */
-    font-size: 20px; /* Tamaño de las estrellas */
-    color: gold;
-}
-
 .movie-buttons {
     display: flex; /* Mostrar botones en fila */
     gap: 10px; /* Espaciado entre botones */
     align-items: center;
 }
-
-.movie-buttons a {
-    padding: 10px 20px;
-    background-color: #ff4500;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 2.7vh;
-    transition: background-color 0.3s ease;
-}
-
-.movie-buttons a:hover {
-    background-color: #ff6347;
-}
-
-
 
 .button-aditional {
     display: none;

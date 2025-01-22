@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (generoElemento) {
         const idsGenero = generoElemento.dataset.genreIds.split(",").map((id) => parseInt(id.trim()));
         const nombresGenero = idsGenero.map((id) => generos[id]);
-        generoElemento.textContent = nombresGenero.join(" / ");
+        generoElemento.textContent = nombresGenero.join(" ");
     }
 
     const addButton = document.querySelector(".add-button a");
@@ -119,3 +119,88 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const menuItems = document.querySelectorAll(".menu-item");
+    const content = document.querySelector("#content");
+    const backButton = document.querySelector("#back-button");
+    const watchNowButton = document.querySelector(".movie-buttons a");
+  
+    let currentFocus = "content";
+  
+    const initializeFocusHandlers = () => {
+      document.addEventListener("keydown", (e) => {
+        switch (e.key) {
+          case "ArrowUp":
+          case "ArrowDown":
+          case "ArrowLeft":
+          case "ArrowRight":
+            if (watchNowButton) {
+              e.preventDefault();
+              watchNowButton.focus();
+            }
+            break;
+          case "Enter":
+            if (document.activeElement === backButton) {
+              backButton.click();
+            } else if (document.activeElement === watchNowButton) {
+              watchNowButton.click();
+            }
+            break;
+          case "Backspace":
+          case "Escape":
+            if (backButton) {
+              e.preventDefault();
+              backButton.focus();
+            }
+            break;
+        }
+      });
+  
+      if (backButton) {
+        backButton.addEventListener("click", () => {
+          console.log("Back button clicked");
+          // Acción personalizada para el botón Volver
+        });
+      }
+  
+      if (watchNowButton) {
+        watchNowButton.addEventListener("click", () => {
+          console.log("Watch Now button clicked");
+          // Acción personalizada para el botón Ver Ahora
+        });
+      }
+    };
+  
+    const updateActiveSection = (section) => {
+      menuItems.forEach((item) => {
+        item.classList.toggle("active", item.getAttribute("data-section") === section);
+      });
+    };
+  
+    const loadSection = (section) => {
+      fetch(section)
+        .then((response) => {
+          if (!response.ok) throw new Error("Failed to load section");
+          return response.text();
+        })
+        .then((html) => {
+          content.innerHTML = html;
+          updateActiveSection(section);
+        })
+        .catch((error) => {
+          console.error(error);
+          content.innerHTML = "<p>Error loading content</p>";
+        });
+    };
+  
+    menuItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const section = item.getAttribute("data-section");
+        loadSection(section);
+      });
+    });
+  
+    initializeFocusHandlers();
+    loadSection("home.html"); // Load the default section
+  });
+  

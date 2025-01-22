@@ -130,21 +130,16 @@ body, html {
     flex-wrap: wrap;
 }
 /* Estilos para Categorías */
-.genre-section .genre {
-    border: 1.5px solid #8a2be2;
-    border-radius: 10px;
-    color: white;
+.genre-section {
     font-size: 2vh;
     padding: 5px 10px;
+    border: 1.5px solid #8a2be2;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0);
     margin: 5px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    color: #ccc;
 }
 
-.genre-section .genre:hover,
-.genre-section .genre:focus {
-    background-color: #6e6abd;
-    border-color: #6e6abd;
-}
 .movie-rating {
     display: flex;
     align-items: center;

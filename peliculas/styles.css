@@ -124,22 +124,23 @@ body, html {
     margin-right: 5px;
    color: #8a2be2;
   }
-.genre-section {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-/* Estilos para Categorías */
-.genre-section {
-    font-size: 2vh;
-    padding: 5px 10px;
+/* Géneros */
+.genre {
+    display: inline-block;
     border: 1.5px solid #8a2be2;
     border-radius: 15px;
-    background: rgba(255, 255, 255, 0);
+    padding: 5px 10px;
+    color: white;
     margin: 5px;
-    color: #ccc;
+    background-color: transparent;
+    font-size: 2vh;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
+.genre:hover, .genre:focus {
+    background-color: #6e6abd;
+    border-color: #6e6abd;
+}
 .movie-rating {
     display: flex;
     align-items: center;

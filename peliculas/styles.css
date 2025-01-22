@@ -124,22 +124,15 @@ body, html {
     margin-right: 5px;
    color: #8a2be2;
   }
-/* Géneros */
+/* Estilos para Categorías */
 .genre {
     display: inline-block;
-    border: 1.5px solid #8a2be2;
+    border: 2px solid #8a2be2;
     border-radius: 15px;
-    padding: 5px 10px;
     color: white;
+    padding: 5px 10px;
     margin: 5px;
-    background-color: transparent;
     font-size: 2vh;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.genre:hover, .genre:focus {
-    background-color: #6e6abd;
-    border-color: #6e6abd;
 }
 .movie-rating {
     display: flex;

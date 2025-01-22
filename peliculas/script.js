@@ -38,30 +38,35 @@ document.addEventListener("DOMContentLoaded", function () {
       return starsHTML;
   }
 
-  // Mostrar géneros con estilo
-  const generos = {
-      1: "Acción",
-      2: "Aventura",
-      3: "Comedia",
-      4: "Drama",
-      5: "Suspenso",
-      6: "Ciencia Ficción",
-      7: "Animación",
-      8: "Fantasía",
-      9: "Terror",
-      10: "Bélico",
-      11: "Romance",
-      12: "Crimen",
-      13: "Documental",
-      14: "Superhéroes",
-      15: "Infantil",
-  };
-  const generoElemento = document.getElementById("genero");
-  if (generoElemento) {
-      const idsGenero = generoElemento.dataset.genreIds.split(",").map((id) => parseInt(id.trim()));
-      const nombresGenero = idsGenero.map((id) => generos[id]);
-      generoElemento.innerHTML = nombresGenero.map((nombre) => `<span class="genre">${nombre}</span>`).join(" ");
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+    // Mostrar géneros con estilo
+    const generos = {
+        1: "Acción",
+        2: "Aventura",
+        3: "Comedia",
+        4: "Drama",
+        5: "Suspenso",
+        6: "Ciencia Ficción",
+        7: "Animación",
+        8: "Fantasía",
+        9: "Terror",
+        10: "Bélico",
+        11: "Romance",
+        12: "Crimen",
+        13: "Documental",
+        14: "Superhéroes",
+        15: "Infantil",
+    };
+    const generoElemento = document.getElementById("genero");
+    if (generoElemento) {
+        const idsGenero = generoElemento.dataset.genreIds.split(",").map((id) => parseInt(id.trim()));
+        const nombresGenero = idsGenero.map((id) => generos[id]);
+        generoElemento.innerHTML = nombresGenero.map((nombre) => `<span class="genre">${nombre}</span>`).join("");
+    }
+
+    
+});
+
 
   // Navegación con KeyDown
   const botonVolver = document.getElementById("back-button");
@@ -85,9 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
           botonVolver.focus();
       }
   });
-
-  // Eliminar bordes de enfoque predeterminados
-  document.querySelectorAll("button, a").forEach((element) => {
-      element.style.outline = "none";
-  });
+// Eliminar bordes de enfoque predeterminados
+document.querySelectorAll("button, a, span.genre").forEach((element) => {
+  element.style.outline = "none";
+});
 });

@@ -35,10 +35,10 @@ body, html {
     height: 100%;
     object-fit: cover; /* Para que la imagen cubra todo el contenedor */
     z-index: -2; /* Detrás del fondo */
-  }
-  #imagen-2{
+}
+#imagen-2{
     display: none;
-  }
+}
 
 /* Botón Volver */
 #back-button {
@@ -61,7 +61,7 @@ body, html {
 }
 
 #back-button i {
-    font-size: 3vh;
+    font-size: 5.5vh;
     color: #000;
 }
 
@@ -88,8 +88,15 @@ body, html {
     gap: 10px;
     z-index: 2;
     width: 60%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
+#movie-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 #movie-title-image img {
     width: 45vh;
     height: auto;
@@ -102,18 +109,8 @@ body, html {
     margin: 0;
 }
 
-.movie-description {
-    font-size: 16px;
-    color: #ddd;
-    max-width: 600px;
-    line-height: 1.5;
-}
-
-.movie-description p{
-    font-size: 2.3vh;
-}
 .movie-details h4 {
-    font-size: 2.3vh;
+    font-size: 2.8vh;
     color: #ccc;
     margin: 0;
     display: flex;
@@ -122,8 +119,13 @@ body, html {
 .movie-details h4 span:not(#edad):not(#duracion-minutos)::before {
     content: '\2022'; /* Punto como icono */
     margin-right: 5px;
-   color: #8a2be2;
-  }
+    color: #8a2be2;
+}
+.movie-details i{
+    background-color: #6e6abd;
+    padding: 5px;
+    border-radius: 5px;
+}
 /* Estilos para Categorías */
 .genre {
     display: inline-block;
@@ -134,6 +136,30 @@ body, html {
     margin: 5px;
     font-size: 2vh;
 }
+
+/* Estilos para descripcion de pelicula */
+.movie-description {
+    font-size: 16px;
+    color: #ddd;
+    line-height: 1.5;
+}
+
+.movie-description p{
+    font-size: 2.3vh;
+    text-align: justify;
+}
+
+/* Movie Details and Buttons */
+.movie-details-and-buttons {
+    display: flex; /* Disposición en fila */
+    align-items: center; /* Alinear verticalmente al centro */
+    gap: 20px; /* Espaciado entre los elementos */
+    flex-wrap: wrap; /* Permitir ajuste en pantallas pequeñas */
+    margin-top: 10px; /* Separar del contenido superior */
+    margin-bottom: 10px;
+}
+
+/* Estilos para Rating */
 .movie-rating {
     display: flex;
     align-items: center;
@@ -141,7 +167,6 @@ body, html {
     color: #ccc;
 }
 
-/* Estilos para Rating */
 .movie-rating .stars ion-icon {
     color: white;
     font-size: 2.5vh;
@@ -154,8 +179,18 @@ body, html {
 }
 
 /* Botón "Ver Ahora" */
+.movie-buttons {
+    display: flex; /* Mostrar botones en fila */
+    gap: 10px; /* Espaciado entre botones */
+    align-items: center;
+}
+
+.movie-buttons i{
+    font-size: 4vh;
+}
+
 .movie-buttons a {
-    padding: 10px 20px;
+    padding: 6px 14px;
     background-color: #8a2be2;
     color: white;
     text-decoration: none;
@@ -163,12 +198,8 @@ body, html {
     font-size: 2vh;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.movie-buttons i{
-    font-size: 3vh;
 }
 
 .movie-buttons a:hover,
@@ -177,21 +208,9 @@ body, html {
     transform: scale(1.1);
 }
 
-/* Movie Details and Buttons */
-.movie-details-and-buttons {
-    display: flex; /* Disposición en fila */
-    align-items: center; /* Alinear verticalmente al centro */
-    gap: 20px; /* Espaciado entre los elementos */
-    flex-wrap: wrap; /* Permitir ajuste en pantallas pequeñas */
-    margin-top: 10px; /* Separar del contenido superior */
-}
-
-.movie-buttons {
-    display: flex; /* Mostrar botones en fila */
-    gap: 10px; /* Espaciado entre botones */
-    align-items: center;
-}
-
 .button-aditional {
+    display: none;
+}
+#carrusel-container{
     display: none;
 }

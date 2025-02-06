@@ -69,31 +69,35 @@ if (movieContent) {
         movieContent.classList.add("visible");
     }, 200);
 }
-  // Navegación con KeyDown
-  const botonVolver = document.getElementById("back-button");
-  const botonVerAhora = document.querySelector(".movie-buttons a");
-  const navegables = [botonVolver, botonVerAhora];
+  
+    // KeyDown Navigation
+    const botonVolver = document.getElementById("back-button");
+    const botonVerAhora = document.querySelector(".movie-buttons a");
+    const navegables = [botonVolver, botonVerAhora];
 
-  document.addEventListener("keydown", function (e) {
-      const currentFocus = document.activeElement;
-      const index = navegables.indexOf(currentFocus);
+    document.addEventListener("keydown", function (e) {
+        const currentFocus = document.activeElement;
+        const index = navegables.indexOf(currentFocus);
 
-      if (e.key === "ArrowRight") {
-          const nextIndex = (index + 1) % navegables.length;
-          navegables[nextIndex]?.focus();
-      } else if (e.key === "ArrowLeft") {
-          const prevIndex = (index - 1 + navegables.length) % navegables.length;
-          navegables[prevIndex]?.focus();
-      } else if (e.key === "Enter") {
-          currentFocus.click();
-      } else if (e.key === "Backspace" || e.key === "Escape") {
-          e.preventDefault();
-          botonVolver.focus();
-      }
-  });
+        if (e.key === "ArrowRight") {
+            const nextIndex = (index + 1) % navegables.length;
+            navegables[nextIndex]?.focus();
+        } else if (e.key === "ArrowLeft") {
+            const prevIndex = (index - 1 + navegables.length) % navegables.length;
+            navegables[prevIndex]?.focus();
+        } else if (e.key === "Enter") {
+            currentFocus.click();
+        } else if (e.key === "Backspace" || e.key === "Escape") {
+            e.preventDefault();
+            botonVolver.focus();
+        }
+    });
 
-  // Eliminar bordes de enfoque predeterminados
-  document.querySelectorAll("button, a").forEach((element) => {
-      element.style.outline = "none";
-  });
+    // Eliminar bordes de enfoque predeterminados
+    document.querySelectorAll("button, a").forEach((element) => {
+        element.style.outline = "none";
+    });
 });
+
+
+

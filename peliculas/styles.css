@@ -58,6 +58,7 @@ body, html {
     transition: background-color 0.3s ease, transform 0.3s ease;
     border: none;
     outline: none;
+    z-index: 999;
 }
 
 #back-button i {
@@ -70,7 +71,13 @@ body, html {
     background-color: #e0b3ff;
     transform: scale(1.1);
 }
-
+#logo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 5vh;
+    z-index: 1001;
+  }
 
 /* Contenedor Principal */
 #content {
@@ -281,7 +288,14 @@ body, html {
         object-fit: cover;
         z-index: -2;
     }
-
+    #logo{position: absolute;
+        display: flex;
+        top: 8px;
+        transform: translateX(-50%);
+        left: 50%;
+        width: 5vh;
+        z-index: 1001;}
+    
     /* Contenedor Principal */
     #content {
         padding-left: 0vh;
@@ -385,7 +399,7 @@ body, html {
 
     .button-aditional button,
     .button-aditional a {
-        background: linear-gradient(45deg, #8a2be2, #6e23a6);
+        background: linear-gradient(45deg, #892be210, #6d23a686);
         border: none;
         color: white;
         font-size: 3vh;

@@ -1,40 +1,76 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Generado por Loshelsistem 1.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <!-- Botón Volver -->
-    <a href="../index.html" id="back-button"><i class="bi bi-arrow-left-short"></i></a>
-
+    <a href="../index.html" id="back-button"
+      ><i class="bi bi-arrow-left-short"></i
+    ></a>
+    <!-- Logo -->
+    <img id="logo" src="logo001.png" alt="Logo" />
     <!-- Contenido principal -->
     <div id="content">
       <!-- Elementos Ocultos -->
-      <input type="hidden" id="ID_pelicula" value="P-127">
-      <input type="hidden" id="cover-url" value="https://image.tmdb.org/t/p/original/vpaC0urwKnthk1wkbX4cy9EtR1G.jpg">
-      <input type="hidden" id="cover-url-2" value="https://image.tmdb.org/t/p/original/sul3eKDF9rb0wn2Q9wFfv61lOGi.jpg">
-      <input type="hidden" id="pagina-nombre" value="P-127-1-3-PandaPlan.html">
+      <input type="hidden" id="ID_pelicula" value="P-127" />
+      <input
+        type="hidden"
+        id="cover-url"
+        value="https://image.tmdb.org/t/p/original/vpaC0urwKnthk1wkbX4cy9EtR1G.jpg"
+      />
+      <input
+        type="hidden"
+        id="cover-url-2"
+        value="https://image.tmdb.org/t/p/original/sul3eKDF9rb0wn2Q9wFfv61lOGi.jpg"
+      />
+      <input
+        type="hidden"
+        id="pagina-nombre"
+        value="P-127-1-3-PandaPlan.html"
+      />
 
       <!-- Fondo Dinámico -->
       <div id="background-section">
         <div class="background-gradient"></div>
       </div>
       <!-- Imagen 1 para el backbroud -->
-      <img src="https://image.tmdb.org/t/p/original/u7AZ5CdT2af8buRjmYCPXNyJssd.jpg" alt="img1" id="imagen-1">
+      <img
+        src="https://image.tmdb.org/t/p/original/u7AZ5CdT2af8buRjmYCPXNyJssd.jpg"
+        alt="img1"
+        id="imagen-1"
+      />
       <!-- Imagen 2 para el backbroud smartphone -->
-      <img src="https://image.tmdb.org/t/p/original/i0hPyO3yCzro41AzRafZgFSumC2.jpg" alt="img2" id="imagen-2">
+      <img
+        src="https://image.tmdb.org/t/p/original/i0hPyO3yCzro41AzRafZgFSumC2.jpg"
+        alt="img2"
+        id="imagen-2"
+      />
 
       <!-- Sección de Contenido de Película -->
       <div id="movie-content" class="hidden">
         <!-- Título de la Película (Imagen) -->
         <div id="movie-title-image">
-          <img src="https://image.tmdb.org/t/p/original/f4tmZDlrV8Ehz1CfVUQzeJBSN1O.png" alt="Título de la Película">
+          <img
+            src="https://image.tmdb.org/t/p/original/f4tmZDlrV8Ehz1CfVUQzeJBSN1O.png"
+            alt="Título de la Película"
+          />
         </div>
 
         <!-- Título de la Película (Texto) -->
@@ -47,10 +83,10 @@
           </div>
           <div class="movie-details">
             <h4>
-              <span id="edad">07+</span>
+              <span id="edad"><i>07+</i></span>
               <span id="año">2024</span>
-              <span id="duracion-horas">1 h</span>
-              <span id="duracion-minutos">39 min</span>
+              <span id="duracion-horas">1h</span>
+              <span id="duracion-minutos">39min</span>
             </h4>
           </div>
         </div>
@@ -58,17 +94,27 @@
         <div id="genero" class="genre-section" data-genre-ids="1,3"></div>
 
         <!-- Descripción de la Película -->
-        <div id="descripcion" class="movie-description">Un famoso sindicato del crimen internacional pone sus ojos en el famoso oso y ofrece una enorme recompensa por su captura. Ante esta repentina crisis, Jackie Chan recurre a la ayuda de su agente y del feroz cuidador de Hu Hu, y el trío se embarca en una aventura.</div>
+        <div id="descripcion" class="movie-description">
+          Un famoso sindicato del crimen internacional pone sus ojos en el
+          famoso oso y ofrece una enorme recompensa por su captura. Ante esta
+          repentina crisis, Jackie Chan recurre a la ayuda de su agente y del
+          feroz cuidador de Hu Hu, y el trío se embarca en una aventura.
+        </div>
 
         <!-- Boton de play y donacion -->
         <div class="button-movie-and-donation">
           <div class="movie-buttons">
-            <a id="video1" href="//ok.ru/videoembed/8978650827329?nochat=1&amp;autoplay=1">
+            <a
+              id="video1"
+              href="//ok.ru/videoembed/8978650827329?nochat=1&amp;autoplay=1"
+            >
               <i class="bi bi-play-fill"></i><span> Ver Ahora</span>
             </a>
           </div>
           <div class="donar-button">
-            <a href="../donar.html" id="donar-button"><i class="bi bi-piggy-bank"></i> Donar</a>
+            <a href="../donar.html" id="donar-button"
+              ><i class="bi bi-piggy-bank"></i> Donar</a
+            >
           </div>
         </div>
       </div>
@@ -88,7 +134,9 @@
           </a>
         </div>
         <div class="canal">
-          <a href="../donar.html" id="donar-button2"><i class="bi bi-piggy-bank"></i></a>
+          <a href="../donar.html" id="donar-button2"
+            ><i class="bi bi-piggy-bank"></i
+          ></a>
         </div>
       </div>
     </div>
@@ -100,8 +148,13 @@
 
     <!-- Scripts -->
     <script src="script.js" type="module"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  
-
-</body></html>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

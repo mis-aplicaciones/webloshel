@@ -26,14 +26,14 @@ function initializeTv() {
   const applyStylesForIndex = () => {
     const container = document.querySelector(".tv-grid-container");
     if (container) {
-      container.style.display = "grid"; // Asegurar el uso correcto de grid
-      container.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))"; // Diseño flexible
+      container.style.display = "grid";
+      container.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
     }
   };
 
   // Manejar navegación por teclado
   tvKeyListener = (e) => {
-    const cols = Math.floor(window.innerWidth / 170); // Columnas basadas en el ancho de pantalla
+    const cols = Math.floor(window.innerWidth / 170);
     switch (e.key) {
       case "ArrowRight":
         if ((currentIndex + 1) % cols !== 0 && currentIndex < cards.length - 1) {
@@ -60,7 +60,7 @@ function initializeTv() {
         break;
       case "Backspace":
       case "Escape":
-        handleReturnToSidebar();
+        handleReturnToIndex();
         break;
       default:
         break;
@@ -84,18 +84,18 @@ function initializeTv() {
   const handleCardAction = (card) => {
     const link = card.getAttribute("data-link");
     if (link) {
-      // Redirigir a la página correspondiente
       window.location.href = link;
     }
   };
 
-  // Retorno al sidebar
-  const handleReturnToSidebar = () => {
-    const activeMenu = document.querySelector(".menu-item.active");
-    if (activeMenu) {
-      activeMenu.focus();
+  // Función corregida para regresar al index correctamente
+  const handleReturnToIndex = () => {
+    console.log("Retornando al index...");
+    const indexButtons = document.querySelectorAll(".menu-item, .index-button");
+    if (indexButtons.length) {
+      indexButtons[0].focus(); // Regresar al primer botón disponible en el index
     }
-    cleanupTv(); // Limpieza al regresar al sidebar
+    cleanupTv(); // Limpieza al regresar
   };
 
   // Limpieza del script
@@ -110,10 +110,9 @@ function initializeTv() {
 
   // Inicialización
   document.addEventListener("keydown", tvKeyListener);
-  applyStylesForIndex(); // Asegura los estilos al cargar desde index
+  applyStylesForIndex();
   updateFocus();
   console.log("TV inicializado correctamente");
 
-  // Exponer la limpieza para que pueda ser llamada desde fuera
   window.cleanupTv = cleanupTv;
 }

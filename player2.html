@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,0" />
+    <title>Reproductor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styleplayers.css" />
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  </head>
+  <body>
+    <div id="player-container">
+      <video id="player-video" autoplay></video>
+    </div>
+
+    <div id="playlist-container">
+      <button id="scroll-up"><i class="bi bi-chevron-up"></i></button>
+      <div id="playlist"></div>
+      <button id="scroll-down"><i class="bi bi-chevron-down"></i></button>
+    </div>
+
+    <script src="player2.js"></script>
+  </body>
+</html>

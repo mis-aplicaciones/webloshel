@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     parent: [window.location.hostname],
     layout: "video",
     muted: false,
+    
   });
 
   // Actualizar la hora en formato AM/PM

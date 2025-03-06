@@ -1,3 +1,13 @@
+/* Eliminar el borde amarillo en Android TV */
+* {
+  outline: none !important;
+}
+
+/* Asegurar que los elementos del playlist no tengan borde al hacer focus */
+.playlist-item:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 /* General */
 body {
   margin: 0;

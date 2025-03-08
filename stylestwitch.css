@@ -7,6 +7,7 @@ body {
   flex-direction: column;
   background-color: #121124;
   color: #ffffff;
+  overflow: hidden;
 }
 
 /* Contenedor principal */
@@ -16,6 +17,7 @@ body {
   width: 100%;
   height: 100vh;
   position: absolute;
+  overflow: hidden;
 }
 
 /* Contenedor del reproductor */
@@ -31,21 +33,28 @@ body {
 
 /* Contenedor de lista de canales */
 .channels-container {
-  width: 25%;
+  width: 30%; /* Aumenté el ancho para evitar scroll horizontal */
   background: rgba(0, 0, 0, 0.7);
-  overflow-y: auto;
+  overflow-x: hidden; /* Evita el scroll horizontal */
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-  
+  scrollbar-width: none; /* Oculta scrollbar en Firefox */
 }
 
 .channel-list {
   list-style: none;
   padding: 2vh;
   margin: 0;
+  overflow-y: auto; /* Mantiene el scroll funcional aunque sea invisible */
+  height: 100%;
+  -ms-overflow-style: none; /* Oculta scrollbar en Edge */
+}
+
+.channel-list::-webkit-scrollbar {
+  display: none; /* Oculta scrollbar en Chrome y Safari */
 }
 
 .channel-card {
@@ -53,52 +62,48 @@ body {
   align-items: center;
   padding: 10px;
   background: transparent;
-  border: 1px solid #444;
   border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
+  opacity: 0.5;
+  outline: none;
+  border: none;
 }
 
-.channel-card:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.1);
+.channel-card:hover,
+.channel-card:focus {
+  transform: scale(1.1);
+  background: rgba(114, 8, 212, 0.2);
+  opacity: 1;
+}
+
+.channel-card h2 {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #fff;
 }
 
 .channel-card img {
-  width: 6vh;
-  height: 6vh;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
   margin-right: 10px;
-  border-radius: 50%;
+  border-radius: 5px;
 }
 
 .channel-card p {
   margin: 0;
-  font-size: 2vh;
+  font-size: 1rem;
+  color: #fff;
 }
+
 .channel-list-title {
   font-size: 2.5vh;
-    text-align: center;
-    padding: 0 1.9rem;
-}
-/* Scrollbar moderno */
-.channels-container::-webkit-scrollbar {
-  width: 10px; /* Ancho del scrollbar */
+  text-align: center;
+  padding: 0 1.9rem;
 }
 
-.channels-container::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3); /* Fondo del track */
-  border-radius: 10px;
-}
-
-.channels-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.6); /* Color del scroll */
-  border-radius: 10px;
-}
-
-.channels-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.8); /* Color al pasar hover */
-}
 /* Contenedor del tiempo */
 .time-container {
   position: absolute;
@@ -111,15 +116,15 @@ body {
   z-index: 2;
   border-radius: 5px;
 }
+
 /* Asegurar que la opacidad se aplique correctamente */
 .channels-container,
 .time-container {
-  transition: opacity 0.5s ease-in-out; /* Suaviza el cambio de opacidad */
-  opacity: 0; /* Por defecto, oculto */
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
 }
 
-
-/* Escala de card y tiempo en pantallas grandes */
+/* Ajustes para pantallas grandes */
 @media (min-width: 1250px) {
   .channel-card {
     padding: 10px;
@@ -132,7 +137,6 @@ body {
     height: 4rem;
   }
 }
-
 
 /* Layout vertical para pantallas pequeñas */
 @media (max-width: 719px) {
@@ -155,12 +159,22 @@ body {
   .time-container {
     display: none;
   }
+
+  .channel-card {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .channel-card:hover,
+  .channel-card:focus {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
   .channel-card p {
     margin: 0;
     font-size: 1rem;
-}
-.channel-list-title {
-  
-  display: none;
-}
+  }
+
+  .channel-list-title {
+    display: none;
+  }
 }

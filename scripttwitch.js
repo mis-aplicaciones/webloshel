@@ -17,13 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
     parent: [window.location.hostname],
     layout: "video",
     muted: false,
-    
   });
 
-  // Actualizar la hora en formato AM/PM
+  // Actualizar la hora en formato AM/PM sin segundos
   const updateClock = () => {
     const now = new Date();
-    const options = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true };
+    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
     currentTimeSpan.textContent = now.toLocaleTimeString("en-US", options);
   };
   setInterval(updateClock, 1000);
@@ -47,18 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Reiniciar el temporizador de inactividad
   const resetInactivityTimeout = () => {
     clearTimeout(timeout);
-    timeout = setTimeout(hideOverlay, 5000); // Ocultar tras 5 segundos de inactividad
+    timeout = setTimeout(hideOverlay, 5000);
   };
 
   // Forzar opacidad para pantallas menores a 720px
   const enforceOpacity = () => {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 720) {
-      channelsContainer.style.opacity = "1"; // Siempre visible en pantallas pequeñas
-      timeContainer.style.opacity = "1"; // Opcional si aplica
-      clearTimeout(timeout); // No ocultar en pantallas pequeñas
+      channelsContainer.style.opacity = "1";
+      timeContainer.style.opacity = "1";
+      clearTimeout(timeout);
     } else {
-      showOverlay(); // Asegurar que aparezca en otras pantallas
+      showOverlay();
     }
   };
 
@@ -81,13 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentIndex = Array.from(channels).indexOf(currentFocus);
 
     if (e.key === "ArrowDown" && currentIndex !== -1 && currentIndex < channels.length - 1) {
-      // Mover foco al siguiente botón si no está en el último
       channels[currentIndex + 1]?.focus();
     } else if (e.key === "ArrowUp" && currentIndex !== -1 && currentIndex > 0) {
-      // Mover foco al botón anterior si no está en el primero
       channels[currentIndex - 1]?.focus();
     } else if (e.key === "Enter" && currentIndex !== -1) {
-      // Cambiar canal en el reproductor si se presiona Enter
       const channelName = channels[currentIndex].getAttribute("data-channel");
       if (channelName) {
         embed.setChannel(channelName);
@@ -113,6 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
   channelsContainer.setAttribute("tabindex", "-1");
   timeContainer.setAttribute("tabindex", "-1");
   videoContainer.setAttribute("tabindex", "-1");
+
+  // Eliminar borde amarillo en Android TV
+  channels.forEach((channel) => {
+    channel.style.outline = "none";
+  });
 
   // Inicializar el foco en el primer canal
   channels[0]?.focus();

@@ -49,16 +49,19 @@ class PlayerJS {
                 this.isInteracting = true;
                 this.playCurrent();
             }
+            this.startAutoHide();
         });
   
         this.scrollUpButton.addEventListener("click", () => {
             this.isInteracting = true;
             this.scrollPlaylist(-1);
+            this.startAutoHide();
         });
   
         this.scrollDownButton.addEventListener("click", () => {
             this.isInteracting = true;
             this.scrollPlaylist(1);
+            this.startAutoHide();
         });
   
         this.playlistContainer.addEventListener("mouseenter", () => this.stopAutoHide());
@@ -111,11 +114,11 @@ class PlayerJS {
   
         if (currentFile.file.endsWith(".m3u8") && Hls.isSupported()) {
             this.hls = new Hls({
-                maxBufferLength: 30, // Mantiene un buffer de 30 segundos
-                maxBufferSize: 60 * 1000 * 1000, // Hasta 60MB de buffer
-                maxMaxBufferLength: 60, // Hasta 60 segundos en condiciones óptimas
-                liveSyncDurationCount: 3, // Baja latencia en streams en vivo
-                enableWorker: true // Mejora rendimiento en segundo plano
+                maxBufferLength: 30,
+                maxBufferSize: 60 * 1000 * 1000,
+                maxMaxBufferLength: 60,
+                liveSyncDurationCount: 3,
+                enableWorker: true
             });
   
             this.hls.loadSource(currentFile.file);
@@ -158,23 +161,24 @@ class PlayerJS {
         }
     }
   
-    
-  handlePlaybackError() {
-      console.error("❌ Error in playback. Restarting stream...");
-      this.recoverPlayback();
-  }
-
-  loadPlaylist(playlist) {
-      this.playlist = playlist;
-      this.currentIndex = 0;
-      this.createPlaylistUI();
-      this.playCurrent();
-  }
+    handlePlaybackError() {
+        console.error("❌ Error in playback. Restarting stream...");
+        this.recoverPlayback();
+    }
+  
+    loadPlaylist(playlist) {
+        this.playlist = playlist;
+        this.currentIndex = 0;
+        this.createPlaylistUI();
+        this.playCurrent();
+        this.startAutoHide();
+    }
 }
-
+  
+// Inicialización del reproductor
 document.addEventListener("DOMContentLoaded", () => {
-  const player = new PlayerJS("player-container");
-
+    const player = new PlayerJS("player-container");
+  
   const playlist = [
       { number: "100", image: "img/canallatina.png", title: "LATINA TV", file: "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8" },
       { number: "101", image: "img/CANAL ATV.JPG", title: "ATV", file: "https://d19e55ehz2il4i.cloudfront.net/index.m3u8" },

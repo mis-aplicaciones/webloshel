@@ -33,7 +33,7 @@ body {
 
 /* Contenedor de lista de canales */
 .channels-container {
-  width: 18%;
+  width: 20%;
   background: rgba(0, 0, 0, 0.7);
   overflow-x: hidden;
   position: absolute;
@@ -77,10 +77,10 @@ body {
 }
 
 .channel-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin-bottom: 5px;
+  width: 100px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 0;
   border-radius: 5px;
 }
 
@@ -137,7 +137,7 @@ body {
   }
 
   .channel-card img {
-    width: 4rem;
+    width: 14rem;
     height: 4rem;
   }
 }

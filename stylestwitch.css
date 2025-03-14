@@ -1,7 +1,7 @@
 /* General */
 body {
   margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family:monospace;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,75 +33,79 @@ body {
 
 /* Contenedor de lista de canales */
 .channels-container {
-  width: 30%; /* Aumenté el ancho para evitar scroll horizontal */
+  width: 18%;
   background: rgba(0, 0, 0, 0.7);
-  overflow-x: hidden; /* Evita el scroll horizontal */
+  overflow-x: hidden;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-  scrollbar-width: none; /* Oculta scrollbar en Firefox */
+  scrollbar-width: none;
 }
 
 .channel-list {
   list-style: none;
   padding: 2vh;
   margin: 0;
-  overflow-y: auto; /* Mantiene el scroll funcional aunque sea invisible */
+  overflow-y: auto;
   height: 100%;
-  -ms-overflow-style: none; /* Oculta scrollbar en Edge */
+  -ms-overflow-style: none;
 }
 
 .channel-list::-webkit-scrollbar {
-  display: none; /* Oculta scrollbar en Chrome y Safari */
+  display: none;
 }
 
 .channel-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 10px;
   background: transparent;
   border-radius: 8px;
-  margin-bottom: 10px;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
   opacity: 0.5;
-  outline: none;
-  border: none;
 }
 
-.channel-card:hover,
-.channel-card:focus {
+.channel-card:hover, .channel-card:focus {
   transform: scale(1.1);
   background: rgba(114, 8, 212, 0.2);
   opacity: 1;
 }
 
-.channel-card h2 {
-  font-size: 1.2rem;
-  margin-right: 10px;
-  color: #fff;
-}
-
-.channel-card img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-right: 10px;
+.channel-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 5px;
   border-radius: 5px;
 }
 
-.channel-card p {
-  margin: 0;
-  font-size: 1rem;
-  color: #fff;
+.channel-number {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
 }
 
-.channel-list-title {
-  font-size: 2.5vh;
+.current-channel-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #6a0dad, #a855f7);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
-  padding: 0 1.9rem;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 2;
 }
 
 /* Contenedor del tiempo */
@@ -119,7 +123,7 @@ body {
 
 /* Asegurar que la opacidad se aplique correctamente */
 .channels-container,
-.time-container {
+.time-container,.current-channel-container {
   transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
@@ -169,12 +173,19 @@ body {
     background: rgba(255, 255, 255, 0.2);
   }
 
-  .channel-card p {
-    margin: 0;
-    font-size: 1rem;
+  .channel-card img {
+    width: 40px;
+    height: 40px;
   }
-
   .channel-list-title {
     display: none;
   }
+  .channel-card {
+    flex-direction: row-reverse;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.current-channel-container {
+display: none;
+}
 }

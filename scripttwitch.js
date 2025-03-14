@@ -4,10 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const videoContainer = document.querySelector(".video-container");
   const channels = document.querySelectorAll(".channel-card");
   const currentTimeSpan = document.getElementById("currentTime");
+  const currentChannelNumber = document.getElementById("currentChannelNumber");
+  const currentChannelDisplay = document.getElementById("currentChannelDisplay");
   let timeout;
 
-  // Obtener el nombre del canal inicial desde el primer botón de canales
-  const initialChannel = channels[0]?.getAttribute("data-channel") || "default";
+  // Obtener el primer canal de la lista
+  const initialChannelElement = channels[0];
+  const initialChannel = initialChannelElement?.getAttribute("data-channel") || "default";
+  const initialChannelNumber = initialChannelElement?.querySelector(".channel-number")?.textContent || "---";
 
   // Inicializar el reproductor de Twitch con el canal inicial
   const embed = new Twitch.Embed("twitch-embed", {
@@ -19,6 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     muted: false,
   });
 
+  // Mostrar el primer canal en el display al cargar la web
+  currentChannelNumber.textContent = initialChannelNumber;
+
   // Actualizar la hora en formato AM/PM sin segundos
   const updateClock = () => {
     const now = new Date();
@@ -29,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Ocultar los contenedores tras 5 segundos
   const hideOverlay = () => {
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 720) {
+    if (window.innerWidth > 720) {
       channelsContainer.style.opacity = "0";
       timeContainer.style.opacity = "0";
+      currentChannelDisplay.style.opacity = "0";
     }
   };
 
@@ -40,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const showOverlay = () => {
     channelsContainer.style.opacity = "1";
     timeContainer.style.opacity = "1";
+    currentChannelDisplay.style.opacity = "1";
     resetInactivityTimeout();
   };
 
@@ -49,30 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     timeout = setTimeout(hideOverlay, 5000);
   };
 
-  // Forzar opacidad para pantallas menores a 720px
-  const enforceOpacity = () => {
-    const screenWidth = window.innerWidth;
-    if (screenWidth <= 720) {
-      channelsContainer.style.opacity = "1";
-      timeContainer.style.opacity = "1";
-      clearTimeout(timeout);
-    } else {
-      showOverlay();
-    }
-  };
-
-  // Detectar cambios de tamaño de ventana
-  window.addEventListener("resize", enforceOpacity);
-  enforceOpacity();
-
-  // Mostrar contenedores al interactuar con el mouse o teclado
-  const handleUserActivity = () => {
-    showOverlay();
-  };
-
-  document.addEventListener("mousemove", handleUserActivity);
-  document.addEventListener("keydown", handleUserActivity);
-  document.addEventListener("click", handleUserActivity);
+  window.addEventListener("resize", showOverlay);
+  document.addEventListener("mousemove", showOverlay);
+  document.addEventListener("keydown", showOverlay);
+  document.addEventListener("click", showOverlay);
 
   // Navegación por teclado
   document.addEventListener("keydown", (e) => {
@@ -84,9 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (e.key === "ArrowUp" && currentIndex !== -1 && currentIndex > 0) {
       channels[currentIndex - 1]?.focus();
     } else if (e.key === "Enter" && currentIndex !== -1) {
-      const channelName = channels[currentIndex].getAttribute("data-channel");
+      const channel = channels[currentIndex];
+      const channelName = channel.getAttribute("data-channel");
       if (channelName) {
         embed.setChannel(channelName);
+        const number = channel.querySelector(".channel-number").textContent;
+        currentChannelNumber.textContent = number;
+        showOverlay();
       }
     }
   });
@@ -97,6 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const channelName = channel.getAttribute("data-channel");
       if (channelName) {
         embed.setChannel(channelName);
+        const number = channel.querySelector(".channel-number").textContent;
+        currentChannelNumber.textContent = number;
+        showOverlay();
       }
     });
   });

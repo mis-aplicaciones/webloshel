@@ -14,14 +14,14 @@ class PlayerJS {
         this.lastPlaybackTime = 0;
         this.init();
     }
-
+  
     init() {
         this.createPlaylistUI();
         this.addEventListeners();
         this.videoElement.autoplay = true;
         this.monitorPlayback();
     }
-
+  
     createPlaylistUI() {
         this.playlistElement.innerHTML = this.playlist
             .map((item, index) => `
@@ -33,7 +33,7 @@ class PlayerJS {
             `)
             .join("");
     }
-
+  
     addEventListeners() {
         window.addEventListener("mousemove", () => this.showPlaylist());
         window.addEventListener("keydown", (e) => {
@@ -50,33 +50,33 @@ class PlayerJS {
                 this.playCurrent();
             }
         });
-
+  
         this.scrollUpButton.addEventListener("click", () => {
             this.isInteracting = true;
             this.scrollPlaylist(-1);
         });
-
+  
         this.scrollDownButton.addEventListener("click", () => {
             this.isInteracting = true;
             this.scrollPlaylist(1);
         });
-
+  
         this.playlistContainer.addEventListener("mouseenter", () => this.stopAutoHide());
         this.playlistContainer.addEventListener("mouseleave", () => this.startAutoHide());
-
+  
         window.addEventListener("keyup", () => {
             this.isInteracting = false;
             this.startAutoHide();
         });
-
+  
         this.videoElement.addEventListener("error", () => this.handlePlaybackError());
     }
-
+  
     showPlaylist() {
         this.playlistContainer.classList.add("active");
         this.startAutoHide();
     }
-
+  
     startAutoHide() {
         this.stopAutoHide();
         this.hideTimeout = setTimeout(() => {
@@ -85,39 +85,39 @@ class PlayerJS {
             }
         }, 5000);
     }
-
+  
     stopAutoHide() {
         clearTimeout(this.hideTimeout);
     }
-
+  
     scrollPlaylist(direction) {
         this.currentIndex = (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
         this.updatePlaylistUI();
     }
-
+  
     updatePlaylistUI() {
         const items = this.playlistElement.querySelectorAll(".playlist-item");
         items.forEach((el, index) => el.classList.toggle("active", index === this.currentIndex));
         this.playlistElement.scrollTo({ top: this.currentIndex * 60, behavior: "smooth" });
     }
-
+  
     playCurrent() {
         const currentFile = this.playlist[this.currentIndex];
-
+  
         if (this.hls) {
             this.hls.destroy();
             this.hls = null;
         }
-
+  
         if (currentFile.file.endsWith(".m3u8") && Hls.isSupported()) {
             this.hls = new Hls({
-                maxBufferLength: 30,
-                maxBufferSize: 60 * 1000 * 1000,
-                maxMaxBufferLength: 60,
-                liveSyncDurationCount: 3,
-                enableWorker: true
+                maxBufferLength: 30, // Mantiene un buffer de 30 segundos
+                maxBufferSize: 60 * 1000 * 1000, // Hasta 60MB de buffer
+                maxMaxBufferLength: 60, // Hasta 60 segundos en condiciones óptimas
+                liveSyncDurationCount: 3, // Baja latencia en streams en vivo
+                enableWorker: true // Mejora rendimiento en segundo plano
             });
-
+  
             this.hls.loadSource(currentFile.file);
             this.hls.attachMedia(this.videoElement);
             this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -127,10 +127,10 @@ class PlayerJS {
             this.videoElement.src = currentFile.file;
             this.videoElement.play();
         }
-
+  
         this.videoElement.title = currentFile.title;
     }
-
+  
     monitorPlayback() {
         setInterval(() => {
             if (!this.videoElement.paused && !this.videoElement.ended) {
@@ -142,10 +142,10 @@ class PlayerJS {
             }
         }, 5000);
     }
-
+  
     recoverPlayback() {
         const currentFile = this.playlist[this.currentIndex];
-
+  
         if (this.hls) {
             console.warn("🔄 Reloading HLS stream...");
             this.hls.detachMedia();
@@ -157,23 +157,23 @@ class PlayerJS {
             this.videoElement.play();
         }
     }
+  
+    
+  handlePlaybackError() {
+      console.error("❌ Error in playback. Restarting stream...");
+      this.recoverPlayback();
+  }
 
-    handlePlaybackError() {
-        console.error("❌ Error in playback. Restarting stream...");
-        this.recoverPlayback();
-    }
-
-    loadPlaylist(playlist) {
-        this.playlist = playlist;
-        this.currentIndex = 0;
-        this.createPlaylistUI();
-        this.playCurrent();
-    }
+  loadPlaylist(playlist) {
+      this.playlist = playlist;
+      this.currentIndex = 0;
+      this.createPlaylistUI();
+      this.playCurrent();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const player = new PlayerJS("player-container");
-    
+  const player = new PlayerJS("player-container");
 
   const playlist = [
       { number: "100", image: "img/canallatina.png", title: "LATINA TV", file: "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8" },
@@ -187,7 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
       { number: "108", image: "img/canalsoltv.png", title: "SOL TV", file: "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8" },
       { number: "109", image: "img/canalorbittv.png", title: "ORBIT TV", file: "https://ss3.domint.net:3134/otv_str/orbittv/playlist.m3u8" },
       { number: "110", image: "img/canalsonynovelas.png", title: "SONY NOVELAS", file: "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8" },
-      { number: "111", image: "img/canaldw.png", title: "DW ESPAÑOL", file: "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8" }
+      { number: "111", image: "img/canaldw.png", title: "DW ESPAÑOL", file: "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8" },
+      { number: "111", image: "img/canaldw.png", title: "DW ESPAÑOL", file: "http://livestreamcdn.net:1935/ExtremaTV/ExtremaTV/playlist.m3u8" },
+      { number: "111", image: "img/canal-axn.png", title: "AXN", file: "http://181.78.109.48:8000/play/a05u/index.m3u8" },
+      
   ];
 
   player.loadPlaylist(playlist);

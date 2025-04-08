@@ -10,7 +10,7 @@ class PlayerJS {
       this.scrollUpButton = document.getElementById("scroll-up");
       this.scrollDownButton = document.getElementById("scroll-down");
       this.hideTimeout = null;
-      this.mouseTimeout = null; // Nuevo temporizador para el mouse
+      this.mouseTimeout = null;
       this.isInteracting = false;
       this.lastPlaybackTime = 0;
       this.autoHideDelay = 5000; // 5 segundos de inactividad
@@ -25,6 +25,7 @@ class PlayerJS {
     }
   
     createPlaylistUI() {
+      // Genera el HTML de los items
       this.playlistElement.innerHTML = this.playlist
         .map(
           (item, index) => `
@@ -36,6 +37,25 @@ class PlayerJS {
         `
         )
         .join("");
+  
+      // Agrega eventos para click y eventos táctiles a cada item
+      const items = this.playlistElement.querySelectorAll(".playlist-item");
+      items.forEach((item) => {
+        // Con click (para PC y tablets)
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          this.currentIndex = parseInt(item.getAttribute("data-index"));
+          this.updatePlaylistUI();
+          this.playCurrent();
+        });
+        // Con toque, se usa touchend para asegurar que finalice el gesto
+        item.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          this.currentIndex = parseInt(item.getAttribute("data-index"));
+          this.updatePlaylistUI();
+          this.playCurrent();
+        });
+      });
     }
   
     addEventListeners() {
@@ -47,10 +67,8 @@ class PlayerJS {
       // Manejo de movimiento del mouse: se activa el contenedor y se programa un temporizador
       window.addEventListener("mousemove", () => {
         resetInactivity();
-        // Cada movimiento de mouse reinicia este timer, que al expirar desactiva la interacción del mouse
         clearTimeout(this.mouseTimeout);
         this.mouseTimeout = setTimeout(() => {
-          // Se considera que el mouse ya no está interactuando
           this.isInteracting = false;
         }, 300);
       });
@@ -77,7 +95,7 @@ class PlayerJS {
         }
       });
   
-      // Al soltar una tecla se marca el fin de la interacción del teclado
+      // Al soltar la tecla se marca el fin de la interacción del teclado
       window.addEventListener("keyup", () => {
         this.isInteracting = false;
         this.startAutoHide();
@@ -90,7 +108,7 @@ class PlayerJS {
       this.scrollUpButton.addEventListener("click", () => this.scrollPlaylist(-1));
       this.scrollDownButton.addEventListener("click", () => this.scrollPlaylist(1));
   
-      // Cuando el cursor esté sobre el contenedor, se detiene el auto-ocultado
+      // Cuando el cursor o toque esté sobre el contenedor, se detiene el auto-ocultado
       this.playlistContainer.addEventListener("mouseenter", () => {
         this.stopAutoHide();
       });
@@ -109,7 +127,6 @@ class PlayerJS {
     startAutoHide() {
       this.stopAutoHide();
       this.hideTimeout = setTimeout(() => {
-        // Si no hay interacción y el contenedor no está siendo apuntado por el mouse, se oculta
         if (!this.isInteracting && !this.playlistContainer.matches(":hover")) {
           this.playlistContainer.classList.remove("active");
         }
@@ -121,18 +138,19 @@ class PlayerJS {
     }
   
     scrollPlaylist(direction) {
-      // Actualiza el índice de forma cíclica
-      this.currentIndex = (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
+      this.currentIndex =
+        (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
       this.updatePlaylistUI();
     }
   
     updatePlaylistUI() {
+      // Actualiza la clase active y enfoca el item activo
       const items = this.playlistElement.querySelectorAll(".playlist-item");
       items.forEach((el, index) => {
         if (index === this.currentIndex) {
           el.classList.add("active");
           el.focus();
-          // Centra el elemento activo en el contenedor
+          // Centra el elemento en la vista
           el.scrollIntoView({ behavior: "smooth", block: "center" });
         } else {
           el.classList.remove("active");
@@ -218,11 +236,12 @@ class PlayerJS {
         number: "100",
         image: "img/canallatina.png",
         title: "LATINA TV",
-        file: "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
+        file:
+          "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
       },
       {
         number: "101",
-        image: "img/CANAL ATV.JPG",
+        image: "img/CANAL ATV.png",
         title: "ATV",
         file: "https://d19e55ehz2il4i.cloudfront.net/index.m3u8"
       },
@@ -248,49 +267,57 @@ class PlayerJS {
         number: "105",
         image: "img/canalmegatv.png",
         title: "MEGATV",
-        file: "https://solo.disfrutaenlared.com:1936/tvcbba/tvcbba/playlist.m3u8"
+        file:
+          "https://solo.disfrutaenlared.com:1936/tvcbba/tvcbba/playlist.m3u8"
       },
       {
         number: "106",
         image: "img/canalwowtv.png",
         title: "WOW TV",
-        file: "https://cdn.elsalvadordigital.com:1936/wowtv/smil:wowtv.smil/playlist.m3u8"
+        file:
+          "https://cdn.elsalvadordigital.com:1936/wowtv/smil:wowtv.smil/playlist.m3u8"
       },
       {
         number: "107",
         image: "img/canalcocotv.png",
         title: "COCO TV",
-        file: "https://cloudflare.streamgato.us:3253/live/canalcocotvlive.m3u8"
+        file:
+          "https://cloudflare.streamgato.us:3253/live/canalcocotvlive.m3u8"
       },
       {
         number: "108",
         image: "img/canalsoltv.png",
         title: "SOL TV",
-        file: "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8"
+        file:
+          "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8"
       },
       {
         number: "109",
         image: "img/canalorbittv.png",
         title: "ORBIT TV",
-        file: "https://ss3.domint.net:3134/otv_str/orbittv/playlist.m3u8"
+        file:
+          "https://ss3.domint.net:3134/otv_str/orbittv/playlist.m3u8"
       },
       {
         number: "110",
         image: "img/canalsonynovelas.png",
         title: "SONY NOVELAS",
-        file: "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8"
+        file:
+          "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8"
       },
       {
         number: "111",
         image: "img/canaldw.png",
         title: "DW ESPAÑOL",
-        file: "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
+        file:
+          "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
       },
       {
         number: "111",
         image: "img/canaldw.png",
         title: "DW ESPAÑOL",
-        file: "http://livestreamcdn.net:1935/ExtremaTV/ExtremaTV/playlist.m3u8"
+        file:
+          "http://livestreamcdn.net:1935/ExtremaTV/ExtremaTV/playlist.m3u8"
       },
       {
         number: "111",

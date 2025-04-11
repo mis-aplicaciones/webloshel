@@ -1,3 +1,6 @@
+
+
+
 class PlayerJS {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -11,14 +14,14 @@ class PlayerJS {
     this.scrollDownButton = document.getElementById("scroll-down");
     this.hideTimeout = null;
     this.mouseTimeout = null;
-    this.keyTimeout = null;  // Temporizador para eventos de control remoto
+    this.keyTimeout = null; // Temporizador para eventos de control remoto
     this.isInteracting = false;
     this.lastPlaybackTime = 0;
     this.autoHideDelay = 5000; // 5 segundos de inactividad
     this.init();
   }
 
-  // Función para detectar dispositivos Android (incluyendo Android TV)
+  // Detecta si se está en un dispositivo Android (incluyendo Android TV)
   isAndroidDevice() {
     return /Android/.test(navigator.userAgent);
   }
@@ -31,7 +34,7 @@ class PlayerJS {
   }
 
   createPlaylistUI() {
-    // Genera el HTML de los items del playlist
+    // Genera el HTML de los items
     this.playlistElement.innerHTML = this.playlist
       .map(
         (item, index) => `
@@ -65,7 +68,7 @@ class PlayerJS {
   }
 
   addEventListeners() {
-    // Función para reiniciar la inactividad
+    // Función para reiniciar la inactividad (sin depender del focus)
     const resetInactivity = () => {
       this.showPlaylist();
     };
@@ -75,6 +78,7 @@ class PlayerJS {
       resetInactivity();
       clearTimeout(this.mouseTimeout);
       this.mouseTimeout = setTimeout(() => {
+        // Al expirar el timer, aunque el focus siga, se considera que ya no hay actividad
         this.isInteracting = false;
       }, 300);
     });
@@ -90,7 +94,7 @@ class PlayerJS {
         this.isInteracting = true;
         resetInactivity();
         clearTimeout(this.keyTimeout);
-        // Timeout para "liberar" la interacción en caso de que keyup no se dispare (común en Android TV)
+        // En Android TV puede que keyup no se dispare, por ello forzamos liberar la interacción
         this.keyTimeout = setTimeout(() => {
           this.isInteracting = false;
           this.startAutoHide();
@@ -106,7 +110,7 @@ class PlayerJS {
         this.playCurrent();
       }
     });
-    // En caso de que keyup se dispare (siempre que ocurra)
+    // Si keyup llega, liberamos la interacción
     window.addEventListener("keyup", () => {
       this.isInteracting = false;
       this.startAutoHide();
@@ -119,7 +123,7 @@ class PlayerJS {
     this.scrollUpButton.addEventListener("click", () => this.scrollPlaylist(-1));
     this.scrollDownButton.addEventListener("click", () => this.scrollPlaylist(1));
 
-    // Cuando el cursor o el enfoque táctil esté sobre el contenedor se detiene el auto-ocultado
+    // Cuando el mouse (o enfoque táctil) está sobre el contenedor se detiene el auto-ocultado
     this.playlistContainer.addEventListener("mouseenter", () => {
       this.stopAutoHide();
     });
@@ -131,16 +135,19 @@ class PlayerJS {
   }
 
   showPlaylist() {
+    // Al interactuar, se muestra el contenedor y se reactiva el foco en el item actualmente reproducido
     this.playlistContainer.classList.add("active");
+    this.updatePlaylistUI();
     this.startAutoHide();
   }
 
   startAutoHide() {
     this.stopAutoHide();
     this.hideTimeout = setTimeout(() => {
-      // Si no hay interacción y el contenedor no está siendo apuntado, se oculta
+      // Si no se detecta interacción adicional, se oculta el contenedor y se quita el focus
       if (!this.isInteracting && !this.playlistContainer.matches(":hover")) {
         this.playlistContainer.classList.remove("active");
+        this.blurActiveItem();
       }
     }, this.autoHideDelay);
   }
@@ -149,47 +156,55 @@ class PlayerJS {
     clearTimeout(this.hideTimeout);
   }
 
+  // Quita el focus del item activo
+  blurActiveItem() {
+    const activeItem = this.playlistElement.querySelector(".playlist-item.active");
+    if (activeItem) {
+      activeItem.blur();
+    }
+  }
+
   scrollPlaylist(direction) {
+    // Al navegar, actualizamos el índice sin cambiar inmediatamente la reproducción
     this.currentIndex =
       (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
     this.updatePlaylistUI();
-  }
-
-  updatePlaylistUI() {
-    // Actualiza la clase active, establece el focus y centra el item activo
-    const items = this.playlistElement.querySelectorAll(".playlist-item");
-    items.forEach((el, index) => {
-      if (index === this.currentIndex) {
-        el.classList.add("active");
-        el.focus();
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        el.classList.remove("active");
-      }
-    });
-    // Luego de actualizar el focus, se fuerza la finalización de la interacción,
-    // independientemente de que el focus se mantenga
+    // Forzamos "liberar" la interacción para que el auto-hide se active si no se presiona Enter
     setTimeout(() => {
       this.isInteracting = false;
       this.startAutoHide();
     }, 500);
   }
 
+  updatePlaylistUI() {
+    // Actualiza la clase active y aplica el focus solo si el contenedor está visible
+    const items = this.playlistElement.querySelectorAll(".playlist-item");
+    items.forEach((el, index) => {
+      if (index === this.currentIndex) {
+        el.classList.add("active");
+        // Si el contenedor está activo, forzamos el focus en el item actual
+        if (this.playlistContainer.classList.contains("active")) {
+          el.focus();
+        }
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        el.classList.remove("active");
+      }
+    });
+  }
+
   playCurrent() {
     const currentFile = this.playlist[this.currentIndex];
 
-    // Si ya existe una instancia de Hls, se destruye
     if (this.hls) {
       this.hls.destroy();
       this.hls = null;
     }
 
-    /*
-      Para archivos .m3u8 y cuando Hls.js sea soportado,
-      se utilizará Hls.js salvo si se está en Android/Android TV y el enlace
-      contiene el dominio problemático.
-      Además, se fuerza el uso del reproductor nativo en caso de que la URL use http (no seguro)
-      en dispositivos Android.
+    /*  
+      Para archivos .m3u8 se utiliza Hls.js si es soportado, excepto:
+      - En dispositivos Android (incl. Android TV) si el enlace contiene "181.78.109.48:8000" o usa http://,
+        en cuyo caso se usa el reproductor nativo.
     */
     if (
       currentFile.file.endsWith(".m3u8") &&
@@ -211,7 +226,7 @@ class PlayerJS {
         this.videoElement.play();
       });
     } else {
-      // Fallback para enlaces problemáticos en Android: se usa el reproductor nativo
+      // Modo fallback: se usa el reproductor nativo
       this.videoElement.src = currentFile.file;
       this.videoElement.load();
       this.videoElement.play();

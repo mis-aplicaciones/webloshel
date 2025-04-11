@@ -1,4 +1,3 @@
-
 class PlayerJS {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -19,7 +18,7 @@ class PlayerJS {
     this.init();
   }
 
-  // Detecta si el usuario está en un dispositivo Android (incluyendo Android TV)
+  // Función para detectar dispositivos Android (incluyendo Android TV)
   isAndroidDevice() {
     return /Android/.test(navigator.userAgent);
   }
@@ -32,7 +31,7 @@ class PlayerJS {
   }
 
   createPlaylistUI() {
-    // Genera el HTML de los items
+    // Genera el HTML de los items del playlist
     this.playlistElement.innerHTML = this.playlist
       .map(
         (item, index) => `
@@ -84,14 +83,14 @@ class PlayerJS {
     window.addEventListener("click", resetInactivity);
     window.addEventListener("touchstart", resetInactivity);
 
-    // Eventos de teclado para navegación y activación
+    // Eventos de teclado para navegación y activación (control remoto)
     window.addEventListener("keydown", (e) => {
       if (["ArrowLeft", "ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
         e.preventDefault();
         this.isInteracting = true;
         resetInactivity();
         clearTimeout(this.keyTimeout);
-        // Timeout para "liberar" la interacción en caso de que keyup no se dispare (caso típico en Android TV)
+        // Timeout para "liberar" la interacción en caso de que keyup no se dispare (común en Android TV)
         this.keyTimeout = setTimeout(() => {
           this.isInteracting = false;
           this.startAutoHide();
@@ -107,8 +106,7 @@ class PlayerJS {
         this.playCurrent();
       }
     });
-
-    // Para casos en que se detecte keyup (si ocurre)
+    // En caso de que keyup se dispare (siempre que ocurra)
     window.addEventListener("keyup", () => {
       this.isInteracting = false;
       this.startAutoHide();
@@ -140,7 +138,7 @@ class PlayerJS {
   startAutoHide() {
     this.stopAutoHide();
     this.hideTimeout = setTimeout(() => {
-      // Si ya no se detecta interacción y el contenedor no está siendo apuntado, se oculta
+      // Si no hay interacción y el contenedor no está siendo apuntado, se oculta
       if (!this.isInteracting && !this.playlistContainer.matches(":hover")) {
         this.playlistContainer.classList.remove("active");
       }
@@ -158,7 +156,7 @@ class PlayerJS {
   }
 
   updatePlaylistUI() {
-    // Actualiza la clase active, enfoca el item activo y lo centra en la vista
+    // Actualiza la clase active, establece el focus y centra el item activo
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((el, index) => {
       if (index === this.currentIndex) {
@@ -169,26 +167,36 @@ class PlayerJS {
         el.classList.remove("active");
       }
     });
+    // Luego de actualizar el focus, se fuerza la finalización de la interacción,
+    // independientemente de que el focus se mantenga
+    setTimeout(() => {
+      this.isInteracting = false;
+      this.startAutoHide();
+    }, 500);
   }
 
   playCurrent() {
     const currentFile = this.playlist[this.currentIndex];
 
-    // Si hay una instancia de Hls ya creada, se destruye
+    // Si ya existe una instancia de Hls, se destruye
     if (this.hls) {
       this.hls.destroy();
       this.hls = null;
     }
 
-    /* 
-      Si el archivo es un .m3u8 y Hls.js es compatible, se usa Hls
-      excepto si se detecta que estamos en un dispositivo Android (incluido Android TV)
-      y el enlace contiene "181.78.109.48:8000", caso en el cual se usará la reproducción nativa.
+    /*
+      Para archivos .m3u8 y cuando Hls.js sea soportado,
+      se utilizará Hls.js salvo si se está en Android/Android TV y el enlace
+      contiene el dominio problemático.
+      Además, se fuerza el uso del reproductor nativo en caso de que la URL use http (no seguro)
+      en dispositivos Android.
     */
     if (
       currentFile.file.endsWith(".m3u8") &&
       Hls.isSupported() &&
-      !(this.isAndroidDevice() && currentFile.file.indexOf("181.78.109.48:8000") > -1)
+      !(this.isAndroidDevice() &&
+        (currentFile.file.indexOf("181.78.109.48:8000") > -1 ||
+         currentFile.file.startsWith("http://")))
     ) {
       this.hls = new Hls({
         maxBufferLength: 30,
@@ -203,8 +211,9 @@ class PlayerJS {
         this.videoElement.play();
       });
     } else {
-      // Para el enlace problemático en Android/Android TV o en cualquier otro caso, se usa el reproductor nativo
+      // Fallback para enlaces problemáticos en Android: se usa el reproductor nativo
       this.videoElement.src = currentFile.file;
+      this.videoElement.load();
       this.videoElement.play();
     }
 
@@ -215,7 +224,9 @@ class PlayerJS {
     setInterval(() => {
       if (!this.videoElement.paused && !this.videoElement.ended) {
         if (this.lastPlaybackTime === this.videoElement.currentTime) {
-          console.warn("⚠️ Detected frozen playback. Attempting to restart stream...");
+          console.warn(
+            "⚠️ Detected frozen playback. Attempting to restart stream..."
+          );
           this.recoverPlayback();
         }
         this.lastPlaybackTime = this.videoElement.currentTime;
@@ -225,15 +236,15 @@ class PlayerJS {
 
   recoverPlayback() {
     const currentFile = this.playlist[this.currentIndex];
-
     if (this.hls) {
       console.warn("🔄 Reloading HLS stream...");
       this.hls.detachMedia();
       this.hls.loadSource(currentFile.file);
       this.hls.attachMedia(this.videoElement);
     } else {
-      console.warn("🔄 Restarting MP4 playback...");
+      console.warn("🔄 Restarting native playback...");
       this.videoElement.src = currentFile.file;
+      this.videoElement.load();
       this.videoElement.play();
     }
   }

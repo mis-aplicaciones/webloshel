@@ -11,10 +11,10 @@ class PlayerJS {
     this.scrollDownButton = document.getElementById("scroll-down");
     this.hideTimeout = null;
     this.mouseTimeout = null;
-    this.keyTimeout = null;  // Temporizador para eventos de control remoto
+    this.keyTimeout = null;  // Para eventos de control remoto
     this.isInteracting = false;
     this.lastPlaybackTime = 0;
-    this.autoHideDelay = 5000; // 5 segundos de inactividad
+    this.autoHideDelay = 5000; // 5 segundos
     this.init();
   }
 
@@ -26,7 +26,7 @@ class PlayerJS {
   }
 
   createPlaylistUI() {
-    // Genera el HTML de los items
+    // Se genera el HTML de los items
     this.playlistElement.innerHTML = this.playlist
       .map(
         (item, index) => `
@@ -39,17 +39,15 @@ class PlayerJS {
       )
       .join("");
 
-    // Agrega eventos para click y touch a cada item
+    // Eventos para click y touch en cada item
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((item) => {
-      // Para click (PC, tablets)
       item.addEventListener("click", (e) => {
         e.preventDefault();
         this.currentIndex = parseInt(item.getAttribute("data-index"));
         this.updatePlaylistUI();
         this.playCurrent();
       });
-      // Para touch (smartphones, tablets)
       item.addEventListener("touchend", (e) => {
         e.preventDefault();
         this.currentIndex = parseInt(item.getAttribute("data-index"));
@@ -60,12 +58,11 @@ class PlayerJS {
   }
 
   addEventListeners() {
-    // Función para reiniciar la inactividad
     const resetInactivity = () => {
       this.showPlaylist();
     };
 
-    // Manejo de movimiento del mouse
+    // Mouse
     window.addEventListener("mousemove", () => {
       resetInactivity();
       clearTimeout(this.mouseTimeout);
@@ -74,18 +71,17 @@ class PlayerJS {
       }, 300);
     });
 
-    // Otros eventos de interacción (click y touchstart)
+    // Click y touchstart
     window.addEventListener("click", resetInactivity);
     window.addEventListener("touchstart", resetInactivity);
 
-    // Eventos de teclado para navegación y activación
+    // Teclado (control remoto)
     window.addEventListener("keydown", (e) => {
       if (["ArrowLeft", "ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
         e.preventDefault();
         this.isInteracting = true;
         resetInactivity();
         clearTimeout(this.keyTimeout);
-        // Establece un timeout para "liberar" la interacción en caso de que keyup no se dispare (caso típico en Android TV)
         this.keyTimeout = setTimeout(() => {
           this.isInteracting = false;
           this.startAutoHide();
@@ -101,8 +97,6 @@ class PlayerJS {
         this.playCurrent();
       }
     });
-
-    // Para los casos en que se detecte keyup (si es que ocurre)
     window.addEventListener("keyup", () => {
       this.isInteracting = false;
       this.startAutoHide();
@@ -115,7 +109,7 @@ class PlayerJS {
     this.scrollUpButton.addEventListener("click", () => this.scrollPlaylist(-1));
     this.scrollDownButton.addEventListener("click", () => this.scrollPlaylist(1));
 
-    // Cuando el cursor o el enfoque táctil esté sobre el contenedor se detiene el auto-ocultado
+    // Al pasar el mouse sobre el contenedor se detiene el auto-ocultado
     this.playlistContainer.addEventListener("mouseenter", () => {
       this.stopAutoHide();
     });
@@ -134,7 +128,6 @@ class PlayerJS {
   startAutoHide() {
     this.stopAutoHide();
     this.hideTimeout = setTimeout(() => {
-      // Si ya no se detecta interacción y el contenedor no está siendo apuntado, se oculta
       if (!this.isInteracting && !this.playlistContainer.matches(":hover")) {
         this.playlistContainer.classList.remove("active");
       }
@@ -152,7 +145,6 @@ class PlayerJS {
   }
 
   updatePlaylistUI() {
-    // Actualiza la clase active, enfoca el item activo y lo centra en la vista
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((el, index) => {
       if (index === this.currentIndex) {
@@ -168,12 +160,16 @@ class PlayerJS {
   playCurrent() {
     const currentFile = this.playlist[this.currentIndex];
 
-    if (this.hls) {
-      this.hls.destroy();
-      this.hls = null;
-    }
-
-    if (currentFile.file.endsWith(".m3u8") && Hls.isSupported()) {
+    // Si existe un stream en HLS, por defecto usar Hls.js solo si el enlace no pertenece al dominio problemático
+    if (
+      currentFile.file.endsWith(".m3u8") &&
+      Hls.isSupported() &&
+      currentFile.file.indexOf("181.78.109.48:8000") === -1
+    ) {
+      if (this.hls) {
+        this.hls.destroy();
+        this.hls = null;
+      }
       this.hls = new Hls({
         maxBufferLength: 30,
         maxBufferSize: 60 * 1000 * 1000,
@@ -181,13 +177,18 @@ class PlayerJS {
         liveSyncDurationCount: 3,
         enableWorker: true
       });
-
       this.hls.loadSource(currentFile.file);
       this.hls.attachMedia(this.videoElement);
       this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
         this.videoElement.play();
       });
     } else {
+      // Fallback: uso del reproductor nativo HTML5
+      if (this.hls) {
+        this.hls.destroy();
+        this.hls = null;
+      }
+      // También se puede considerar que el reproductor nativo sea usado para enlaces HTTP inseguros
       this.videoElement.src = currentFile.file;
       this.videoElement.play();
     }
@@ -209,7 +210,6 @@ class PlayerJS {
 
   recoverPlayback() {
     const currentFile = this.playlist[this.currentIndex];
-
     if (this.hls) {
       console.warn("🔄 Reloading HLS stream...");
       this.hls.detachMedia();
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CANAL-PANAMERICANA.png",
       title: "PANAMERICANA TV",
       file:
-        "https://sae12.playlist.live-video.net/v1/playlist/CtsFaL-0kBBGn0wqwjZWHzhD4M_-CK8Mjh59Jpp_0i40xNjCqw_Z0MOzJyX4qGjzrGVBBRRftVcoUKKbCSJViLIZTXoKJoik1D1nNTaj2-FbU-Ncol7p2DClVvLkXDj8en39iIwn2z_z9zEZNkg5rd8t82duAff5MiB7jBomCnvRUec0vaOqegbB4slp3G-5pMu0r0qK0V9Z0RinCsrNQ3DxCgFsaG0C2P2UbzyfjcU2h4781bVa1uUIDhLZG2widExigHokIJO0VWkEKetowS34073kdjmCFXvhSS6hRFsGWXvcz_8PRrcWijw_PiPJTo0TTVW1kqPYVfGAFMtnbzDuW6qOMBbx5Rv9z3lA1E6fiqfIrsY-aau8j6ynTZe32fw-1c7WgIbU-VcGhZyy42LlWL_fCyFZCzFG5BO6nrcwlkqbry28VyCpWvMc8O3NTbaRE-zQky57st-kOSuG2-7oCoNzSWbn5naDJah3U_z_v2_vq0BN24T6GBX_Q6XC4hoHZ0aXS1Fq_0WXUDEEgwt0urEU_Z1GR924E4YFoqWucSS8Z_XDTB17ISmCYOGlaEbaSkwxPacgpAii1V_nWs9oCKzoFq2NR4-_SSyevEL1zI0Yj_3-MOKxhu6bNTGFeO5XxES3ty6SR8mtfd1IpZ9hO1fmq2Prx9i-iY008GOerk_63eTR1tL0HPYzFweFz--8pIknz4aHEPBxPBCFGTDhFQGBvr8ay6Q47LeaXwxf-2pt8yFLPg-CSKdeA5feHX30kgoKKPcSi5yecL5uVs5_DPU0mjL8PSL88Dm5bHbR9mV3rJFyWpmY1-mZORYXWYMS8q_CTuPsfu42Hiiq-4rnNGer05ssu7m1o5xWX33gIISjTFBYaImkza-YiESlk9SADO_i-NRdf11GwoYHmBzplVxioB4pzGMl2mEmaBfq0jO8hnpYu3WzTp8pSytjSbPnX77RjNo9XefKeLMaDN-NZ9IbvHA5OR8oUCABKgl1cy1lYXN0LTIwgQw.m3u8"
+        "https://fa723fc1b171.us-west-2.playback.live-video.net/api/video/v1/us-west-2.196233775518.channel.SnObcKtKq69K.m3u8?browser_family=chrome&browser_version=135.0&cdm=wv&os_name=Windows&os_version=NT%2010.0&platform=web&player_backend=mediaplayer&player_version=1.31.0&supported_codecs=av1,h264&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzM4NCJ9.eyJhd3M6Y2hhbm5lbC1hcm4iOiJhcm46YXdzOml2czp1cy13ZXN0LTI6MTk2MjMzNzc1NTE4OmNoYW5uZWwvU25PYmNLdEtxNjlLIiwiYXdzOmFjY2Vzcy1jb250cm9sLWFsbG93LW9yaWdpbiI6Imh0dHBzOi8va2ljay5jb20saHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20saHR0cHM6Ly8qLmtpY2subGl2ZSxodHRwczovL3BsYXllci5raWNrLmNvbSxodHRwczovL2FkbWluLmtpY2suY29tLGh0dHBzOi8vYmV0YS5raWNrLmNvbSxodHRwczovL25leHQua2ljay5jb20saHR0cHM6Ly9kYXNoYm9hcmQua2ljay5jb20saHR0cHM6Ly8qLnByZXZpZXcua2ljay5jb20iLCJhd3M6c3RyaWN0LW9yaWdpbi1lbmZvcmNlbWVudCI6ZmFsc2UsImV4cCI6MTc0NDQxMDY4N30.DSoc6N7Zb-SG2Dd-trxr2rCsWyBerXbnZrosOkC0Pj9HCZFEe5NJmHgLNNkPdYxxoJc1Sa5QkJ2JS0mlmYn51KD54t7DYniwPpFbXBu2p6apx-61hEl5BF0DNO1coyIX"
     },
     {
       number: "113",

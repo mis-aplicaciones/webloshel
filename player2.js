@@ -1,6 +1,3 @@
-
-
-
 class PlayerJS {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -14,14 +11,14 @@ class PlayerJS {
     this.scrollDownButton = document.getElementById("scroll-down");
     this.hideTimeout = null;
     this.mouseTimeout = null;
-    this.keyTimeout = null; // Temporizador para eventos de control remoto
-    this.isInteracting = false;
-    this.lastPlaybackTime = 0;
-    this.autoHideDelay = 5000; // 5 segundos de inactividad
+    this.keyTimeout = null; // Para eventos del control remoto
+    // Variable para registrar el último instante en que se navegó (cambio de ítem)
+    this.lastNavTime = Date.now(); 
+    this.autoHideDelay = 5000; // 5 segundos
     this.init();
   }
 
-  // Detecta si se está en un dispositivo Android (incluyendo Android TV)
+  // Detecta si se está en un dispositivo Android (incl. Android TV)
   isAndroidDevice() {
     return /Android/.test(navigator.userAgent);
   }
@@ -31,10 +28,16 @@ class PlayerJS {
     this.addEventListeners();
     this.videoElement.autoplay = true;
     this.monitorPlayback();
+    // Inicia un timer para detectar inactividad en la navegación
+    setInterval(() => {
+      if (Date.now() - this.lastNavTime > this.autoHideDelay) {
+        this.hidePlaylist();
+      }
+    }, 500);
   }
 
   createPlaylistUI() {
-    // Genera el HTML de los items
+    // Genera la lista de ítems
     this.playlistElement.innerHTML = this.playlist
       .map(
         (item, index) => `
@@ -47,20 +50,20 @@ class PlayerJS {
       )
       .join("");
 
-    // Agrega eventos para click y touch a cada item
+    // Agrega eventos para click y touch en cada ítem
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((item) => {
-      // Para click (PC, tablets)
       item.addEventListener("click", (e) => {
         e.preventDefault();
         this.currentIndex = parseInt(item.getAttribute("data-index"));
+        this.lastNavTime = Date.now(); // Actualizamos la hora de navegación
         this.updatePlaylistUI();
         this.playCurrent();
       });
-      // Para touch (smartphones, tablets)
       item.addEventListener("touchend", (e) => {
         e.preventDefault();
         this.currentIndex = parseInt(item.getAttribute("data-index"));
+        this.lastNavTime = Date.now();
         this.updatePlaylistUI();
         this.playCurrent();
       });
@@ -68,37 +71,27 @@ class PlayerJS {
   }
 
   addEventListeners() {
-    // Función para reiniciar la inactividad (sin depender del focus)
     const resetInactivity = () => {
       this.showPlaylist();
     };
 
-    // Manejo de movimiento del mouse
+    // Movimiento del mouse actualiza la navegación
     window.addEventListener("mousemove", () => {
       resetInactivity();
       clearTimeout(this.mouseTimeout);
       this.mouseTimeout = setTimeout(() => {
-        // Al expirar el timer, aunque el focus siga, se considera que ya no hay actividad
-        this.isInteracting = false;
+        // No dependemos del focus aquí
       }, 300);
     });
 
-    // Otros eventos de interacción (click y touchstart)
+    // Eventos de click y touchstart
     window.addEventListener("click", resetInactivity);
     window.addEventListener("touchstart", resetInactivity);
 
-    // Eventos de teclado para navegación y activación (control remoto)
+    // Eventos de teclado (navegación con flechas y Enter)
     window.addEventListener("keydown", (e) => {
       if (["ArrowLeft", "ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
         e.preventDefault();
-        this.isInteracting = true;
-        resetInactivity();
-        clearTimeout(this.keyTimeout);
-        // En Android TV puede que keyup no se dispare, por ello forzamos liberar la interacción
-        this.keyTimeout = setTimeout(() => {
-          this.isInteracting = false;
-          this.startAutoHide();
-        }, 500);
       }
       if (e.key === "ArrowLeft") {
         this.showPlaylist();
@@ -110,24 +103,31 @@ class PlayerJS {
         this.playCurrent();
       }
     });
-    // Si keyup llega, liberamos la interacción
-    window.addEventListener("keyup", () => {
-      this.isInteracting = false;
-      this.startAutoHide();
+    // En keydown, actualizamos el timestamp de navegación
+    window.addEventListener("keydown", (e) => {
+      if (["ArrowUp", "ArrowDown"].includes(e.key)) {
+        this.lastNavTime = Date.now();
+      }
     });
     window.addEventListener("touchend", () => {
-      this.isInteracting = false;
-      this.startAutoHide();
+      this.lastNavTime = Date.now();
     });
 
-    this.scrollUpButton.addEventListener("click", () => this.scrollPlaylist(-1));
-    this.scrollDownButton.addEventListener("click", () => this.scrollPlaylist(1));
+    // Botones de desplazamiento
+    this.scrollUpButton.addEventListener("click", () => {
+      this.scrollPlaylist(-1);
+    });
+    this.scrollDownButton.addEventListener("click", () => {
+      this.scrollPlaylist(1);
+    });
 
-    // Cuando el mouse (o enfoque táctil) está sobre el contenedor se detiene el auto-ocultado
+    // Cuando el mouse (o el toque) está sobre el contenedor, se cancela el auto-ocultado
     this.playlistContainer.addEventListener("mouseenter", () => {
       this.stopAutoHide();
     });
     this.playlistContainer.addEventListener("mouseleave", () => {
+      // Reiniciamos el timestamp al salir del contenedor
+      this.lastNavTime = Date.now();
       this.startAutoHide();
     });
 
@@ -135,20 +135,15 @@ class PlayerJS {
   }
 
   showPlaylist() {
-    // Al interactuar, se muestra el contenedor y se reactiva el foco en el item actualmente reproducido
     this.playlistContainer.classList.add("active");
+    // Al mostrar, forzamos reestablecer el foco en el ítem actualmente reproducido
     this.updatePlaylistUI();
-    this.startAutoHide();
   }
 
   startAutoHide() {
     this.stopAutoHide();
     this.hideTimeout = setTimeout(() => {
-      // Si no se detecta interacción adicional, se oculta el contenedor y se quita el focus
-      if (!this.isInteracting && !this.playlistContainer.matches(":hover")) {
-        this.playlistContainer.classList.remove("active");
-        this.blurActiveItem();
-      }
+      this.hidePlaylist();
     }, this.autoHideDelay);
   }
 
@@ -156,7 +151,12 @@ class PlayerJS {
     clearTimeout(this.hideTimeout);
   }
 
-  // Quita el focus del item activo
+  hidePlaylist() {
+    // Se oculta el contenedor si no se ha actualizado la navegación
+    this.playlistContainer.classList.remove("active");
+    this.blurActiveItem();
+  }
+
   blurActiveItem() {
     const activeItem = this.playlistElement.querySelector(".playlist-item.active");
     if (activeItem) {
@@ -165,24 +165,19 @@ class PlayerJS {
   }
 
   scrollPlaylist(direction) {
-    // Al navegar, actualizamos el índice sin cambiar inmediatamente la reproducción
     this.currentIndex =
       (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
+    this.lastNavTime = Date.now(); // Actualiza el timestamp en cada navegación
     this.updatePlaylistUI();
-    // Forzamos "liberar" la interacción para que el auto-hide se active si no se presiona Enter
-    setTimeout(() => {
-      this.isInteracting = false;
-      this.startAutoHide();
-    }, 500);
+    // No cambiamos la reproducción hasta que se presione Enter
   }
 
   updatePlaylistUI() {
-    // Actualiza la clase active y aplica el focus solo si el contenedor está visible
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((el, index) => {
       if (index === this.currentIndex) {
         el.classList.add("active");
-        // Si el contenedor está activo, forzamos el focus en el item actual
+        // Si el contenedor está visible, forzamos el focus
         if (this.playlistContainer.classList.contains("active")) {
           el.focus();
         }
@@ -201,9 +196,9 @@ class PlayerJS {
       this.hls = null;
     }
 
-    /*  
+    /*
       Para archivos .m3u8 se utiliza Hls.js si es soportado, excepto:
-      - En dispositivos Android (incl. Android TV) si el enlace contiene "181.78.109.48:8000" o usa http://,
+      - En dispositivos Android (incl. Android TV) si el enlace contiene "181.78.109.48:8000" o empieza con "http://",
         en cuyo caso se usa el reproductor nativo.
     */
     if (
@@ -226,12 +221,11 @@ class PlayerJS {
         this.videoElement.play();
       });
     } else {
-      // Modo fallback: se usa el reproductor nativo
+      // Fallback: uso del reproductor nativo
       this.videoElement.src = currentFile.file;
       this.videoElement.load();
       this.videoElement.play();
     }
-
     this.videoElement.title = currentFile.title;
   }
 
@@ -361,6 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
       file:
         "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
     },
+    
     {
       number: "112",
       image: "img/CANAL-PANAMERICANA.png",

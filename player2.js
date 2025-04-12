@@ -9,12 +9,14 @@ class PlayerJS {
     this.playlistElement = document.getElementById("playlist");
     this.scrollUpButton = document.getElementById("scroll-up");
     this.scrollDownButton = document.getElementById("scroll-down");
+    this.spinner = document.getElementById("video-loading-spinner");
+    this.clockContainer = document.getElementById("clock-container");
     this.hideTimeout = null;
     this.mouseTimeout = null;
     this.keyTimeout = null; // Para eventos del control remoto
-    // Variable para registrar el último instante en que se navegó (cambio de ítem)
+    // Timestamp de la última navegación (cambio de ítem)
     this.lastNavTime = Date.now(); 
-    this.autoHideDelay = 5000; // 5 segundos
+    this.autoHideDelay = 5000; // 5 segundos de inactividad para UI (playlist y reloj)
     this.init();
   }
 
@@ -28,16 +30,31 @@ class PlayerJS {
     this.addEventListeners();
     this.videoElement.autoplay = true;
     this.monitorPlayback();
-    // Inicia un timer para detectar inactividad en la navegación
+    this.initClock();
+    // Timer para detectar inactividad en la navegación
     setInterval(() => {
       if (Date.now() - this.lastNavTime > this.autoHideDelay) {
-        this.hidePlaylist();
+        this.hideUI();
       }
     }, 500);
   }
 
+  initClock() {
+    // Actualiza el reloj cada segundo
+    const updateClock = () => {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      this.clockContainer.innerText = `${hours}:${minutes} ${ampm}`;
+    };
+    setInterval(updateClock, 1000);
+    updateClock();
+  }
+
   createPlaylistUI() {
-    // Genera la lista de ítems
+    // Genera el HTML de los ítems del playlist
     this.playlistElement.innerHTML = this.playlist
       .map(
         (item, index) => `
@@ -56,7 +73,7 @@ class PlayerJS {
       item.addEventListener("click", (e) => {
         e.preventDefault();
         this.currentIndex = parseInt(item.getAttribute("data-index"));
-        this.lastNavTime = Date.now(); // Actualizamos la hora de navegación
+        this.lastNavTime = Date.now();
         this.updatePlaylistUI();
         this.playCurrent();
       });
@@ -72,29 +89,26 @@ class PlayerJS {
 
   addEventListeners() {
     const resetInactivity = () => {
-      this.showPlaylist();
+      this.showUI();
     };
 
-    // Movimiento del mouse actualiza la navegación
+    // Movimiento del mouse (se ignora el focus)
     window.addEventListener("mousemove", () => {
       resetInactivity();
       clearTimeout(this.mouseTimeout);
-      this.mouseTimeout = setTimeout(() => {
-        // No dependemos del focus aquí
-      }, 300);
+      this.mouseTimeout = setTimeout(() => {}, 300);
     });
-
-    // Eventos de click y touchstart
+    // Click y touchstart
     window.addEventListener("click", resetInactivity);
     window.addEventListener("touchstart", resetInactivity);
 
-    // Eventos de teclado (navegación con flechas y Enter)
+    // Eventos de teclado para navegación (control remoto)
     window.addEventListener("keydown", (e) => {
       if (["ArrowLeft", "ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
         e.preventDefault();
       }
       if (e.key === "ArrowLeft") {
-        this.showPlaylist();
+        this.showUI();
       } else if (e.key === "ArrowUp") {
         this.scrollPlaylist(-1);
       } else if (e.key === "ArrowDown") {
@@ -102,9 +116,6 @@ class PlayerJS {
       } else if (e.key === "Enter") {
         this.playCurrent();
       }
-    });
-    // En keydown, actualizamos el timestamp de navegación
-    window.addEventListener("keydown", (e) => {
       if (["ArrowUp", "ArrowDown"].includes(e.key)) {
         this.lastNavTime = Date.now();
       }
@@ -121,40 +132,57 @@ class PlayerJS {
       this.scrollPlaylist(1);
     });
 
-    // Cuando el mouse (o el toque) está sobre el contenedor, se cancela el auto-ocultado
+    // Al pasar el mouse o tocar el contenedor de playlist, se cancela el auto‑ocultado
     this.playlistContainer.addEventListener("mouseenter", () => {
       this.stopAutoHide();
     });
     this.playlistContainer.addEventListener("mouseleave", () => {
-      // Reiniciamos el timestamp al salir del contenedor
       this.lastNavTime = Date.now();
       this.startAutoHide();
     });
 
+    // Eventos del video para controlar la pantalla de carga
+    this.videoElement.addEventListener("waiting", () => {
+      this.spinner.classList.remove("hidden");
+    });
+    this.videoElement.addEventListener("playing", () => {
+      this.spinner.classList.add("hidden");
+    });
+
+    // Para que el video no muestre los controles nativos molestos
+    this.videoElement.controls = false;
+
     this.videoElement.addEventListener("error", () => this.handlePlaybackError());
   }
 
-  showPlaylist() {
+  showUI() {
+    // Muestra tanto el contenedor de playlist como el reloj
     this.playlistContainer.classList.add("active");
-    // Al mostrar, forzamos reestablecer el foco en el ítem actualmente reproducido
+    this.clockContainer.classList.remove("hidden");
     this.updatePlaylistUI();
+    this.lastNavTime = Date.now();
+    this.startAutoHide();
+  }
+
+  hideUI() {
+    // Oculta playlist y reloj si no hubo navegación en autoHideDelay ms
+    this.playlistContainer.classList.remove("active");
+    this.clockContainer.classList.add("hidden");
+    this.blurActiveItem();
   }
 
   startAutoHide() {
     this.stopAutoHide();
     this.hideTimeout = setTimeout(() => {
-      this.hidePlaylist();
+      // Si no se actualizó la navegación en autoHideDelay, se oculta la UI
+      if (Date.now() - this.lastNavTime > this.autoHideDelay) {
+        this.hideUI();
+      }
     }, this.autoHideDelay);
   }
 
   stopAutoHide() {
     clearTimeout(this.hideTimeout);
-  }
-
-  hidePlaylist() {
-    // Se oculta el contenedor si no se ha actualizado la navegación
-    this.playlistContainer.classList.remove("active");
-    this.blurActiveItem();
   }
 
   blurActiveItem() {
@@ -165,11 +193,11 @@ class PlayerJS {
   }
 
   scrollPlaylist(direction) {
+    // Cambia el índice sin reproducir inmediatamente; solo actualiza navegación
     this.currentIndex =
       (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
-    this.lastNavTime = Date.now(); // Actualiza el timestamp en cada navegación
+    this.lastNavTime = Date.now();
     this.updatePlaylistUI();
-    // No cambiamos la reproducción hasta que se presione Enter
   }
 
   updatePlaylistUI() {
@@ -177,7 +205,7 @@ class PlayerJS {
     items.forEach((el, index) => {
       if (index === this.currentIndex) {
         el.classList.add("active");
-        // Si el contenedor está visible, forzamos el focus
+        // Si la UI está activa, forzamos el focus; sin embargo, el focus solo se usará al reactivar
         if (this.playlistContainer.classList.contains("active")) {
           el.focus();
         }
@@ -196,10 +224,10 @@ class PlayerJS {
       this.hls = null;
     }
 
-    /*
-      Para archivos .m3u8 se utiliza Hls.js si es soportado, excepto:
-      - En dispositivos Android (incl. Android TV) si el enlace contiene "181.78.109.48:8000" o empieza con "http://",
-        en cuyo caso se usa el reproductor nativo.
+    /*  
+      Para archivos .m3u8 se usa Hls.js si es soportado, excepto en dispositivos Android/Android TV
+      cuando el enlace comienza con "http://" o contiene "181.78.109.48:8000" (por problemas de reproducción).
+      En esos casos se fuerza el reproductor nativo.
     */
     if (
       currentFile.file.endsWith(".m3u8") &&
@@ -284,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "101",
-      image: "img/CANAL ATV.JPG",
+      image: "img/CANAL ATV.png",
       title: "ATV",
       file: "https://d19e55ehz2il4i.cloudfront.net/index.m3u8"
     },
@@ -355,7 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
       file:
         "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
     },
-    
     {
       number: "112",
       image: "img/CANAL-PANAMERICANA.png",
@@ -373,7 +400,8 @@ document.addEventListener("DOMContentLoaded", () => {
       number: "114",
       image: "img/CINE-TERROR.png",
       title: "CINE TERROR",
-      file: "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d180092e97a5e107638d3/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c27e001-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c0a34186-d9cb-4907-882c-bf61e4d59e0f"
+      file:
+        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d180092e97a5e107638d3/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c27e001-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c0a34186-d9cb-4907-882c-bf61e4d59e0f"
     }
   ];
 

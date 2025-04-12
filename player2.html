@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reproductor</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
@@ -12,10 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   </head>
   <body>
+    <!-- Contenedor del video -->
     <div id="player-container">
       <video id="player-video" autoplay></video>
+      <!-- Pantalla de carga personalizada (spinner) -->
+      <div id="video-loading-spinner" class="spinner hidden"></div>
+      <!-- Reloj en la esquina superior derecha -->
+      <div id="clock-container" class="clock hidden"></div>
     </div>
 
+    <!-- Contenedor del playlist -->
     <div id="playlist-container">
       <button id="scroll-up"><i class="bi bi-chevron-up"></i></button>
       <div id="playlist"></div>

@@ -1,6 +1,5 @@
 
 
-
 class PlayerJS {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -8,12 +7,16 @@ class PlayerJS {
     this.currentIndex = 0;
     this.videoElement = document.getElementById("player-video");
     this.hls = null;
+    // Nueva propiedad para Shaka Player
+    this.shakaPlayer = null;
+    
     this.playlistContainer = document.getElementById("playlist-container");
     this.playlistElement = document.getElementById("playlist");
     this.scrollUpButton = document.getElementById("scroll-up");
     this.scrollDownButton = document.getElementById("scroll-down");
     this.spinner = document.getElementById("video-loading-spinner");
     this.clockContainer = document.getElementById("clock-container");
+    
     this.hideTimeout = null;
     this.mouseTimeout = null;
     this.keyTimeout = null;
@@ -22,7 +25,7 @@ class PlayerJS {
     this.init();
   }
 
-  // Detecta si estamos en Android (incl. Android TV)
+  // Detecta si se está en Android (incluyendo Android TV)
   isAndroidDevice() {
     return /Android/.test(navigator.userAgent);
   }
@@ -33,7 +36,7 @@ class PlayerJS {
     this.videoElement.autoplay = true;
     this.monitorPlayback();
     this.initClock();
-    // Timer que oculta la UI si han pasado 5 s sin navegación
+    // Timer que oculta la UI si han pasado autoHideDelay sin navegación real
     setInterval(() => {
       if (Date.now() - this.lastNavTime > this.autoHideDelay) {
         this.hideUI();
@@ -66,7 +69,6 @@ class PlayerJS {
       `
       )
       .join("");
-      
     const items = this.playlistElement.querySelectorAll(".playlist-item");
     items.forEach((item) => {
       item.addEventListener("click", (e) => {
@@ -131,6 +133,7 @@ class PlayerJS {
       this.startAutoHide();
     });
 
+    // Eventos del video para el spinner de carga
     this.videoElement.addEventListener("waiting", () => {
       this.spinner.classList.remove("hidden");
     });
@@ -138,7 +141,6 @@ class PlayerJS {
       this.spinner.classList.add("hidden");
     });
     this.videoElement.controls = false;
-
     this.videoElement.addEventListener("error", () => this.handlePlaybackError());
   }
 
@@ -200,18 +202,21 @@ class PlayerJS {
 
   playCurrent() {
     const currentFile = this.playlist[this.currentIndex];
+    // Destruir instancias previas
     if (this.hls) {
       this.hls.destroy();
       this.hls = null;
     }
+    if (this.shakaPlayer) {
+      this.shakaPlayer.destroy();
+      this.shakaPlayer = null;
+    }
 
     /*  
-      Si el archivo es .m3u8 y Hls.js es soportado se usa Hls.js, excepto
-      cuando estamos en Android/Android TV y el enlace:
-       - comienza con "http://"
-       - contiene "181.78.109.48:8000"
-       - O contiene "cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv"
-      en cuyo caso se fuerza el reproductor nativo.
+      Si el archivo es .m3u8 y Hls.js es soportado se usará Hls.js, excepto cuando:
+      - Estamos en Android/Android TV y el enlace comienza con "http://", contiene "181.78.109.48:8000"
+        o contiene "cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv".
+      En ese caso se intentará usar Shaka Player, y si no es compatible se recurre al reproductor nativo.
     */
     if (
       currentFile.file.endsWith(".m3u8") &&
@@ -236,10 +241,24 @@ class PlayerJS {
         this.videoElement.play();
       });
     } else {
-      // Forzamos el uso nativo en caso de enlaces problemáticos
-      this.videoElement.src = currentFile.file;
-      this.videoElement.load();
-      this.videoElement.play();
+      // Intentar usar Shaka Player (si el navegador lo soporta)
+      if (window.shaka && shaka.Player.isBrowserSupported()) {
+        this.shakaPlayer = new shaka.Player(this.videoElement);
+        this.shakaPlayer.load(currentFile.file).then(() => {
+          this.videoElement.play();
+        }).catch((error) => {
+          console.error("Shaka Player error: ", error);
+          // Si falla Shaka, fallback a reproductor nativo:
+          this.videoElement.src = currentFile.file;
+          this.videoElement.load();
+          this.videoElement.play();
+        });
+      } else {
+        // Fallback directo a reproductor nativo
+        this.videoElement.src = currentFile.file;
+        this.videoElement.load();
+        this.videoElement.play();
+      }
     }
     this.videoElement.title = currentFile.title;
   }
@@ -259,10 +278,15 @@ class PlayerJS {
   recoverPlayback() {
     const currentFile = this.playlist[this.currentIndex];
     if (this.hls) {
-      console.warn("🔄 Reloading HLS stream...");
+      console.warn("🔄 Reloading Hls stream...");
       this.hls.detachMedia();
       this.hls.loadSource(currentFile.file);
       this.hls.attachMedia(this.videoElement);
+    } else if (this.shakaPlayer) {
+      console.warn("🔄 Reloading Shaka Player stream...");
+      this.shakaPlayer.load(currentFile.file).then(() => {
+        this.videoElement.play();
+      });
     } else {
       console.warn("🔄 Restarting native playback...");
       this.videoElement.src = currentFile.file;
@@ -286,6 +310,7 @@ class PlayerJS {
 
 document.addEventListener("DOMContentLoaded", () => {
   const player = new PlayerJS("player-container");
+
   const playlist = [
     {
       number: "100",
@@ -385,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CINE-TERROR.png",
       title: "CINE TERROR",
       file:
-        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d180092e97a5e107638d3/master.m3u8"
+        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d180092e97a5e107638d3/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c27e001-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c0a34186-d9cb-4907-882c-bf61e4d59e0f"
     }
   ];
 

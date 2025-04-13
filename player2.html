@@ -9,25 +9,24 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styleplayers.css" />
+    <!-- Se carga Hls.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Se carga Shaka Player -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
   </head>
   <body>
-    <!-- Contenedor del video -->
     <div id="player-container">
-      <video id="player-video" autoplay></video>
-      <!-- Pantalla de carga personalizada (spinner) -->
+      <video id="player-video" autoplay playsinline></video>
+      <!-- Spinner de carga personalizado -->
       <div id="video-loading-spinner" class="spinner hidden"></div>
-      <!-- Reloj en la esquina superior derecha -->
+      <!-- Contenedor del reloj -->
       <div id="clock-container" class="clock hidden"></div>
     </div>
-
-    <!-- Contenedor del playlist -->
     <div id="playlist-container">
       <button id="scroll-up"><i class="bi bi-chevron-up"></i></button>
       <div id="playlist"></div>
       <button id="scroll-down"><i class="bi bi-chevron-down"></i></button>
     </div>
-
     <script src="player2.js"></script>
   </body>
 </html>

@@ -402,17 +402,60 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       number: "113",
       image: "img/canal-axn.png",
-      title: "AXN",
-      file: "http://181.78.109.48:8000/play/a05u/index.m3u8"
+      title: "CANAL 57",
+      file: "https://167790.global.ssl.fastly.net/6189746bccf0424c112f5476/live_50bbca50292011ed8d265962bedee5f9/tracks-v2a1/mono.m3u8"
     },
     {
       number: "114",
       image: "img/CINE-TERROR.png",
-      title: "CINE TERROR",
+      title: "LAS ESTRELLAS",
       file:
-        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d180092e97a5e107638d3/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c27e001-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c0a34186-d9cb-4907-882c-bf61e4d59e0f"
+        "https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8"
+    },
+    {
+      number: "115",
+      image: "img/CINE-TERROR.png",
+      title: "TELEMUNDO",
+      file:
+        "https://nbculocallive.akamaized.net/hls/live/2037499/puertorico/stream1/master.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CINE-TERROR.png",
+      title: "CTV INTERNCIONAL",
+      file:
+        "https://mediacp.us:8081/ctvhn/index.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CINE-TERROR.png",
+      title: "FOX DEPORTE",
+      file:
+        "https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Fox-Sports-Espanol2.m3u8"
+    }
+    ,
+    {
+      number: "116",
+      image: "img/CINE-TERROR.png",
+      title: "ESPN DEPORTES",
+      file:
+        "http://190.92.10.66:4000/play/a003/index.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CINE-TERROR.png",
+      title: "ESPN PREMIUM",
+      file:
+        "http://190.102.246.93:9005/play/a00x"
+    },
+    {
+      number: "116",
+      image: "img/CINE-TERROR.png",
+      title: "RETRO",
+      file:
+        "https://ssh101stream.ssh101.com/akamaissh101/ssh101/retroplustv03/playlist.m3u8"
     }
   ];
-
+  
   player.loadPlaylist(playlist);
 });

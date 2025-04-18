@@ -1,317 +1,214 @@
 
-
 class PlayerJS {
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
-    this.playlist = [];
+  constructor() {
+    // DOM elements
+    this.videoEl      = document.getElementById("player-video");
+    this.playlistEl   = document.getElementById("carouselList");
+    this.containerEl  = document.getElementById("playlist-container");
+    this.spinnerEl    = document.getElementById("video-loading-spinner");
+    this.clockEl      = document.getElementById("clock-container");
+
+    // Playback & playlist
+    this.playlist     = [];
     this.currentIndex = 0;
-    this.videoElement = document.getElementById("player-video");
-    this.hls = null;
-    // Nueva propiedad para Shaka Player
-    this.shakaPlayer = null;
-    
-    this.playlistContainer = document.getElementById("playlist-container");
-    this.playlistElement = document.getElementById("playlist");
-    this.scrollUpButton = document.getElementById("scroll-up");
-    this.scrollDownButton = document.getElementById("scroll-down");
-    this.spinner = document.getElementById("video-loading-spinner");
-    this.clockContainer = document.getElementById("clock-container");
-    
-    this.hideTimeout = null;
-    this.mouseTimeout = null;
-    this.keyTimeout = null;
-    this.lastNavTime = Date.now();
-    this.autoHideDelay = 5000; // 5 segundos de inactividad
+    this.hls          = null;
+    this.shakaPlayer  = null;
+
+    // Auto-hide UI
+    this.lastNavTime  = Date.now();
+    this.autoHide     = 5000;
+
+    // Carousel config
+    this.visibleCount = 5;
+    this.half         = Math.floor(this.visibleCount / 2);
+
     this.init();
   }
 
-  // Detecta si se está en Android (incluyendo Android TV)
-  isAndroidDevice() {
-    return /Android/.test(navigator.userAgent);
-  }
-
   init() {
-    this.createPlaylistUI();
-    this.addEventListeners();
-    this.videoElement.autoplay = true;
-    this.monitorPlayback();
     this.initClock();
-    // Timer que oculta la UI si han pasado autoHideDelay sin navegación real
+    this.addUIListeners();
+    this.videoEl.autoplay = true;
+    this.monitorPlayback();
     setInterval(() => {
-      if (Date.now() - this.lastNavTime > this.autoHideDelay) {
+      if (Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
       }
     }, 500);
   }
 
   initClock() {
-    const updateClock = () => {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12 || 12;
-      this.clockContainer.innerText = `${hours}:${minutes} ${ampm}`;
+    const upd = () => {
+      const d   = new Date();
+      let h    = d.getHours(),
+          m    = String(d.getMinutes()).padStart(2, "0"),
+          ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
+      this.clockEl.innerText = `${h}:${m} ${ampm}`;
     };
-    setInterval(updateClock, 1000);
-    updateClock();
-  }
-
-  createPlaylistUI() {
-    this.playlistElement.innerHTML = this.playlist
-      .map(
-        (item, index) => `
-        <div class="playlist-item ${index === this.currentIndex ? "active" : ""}" data-index="${index}" tabindex="0">
-          <span>${item.number}</span>
-          <img src="${item.image}" alt="Imagen del canal">
-          ${item.title}
-        </div>
-      `
-      )
-      .join("");
-    const items = this.playlistElement.querySelectorAll(".playlist-item");
-    items.forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.currentIndex = parseInt(item.getAttribute("data-index"));
-        this.lastNavTime = Date.now();
-        this.updatePlaylistUI();
-        this.playCurrent();
-      });
-      item.addEventListener("touchend", (e) => {
-        e.preventDefault();
-        this.currentIndex = parseInt(item.getAttribute("data-index"));
-        this.lastNavTime = Date.now();
-        this.updatePlaylistUI();
-        this.playCurrent();
-      });
-    });
-  }
-
-  addEventListeners() {
-    const resetInactivity = () => {
-      this.showUI();
-    };
-
-    window.addEventListener("mousemove", () => {
-      resetInactivity();
-      clearTimeout(this.mouseTimeout);
-      this.mouseTimeout = setTimeout(() => {}, 300);
-    });
-    window.addEventListener("click", resetInactivity);
-    window.addEventListener("touchstart", resetInactivity);
-
-    window.addEventListener("keydown", (e) => {
-      if (["ArrowLeft", "ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
-        e.preventDefault();
-      }
-      if (e.key === "ArrowLeft") {
-        this.showUI();
-      } else if (e.key === "ArrowUp") {
-        this.scrollPlaylist(-1);
-      } else if (e.key === "ArrowDown") {
-        this.scrollPlaylist(1);
-      } else if (e.key === "Enter") {
-        this.playCurrent();
-      }
-      if (["ArrowUp", "ArrowDown"].includes(e.key)) {
-        this.lastNavTime = Date.now();
-      }
-    });
-    window.addEventListener("touchend", () => {
-      this.lastNavTime = Date.now();
-    });
-
-    this.scrollUpButton.addEventListener("click", () => this.scrollPlaylist(-1));
-    this.scrollDownButton.addEventListener("click", () => this.scrollPlaylist(1));
-
-    this.playlistContainer.addEventListener("mouseenter", () => {
-      this.stopAutoHide();
-    });
-    this.playlistContainer.addEventListener("mouseleave", () => {
-      this.lastNavTime = Date.now();
-      this.startAutoHide();
-    });
-
-    // Eventos del video para el spinner de carga
-    this.videoElement.addEventListener("waiting", () => {
-      this.spinner.classList.remove("hidden");
-    });
-    this.videoElement.addEventListener("playing", () => {
-      this.spinner.classList.add("hidden");
-    });
-    this.videoElement.controls = false;
-    this.videoElement.addEventListener("error", () => this.handlePlaybackError());
+    setInterval(upd, 1000);
+    upd();
   }
 
   showUI() {
-    this.playlistContainer.classList.add("active");
-    this.clockContainer.classList.remove("hidden");
-    this.updatePlaylistUI();
+    this.containerEl.classList.add("active");
+    this.clockEl.classList.remove("hidden");
+    // No recreamos el DOM para no reiniciar la animación de zoom
+    this.updateCarousel(false);
     this.lastNavTime = Date.now();
-    this.startAutoHide();
   }
 
   hideUI() {
-    this.playlistContainer.classList.remove("active");
-    this.clockContainer.classList.add("hidden");
-    this.blurActiveItem();
+    this.containerEl.classList.remove("active");
+    this.clockEl.classList.add("hidden");
   }
 
-  startAutoHide() {
-    this.stopAutoHide();
-    this.hideTimeout = setTimeout(() => {
-      if (Date.now() - this.lastNavTime > this.autoHideDelay) {
-        this.hideUI();
-      }
-    }, this.autoHideDelay);
+  loadPlaylist(arr) {
+    this.playlist     = arr;
+    this.currentIndex = 0;
+    this.renderCarousel();
+    this.showUI();
+    this.playCurrent();
   }
 
-  stopAutoHide() {
-    clearTimeout(this.hideTimeout);
+  createItem(idx, isFocused) {
+    const data = this.playlist[idx];
+    const item = document.createElement("div");
+    item.className = "carousel-item" + (isFocused ? " focused" : "");
+
+    const lbl = document.createElement("div");
+    lbl.className = "item-label";
+    const num = document.createElement("span");
+    num.textContent = data.number;
+    lbl.appendChild(num);
+
+    const img = document.createElement("img");
+    img.src = data.image;
+    img.alt = data.title;
+
+    const btn = document.createElement("button");
+    btn.className = "carousel-button";
+    btn.textContent = data.title;
+
+    item.append(lbl, img, btn);
+    return item;
   }
 
-  blurActiveItem() {
-    const activeItem = this.playlistElement.querySelector(".playlist-item.active");
-    if (activeItem) {
-      activeItem.blur();
+  renderCarousel() {
+    const mod = (n,m) => ((n % m) + m) % m;
+    const N   = this.playlist.length;
+    this.playlistEl.innerHTML = "";
+    for (let i = -this.half; i <= this.half; i++) {
+      const idx     = mod(this.currentIndex + i, N);
+      const focused = i === 0;
+      this.playlistEl.appendChild(this.createItem(idx, focused));
     }
   }
 
-  scrollPlaylist(direction) {
-    this.currentIndex =
-      (this.currentIndex + direction + this.playlist.length) % this.playlist.length;
-    this.lastNavTime = Date.now();
-    this.updatePlaylistUI();
+  updateCarousel(animate = true) {
+    const els    = this.playlistEl.children;
+    const itemH  = els[0].offsetHeight + 16;
+    // mantenemos el centrado estático: siempre translateY de -half*itemH
+    const offset = -(this.half * itemH);
+
+    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
+    this.playlistEl.style.transform  = `translateY(${offset}px)`;
+
+    Array.from(els).forEach((el, i) => {
+      el.classList.toggle("focused", i === this.half);
+    });
+
+    if (!animate) {
+      void this.playlistEl.offsetWidth;
+      this.playlistEl.style.transition = "transform .3s ease";
+    }
   }
 
-  updatePlaylistUI() {
-    const items = this.playlistElement.querySelectorAll(".playlist-item");
-    items.forEach((el, index) => {
-      if (index === this.currentIndex) {
-        el.classList.add("active");
-        if (this.playlistContainer.classList.contains("active")) {
-          el.focus();
-        }
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        el.classList.remove("active");
-      }
-    });
+  move(dir) {
+    const N = this.playlist.length;
+    this.currentIndex = (this.currentIndex + dir + N) % N;
+    this.lastNavTime  = Date.now();
+    this.renderCarousel();
+    this.updateCarousel(true);
   }
 
   playCurrent() {
-    const currentFile = this.playlist[this.currentIndex];
-    // Destruir instancias previas
-    if (this.hls) {
-      this.hls.destroy();
-      this.hls = null;
-    }
-    if (this.shakaPlayer) {
-      this.shakaPlayer.destroy();
-      this.shakaPlayer = null;
-    }
+    const fileObj = this.playlist[this.currentIndex];
+    if (this.hls) { this.hls.destroy(); this.hls = null; }
+    if (this.shakaPlayer) { this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
-    /*  
-      Si el archivo es .m3u8 y Hls.js es soportado se usará Hls.js, excepto cuando:
-      - Estamos en Android/Android TV y el enlace comienza con "http://", contiene "181.78.109.48:8000"
-        o contiene "cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv".
-      En ese caso se intentará usar Shaka Player, y si no es compatible se recurre al reproductor nativo.
-    */
     if (
-      currentFile.file.endsWith(".m3u8") &&
+      fileObj.file.endsWith(".m3u8") &&
       Hls.isSupported() &&
       !(
-        this.isAndroidDevice() &&
-        ( currentFile.file.startsWith("http://") ||
-          currentFile.file.indexOf("181.78.109.48:8000") > -1 ||
-          currentFile.file.indexOf("cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv") > -1 )
+        /Android/.test(navigator.userAgent) &&
+        ( fileObj.file.startsWith("http://") ||
+          fileObj.file.includes("181.78.109.48:8000") ||
+          fileObj.file.includes("cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv") )
       )
     ) {
       this.hls = new Hls({
         maxBufferLength: 30,
-        maxBufferSize: 60 * 1000 * 1000,
-        maxMaxBufferLength: 60,
+        maxBufferSize: 60e6,
         liveSyncDurationCount: 3,
         enableWorker: true
       });
-      this.hls.loadSource(currentFile.file);
-      this.hls.attachMedia(this.videoElement);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        this.videoElement.play();
-      });
-    } else {
-      // Intentar usar Shaka Player (si el navegador lo soporta)
-      if (window.shaka && shaka.Player.isBrowserSupported()) {
-        this.shakaPlayer = new shaka.Player(this.videoElement);
-        this.shakaPlayer.load(currentFile.file).then(() => {
-          this.videoElement.play();
-        }).catch((error) => {
-          console.error("Shaka Player error: ", error);
-          // Si falla Shaka, fallback a reproductor nativo:
-          this.videoElement.src = currentFile.file;
-          this.videoElement.load();
-          this.videoElement.play();
+      this.hls.loadSource(fileObj.file);
+      this.hls.attachMedia(this.videoEl);
+      this.hls.on(Hls.Events.MANIFEST_PARSED, () => this.videoEl.play());
+    } else if (window.shaka && shaka.Player.isBrowserSupported()) {
+      this.shakaPlayer = new shaka.Player(this.videoEl);
+      this.shakaPlayer.load(fileObj.file)
+        .then(() => this.videoEl.play())
+        .catch(() => {
+          this.videoEl.src = fileObj.file;
+          this.videoEl.play();
         });
-      } else {
-        // Fallback directo a reproductor nativo
-        this.videoElement.src = currentFile.file;
-        this.videoElement.load();
-        this.videoElement.play();
-      }
+    } else {
+      this.videoEl.src = fileObj.file;
+      this.videoEl.play();
     }
-    this.videoElement.title = currentFile.title;
+    this.videoEl.title = fileObj.title;
   }
 
   monitorPlayback() {
+    let last = 0;
     setInterval(() => {
-      if (!this.videoElement.paused && !this.videoElement.ended) {
-        if (this.lastPlaybackTime === this.videoElement.currentTime) {
-          console.warn("⚠️ Detected frozen playback. Attempting to restart stream...");
-          this.recoverPlayback();
+      if (!this.videoEl.paused && !this.videoEl.ended) {
+        if (this.videoEl.currentTime === last) {
+          this.playCurrent();
         }
-        this.lastPlaybackTime = this.videoElement.currentTime;
+        last = this.videoEl.currentTime;
       }
     }, 5000);
   }
 
-  recoverPlayback() {
-    const currentFile = this.playlist[this.currentIndex];
-    if (this.hls) {
-      console.warn("🔄 Reloading Hls stream...");
-      this.hls.detachMedia();
-      this.hls.loadSource(currentFile.file);
-      this.hls.attachMedia(this.videoElement);
-    } else if (this.shakaPlayer) {
-      console.warn("🔄 Reloading Shaka Player stream...");
-      this.shakaPlayer.load(currentFile.file).then(() => {
-        this.videoElement.play();
+  addUIListeners() {
+    ["mousemove","click","touchstart"].forEach(ev =>
+      window.addEventListener(ev, () => this.showUI())
+    );
+    window.addEventListener("keydown", e => {
+      if (["ArrowUp","ArrowDown","Enter","ArrowLeft"].includes(e.key)) e.preventDefault();
+      if (e.key === "ArrowUp")    this.move(-1);
+      else if (e.key === "ArrowDown") this.move(1);
+      else if (e.key === "Enter")     this.playCurrent();
+      else if (e.key === "ArrowLeft") this.showUI();
+    });
+    document.querySelector(".carousel-wrapper")
+      .addEventListener("wheel", e => {
+        e.preventDefault();
+        this.move(e.deltaY > 0 ? 1 : -1);
       });
-    } else {
-      console.warn("🔄 Restarting native playback...");
-      this.videoElement.src = currentFile.file;
-      this.videoElement.load();
-      this.videoElement.play();
-    }
-  }
-
-  handlePlaybackError() {
-    console.error("❌ Error in playback. Restarting stream...");
-    this.recoverPlayback();
-  }
-
-  loadPlaylist(playlist) {
-    this.playlist = playlist;
-    this.currentIndex = 0;
-    this.createPlaylistUI();
-    this.playCurrent();
+    this.videoEl.addEventListener("waiting", () => this.spinnerEl.classList.remove("hidden"));
+    this.videoEl.addEventListener("playing", () => this.spinnerEl.classList.add("hidden"));
+    this.videoEl.addEventListener("error",   () => this.playCurrent());
   }
 }
 
+// Arranque
 document.addEventListener("DOMContentLoaded", () => {
-  const player = new PlayerJS("player-container");
-
-  const playlist = [
+  const player = new PlayerJS();
+  player.loadPlaylist([
     {
       number: "100",
       image: "img/canallatina.png",
@@ -401,27 +298,34 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "113",
-      image: "img/canal-axn.png",
+      image: "img/CANAL57.png",
       title: "CANAL 57",
       file: "https://167790.global.ssl.fastly.net/6189746bccf0424c112f5476/live_50bbca50292011ed8d265962bedee5f9/tracks-v2a1/mono.m3u8"
     },
     {
       number: "114",
-      image: "img/CINE-TERROR.png",
+      image: "img/CANAL-ESTRELLAS.png",
       title: "LAS ESTRELLAS",
       file:
         "https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8"
     },
     {
       number: "115",
-      image: "img/CINE-TERROR.png",
+      image: "img/CANAL-RETROPLUS.png",
+      title: "RETRO",
+      file:
+        "https://ssh101stream.ssh101.com/akamaissh101/ssh101/retroplustv03/playlist.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CANAL-TELEMUNDO.png",
       title: "TELEMUNDO",
       file:
         "https://nbculocallive.akamaized.net/hls/live/2037499/puertorico/stream1/master.m3u8"
     },
     {
       number: "116",
-      image: "img/CINE-TERROR.png",
+      image: "img/CANAL-CTV.png",
       title: "CTV INTERNCIONAL",
       file:
         "https://mediacp.us:8081/ctvhn/index.m3u8"
@@ -447,15 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ESPN PREMIUM",
       file:
         "http://190.102.246.93:9005/play/a00x"
-    },
-    {
-      number: "116",
-      image: "img/CINE-TERROR.png",
-      title: "RETRO",
-      file:
-        "https://ssh101stream.ssh101.com/akamaissh101/ssh101/retroplustv03/playlist.m3u8"
     }
-  ];
-  
-  player.loadPlaylist(playlist);
+  ]);
 });

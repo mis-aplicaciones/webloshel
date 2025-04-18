@@ -4,29 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reproductor</title>
+    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styleplayers.css" />
-    <!-- Se carga Hls.js -->
+    <!-- Hls.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <!-- Se carga Shaka Player -->
+    <!-- Shaka Player -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
   </head>
   <body>
+    <!-- Video + Spinner + Reloj -->
     <div id="player-container">
       <video id="player-video" autoplay playsinline></video>
-      <!-- Spinner de carga personalizado -->
       <div id="video-loading-spinner" class="spinner hidden"></div>
-      <!-- Contenedor del reloj -->
       <div id="clock-container" class="clock hidden"></div>
     </div>
+
+    <!-- Carrusel Vertical Infinito -->
     <div id="playlist-container">
-      <button id="scroll-up"><i class="bi bi-chevron-up"></i></button>
-      <div id="playlist"></div>
-      <button id="scroll-down"><i class="bi bi-chevron-down"></i></button>
+      <div class="carousel-wrapper">
+        <div class="carousel-list" id="carouselList"></div>
+      </div>
     </div>
+
     <script src="player2.js"></script>
   </body>
 </html>

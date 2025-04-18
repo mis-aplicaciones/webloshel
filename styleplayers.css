@@ -1,160 +1,133 @@
-/* Eliminar el borde amarillo en Android TV */
-* {
-  outline: none !important;
-}
-
-/* Evitar bordes al hacer focus en ítems */
-.playlist-item:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Estilos generales */
+/* ─── RESET & PLAYER ───────────────────────────────────────────────── */
+* { outline: none !important; }
 body, html {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   overflow: hidden;
-  background-color: black;
-  color: white;
+  background: #111;
+  color: #fff;
+  /* ↓↓↓ Cambia aquí la fuente de los items y UI general: */
   font-family: Arial, sans-serif;
 }
-
-/* Player a pantalla completa */
 #player-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease;
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex; justify-content: center; align-items: center;
 }
 #player-video {
-  width: 100%;
-  height: 100%;
-  background-color: black;
+  width: 100%; height: 100%; background: #000;
 }
-
-/* Spinner de carga personalizado */
+/* Spinner */
 .spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  border: 6px solid rgba(255, 255, 255, 0.2);
-  border-top: 6px solid #ffffff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  z-index: 99;
+  border: 6px solid rgba(255,255,255,0.2);
+  border-top: 6px solid #fff; border-radius: 50%;
+  width: 40px; height: 40px;
+  animation: spin 1s linear infinite; z-index: 99;
 }
 @keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
-.hidden {
-  display: none;
-}
-
-/* Reloj en la esquina superior derecha */
+.hidden { display: none; }
+/* Reloj */
 .clock {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 18px;
-  color: #fff;
-  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
-  background: transparent;
+  position: absolute; top: 10px; right: 15px;
+  font-size: 18px; text-shadow: 0 0 6px rgba(0,0,0,0.6);
   z-index: 99;
 }
 
-/* Contenedor de Playlist */
+/* ─── PLAYLIST CONTAINER ───────────────────────────────────────────── */
 #playlist-container {
-  position: fixed;
-  top: 0;
-  left: -350px;
-  width: 350px;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: left 0.5s ease;
+  position: fixed; top: 0; left: -350px;
+  width: 350px; height: 100%;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transition: left .5s ease;
 }
-#playlist-container.active {
-  left: 0;
-}
+#playlist-container.active { left: 0; }
 
-/* Botones de navegación fijados */
-#scroll-up, #scroll-down {
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-  opacity: 0.5;
-}
-#scroll-up { top: 0; }
-#scroll-down { bottom: 0; }
-#scroll-up:focus, #scroll-down:focus {
-  opacity: 1;
-}
-
-/* Área del Playlist */
-#playlist {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* ─── CAROUSEL ──────────────────────────────────────────────────────── */
+.carousel-wrapper {
   position: relative;
-  transition: transform 0.3s ease-in-out;
-  padding: 50px 0;
+  width: 100%;
+  height: 100%; /* full height of playlist-container */
+  overflow: hidden;
+}
+.carousel-list {
+  position: absolute;
+  top: 50%; left: 0;
+  width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  /* el translateY dinámico vendrá desde JS */
 }
 
-/* Ítems del Playlist */
-.playlist-item {
-  width: 90%;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin: 5px 0;
+/* ─── ÍTEMS ─────────────────────────────────────────────────────────── */
+.carousel-item {
   background: transparent;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: left;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  opacity: 0.3;
-  transform: scale(0.9);
+  display: flex; align-items: center;
+  margin: 8px 0;
+  width: 100%;
+  padding: 0 20px;
+  opacity: 0.4;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.playlist-item img {
-  width: 100px;
-  height: 50px;
-  object-fit: cover;
-  margin-right: 10px;
-  border-radius: 5px;
-}
-.playlist-item span {
-  font-weight: bold;
+.carousel-item .item-label {
+  position: relative;
+  width: 60px;
+  font-size: 1.2rem; font-weight: bold;
+  color: #ccc;
+  display: flex; align-items: center; justify-content: center;
   margin-right: 10px;
 }
-.playlist-item.active {
-  opacity: 1;
-  transform: scale(1);
+.carousel-item img {
+  width: 100px; height: 50px;
+  object-fit: cover; border-radius: 5px;
+  margin-right: 10px;
+}
+.carousel-item .carousel-button {
+  flex: 1; height: 50px;
+  background: transparent;
+  border: none; border-radius: 8px;
+  color: #fff; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0.3; transform: scale(1);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+  pointer-events: none;
 }
 
-/* Ocultar scrollbars */
-#playlist-container::-webkit-scrollbar {
-  display: none;
+/* ─── FOCUS ─────────────────────────────────────────────────────────── */
+.carousel-item.focused {
+  opacity: 1;
+  transform: scale(1.1);
+  z-index: 2;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  animation: focusPulse 0.25s ease-out;
+}
+@keyframes focusPulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+.carousel-item.focused .item-label {
+  color: #fff;
+}
+.carousel-item.focused .item-label::before {
+  content: "\f286"; /* chevron-up */
+  font-family: 'bootstrap-icons';
+  position: absolute; top: -1.2em; left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem; color: #888;
+}
+.carousel-item.focused .item-label::after {
+  content: "\f282"; /* chevron-down */
+  font-family: 'bootstrap-icons';
+  position: absolute; bottom: -1.2em; left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem; color: #888;
+}
+.carousel-item.focused .carousel-button {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1.05);
 }

@@ -1,4 +1,3 @@
-
 class PlayerJS {
   constructor() {
     // DOM elements
@@ -7,6 +6,7 @@ class PlayerJS {
     this.containerEl  = document.getElementById("playlist-container");
     this.spinnerEl    = document.getElementById("video-loading-spinner");
     this.clockEl      = document.getElementById("clock-container");
+    this.channelEl    = document.getElementById("channel-title");  // ← Aquí
 
     // Playback & playlist
     this.playlist     = [];
@@ -19,7 +19,7 @@ class PlayerJS {
     this.autoHide     = 5000;
 
     // Carousel config
-    this.visibleCount = 5;
+    this.visibleCount = 7;                  // ← Número total de items visibles (cambia aquí)
     this.half         = Math.floor(this.visibleCount / 2);
 
     this.init();
@@ -31,18 +31,16 @@ class PlayerJS {
     this.videoEl.autoplay = true;
     this.monitorPlayback();
     setInterval(() => {
-      if (Date.now() - this.lastNavTime > this.autoHide) {
-        this.hideUI();
-      }
+      if (Date.now() - this.lastNavTime > this.autoHide) this.hideUI();
     }, 500);
   }
 
   initClock() {
     const upd = () => {
-      const d   = new Date();
-      let h    = d.getHours(),
-          m    = String(d.getMinutes()).padStart(2, "0"),
-          ampm = h >= 12 ? "PM" : "AM";
+      const d    = new Date();
+      let h     = d.getHours(),
+          m     = String(d.getMinutes()).padStart(2, "0"),
+          ampm  = h >= 12 ? "PM" : "AM";
       h = h % 12 || 12;
       this.clockEl.innerText = `${h}:${m} ${ampm}`;
     };
@@ -53,15 +51,17 @@ class PlayerJS {
   showUI() {
     this.containerEl.classList.add("active");
     this.clockEl.classList.remove("hidden");
-    // No recreamos el DOM para no reiniciar la animación de zoom
+    this.channelEl.classList.remove("hidden");       // ← Mostrar CHANNEL
     this.updateCarousel(false);
     this.lastNavTime = Date.now();
   }
-
+  
   hideUI() {
     this.containerEl.classList.remove("active");
     this.clockEl.classList.add("hidden");
+    this.channelEl.classList.add("hidden");          // ← Ocultar CHANNEL
   }
+  
 
   loadPlaylist(arr) {
     this.playlist     = arr;
@@ -75,22 +75,41 @@ class PlayerJS {
     const data = this.playlist[idx];
     const item = document.createElement("div");
     item.className = "carousel-item" + (isFocused ? " focused" : "");
+    item.setAttribute("data-idx", idx);
 
+    // Label numérico
     const lbl = document.createElement("div");
     lbl.className = "item-label";
     const num = document.createElement("span");
     num.textContent = data.number;
     lbl.appendChild(num);
 
+    // Imagen
     const img = document.createElement("img");
-    img.src = data.image;
-    img.alt = data.title;
+    img.src = data.image; img.alt = data.title;
 
+    // Botón (texto)
     const btn = document.createElement("button");
     btn.className = "carousel-button";
     btn.textContent = data.title;
 
     item.append(lbl, img, btn);
+
+    // Mouse click & touch
+    item.addEventListener("click", () => {
+      this.currentIndex = idx;
+      this.lastNavTime  = Date.now();
+      this.renderCarousel();
+      this.playCurrent();
+    });
+    item.addEventListener("touchend", e => {
+      e.preventDefault();
+      this.currentIndex = idx;
+      this.lastNavTime  = Date.now();
+      this.renderCarousel();
+      this.playCurrent();
+    });
+
     return item;
   }
 
@@ -106,23 +125,41 @@ class PlayerJS {
   }
 
   updateCarousel(animate = true) {
-    const els    = this.playlistEl.children;
-    const itemH  = els[0].offsetHeight + 16;
-    // mantenemos el centrado estático: siempre translateY de -half*itemH
-    const offset = -(this.half * itemH);
-
-    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
-    this.playlistEl.style.transform  = `translateY(${offset}px)`;
-
+    const els = this.playlistEl.children;
+    if (!els.length) return;
+  
+    // Altura de un ítem (incluye margin-top + margin-bottom)
+    const style  = window.getComputedStyle(els[0]);
+    const itemH  = els[0].offsetHeight
+                 + parseFloat(style.marginTop)
+                 + parseFloat(style.marginBottom);
+  
+    // Altura del wrapper (100% del contenedor)
+    const wrapper = this.containerEl.querySelector('.carousel-wrapper');
+    const wrapH   = wrapper.clientHeight;
+  
+    // Cálculo: colocar el ítem "half" en el centro vertical
+    // offsetY = (wrapH/2 - itemH/2) - half*itemH
+    const offsetY = wrapH / 2 - itemH / 2 - this.half * itemH;
+  
+    // Aplica con o sin animación
+    this.playlistEl.style.transition = animate
+      ? "transform 0.3s ease"
+      : "none";
+    this.playlistEl.style.transform = `translateY(${offsetY}px)`;
+  
+    // Activa el foco en el ítem central (índice half)
     Array.from(els).forEach((el, i) => {
       el.classList.toggle("focused", i === this.half);
     });
-
+  
+    // Si no animamos, “reseteamos” la transición
     if (!animate) {
       void this.playlistEl.offsetWidth;
-      this.playlistEl.style.transition = "transform .3s ease";
+      this.playlistEl.style.transition = "transform 0.3s ease";
     }
   }
+  
 
   move(dir) {
     const N = this.playlist.length;
@@ -148,22 +185,17 @@ class PlayerJS {
       )
     ) {
       this.hls = new Hls({
-        maxBufferLength: 30,
-        maxBufferSize: 60e6,
-        liveSyncDurationCount: 3,
-        enableWorker: true
+        maxBufferLength:30, maxBufferSize:60e6,
+        liveSyncDurationCount:3, enableWorker:true
       });
       this.hls.loadSource(fileObj.file);
       this.hls.attachMedia(this.videoEl);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => this.videoEl.play());
+      this.hls.on(Hls.Events.MANIFEST_PARSED, ()=>this.videoEl.play());
     } else if (window.shaka && shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.videoEl);
       this.shakaPlayer.load(fileObj.file)
-        .then(() => this.videoEl.play())
-        .catch(() => {
-          this.videoEl.src = fileObj.file;
-          this.videoEl.play();
-        });
+        .then(()=>this.videoEl.play())
+        .catch(()=>{ this.videoEl.src=fileObj.file; this.videoEl.play(); });
     } else {
       this.videoEl.src = fileObj.file;
       this.videoEl.play();
@@ -173,35 +205,34 @@ class PlayerJS {
 
   monitorPlayback() {
     let last = 0;
-    setInterval(() => {
+    setInterval(()=>{
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) {
-          this.playCurrent();
-        }
+        if (this.videoEl.currentTime === last) this.playCurrent();
         last = this.videoEl.currentTime;
       }
     }, 5000);
   }
 
   addUIListeners() {
-    ["mousemove","click","touchstart"].forEach(ev =>
-      window.addEventListener(ev, () => this.showUI())
+    ["mousemove","click","touchstart"].forEach(ev=>
+      window.addEventListener(ev, ()=>this.showUI())
     );
-    window.addEventListener("keydown", e => {
-      if (["ArrowUp","ArrowDown","Enter","ArrowLeft"].includes(e.key)) e.preventDefault();
-      if (e.key === "ArrowUp")    this.move(-1);
-      else if (e.key === "ArrowDown") this.move(1);
-      else if (e.key === "Enter")     this.playCurrent();
-      else if (e.key === "ArrowLeft") this.showUI();
+    window.addEventListener("keydown", e=>{
+      if (["ArrowUp","ArrowDown","Enter","ArrowLeft"].includes(e.key))
+        e.preventDefault();
+      if (e.key==="ArrowUp")    this.move(-1);
+      else if (e.key==="ArrowDown") this.move(1);
+      else if (e.key==="Enter")     this.playCurrent();
+      else if (e.key==="ArrowLeft") this.showUI();
     });
     document.querySelector(".carousel-wrapper")
-      .addEventListener("wheel", e => {
+      .addEventListener("wheel", e=>{
         e.preventDefault();
-        this.move(e.deltaY > 0 ? 1 : -1);
+        this.move(e.deltaY>0?1:-1);
       });
-    this.videoEl.addEventListener("waiting", () => this.spinnerEl.classList.remove("hidden"));
-    this.videoEl.addEventListener("playing", () => this.spinnerEl.classList.add("hidden"));
-    this.videoEl.addEventListener("error",   () => this.playCurrent());
+    this.videoEl.addEventListener("waiting", ()=>this.spinnerEl.classList.remove("hidden"));
+    this.videoEl.addEventListener("playing", ()=>this.spinnerEl.classList.add("hidden"));
+    this.videoEl.addEventListener("error",   ()=>this.playCurrent());
   }
 }
 
@@ -212,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       number: "100",
       image: "img/canallatina.png",
-      title: "LATINA TV",
+      title: "",
       file:
         "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
     },

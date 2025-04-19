@@ -6,7 +6,7 @@ body, html {
   background: #111;
   color: #fff;
   /* ↓↓↓ Cambia aquí la fuente de los items y UI general: */
-  font-family: Arial, sans-serif;
+  font-family:monospace;
 }
 #player-container {
   position: fixed; top: 0; left: 0;
@@ -51,17 +51,19 @@ body, html {
 .carousel-wrapper {
   position: relative;
   width: 100%;
-  height: 100%; /* full height of playlist-container */
+  height: 100%;
   overflow: hidden;
 }
 .carousel-list {
   position: absolute;
-  top: 50%; left: 0;
+  top: 0;    /* ya no top:50% */
+  left: 0;
   width: 100%;
-  display: flex; flex-direction: column; align-items: center;
-  /* el translateY dinámico vendrá desde JS */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* transform fijo eliminado */
 }
-
 /* ─── ÍTEMS ─────────────────────────────────────────────────────────── */
 .carousel-item {
   background: transparent;
@@ -95,6 +97,27 @@ body, html {
   opacity: 0.3; transform: scale(1);
   transition: opacity 0.2s ease, transform 0.3s ease;
   pointer-events: none;
+}
+/* Título CHANNEL superpuesto */
+.channel-title {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 18px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 99;
+  transition: opacity 0.3s ease;
+}
+.channel-title.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.channel-title:not(.hidden) {
+  opacity: 1;
 }
 
 /* ─── FOCUS ─────────────────────────────────────────────────────────── */

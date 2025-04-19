@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generado por Loshelsistem 1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Botón Volver -->
+    <a href="../index.html" id="back-button"><i class="bi bi-arrow-left-short"></i></a>
+<!-- Logo -->
+    <img id="logo" src="logo001.png" alt="Logo">
+    <!-- Contenido principal -->
+    <div id="content">
+      <!-- Elementos Ocultos -->
+      <input type="hidden" id="ID_pelicula" value="P-136">
+      <input type="hidden" id="cover-url" value="https://image.tmdb.org/t/p/original/1bGNqu2h2mbMaQIj9zggBFP7G8o.jpg">
+      <input type="hidden" id="cover-url-2" value="https://image.tmdb.org/t/p/original/1sWDPsYsWwyMx0rmtsIoyB8wC6s.jpg">
+      <input type="hidden" id="pagina-nombre" value="P-136-2-4-1-Exodus:Diosesyreyes.html">
+
+      <!-- Fondo Dinámico -->
+      <div id="background-section">
+        <div class="background-gradient"></div>
+      </div>
+      <!-- Imagen 1 para el backbroud -->
+      <img src="https://image.tmdb.org/t/p/original/twrZ6sxomHF2RfMkjAVkDcfQEkQ.jpg" alt="img1" id="imagen-1">
+      <!-- Imagen 2 para el backbroud smartphone -->
+      <img src="https://image.tmdb.org/t/p/original/cdto7O7SS1yuzg319ksNMYCPKA2.jpg" alt="img2" id="imagen-2">
+
+      <!-- Sección de Contenido de Película -->
+      <div id="movie-content" class="hidden">
+        <!-- Título de la Película (Imagen) -->
+        <div id="movie-title-image">
+          <img src="https://image.tmdb.org/t/p/original/cdYP3sB05KPehNhjEvoIpyi8pUw.png" alt="Título de la Película">
+        </div>
+
+        <!-- Título de la Película (Texto) -->
+        <h2 id="movie-title-text" class="movie-title-text">Exodus: Dioses y reyes</h2>
+
+        <!-- Detalles de la Película -->
+        <div class="movie-details">
+          <div id="puntuacion" class="movie-rating" data-puntuacion="2.5">
+            <span class="stars"></span>
+          </div>
+          <div class="movie-details">
+            <h4>
+              <span id="edad">13+</span>
+              <span id="año">2014</span>
+              <span id="duracion-horas">2 h</span>
+              <span id="duracion-minutos">30 min</span>
+            </h4>
+          </div>
+        </div>
+        <!-- Género de la Película -->
+        <div id="genero" class="genre-section" data-genre-ids="2,4,1"></div>
+
+        <!-- Descripción de la Película -->
+        <div id="descripcion" class="movie-description">Narra la historia de Moisés (Christian Bale), un hombre cuyo coraje desafió a un imperio cuando se rebela contra el todopoderoso faraón Ramsés (Joel Edgerton), liberando a 600.000 esclavos en una épica huida a través de Egipto, llena de peligros y mortíferas plagas, en busca de la Tierra Prometida.</div>
+
+        <!-- Boton de play y donacion -->
+        <div class="button-movie-and-donation">
+          <div class="movie-buttons">
+            <a id="video1" href="//ok.ru/videoembed/1983594236640?nochat=1&amp;autoplay=1">
+              <i class="bi bi-play-fill"></i><span> Ver Ahora</span>
+            </a>
+          </div>
+          <div class="donar-button">
+            <a href="../donar.html" id="donar-button"><i class="bi bi-piggy-bank"></i> Donar</a>
+          </div>
+        </div>
+      </div>
+      <!-- Botones Adicionales -->
+      <div class="button-aditional">
+        <div class="add-button">
+          <a href="#">
+            <i class="bi bi-plus-circle"></i>
+          </a>
+        </div>
+        <button id="botonCompartir">
+          <i class="bi bi-share"></i>
+        </button>
+        <div class="canal">
+          <a href="https://whatsapp.com/channel/0029VaFwj295kg6xQ8thvM2s">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+        </div>
+        <div class="canal">
+          <a href="../donar.html" id="donar-button2"><i class="bi bi-piggy-bank"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+    <div id="carrusel-container">
+      <div id="carrusel-title">También puedes ver</div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js" type="module"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
+
+</body></html>

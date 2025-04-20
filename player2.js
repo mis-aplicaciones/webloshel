@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       number: "100",
       image: "img/canallatina.png",
-      title: "",
+      title: "LATINA",
       file:
         "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
     },
@@ -336,14 +336,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://nbculocallive.akamaized.net/hls/live/2037499/puertorico/stream1/master.m3u8"
     },
     {
-      number: "116",
+      number: "117",
       image: "img/CANAL-CTV.png",
       title: "CTV INTERNCIONAL",
       file:
         "https://mediacp.us:8081/ctvhn/index.m3u8"
     },
     {
-      number: "116",
+      number: "118",
       image: "img/CINE-TERROR.png",
       title: "FOX DEPORTE",
       file:
@@ -351,14 +351,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "116",
+      number: "119",
       image: "img/CINE-TERROR.png",
       title: "ESPN DEPORTES",
       file:
         "http://190.92.10.66:4000/play/a003/index.m3u8"
     },
     {
-      number: "116",
+      number: "120",
       image: "img/CINE-TERROR.png",
       title: "ESPN PREMIUM",
       file:

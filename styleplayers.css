@@ -1,13 +1,25 @@
 /* ─── RESET & PLAYER ───────────────────────────────────────────────── */
 * { outline: none !important; }
+@font-face {
+  font-family: 'MyFont';
+  src: url('fonts/Dosis-Bold.woff2') format('woff2'),
+       url('fonts/Dosis-Bold.woff')  format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* para que no bloquee el render */
+}
+
 body, html {
   margin: 0; padding: 0;
   overflow: hidden;
   background: #111;
   color: #fff;
   /* ↓↓↓ Cambia aquí la fuente de los items y UI general: */
-  font-family:monospace;
+  /* ↓↓↓ Cambia aquí la fuente de los items y UI general: */
+  font-family: 'MyFont', Arial, sans-serif;
 }
+
+
 #player-container {
   position: fixed; top: 0; left: 0;
   width: 100%; height: 100%;
@@ -44,6 +56,7 @@ body, html {
     rgba(0,0,0,0.7), rgba(0,0,0,0.3));
   box-shadow: 2px 0 5px rgba(0,0,0,0.5);
   transition: left .5s ease;
+
 }
 #playlist-container.active { left: 0; }
 
@@ -74,6 +87,7 @@ body, html {
   opacity: 0.4;
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  
 }
 .carousel-item .item-label {
   position: relative;
@@ -97,13 +111,14 @@ body, html {
   opacity: 0.3; transform: scale(1);
   transition: opacity 0.2s ease, transform 0.3s ease;
   pointer-events: none;
+  font-family: 'MyFont', Arial, sans-serif;
 }
 /* Título CHANNEL superpuesto */
 .channel-title {
   position: absolute;
   top: 10px;
   left: 15px;
-  font-size: 18px;
+  font-size: x-large;
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
@@ -153,4 +168,36 @@ body, html {
   opacity: 1;
   pointer-events: auto;
   transform: scale(1.05);
+}
+
+/* ─── CONTROL BUTTONS (CLOSE & FULLSCREEN) ────────────────────────── */
+.control-button {
+  position: fixed; top: 10px;
+  width: 32px; height: 32px;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 4px;
+  display: none;
+  color: #fff; font-size: 1.2rem;
+  z-index: 200; opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+#close-button { left: 15px; }        /* sobre CHANNEL en móviles */
+#fullscreen-button { right: 15px; }   /* esquina superior derecha */
+.control-button:not(.hidden) {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ─── MEDIA QUERIES (smartphones/tablets) ─────────────────────────── */
+@media (max-width: 768px) {
+  /* ocultar reloj y channel-title en móviles */
+  #clock-container, .channel-title { display: none !important; }
+  /* playlist ocupa toda la pantalla */
+  #playlist-container { width: 100vw; left: -100vw; }
+  /* ajustes de tamaño ya definidos arriba */
+  .control-button {
+  display: flex; align-items: center; justify-content: center;
+}
 }

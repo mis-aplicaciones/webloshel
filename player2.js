@@ -344,18 +344,18 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "118",
-      image: "img/CINE-TERROR.png",
-      title: "FOX DEPORTE",
+      image: "img/CANAL-BAYRES.png",
+      title: "BAYRES TV",
       file:
-        "https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Fox-Sports-Espanol2.m3u8"
+        "https://streaming02.gbasat.com.ar:19360/bayrestv/bayrestv.m3u8"
     }
     ,
     {
       number: "119",
-      image: "img/CINE-TERROR.png",
-      title: "ESPN DEPORTES",
+      image: "img/CANAL-FMCOSMOS.png",
+      title: "COSMOS TV",
       file:
-        "http://190.92.10.66:4000/play/a003/index.m3u8"
+        "https://tv.mediacp.eu:19360/cosmos/cosmos.m3u8"
     },
     {
       number: "120",

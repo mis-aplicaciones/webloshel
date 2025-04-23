@@ -1,51 +1,56 @@
 /* General */
-/* Override de estilos del index para la sección TV */
+/* ========================= Overrides del index ========================= */
 .content {
   display: block !important;
-  flex: 1;
   overflow: visible !important;
   margin: 0;
   padding: 0;
 }
 
-/* Ajuste de contenedor para no invadir el sidebar */
-.tv-section {
-  margin-left: 5%; /* igual ancho del sidebar */
-  width: 95%;
-}
-
-/* Estilos principales */
-body {
-  background-color: #0d0d1a;
+/* ========================= Layout TV ========================= */
+html, body {
+  height: 100%;
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
+  background-color: #0d0d1a;
+}
+
+.tv-section {
+  margin-left: 5%;    /* espacio para sidebar */
+  width: 95%;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .tv-title {
-  font-size: 2.5rem;
+  flex: 0 0 auto;
   text-align: center;
+  font-size: 2.5rem;
+  color: transparent;
   background: linear-gradient(90deg, #00d4ff, #0066ff);
   -webkit-background-clip: text;
-  color: transparent;
-  animation: fadeIn 1s ease;
-  margin: 20px 20px 10px;
+  margin: 1rem 0;
 }
 
 .tv-grid {
+  flex: 1 1 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  grid-auto-rows: 120px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-auto-rows: 100px;
   gap: 12px;
-  padding: 0 32px 32px;
-  box-sizing: border-box;
+  padding: 0 2rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .tv-card {
   position: relative;
+  border-radius: 8px;
   overflow: hidden;
-  border-radius: 10px;
   background-color: #1e1e3f;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   display: flex;
@@ -54,42 +59,46 @@ body {
 
 .tv-card img {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   object-fit: cover;
-  top: 0;
-  left: 0;
   z-index: 0;
 }
 
 .tv-card__label {
   position: relative;
   z-index: 1;
-  margin: 8px;
-  padding: 4px 8px;
+  margin: 0.5rem;
+  padding: 0.25rem 0.5rem;
   background: rgba(0,0,0,0.6);
   color: #fff;
   border-radius: 4px;
   font-size: 0.9rem;
 }
 
-.tv-card.small { grid-row: span 1; grid-column: span 1; }
-.tv-card.medium { grid-row: span 2; grid-column: span 2; }
-.tv-card.large { grid-row: span 3; grid-column: span 2; }
+/* Tamaños tipo Tetris */
+.tv-card.small  { grid-column: span 1; grid-row: span 1; }
+.tv-card.medium { grid-column: span 2; grid-row: span 2; }
+.tv-card.large  { grid-column: span 2; grid-row: span 3; }
 
+/* Focus state */
 .tv-card.focused,
 .tv-card:focus {
   outline: none;
-  transform: translateY(-4px) scale(1.03);
+  transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0,212,255,0.8);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-/* Responsiveness */
-@media (max-width: 720px) {
+/* Responsive para móvil/tablet */
+@media (max-width: 768px) {
+  .tv-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    grid-auto-rows: 80px;
+  }
+  .tv-card.small { grid-column: span 1; grid-row: span 1; }
+  .tv-card.medium { grid-column: span 2; grid-row: span 1; }
+  .tv-card.large  { grid-column: span 2; grid-row: span 2; }
+
   /* Ajustar contenedor principal */
   .main-container {
     width: 100%;

@@ -1,74 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>STREAM HUB</title>
-    <link rel="stylesheet" href="stylestv.css" />
-  </head>
-  <body onload="initializeTv()">
-    <div class="tv-section">
-      <h1 class="tv-title">STREAM HUB</h1>
-      <div class="tv-grid" role="list" aria-label="Categorías y Canales">
-        <div
-          class="tv-card large"
-          data-link="player2.html"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img
-            src="https://i.pinimg.com/1200x/4b/a7/cd/4ba7cd5cd46ae19e76273e234209d282.jpg"
-            alt="Entretenimiento"
-          />
-          <div class="tv-card__label">Entretenimiento</div>
-        </div>
-        <div
-          class="tv-card medium"
-          data-link="player.html?cat=deportes"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img src="deportes.jpg" alt="Deportes" />
-          <div class="tv-card__label">Deportes</div>
-        </div>
-        <div
-          class="tv-card small"
-          data-link="player.html?cat=musica"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img src="musica.jpg" alt="Música" />
-          <div class="tv-card__label">Música</div>
-        </div>
-        <div
-          class="tv-card medium"
-          data-link="player.html?cat=documentales"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img src="documentales.jpg" alt="Documentales" />
-          <div class="tv-card__label">Documentales</div>
-        </div>
-        <div
-          class="tv-card small"
-          data-link="player.html?canal=canal1"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img src="canal1.jpg" alt="Canal 1" />
-          <div class="tv-card__label">Canal 1</div>
-        </div>
-        <div
-          class="tv-card small"
-          data-link="player.html?canal=canal2"
-          tabindex="-1"
-          role="listitem"
-        >
-          <img src="canal2.jpg" alt="Canal 2" />
-          <div class="tv-card__label">Canal 2</div>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STREAM HUB</title>
+  <link rel="stylesheet" href="stylestv.css">
+</head>
+<body>
+  <div class="tv-section">
+    <h1 class="tv-title">STREAM HUB</h1>
+    <div class="tv-grid" role="list" aria-label="Categorías y Canales">
+      <!-- Ejemplo de cards -->
+      <div class="tv-card large" data-link="player2.html" tabindex="-1" role="listitem" aria-label="Entretenimiento">
+        <img src="entretenimiento.jpg" alt="Entretenimiento">
+        <div class="tv-card__label">Entretenimiento</div>
       </div>
+      <div class="tv-card medium" data-link="player.html?cat=deportes" tabindex="-1" role="listitem" aria-label="Deportes">
+        <img src="deportes.jpg" alt="Deportes">
+        <div class="tv-card__label">Deportes</div>
+      </div>
+      <!-- ...otros cards -->
     </div>
-    <script src="scripttv.js"></script>
-  </body>
-</html>
+  </div>
+  <script src="scripttv.js"></script>
+</body>
+</html

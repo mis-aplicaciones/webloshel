@@ -3,60 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Live</title>
+    <title>STREAM HUB</title>
     <link rel="stylesheet" href="stylestv.css" />
   </head>
-  <body>
-    <div class="main-container">
-      <h1 class="tv-title">TV Live</h1>
-
-      <div class="content-container">
-        <!-- Contenedor de Canales Frecuentes -->
-        <div class="block-container">
-          <h2 class="block-title">Canales Frecuentes</h2>
-          <div class="grid-container" id="frequent-channels">
-            <div class="card" tabindex="0" data-link="go:atv">
-              <img src="img/CANAL ATV.jpg" alt="Canal 1" />
-            </div>
-            <div class="card" tabindex="0" data-link="./canal/cosmos-tv.html">
-              <img src="img/CANAL COSMOS TV.jpg" alt="Canal 2" />
-            </div>
-            <div class="card" tabindex="0" data-link="canal3.html">
-              <img src="canal3.jpg" alt="Canal 3" />
-            </div>
-            <div class="card" tabindex="0" data-link="canal4.html">
-              <img src="canal4.jpg" alt="Canal 4" />
-            </div>
-            <div class="card" tabindex="0" data-link="canal5.html">
-              <img src="canal5.jpg" alt="Canal 5" />
-            </div>
-          </div>
+  <body onload="initializeTv()">
+    <div class="tv-section">
+      <h1 class="tv-title">STREAM HUB</h1>
+      <div class="tv-grid" role="list" aria-label="Categorías y Canales">
+        <div
+          class="tv-card large"
+          data-link="player2.html"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img
+            src="https://i.pinimg.com/1200x/4b/a7/cd/4ba7cd5cd46ae19e76273e234209d282.jpg"
+            alt="Entretenimiento"
+          />
+          <div class="tv-card__label">Entretenimiento</div>
         </div>
-
-        <!-- Contenedor de Colección -->
-        <div class="block-container" style="margin-top: 3%">
-          <h2 class="block-title">Colección</h2>
-          <div class="grid-container" id="collection">
-            <div class="card" data-link="canalestwitch.html">
-              <img
-                src="https://variety.com/wp-content/uploads/2015/03/twitch-logo.jpg"
-                alt="Card Image 1"
-              />
-              <div class="card-title">Canal Twitch</div>
-            </div>
-            <div class="card" data-link="player2.html">
-              <img src="example2.jpg" alt="Card Image 2" />
-              <div class="card-title">Card Title 2</div>
-            </div>
-            <div class="card">
-              <img src="example3.jpg" alt="Card Image 3" />
-              <div class="card-title">Card Title 3</div>
-            </div>
-          </div>
+        <div
+          class="tv-card medium"
+          data-link="player.html?cat=deportes"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img src="deportes.jpg" alt="Deportes" />
+          <div class="tv-card__label">Deportes</div>
+        </div>
+        <div
+          class="tv-card small"
+          data-link="player.html?cat=musica"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img src="musica.jpg" alt="Música" />
+          <div class="tv-card__label">Música</div>
+        </div>
+        <div
+          class="tv-card medium"
+          data-link="player.html?cat=documentales"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img src="documentales.jpg" alt="Documentales" />
+          <div class="tv-card__label">Documentales</div>
+        </div>
+        <div
+          class="tv-card small"
+          data-link="player.html?canal=canal1"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img src="canal1.jpg" alt="Canal 1" />
+          <div class="tv-card__label">Canal 1</div>
+        </div>
+        <div
+          class="tv-card small"
+          data-link="player.html?canal=canal2"
+          tabindex="-1"
+          role="listitem"
+        >
+          <img src="canal2.jpg" alt="Canal 2" />
+          <div class="tv-card__label">Canal 2</div>
         </div>
       </div>
     </div>
-
     <script src="scripttv.js"></script>
   </body>
 </html>

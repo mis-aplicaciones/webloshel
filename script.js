@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (menuItemToFocus) {
             window.currentFocus = "menu";
             menuItemToFocus.focus();
+            if (typeof window.cleanupTv === "function") window.cleanupTv();
           }
         }
       }

@@ -151,6 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
   menuItems[0].classList.add("active");
   loadContent("home.html");
 };
+// Dentro de initializeApplication (script.js)
+window.addEventListener('return-to-sidebar', () => {
+  currentFocus = 'menu';
+  const activeMenuItem = document.querySelector('.menu-item.active');
+  if (activeMenuItem) activeMenuItem.focus();
+});
 // Escuchar el evento `load` para asegurarnos de que todo está listo
 window.addEventListener("load", () => {
   hideLoadingScreen();

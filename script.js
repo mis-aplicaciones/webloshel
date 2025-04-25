@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = document.querySelector(".content");
     const footerMenuItems = document.querySelectorAll(".footer .menu-item");
 
-  let currentFocus = "content"; // Start focus on the conten
+  let currentFocus = "content"; // Start focus on the content
   let activeSection = "home.html";
   let currentScript = null;
 

@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = document.querySelector(".content");
     const footerMenuItems = document.querySelectorAll(".footer .menu-item");
 
-  let currentFocus = "content"; // Start focus on the content
-   let currentFocus = "content"; // Empieza en contenido
+  let currentFocus = "content"; // Start focus on the conten
   let activeSection = "home.html";
 
   // Escuchar retorno desde TV (evento personalizado)
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  let activeSection = "home.html";
+  
   let currentScript = null;
 
   const initializeSectionScripts = (section) => {

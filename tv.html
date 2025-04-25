@@ -9,29 +9,101 @@
   <body>
     <div class="tv-section">
       <h1 class="tv-title">STREAM HUB</h1>
-      <div class="tv-grid" role="list" aria-label="Categorías y Canales">
-        <!-- Ejemplo de cards -->
+      <!-- Fila de categorías (rectangulares verticales) -->
+      <div class="category-row">
         <div
-          class="tv-card large"
-          data-link="player.html?cat=entretenimiento"
+          class="card category"
+          data-link="player2.html"
           tabindex="-1"
           role="listitem"
           aria-label="Entretenimiento"
         >
           <img src="entretenimiento.jpg" alt="Entretenimiento" />
-          <div class="tv-card__label">Entretenimiento</div>
+          <div class="card-label">Entretenimiento</div>
         </div>
         <div
-          class="tv-card medium"
+          class="card category"
           data-link="player.html?cat=deportes"
           tabindex="-1"
           role="listitem"
           aria-label="Deportes"
         >
           <img src="deportes.jpg" alt="Deportes" />
-          <div class="tv-card__label">Deportes</div>
+          <div class="card-label">Deportes</div>
         </div>
-        <!-- ...otros cards -->
+        <div
+          class="card category"
+          data-link="player.html?cat=musica"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Música"
+        >
+          <img src="musica.jpg" alt="Música" />
+          <div class="card-label">Música</div>
+        </div>
+        <div
+          class="card category"
+          data-link="player.html?cat=documentales"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Documentales"
+        >
+          <img src="documentales.jpg" alt="Documentales" />
+          <div class="card-label">Documentales</div>
+        </div>
+      </div>
+      <!-- Fila de canales (cuadrados) -->
+      <div class="channel-row">
+        <div
+          class="card channel"
+          data-link="player.html?canal=canal1"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Canal 1"
+        >
+          <img src="canal1.jpg" alt="Canal 1" />
+          <div class="card-label">Canal 1</div>
+        </div>
+        <div
+          class="card channel"
+          data-link="player.html?canal=canal2"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Canal 2"
+        >
+          <img src="canal2.jpg" alt="Canal 2" />
+          <div class="card-label">Canal 2</div>
+        </div>
+        <div
+          class="card channel"
+          data-link="player.html?canal=canal3"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Canal 3"
+        >
+          <img src="canal3.jpg" alt="Canal 3" />
+          <div class="card-label">Canal 3</div>
+        </div>
+        <div
+          class="card channel"
+          data-link="player.html?canal=canal4"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Canal 4"
+        >
+          <img src="canal4.jpg" alt="Canal 4" />
+          <div class="card-label">Canal 4</div>
+        </div>
+        <div
+          class="card channel"
+          data-link="player.html?canal=canal5"
+          tabindex="-1"
+          role="listitem"
+          aria-label="Canal 5"
+        >
+          <img src="canal5.jpg" alt="Canal 5" />
+          <div class="card-label">Canal 5</div>
+        </div>
       </div>
     </div>
     <script src="scripttv.js"></script>

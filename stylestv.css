@@ -1,102 +1,32 @@
-/* ========================= Overrides del index ========================= */
-.content {
-  display: block !important;
-  overflow: visible !important;
-  margin: 0;
-  padding: 0;
-}
+/* Overrides del index */
+.content { display: block !important; overflow: visible !important; margin: 0; padding: 0; }
 
-/* ========================= Layout TV ========================= */
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #0d0d1a;
-}
+/* Layout general */
+html, body { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #0d0d1a; }
+.tv-section { margin-left: 5%; width: 95%; padding-top: 1rem; box-sizing: border-box; }
+.tv-title { text-align: center; font-size: 2rem; background: linear-gradient(90deg, #00d4ff, #0066ff); -webkit-background-clip: text; color: transparent; margin-bottom: 1rem; }
 
-.tv-section {
-  margin-left: 5%;    /* espacio para sidebar */
-  width: 95%;
-  height: 100vh;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
+/* Filas */
+.category-row, .channel-row { display: grid; gap: 12px; padding: 0 2rem; box-sizing: border-box; }
+.category-row { grid-template-columns: repeat(4, 1fr); margin-bottom: 1.5rem; }
+.channel-row  { grid-template-columns: repeat(5, 1fr); }
 
-.tv-title {
-  flex: 0 0 auto;
-  text-align: center;
-  font-size: 2.5rem;
-  color: transparent;
-  background: linear-gradient(90deg, #00d4ff, #0066ff);
-  -webkit-background-clip: text;
-  margin: 1rem 0;
-}
+/* Cards comunes */
+.card { position: relative; overflow: hidden; border-radius: 8px; background-color: #1e1e3f; box-shadow: 0 4px 8px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; align-items: flex-end; }
+.card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.card-label { position: relative; z-index: 1; margin: 0.5rem; padding: 0.25rem 0.5rem; background: rgba(0,0,0,0.6); color: #fff; border-radius: 4px; font-size: 0.9rem; }
 
-.tv-grid {
-  flex: 1 1 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-auto-rows: 100px;
-  gap: 12px;
-  padding: 0 2rem;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
+/* Tamaños de cards */
+.card.category { aspect-ratio: 3 / 4; } /* vertical rectangles */
+.card.channel  { aspect-ratio: 1 / 1; } /* squares */
 
-.tv-card {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #1e1e3f;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-}
+/* Focus y hover */
+.card:focus, .card.focused, .card:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(0,212,255,0.8); outline: none; }
 
-.tv-card img {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-.tv-card__label {
-  position: relative;
-  z-index: 1;
-  margin: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-/* Tamaños tipo Tetris */
-.tv-card.small  { grid-column: span 1; grid-row: span 1; }
-.tv-card.medium { grid-column: span 2; grid-row: span 2; }
-.tv-card.large  { grid-column: span 2; grid-row: span 3; }
-
-/* Focus state */
-.tv-card.focused,
-.tv-card:focus {
-  outline: none;
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,212,255,0.8);
-}
-
-/* Responsive para móvil/tablet */
+/* Responsive móviles/tablets */
 @media (max-width: 768px) {
-  .tv-grid {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    grid-auto-rows: 80px;
-  }
-  .tv-card.small { grid-column: span 1; grid-row: span 1; }
-  .tv-card.medium { grid-column: span 2; grid-row: span 1; }
-  .tv-card.large  { grid-column: span 2; grid-row: span 2; }
+  .category-row { grid-template-columns: repeat(2, 1fr); }
+  .channel-row  { grid-template-columns: repeat(3, 1fr); }
 }
 /* Responsiveness */
 @media (max-width: 720px) {

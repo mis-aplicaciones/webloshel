@@ -17,12 +17,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const footerMenuItems = document.querySelectorAll(".footer .menu-item");
 
   let currentFocus = "content"; // Start focus on the content
-   // Escuchar retorno desde TV
+   let currentFocus = "content"; // Empieza en contenido
+  let activeSection = "home.html";
+
+  // Escuchar retorno desde TV (evento personalizado)
   window.addEventListener('return-to-sidebar', () => {
     currentFocus = 'menu';
     const activeMenuItem = document.querySelector('.menu-item.active');
-    if(activeMenuItem) activeMenuItem.focus();
-  }); 
+    if (activeMenuItem) activeMenuItem.focus();
+  });
+
+  // Key navigation para sidebar y contenido
+  document.addEventListener("keydown", (e) => {
+    const activeMenuItem = document.querySelector(".menu-item.active");
+
+    if (currentFocus === "menu") {
+      // ... navegación del menú ...
+    } else if (currentFocus === "content") {
+      // Cuando estemos en TV u otras secciones
+      if (e.key === "Backspace" || e.key === "Escape" || (e.key === "ArrowLeft" && activeSection === 'tv.html')) {
+        e.preventDefault();
+        currentFocus = "menu";
+        if (activeMenuItem) activeMenuItem.focus();
+      }
+    }
+  });
+
   let activeSection = "home.html";
   let currentScript = null;
 

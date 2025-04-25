@@ -1,69 +1,102 @@
-.content { display: block !important; overflow: visible !important; margin: 0; padding: 0; }
-html, body { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #0d0d1a; }
+html, body {
+  height: 100%; margin: 0; padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+#tv-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: background-image 1s ease-in-out, filter 1s ease-in-out;
+}
+
+#tv-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to right, #121124 30%, rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
 
 .tv-section {
-  margin-left: 5%; width: 95%; height: 100vh;
-  display: flex; flex-direction: column;
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  padding-left: 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .tv-title {
-  flex: 0 0 auto;
-  text-align: center;
+  color: white;
   font-size: 2.5rem;
+  margin-bottom: 2rem;
   background: linear-gradient(90deg, #00d4ff, #0066ff);
   -webkit-background-clip: text;
   color: transparent;
-  margin: 1rem 0;
-  animation: fadeIn 1s ease;
+  align-self: flex-start;
 }
 
-.tv-grid {
-  flex: 1 1 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-auto-rows: 100px;
-  gap: 12px;
-  padding: 0 2rem;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+.card-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
 }
 
 .card {
-  position: relative;
+  min-width: 200px;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 8px;
   overflow: hidden;
-  background-color: #1e1e3f;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
   cursor: pointer;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+  filter: grayscale(1);
+}
+
+.card.focused {
+  transform: scale(1.1);
+  
+  z-index: 10;
+  filter: grayscale(0);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(255,255,255,0.2);
+  filter: grayscale(0);
 }
 
 .card img {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%; object-fit: cover;
+  position: absolute;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  top: 0; left: 0;
+  z-index: 0;
 }
 
 .tv-card__label {
-  position: relative; z-index: 1;
-  margin: 0.5rem; padding: 0.25rem 0.5rem;
-  background: rgba(0,0,0,0.6); color: #fff;
-  border-radius: 4px; font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  margin: 8px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 1rem;
 }
-
-.card.focused,
-.card:focus {
-  outline: none;
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,212,255,0.8);
-}
-
-@media (max-width: 768px) {
-  .tv-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); grid-auto-rows: 80px; }
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 720px) {
   /* Ajustar contenedor principal */
   .main-container {

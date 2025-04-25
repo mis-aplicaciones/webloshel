@@ -6,74 +6,53 @@
     <title>STREAM HUB</title>
     <link rel="stylesheet" href="stylestv.css" />
   </head>
-  <body>
+  <body onload="initializeTv()">
+    <div id="tv-background"></div>
+    <div id="tv-overlay"></div>
     <div class="tv-section">
-      <h1 class="tv-title">STREAM HUB</h1>
-      <div
-        class="tv-grid tv-grid-container"
-        role="list"
-        aria-label="Categorías y Canales"
-      >
-        <!-- Ejemplos de cards -->
+      <h1 class="tv-title">LIVE TV</h1>
+      <div class="card-container">
         <div
-          class="card large"
-          data-link="player2.html"
+          class="card"
           tabindex="-1"
-          role="listitem"
-          aria-label="Entretenimiento"
+          data-link="player2.html"
+          data-bg="https://i.pinimg.com/736x/cd/09/37/cd0937dffa387e83c4448ab7a0976fd2.jpg"
         >
-          <img src="entretenimiento.jpg" alt="Entretenimiento" />
+          <img
+            src="https://i.pinimg.com/736x/83/07/df/8307df9a8bb6d9daa38eb823d5376f6a.jpg"
+            alt="Entretenimiento"
+          />
           <div class="tv-card__label">Entretenimiento</div>
         </div>
         <div
-          class="card medium"
-          data-link="player.html?cat=deportes"
+          class="card"
           tabindex="-1"
-          role="listitem"
-          aria-label="Deportes"
+          data-link="player.html?cat=deportes"
+          data-bg="fondo2.jpg"
         >
-          <img src="deportes.jpg" alt="Deportes" />
+          <img
+            src="https://i.pinimg.com/736x/72/78/4b/72784bb6f10ca526a0e14c8b0ba161b6.jpg"
+            alt="Deportes"
+          />
           <div class="tv-card__label">Deportes</div>
         </div>
         <div
-          class="card small"
-          data-link="player.html?cat=musica"
+          class="card"
           tabindex="-1"
-          role="listitem"
-          aria-label="Música"
+          data-link="player.html?cat=musica"
+          data-bg="fondo3.jpg"
         >
           <img src="musica.jpg" alt="Música" />
           <div class="tv-card__label">Música</div>
         </div>
         <div
-          class="card medium"
-          data-link="player.html?cat=documentales"
+          class="card"
           tabindex="-1"
-          role="listitem"
-          aria-label="Documentales"
+          data-link="player.html?cat=documentales"
+          data-bg="fondo4.jpg"
         >
           <img src="documentales.jpg" alt="Documentales" />
           <div class="tv-card__label">Documentales</div>
-        </div>
-        <div
-          class="card small"
-          data-link="player.html?canal=canal1"
-          tabindex="-1"
-          role="listitem"
-          aria-label="Canal 1"
-        >
-          <img src="canal1.jpg" alt="Canal 1" />
-          <div class="tv-card__label">Canal 1</div>
-        </div>
-        <div
-          class="card small"
-          data-link="player.html?canal=canal2"
-          tabindex="-1"
-          role="listitem"
-          aria-label="Canal 2"
-        >
-          <img src="canal2.jpg" alt="Canal 2" />
-          <div class="tv-card__label">Canal 2</div>
         </div>
       </div>
     </div>

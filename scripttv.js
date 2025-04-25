@@ -1,61 +1,24 @@
 function initializeTv() {
   const cards = document.querySelectorAll(".card");
+  const container = document.querySelector(".card-container");
+  const background = document.getElementById("tv-background");
   let currentIndex = 0;
-  let tvKeyListener;
-
-  if (!cards.length) {
-    console.error("No se encontraron cards en tv.html.");
-    return;
-  }
 
   const updateFocus = () => {
-    cards.forEach((card, index) => {
-      if (index === currentIndex) {
-        card.classList.add("focused");
-        card.setAttribute("tabindex", "0");
-        card.focus();
-      } else {
-        card.classList.remove("focused");
-        card.setAttribute("tabindex", "-1");
-      }
+    cards.forEach((card, i) => {
+      card.classList.remove("focused");
+      card.setAttribute("tabindex", "-1");
     });
-  };
+    const focused = cards[currentIndex];
+    focused.classList.add("focused");
+    focused.setAttribute("tabindex", "0");
+    focused.focus();
 
-  const applyStylesForIndex = () => {
-    const container = document.querySelector(".tv-grid-container");
-    if (container) {
-      container.style.display = "grid";
-      container.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
-    }
-  };
+    const bg = focused.getAttribute("data-bg");
+    if (bg) background.style.backgroundImage = `url('${bg}')`;
 
-  tvKeyListener = (e) => {
-    const cols = Math.floor(window.innerWidth / 170);
-    switch (e.key) {
-      case "ArrowRight":
-        if ((currentIndex + 1) < cards.length) currentIndex++;
-        break;
-      case "ArrowLeft":
-        if ((currentIndex % cols) > 0) currentIndex--;
-        
-        break;
-      case "ArrowDown":
-        if (currentIndex + cols < cards.length) currentIndex += cols;
-        break;
-      case "ArrowUp":
-        if (currentIndex - cols >= 0) currentIndex -= cols;
-        break;
-      case "Enter":
-        handleCardAction(cards[currentIndex]);
-        return;
-      case "Backspace":
-      case "Escape":
-        handleReturnToIndex();
-        return;
-      default:
-        break;
-    }
-    updateFocus();
+    const offset = currentIndex * (focused.offsetWidth + 24);
+    container.style.transform = `translateX(${-offset}px)`;
   };
 
   const handleCardAction = (card) => {
@@ -64,42 +27,56 @@ function initializeTv() {
   };
 
   const handleReturnToIndex = () => {
-    cards.forEach((card) => {
+    cards.forEach(card => {
       card.classList.remove("focused");
       card.setAttribute("tabindex", "-1");
     });
-    currentIndex = 0;
-
-    // Focus solo al ícono de TV
-    const tvMenu = document.querySelector('.menu-item[data-section="tv.html"]');
-    if (tvMenu) {
-      // Eliminar otros focus activos
-      document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
-      tvMenu.classList.add("active");
-      tvMenu.focus();
+    const menu = document.querySelector('.menu-item[data-section="tv.html"]');
+    if (menu) {
+      document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+      menu.classList.add("active");
+      menu.focus();
     }
-
     cleanupTv();
+  };
+
+  const tvKeyListener = (e) => {
+    switch (e.key) {
+      case "ArrowRight":
+        if (currentIndex < cards.length - 1) currentIndex++;
+        break;
+      case "ArrowLeft":
+        if (currentIndex > 0) currentIndex--;
+        
+        break;
+      case "Enter":
+        handleCardAction(cards[currentIndex]);
+        return;
+      case "Backspace":
+      case "Escape":
+        handleReturnToIndex();
+        return;
+    }
+    updateFocus();
   };
 
   const cleanupTv = () => {
     document.removeEventListener("keydown", tvKeyListener);
   };
 
-  cards.forEach((card, index) => {
+  cards.forEach((card, i) => {
     card.addEventListener("click", () => handleCardAction(card));
     card.addEventListener("focus", () => {
-      currentIndex = index;
+      currentIndex = i;
       updateFocus();
     });
-    card.addEventListener("touchend", (e) => {
+    card.addEventListener("touchend", e => {
       e.preventDefault();
       handleCardAction(card);
     });
   });
 
   document.addEventListener("keydown", tvKeyListener);
-  applyStylesForIndex();
   updateFocus();
   window.cleanupTv = cleanupTv;
 }

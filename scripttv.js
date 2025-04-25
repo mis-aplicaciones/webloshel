@@ -14,69 +14,77 @@ function initializeTv() {
     focused.setAttribute("tabindex", "0");
     focused.focus();
 
-    const bg = focused.getAttribute("data-bg");
-    if (bg) background.style.backgroundImage = `url('${bg}')`;
+    // Actualizar fondo con transición suave
+    const bg = focused.dataset.bg;
+    if (bg) {
+      background.style.filter = 'brightness(0.5)';
+      setTimeout(() => {
+        background.style.backgroundImage = `url('${bg}')`;
+        background.style.filter = 'brightness(1)';
+      }, 100);
+    }
 
+    // Desplazar cards
     const offset = currentIndex * (focused.offsetWidth + 24);
     container.style.transform = `translateX(${-offset}px)`;
   };
 
   const handleCardAction = (card) => {
-    const link = card.getAttribute("data-link");
+    const link = card.dataset.link;
     if (link) window.location.href = link;
   };
 
-  const handleReturnToIndex = () => {
+  const handleReturnToSidebar = () => {
+    // Desactivar foco TV
     cards.forEach(card => {
       card.classList.remove("focused");
       card.setAttribute("tabindex", "-1");
     });
-    const menu = document.querySelector('.menu-item[data-section="tv.html"]');
-    if (menu) {
-      document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
-      menu.classList.add("active");
-      menu.focus();
+    // Restaurar foco menu
+    const menuTV = document.querySelector('.menu-item[data-section="tv.html"]');
+    if (menuTV) {
+      document.querySelectorAll('.menu-item').forEach(mi => mi.classList.remove('active'));
+      menuTV.classList.add('active');
+      window.currentFocus = 'menu';
+      menuTV.focus();
     }
     cleanupTv();
   };
 
   const tvKeyListener = (e) => {
-    switch (e.key) {
-      case "ArrowRight":
+    switch(e.key) {
+      case 'ArrowRight':
         if (currentIndex < cards.length - 1) currentIndex++;
         break;
-      case "ArrowLeft":
+      case 'ArrowLeft':
         if (currentIndex > 0) currentIndex--;
         
         break;
-      case "Enter":
+      case 'Enter':
         handleCardAction(cards[currentIndex]);
         return;
-      case "Backspace":
-      case "Escape":
-        handleReturnToIndex();
+      case 'Backspace':
+      case 'Escape':
+        handleReturnToSidebar();
         return;
     }
     updateFocus();
   };
 
   const cleanupTv = () => {
-    document.removeEventListener("keydown", tvKeyListener);
+    document.removeEventListener('keydown', tvKeyListener, true);
   };
 
+  // Listeners
   cards.forEach((card, i) => {
-    card.addEventListener("click", () => handleCardAction(card));
-    card.addEventListener("focus", () => {
-      currentIndex = i;
-      updateFocus();
-    });
-    card.addEventListener("touchend", e => {
-      e.preventDefault();
-      handleCardAction(card);
-    });
+    card.addEventListener('click', () => handleCardAction(card));
+    card.addEventListener('focus', () => { currentIndex = i; updateFocus(); });
+    card.addEventListener('touchend', e => { e.preventDefault(); handleCardAction(card); });
   });
 
-  document.addEventListener("keydown", tvKeyListener);
+  // Capturar primero para no interferir con script.js
+  document.addEventListener('keydown', tvKeyListener, true);
   updateFocus();
   window.cleanupTv = cleanupTv;
 }
+window.addEventListener('load', initializeTv);

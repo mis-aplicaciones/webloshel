@@ -121,11 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
           window.currentFocus = "content";
         }
       } else if (window.currentFocus === "content") {
-        if ((e.key === "Backspace" || e.key === "Escape") && activeSection !== "home.html") {
-          const activeMenu = document.querySelector('.menu-item[data-section="' + activeSection + '"]');
-          if (activeMenu) {
+        if ((e.key === "Backspace" || e.key === "Escape")) {
+          const menuItemToFocus = document.querySelector(`.menu-item[data-section="${activeSection}"]`);
+          if (menuItemToFocus) {
             window.currentFocus = "menu";
-            activeMenu.focus();
+            menuItemToFocus.focus();
           }
         }
       }

@@ -3,88 +3,135 @@ function initializeTv() {
   const container = document.querySelector(".card-container");
   const background = document.getElementById("tv-background");
   let currentIndex = 0;
+  let tvKeyListener;
 
+  if (!cards.length) {
+    console.error("No se encontraron cards en tv.html.");
+    return;
+  }
+
+  // Función para actualizar el foco
   const updateFocus = () => {
-    cards.forEach((card, i) => {
+    cards.forEach((card) => {
       card.classList.remove("focused");
       card.setAttribute("tabindex", "-1");
     });
     const focused = cards[currentIndex];
-    focused.classList.add("focused");
-    focused.setAttribute("tabindex", "0");
-    focused.focus();
+    if (focused) {
+      focused.classList.add("focused");
+      focused.setAttribute("tabindex", "0");
+      focused.focus();
 
-    // Actualizar fondo con transición suave
-    const bg = focused.dataset.bg;
-    if (bg) {
-      background.style.filter = 'brightness(0.5)';
-      setTimeout(() => {
-        background.style.backgroundImage = `url('${bg}')`;
-        background.style.filter = 'brightness(1)';
-      }, 100);
+      // Actualizar fondo con transición suave
+      const bg = focused.dataset.bg;
+      if (bg && background) {
+        background.style.filter = 'brightness(0.5)';
+        setTimeout(() => {
+          background.style.backgroundImage = `url('${bg}')`;
+          background.style.filter = 'brightness(1)';
+        }, 100);
+      }
+
+      // Desplazar cards
+      if (container) {
+        const offset = currentIndex * (focused.offsetWidth + 24);
+        container.style.transform = `translateX(${-offset}px)`;
+      }
     }
-
-    // Desplazar cards
-    const offset = currentIndex * (focused.offsetWidth + 24);
-    container.style.transform = `translateX(${-offset}px)`;
   };
 
+  // Asegurar estilos de grilla
+  const applyStylesForIndex = () => {
+    const grid = document.querySelector(".tv-grid-container");
+    if (grid) {
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
+    }
+  };
+
+  // Acción al interactuar con un card
   const handleCardAction = (card) => {
-    const link = card.dataset.link;
-    if (link) window.location.href = link;
+    const link = card.getAttribute("data-link");
+    if (link) {
+      window.location.href = link;
+    }
   };
 
-  const handleReturnToSidebar = () => {
-    // Desactivar foco TV
-    cards.forEach(card => {
+  // Regresar al índice (sidebar) y desactivar foco en cards
+  const handleReturnToIndex = () => {
+    console.log("Retornando al index...");
+    // Desactivar foco en todos los cards
+    cards.forEach((card) => {
       card.classList.remove("focused");
       card.setAttribute("tabindex", "-1");
+      card.blur();
     });
-    // Restaurar foco menu
-    const menuTV = document.querySelector('.menu-item[data-section="tv.html"]');
-    if (menuTV) {
-      document.querySelectorAll('.menu-item').forEach(mi => mi.classList.remove('active'));
-      menuTV.classList.add('active');
-      window.currentFocus = 'menu';
-      menuTV.focus();
+    // Enfocar primer elemento del menú o índice
+    const indexButtons = document.querySelectorAll(".menu-item, .index-button");
+    if (indexButtons.length) {
+      indexButtons[0].focus();
     }
     cleanupTv();
   };
 
-  const tvKeyListener = (e) => {
-    switch(e.key) {
-      case 'ArrowRight':
-        if (currentIndex < cards.length - 1) currentIndex++;
+  // Limpieza de eventos
+  const cleanupTv = () => {
+    console.log("Limpiando eventos de TV...");
+    document.removeEventListener("keydown", tvKeyListener);
+  };
+
+  // Manejo de teclas remoto
+  tvKeyListener = (e) => {
+    const cols = Math.floor(window.innerWidth / 170) || 1;
+    switch (e.key) {
+      case "ArrowRight":
+        if ((currentIndex + 1) % cols !== 0 && currentIndex < cards.length - 1) {
+          currentIndex++;
+        }
         break;
-      case 'ArrowLeft':
-        if (currentIndex > 0) currentIndex--;
-        
+      case "ArrowLeft":
+        if (currentIndex % cols !== 0 && currentIndex > 0) {
+          currentIndex--;
+        }
         break;
-      case 'Enter':
+      case "ArrowDown":
+        if (currentIndex + cols < cards.length) {
+          currentIndex += cols;
+        }
+        break;
+      case "ArrowUp":
+        if (currentIndex - cols >= 0) {
+          currentIndex -= cols;
+        }
+        break;
+      case "Enter":
         handleCardAction(cards[currentIndex]);
-        return;
-      case 'Backspace':
-      case 'Escape':
-        handleReturnToSidebar();
-        return;
+        break;
+      case "Backspace":
+      case "Escape":
+        handleReturnToIndex();
+        return; // evitar updateFocus después de salir
+      default:
+        break;
     }
     updateFocus();
   };
 
-  const cleanupTv = () => {
-    document.removeEventListener('keydown', tvKeyListener, true);
-  };
-
-  // Listeners
-  cards.forEach((card, i) => {
-    card.addEventListener('click', () => handleCardAction(card));
-    card.addEventListener('focus', () => { currentIndex = i; updateFocus(); });
-    card.addEventListener('touchend', e => { e.preventDefault(); handleCardAction(card); });
+  // Eventos de clic y focus en cards
+  cards.forEach((card, index) => {
+    card.addEventListener("click", () => handleCardAction(card));
+    card.addEventListener("focus", () => {
+      currentIndex = index;
+      updateFocus();
+    });
   });
 
-  // Capturar primero para no interferir con script.js
-  document.addEventListener('keydown', tvKeyListener, true);
+  // Inicializar
+  document.addEventListener("keydown", tvKeyListener);
+  applyStylesForIndex();
   updateFocus();
+  console.log("TV inicializado correctamente");
+
+  // Exponer limpieza global
   window.cleanupTv = cleanupTv;
 }
-window.addEventListener('load', initializeTv);

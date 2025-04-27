@@ -254,10 +254,10 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "105",
-      image: "img/canalmegatv.png",
-      title: "MEGATV",
+      image: "img/CANAL-AMC.png",
+      title: "AMC",
       file:
-        "https://solo.disfrutaenlared.com:1936/tvcbba/tvcbba/playlist.m3u8"
+        "http://vegafibratv.com:8085/AMC/index.m3u8"
     },
     {
       number: "106",
@@ -359,10 +359,18 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "120",
-      image: "img/CINE-TERROR.png",
-      title: "ESPN PREMIUM",
+      image: "img/CANAL-SONY.png",
+      title: "SONY CINE",
       file:
-        "http://190.102.246.93:9005/play/a00x"
+        "https://a-cdn.klowdtv.com/live1/cine_720p/playlist.m3u8"
+    }
+    ,
+    {
+      number: "121",
+      image: "img/CANAL-TELEMUNDOACCION.png",
+      title: "ACCIÓN",
+      file:
+        "https://xumo-drct-ch835-ekq0p.fast.nbcuni.com/live/master.m3u8"
     }
   ]);
 });

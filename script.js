@@ -1,4 +1,4 @@
-
+// script.js
 document.addEventListener("DOMContentLoaded", () => {
   const loadingScreen = document.getElementById("loading-screen");
 
@@ -11,145 +11,158 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   };
 
-  const initializeApplication = () => {
-    const menuItems = document.querySelectorAll(".menu-item");
-    const content = document.querySelector(".content");
-    const footerMenuItems = document.querySelectorAll(".footer .menu-item");
+  const menuItems = document.querySelectorAll(".menu-item");
+  const footerMenuItems = document.querySelectorAll(".footer .menu-item");
+  const content = document.querySelector(".content");
 
-    window.currentFocus = "content";
-    let activeSection = "home.html";
-    let currentScript = null;
+  let currentFocus = "menu";      // "menu" ó "content"
+  let activeSection = "home.html";
+  let currentScript = null;
+  let sidebarKeyListener;
 
-    const initializeSectionScripts = (section) => {
-      let scriptPath = "";
-      let initializeFunction = null;
+  // Carga y arranca el JS de cada sección
+  const initializeSectionScripts = (section) => {
+    // Al entrar en sección, dejamos el foco en contenido y deshabilitamos el listener de menú
+    currentFocus = "content";
+    document.removeEventListener("keydown", sidebarKeyListener);
 
-      switch (section) {
-        case "home.html":
-          scriptPath = "scripthome.js";
-          initializeFunction = "initializeHome";
-          break;
-        case "movies.html":
-          scriptPath = "scriptmovie.js";
-          initializeFunction = "initializeMovie";
-          break;
-        case "series.html":
-          scriptPath = "scriptserie.js";
-          initializeFunction = "initializeSerie";
-          break;
-        case "tv.html":
-          scriptPath = "scripttv.js";
-          initializeFunction = "initializeTv";
-          break;
-        case "usuario.html":
-          scriptPath = "scriptusuario.js";
-          initializeFunction = "initializeUsuario";
-          break;
-        default:
-          console.error(`Sección desconocida: ${section}`);
-          return;
-      }
+    let scriptPath = "";
+    let initializeFunction = "";
 
-      const script = document.createElement("script");
-      script.src = scriptPath;
-      script.onload = () => {
-        if (typeof window[initializeFunction] === "function") {
-          window[initializeFunction]();
-        } else {
-          console.error(`La función ${initializeFunction} no está definida en ${scriptPath}`);
-        }
-      };
-      document.body.appendChild(script);
-      currentScript = script;
-    };
+    switch (section) {
+      case "home.html":
+        scriptPath = "scripthome.js";
+        initializeFunction = "initializeHome";
+        break;
+      case "movies.html":
+        scriptPath = "scriptmovie.js";
+        initializeFunction = "initializeMovie";
+        break;
+      case "series.html":
+        scriptPath = "scriptserie.js";
+        initializeFunction = "initializeSerie";
+        break;
+      case "tv.html":
+        scriptPath = "scripttv.js";
+        initializeFunction = "initializeTv";
+        break;
+      case "usuario.html":
+        scriptPath = "scriptusuario.js";
+        initializeFunction = "initializeUsuario";
+        break;
+      default:
+        console.error(`Sección desconocida: ${section}`);
+        return;
+    }
 
-    const cleanupSection = () => {
-      if (currentScript) {
-        if (typeof window.cleanupTv === "function") window.cleanupTv();
-        document.body.removeChild(currentScript);
-        currentScript = null;
+    // Inyectamos y arrancamos el script
+    const script = document.createElement("script");
+    script.src = scriptPath;
+    script.onload = () => {
+      if (typeof window[initializeFunction] === "function") {
+        window[initializeFunction]();
+      } else {
+        console.error(`Función ${initializeFunction} no encontrada en ${scriptPath}`);
       }
     };
-
-    const loadContent = (section) => {
-      cleanupSection();
-
-      fetch(section)
-        .then((response) => {
-          if (!response.ok) throw new Error("No se pudo cargar la sección");
-          return response.text();
-        })
-        .then((html) => {
-          content.innerHTML = html;
-          initializeSectionScripts(section);
-          activeSection = section;
-          updateFooterActiveState(section);
-          window.currentFocus = "content";
-        })
-        .catch((error) => {
-          console.error(error);
-          content.innerHTML = "<p>Error al cargar el contenido</p>";
-        });
-    };
-
-    const updateFooterActiveState = (section) => {
-      footerMenuItems.forEach((item) => {
-        item.classList.toggle("active", item.getAttribute("data-section") === section);
-      });
-    };
-
-    document.addEventListener("keydown", (e) => {
-      const activeMenuItem = document.querySelector(".menu-item.active");
-      const menuItemsArray = Array.from(menuItems);
-
-      if (window.currentFocus === "menu") {
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          const nextIndex = (menuItemsArray.indexOf(activeMenuItem) + 1) % menuItemsArray.length;
-          activeMenuItem.classList.remove("active");
-          menuItems[nextIndex].classList.add("active");
-          menuItems[nextIndex].focus();
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          const prevIndex = (menuItemsArray.indexOf(activeMenuItem) - 1 + menuItemsArray.length) % menuItemsArray.length;
-          activeMenuItem.classList.remove("active");
-          menuItems[prevIndex].classList.add("active");
-          menuItems[prevIndex].focus();
-        } else if (e.key === "Enter") {
-          const section = activeMenuItem.getAttribute("data-section");
-          loadContent(section);
-          window.currentFocus = "content";
-        }
-      } else if (window.currentFocus === "content") {
-        if ((e.key === "Backspace" || e.key === "Escape")) {
-          const menuItemToFocus = document.querySelector(`.menu-item[data-section="${activeSection}"]`);
-          if (menuItemToFocus) {
-            window.currentFocus = "menu";
-            menuItemToFocus.focus();
-            if (typeof window.cleanupTv === "function") window.cleanupTv();
-          }
-        }
-      }
-    });
-
-    [...menuItems, ...footerMenuItems].forEach((item) => {
-      item.addEventListener("click", () => {
-        menuItems.forEach((menuItem) => menuItem.classList.remove("active"));
-        footerMenuItems.forEach((menuItem) => menuItem.classList.remove("active"));
-
-        item.classList.add("active");
-        const section = item.getAttribute("data-section");
-        loadContent(section);
-        window.currentFocus = "content";
-      });
-    });
-
-    menuItems[0].classList.add("active");
-    loadContent("home.html");
+    document.body.appendChild(script);
+    currentScript = script;
   };
+
+  const cleanupSection = () => {
+    if (currentScript) {
+      document.body.removeChild(currentScript);
+      currentScript = null;
+    }
+  };
+
+  const loadContent = (section) => {
+    cleanupSection();
+    fetch(section)
+      .then((res) => {
+        if (!res.ok) throw new Error("No se pudo cargar la sección");
+        return res.text();
+      })
+      .then((html) => {
+        content.innerHTML = html;
+        activeSection = section;
+        updateFooterActiveState(section);
+        initializeSectionScripts(section);
+      })
+      .catch((err) => {
+        console.error(err);
+        content.innerHTML = "<p>Error al cargar contenido.</p>";
+      });
+  };
+
+  const updateFooterActiveState = (section) => {
+    footerMenuItems.forEach((item) => {
+      item.classList.toggle("active", item.dataset.section === section);
+    });
+  };
+
+  // *****************************************************************
+  // Sidebar navigation: flechas y Enter (solo cuando currentFocus = "menu")
+  // *****************************************************************
+  sidebarKeyListener = (e) => {
+    if (currentFocus !== "menu") return;
+
+    const active = document.querySelector(".menu-item.active");
+    const arr = Array.from(menuItems);
+    let idx = arr.indexOf(active);
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        idx = (idx + 1) % arr.length;
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        idx = (idx - 1 + arr.length) % arr.length;
+        break;
+      case "Enter":
+        const sec = active.getAttribute("data-section");
+        loadContent(sec);
+        return;
+      default:
+        return;
+    }
+
+    active.classList.remove("active");
+    menuItems[idx].classList.add("active");
+    menuItems[idx].focus();
+  };
+  document.addEventListener("keydown", sidebarKeyListener);
+
+  // Click (o touch) en menu y footer
+  [...menuItems, ...footerMenuItems].forEach((item) => {
+    item.addEventListener("click", () => {
+      menuItems.forEach((m) => m.classList.remove("active"));
+      footerMenuItems.forEach((m) => m.classList.remove("active"));
+      item.classList.add("active");
+      loadContent(item.dataset.section);
+    });
+  });
+
+  // Evento genérico para volver al sidebar desde cualquier sección
+  window.addEventListener("return-to-sidebar", () => {
+    // Limpieza de sección
+    cleanupSection();
+
+    // Reactivar listener de menú
+    document.addEventListener("keydown", sidebarKeyListener);
+    currentFocus = "menu";
+
+    // Poner foco en el ítem activo
+    const active = document.querySelector(".menu-item.active");
+    if (active) active.focus();
+  });
+
+  // Estado inicial
+  menuItems[0].classList.add("active");
+  loadContent("home.html");
 
   window.addEventListener("load", () => {
     hideLoadingScreen();
-    initializeApplication();
   });
 });

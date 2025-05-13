@@ -7,8 +7,6 @@ class PlayerJS {
     this.spinnerEl    = document.getElementById("video-loading-spinner");
     this.clockEl      = document.getElementById("clock-container");
     this.channelEl    = document.getElementById("channel-title");
-    this.closeEl      = document.getElementById("close-button");
-    this.fullscreenEl = document.getElementById("fullscreen-button");
 
     // Playback & playlist
     this.playlist     = [];
@@ -30,7 +28,6 @@ class PlayerJS {
   init() {
     this.initClock();
     this.addUIListeners();
-    this.initControls();    // close + fullscreen
     this.videoEl.autoplay = true;
     this.monitorPlayback();
     setInterval(() => {
@@ -49,25 +46,10 @@ class PlayerJS {
     upd();
   }
 
-  initControls() {
-    // Close: vuelve atrás
-    this.closeEl.addEventListener("click", ()=> history.back());
-    // Fullscreen toggle
-    this.fullscreenEl.addEventListener("click", ()=>{
-      if (!document.fullscreenElement) {
-        this.videoEl.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    });
-  }
-
   showUI() {
     this.containerEl.classList.add("active");
-    this.clockEl.classList.remove("hidden");    // en móvil CSS lo ocultará
+    this.clockEl.classList.remove("hidden");
     this.channelEl.classList.remove("hidden");
-    this.closeEl.classList.remove("hidden");
-    this.fullscreenEl.classList.remove("hidden");
     this.updateCarousel(false);
     this.lastNavTime = Date.now();
   }
@@ -76,8 +58,6 @@ class PlayerJS {
     this.containerEl.classList.remove("active");
     this.clockEl.classList.add("hidden");
     this.channelEl.classList.add("hidden");
-    this.closeEl.classList.add("hidden");
-    this.fullscreenEl.classList.add("hidden");
   }
 
   loadPlaylist(arr) {
@@ -139,7 +119,6 @@ class PlayerJS {
                 + parseFloat(style.marginTop)
                 + parseFloat(style.marginBottom);
     const wrapH = this.containerEl.querySelector('.carousel-wrapper').clientHeight;
-    // colocar el ítem centrado: wrapH/2 - itemH/2 - half*itemH
     const offsetY = wrapH/2 - itemH/2 - this.half*itemH;
 
     this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
@@ -164,8 +143,8 @@ class PlayerJS {
 
   playCurrent() {
     const f = this.playlist[this.currentIndex];
-    if (this.hls) { this.hls.destroy(); this.hls=null; }
-    if (this.shakaPlayer) { this.shakaPlayer.destroy(); this.shakaPlayer=null; }
+    if (this.hls)        { this.hls.destroy(); this.hls = null; }
+    if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
     if (f.file.endsWith(".m3u8") && Hls.isSupported() &&
         !(/Android/.test(navigator.userAgent) &&
@@ -173,27 +152,32 @@ class PlayerJS {
            f.file.includes("181.78.109.48:8000") ||
            f.file.includes("cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv")))) {
       this.hls = new Hls({maxBufferLength:30,liveSyncDurationCount:3,enableWorker:true});
-      this.hls.loadSource(f.file); this.hls.attachMedia(this.videoEl);
+      this.hls.loadSource(f.file);
+      this.hls.attachMedia(this.videoEl);
       this.hls.on(Hls.Events.MANIFEST_PARSED, ()=>this.videoEl.play());
     } else if (window.shaka && shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.videoEl);
       this.shakaPlayer.load(f.file)
         .then(()=>this.videoEl.play())
-        .catch(()=>{ this.videoEl.src=f.file; this.videoEl.play(); });
+        .catch(()=>{
+          this.videoEl.src = f.file;
+          this.videoEl.play();
+        });
     } else {
-      this.videoEl.src = f.file; this.videoEl.play();
+      this.videoEl.src = f.file;
+      this.videoEl.play();
     }
     this.videoEl.title = f.title;
   }
 
   monitorPlayback() {
-    let last=0;
+    let last = 0;
     setInterval(()=>{
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime===last) this.playCurrent();
-        last=this.videoEl.currentTime;
+        if (this.videoEl.currentTime === last) this.playCurrent();
+        last = this.videoEl.currentTime;
       }
-    },5000);
+    }, 5000);
   }
 
   addUIListeners() {
@@ -201,15 +185,17 @@ class PlayerJS {
       window.addEventListener(ev, ()=>this.showUI())
     );
     window.addEventListener("keydown", e=>{
-      if (["ArrowUp","ArrowDown","Enter","ArrowLeft"].includes(e.key)) e.preventDefault();
-      if (e.key==="ArrowUp")    this.move(-1);
-      else if (e.key==="ArrowDown") this.move(1);
-      else if (e.key==="Enter")     this.playCurrent();
-      else if (e.key==="ArrowLeft") this.showUI();
+      if (["ArrowUp","ArrowDown","Enter","ArrowLeft"].includes(e.key))
+        e.preventDefault();
+      if (e.key === "ArrowUp")        this.move(-1);
+      else if (e.key === "ArrowDown") this.move(1);
+      else if (e.key === "Enter")     this.playCurrent();
+      else if (e.key === "ArrowLeft") this.showUI();
     });
     document.querySelector(".carousel-wrapper")
       .addEventListener("wheel", e=>{
-        e.preventDefault(); this.move(e.deltaY>0?1:-1);
+        e.preventDefault();
+        this.move(e.deltaY > 0 ? 1 : -1);
       });
     this.videoEl.addEventListener("waiting", ()=>this.spinnerEl.classList.remove("hidden"));
     this.videoEl.addEventListener("playing", ()=>this.spinnerEl.classList.add("hidden"));

@@ -6,9 +6,9 @@ class PlayerJS {
     this.spinnerEl     = document.getElementById("video-loading-spinner");
     this.clockEl       = document.getElementById("clock-container");
 
-    // UI vs playback index
-    this.currentIndex  = 0;  // índice donde el foco navega
-    this.playbackIndex = 0;  // índice que realmente está sonando
+    // Índice de UI vs. índice de reproducción
+    this.currentIndex  = 0;
+    this.playbackIndex = 0;
 
     this.playlist      = [];
     this.hls           = null;
@@ -20,7 +20,7 @@ class PlayerJS {
     this.visibleCount  = 7;
     this.half          = Math.floor(this.visibleCount / 2);
 
-    // Touch-drag
+    // Para touch-drag
     this._touchStartY  = 0;
     this._isDragging   = false;
 
@@ -52,16 +52,18 @@ class PlayerJS {
     upd();
   }
 
-  showUI() {
-    const wasHidden = !this.containerEl.classList.contains("active");
-    if (wasHidden) {
-      // Sólo cuando pasa de oculto a visible reseteamos el foco
+  /**
+   * Muestra el playlist.
+   * @param {boolean} resetFocus  Si es true, centra en el canal en reproducción
+   */
+  showUI(resetFocus = false) {
+    if (resetFocus) {
       this.currentIndex = this.playbackIndex;
       this.renderCarousel();
-      this.containerEl.classList.add("active");
-      this.clockEl.classList.remove("hidden");
       this.updateCarousel(false);
     }
+    this.containerEl.classList.add("active");
+    this.clockEl.classList.remove("hidden");
     this.lastNavTime = Date.now();
   }
 
@@ -75,14 +77,15 @@ class PlayerJS {
     this.currentIndex  = 0;
     this.playbackIndex = 0;
     this.renderCarousel();
-    this.showUI();
+    this.updateCarousel(false);
+    this.showUI(true);
     this.playCurrent();
   }
 
-  createItem(idx, isFocused) {
+  createItem(idx) {
     const data = this.playlist[idx];
     const item = document.createElement("div");
-    item.className = "carousel-item" + (isFocused ? " focused" : "");
+    item.className = "carousel-item";
     item.dataset.idx = idx;
 
     const lbl = document.createElement("div");
@@ -90,7 +93,8 @@ class PlayerJS {
     lbl.innerHTML = `<span>${data.number}</span>`;
 
     const img = document.createElement("img");
-    img.src = data.image; img.alt = data.title;
+    img.src = data.image;
+    img.alt = data.title;
 
     const btn = document.createElement("button");
     btn.className = "carousel-button";
@@ -98,52 +102,49 @@ class PlayerJS {
 
     item.append(lbl, img, btn);
 
+    // CLICK / TOUCH => play
     item.addEventListener("click", () => {
       this.currentIndex = idx;
-      this.lastNavTime = Date.now();
-      this.renderCarousel();
-      this.updateCarousel(true);
-      this.playCurrent();
+      this.play();
     });
     item.addEventListener("touchend", e => {
       e.preventDefault();
       this.currentIndex = idx;
-      this.lastNavTime = Date.now();
-      this.renderCarousel();
-      this.updateCarousel(true);
-      this.playCurrent();
+      this.play();
     });
 
     return item;
   }
 
   renderCarousel() {
-    const mod = (n,m) => ((n % m) + m) % m;
-    const N   = this.playlist.length;
+    const N = this.playlist.length;
     this.playlistEl.innerHTML = "";
-    for (let i = -this.half; i <= this.half; i++) {
-      const idx = mod(this.currentIndex + i, N);
-      this.playlistEl.appendChild(this.createItem(idx, i === 0));
+    for (let offset = -this.half; offset <= this.half; offset++) {
+      const idx = ((this.currentIndex + offset) % N + N) % N;
+      this.playlistEl.appendChild(this.createItem(idx));
     }
   }
 
   updateCarousel(animate = true) {
-    const els = this.playlistEl.children;
-    if (!els.length) return;
+    const items = this.playlistEl.children;
+    if (!items.length) return;
 
-    const st    = getComputedStyle(els[0]);
-    const itemH = els[0].offsetHeight
+    const st = getComputedStyle(items[0]);
+    const itemH = items[0].offsetHeight
                 + parseFloat(st.marginTop)
                 + parseFloat(st.marginBottom);
-    const wrapH = this.containerEl.querySelector('.carousel-wrapper').clientHeight;
-    const offsetY = wrapH/2 - itemH/2 - this.half * itemH;
+    const wrapH = this.containerEl
+                   .querySelector(".carousel-wrapper").clientHeight;
+    const baseY = wrapH/2 - itemH/2 - this.half * itemH;
 
-    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
-    this.playlistEl.style.transform  = `translateY(${offsetY}px)`;
+    this.playlistEl.style.transition = animate
+      ? "transform .3s ease"
+      : "none";
+    this.playlistEl.style.transform  = `translateY(${baseY}px)`;
 
-    Array.from(els).forEach((el,i) => {
-      el.classList.toggle("focused", i === this.half);
-    });
+    Array.from(items).forEach((el,i) =>
+      el.classList.toggle("focused", i === this.half)
+    );
 
     if (!animate) {
       void this.playlistEl.offsetWidth;
@@ -151,6 +152,9 @@ class PlayerJS {
     }
   }
 
+  /**
+   * Desplaza N pasos y rerenderiza
+   */
   move(dir) {
     const N = this.playlist.length;
     this.currentIndex = (this.currentIndex + dir + N) % N;
@@ -160,19 +164,26 @@ class PlayerJS {
   }
 
   playCurrent() {
-    const f = this.playlist[this.currentIndex];
-    this.playbackIndex = this.currentIndex; // guardamos para reset
+    const idx = this.currentIndex;
+    const f   = this.playlist[idx];
+    this.playbackIndex = idx;
 
-    // destruye sesiones previas
     if (this.hls)        { this.hls.destroy(); this.hls = null; }
     if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
     if (f.file.endsWith(".m3u8") && Hls.isSupported()) {
-      this.hls = new Hls({ maxBufferLength:30, liveSyncDurationCount:3, enableWorker:true });
+      this.hls = new Hls({
+        maxBufferLength:30,
+        liveSyncDurationCount:3,
+        enableWorker:true
+      });
       this.hls.loadSource(f.file);
       this.hls.attachMedia(this.videoEl);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => this.videoEl.play());
-    } else if (window.shaka && shaka.Player.isBrowserSupported()) {
+      this.hls.on(Hls.Events.MANIFEST_PARSED,
+        () => this.videoEl.play()
+      );
+    } else if (window.shaka
+               && shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.videoEl);
       this.shakaPlayer.load(f.file)
         .then(() => this.videoEl.play())
@@ -187,60 +198,80 @@ class PlayerJS {
     this.videoEl.title = f.title;
   }
 
+  play() {
+    this.playCurrent();
+    this.renderCarousel();
+    this.updateCarousel(true);
+  }
+
   monitorPlayback() {
     let last = 0;
     setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) this.playCurrent();
+        if (this.videoEl.currentTime === last) {
+          this.playCurrent();
+        }
         last = this.videoEl.currentTime;
       }
     }, 5000);
   }
 
   addUIListeners() {
-    // Mostrar UI
+    // Mouse/Touch muestran UI sin reset
     ["mousemove","click","touchstart"].forEach(ev =>
-      window.addEventListener(ev, () => this.showUI())
+      window.addEventListener(ev, () => this.showUI(false))
     );
 
+    // Teclas
     window.addEventListener("keydown", e => {
-      if (["ArrowUp","ArrowDown","Enter"].includes(e.key)) e.preventDefault();
+      if (["ArrowUp","ArrowDown","Enter"].includes(e.key))
+        e.preventDefault();
 
-      if (!this.containerEl.classList.contains("active") &&
-         (e.key === "ArrowUp" || e.key === "ArrowDown")) {
-        return this.showUI();
+      // Si estaba oculto y es flecha arriba/abajo ➔ mostrar + resetFocus
+      if (!this.containerEl.classList.contains("active")
+          && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
+        return this.showUI(true);
       }
-      if (e.key === "ArrowUp")       this.move(-1);
+
+      // Si visible ➔ mover o reproducir
+      if (e.key === "ArrowUp")        this.move(-1);
       else if (e.key === "ArrowDown") this.move(1);
       else if (e.key === "Enter")     this.playCurrent();
     });
 
-    // Rueda dentro del playlist
-    this.containerEl.querySelector(".carousel-wrapper")
+    // Wheel SOLO dentro del carrusel
+    this.containerEl
+      .querySelector(".carousel-wrapper")
       .addEventListener("wheel", e => {
         e.preventDefault();
         this.move(e.deltaY > 0 ? 1 : -1);
       });
 
-    this.videoEl.addEventListener("waiting", () => this.spinnerEl.classList.remove("hidden"));
-    this.videoEl.addEventListener("playing", () => this.spinnerEl.classList.add("hidden"));
-    this.videoEl.addEventListener("error",   () => this.playCurrent());
+    // Spinner y retry on error
+    this.videoEl.addEventListener("waiting",
+      () => this.spinnerEl.classList.remove("hidden")
+    );
+    this.videoEl.addEventListener("playing",
+      () => this.spinnerEl.classList.add("hidden")
+    );
+    this.videoEl.addEventListener("error",
+      () => this.playCurrent()
+    );
   }
 
   initTouchDrag() {
     const wrapper = this.containerEl.querySelector(".carousel-wrapper");
     const listEl  = this.playlistEl;
-    let itemH, baseOffsetY;
+    let itemH, baseY;
 
     const recalc = () => {
-      const els = listEl.children;
-      if (!els.length) return;
-      const st    = getComputedStyle(els[0]);
-      itemH       = els[0].offsetHeight
+      const first = listEl.children[0];
+      const st    = getComputedStyle(first);
+      itemH       = first.offsetHeight
                   + parseFloat(st.marginTop)
                   + parseFloat(st.marginBottom);
       const wrapH = wrapper.clientHeight;
-      baseOffsetY = wrapH/2 - itemH/2 - this.half * itemH;
+      baseY       = wrapH/2 - itemH/2 - this.half * itemH;
     };
 
     wrapper.addEventListener("touchstart", e => {
@@ -253,7 +284,7 @@ class PlayerJS {
     wrapper.addEventListener("touchmove", e => {
       if (!this._isDragging) return;
       const deltaY = e.touches[0].clientY - this._touchStartY;
-      listEl.style.transform = `translateY(${baseOffsetY + deltaY}px)`;
+      listEl.style.transform = `translateY(${baseY + deltaY}px)`;
     });
 
     wrapper.addEventListener("touchend", e => {
@@ -261,9 +292,16 @@ class PlayerJS {
       this._isDragging = false;
       const deltaY = e.changedTouches[0].clientY - this._touchStartY;
       const steps  = Math.round(-deltaY / itemH);
-      this.currentIndex = (this.currentIndex + steps + this.playlist.length) % this.playlist.length;
-      this.renderCarousel();
-      this.updateCarousel(true);
+
+      this.currentIndex = (this.currentIndex + steps + this.playlist.length)
+                          % this.playlist.length;
+      listEl.style.transition = "transform .3s ease";
+      listEl.style.transform  = `translateY(${baseY}px)`;
+
+      // Update visual focus
+      Array.from(listEl.children).forEach((el,i) =>
+        el.classList.toggle("focused", i === this.half)
+      );
     });
   }
 }

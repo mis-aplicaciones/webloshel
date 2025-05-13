@@ -109,27 +109,6 @@ body, html {
   font-family: 'MyFont', Arial, sans-serif;
 }
 
-/* Título CHANNEL superpuesto */
-.channel-title {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  font-size: x-large;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  padding: 4px 8px;
-  border-radius: 4px;
-  z-index: 99;
-  transition: opacity 0.3s ease;
-}
-.channel-title.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.channel-title:not(.hidden) {
-  opacity: 1;
-}
 
 /* ─── FOCUS ─────────────────────────────────────────────────────────── */
 .carousel-item.focused {
@@ -168,7 +147,7 @@ body, html {
 /* ─── MEDIA QUERIES (smartphones/tablets) ─────────────────────────── */
 @media (max-width: 768px) {
   /* ocultar reloj y channel-title en móviles */
-  #clock-container, .channel-title { display: none !important; }
+  #clock-container { display: none !important; }
   /* playlist ocupa toda la pantalla */
   #playlist-container { width: 100vw; left: -100vw; }
   /* ajustes de tamaño ya definidos arriba */

@@ -4,29 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reproductor</title>
-    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styleplayers.css" />
-    <!-- Hls.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <!-- Shaka Player -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
   </head>
   <body>
-    <!-- Video + Spinner + Reloj -->
     <div id="player-container">
       <video id="player-video" autoplay playsinline></video>
       <div id="video-loading-spinner" class="spinner hidden"></div>
       <div id="clock-container" class="clock hidden"></div>
     </div>
 
-    <!-- CHANNEL title (fijo, pero oculto en móvil vía CSS) -->
-    <div id="channel-title" class="channel-title hidden">CHANNEL</div>
-
-    <!-- Carrusel Vertical Infinito -->
     <div id="playlist-container">
       <div class="carousel-wrapper">
         <div class="carousel-list" id="carouselList"></div>

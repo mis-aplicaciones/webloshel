@@ -6,9 +6,10 @@ class PlayerJS {
     this.spinnerEl     = document.getElementById("video-loading-spinner");
     this.clockEl       = document.getElementById("clock-container");
 
-    // Índices: UI vs. reproducción
-    this.currentIndex  = 0;
-    this.playbackIndex = 0;
+    // UI vs. reproducción
+    this.currentIndex      = 0;
+    this.playbackIndex     = 0;
+    this.hasUncommittedNav = false;  // true si el usuario navegó pero no reprodujo
 
     this.playlist      = [];
     this.hls           = null;
@@ -20,7 +21,7 @@ class PlayerJS {
     this.visibleCount  = 7;
     this.half          = Math.floor(this.visibleCount / 2);
 
-    // Para touch-drag
+    // Touch-drag
     this._touchStartY  = 0;
     this._isDragging   = false;
 
@@ -32,7 +33,7 @@ class PlayerJS {
     this.addUIListeners();
     this.videoEl.autoplay = true;
     this.monitorPlayback();
-    // Auto-hide loop
+    // Auto-hide
     setInterval(() => {
       if (Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
@@ -54,15 +55,21 @@ class PlayerJS {
   }
 
   /**
-   * Muestra/actualiza el playlist.
-   * @param {boolean} resetFocus  Si true, centra en el canal en reproducción
+   * Muestra el playlist.
+   * Si el playlist estaba oculto *y* hubo navegación no confirmada,
+   * reposiciona el foco al canal que realmente se reproduce.
    */
-  showUI(resetFocus = false) {
-    if (resetFocus) {
+  showUI() {
+    const wasHidden = !this.containerEl.classList.contains("active");
+
+    if (wasHidden && this.hasUncommittedNav) {
+      // Reset focus a índice en reproducción
       this.currentIndex = this.playbackIndex;
       this.renderCarousel();
       this.updateCarousel(false);
+      this.hasUncommittedNav = false;
     }
+
     this.containerEl.classList.add("active");
     this.clockEl.classList.remove("hidden");
     this.lastNavTime = Date.now();
@@ -77,9 +84,11 @@ class PlayerJS {
     this.playlist      = arr;
     this.currentIndex  = 0;
     this.playbackIndex = 0;
+    this.hasUncommittedNav = false;
+
     this.renderCarousel();
     this.updateCarousel(false);
-    this.showUI(true);
+    this.showUI();
     this.playCurrent();
   }
 
@@ -103,7 +112,7 @@ class PlayerJS {
 
     item.append(lbl, img, btn);
 
-    // Al hacer click o touch, lanzamos play()
+    // CLICK / TOUCH => reproducir
     item.addEventListener("click", () => {
       this.currentIndex = idx;
       this.play();
@@ -144,7 +153,6 @@ class PlayerJS {
       : "none";
     this.playlistEl.style.transform  = `translateY(${baseY}px)`;
 
-    // foco visual
     Array.from(items).forEach((el,i) =>
       el.classList.toggle("focused", i === this.half)
     );
@@ -156,11 +164,13 @@ class PlayerJS {
   }
 
   /**
-   * Desplaza el carrusel dir pasos.
+   * Navegación por flechas / rueda.
+   * Marca navegación no confirmada.
    */
   move(dir) {
     const N = this.playlist.length;
     this.currentIndex = (this.currentIndex + dir + N) % N;
+    this.hasUncommittedNav = true;
     this.lastNavTime = Date.now();
     this.renderCarousel();
     this.updateCarousel(true);
@@ -168,16 +178,18 @@ class PlayerJS {
 
   playCurrent() {
     const f = this.playlist[this.currentIndex];
-    this.playbackIndex = this.currentIndex;
+    // Confirmamos navegación
+    this.playbackIndex     = this.currentIndex;
+    this.hasUncommittedNav = false;
 
-    // limpiar instancias previas
     if (this.hls)        { this.hls.destroy(); this.hls = null; }
     if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
-    // HLS
     if (f.file.endsWith(".m3u8") && Hls.isSupported()) {
       this.hls = new Hls({
-        maxBufferLength:30, liveSyncDurationCount:3, enableWorker:true
+        maxBufferLength:30,
+        liveSyncDurationCount:3,
+        enableWorker:true
       });
       this.hls.loadSource(f.file);
       this.hls.attachMedia(this.videoEl);
@@ -185,7 +197,6 @@ class PlayerJS {
         () => this.videoEl.play()
       );
     }
-    // Shaka
     else if (window.shaka && shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.videoEl);
       this.shakaPlayer.load(f.file)
@@ -195,7 +206,6 @@ class PlayerJS {
           this.videoEl.play();
         });
     }
-    // Fallback simple
     else {
       this.videoEl.src = f.file;
       this.videoEl.play();
@@ -213,26 +223,30 @@ class PlayerJS {
     let last = 0;
     setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) this.playCurrent();
+        if (this.videoEl.currentTime === last) {
+          this.playCurrent();
+        }
         last = this.videoEl.currentTime;
       }
     }, 5000);
   }
 
   addUIListeners() {
-    // Muestra UI (sin reset) con mouse, click o touch en cualquier parte
+    // Muestra UI sin reset por mouse/touch en cualquier parte
     ["mousemove","click","touchstart"].forEach(ev =>
-      window.addEventListener(ev, () => this.showUI(false))
+      window.addEventListener(ev, () => this.showUI())
     );
 
     // Flechas y Enter
     window.addEventListener("keydown", e => {
-      if (["ArrowUp","ArrowDown","Enter"].includes(e.key)) e.preventDefault();
+      if (["ArrowUp","ArrowDown","Enter"].includes(e.key))
+        e.preventDefault();
 
-      // Si está oculto y flechas arriba/abajo ➔ show+reset
       if (!this.containerEl.classList.contains("active")
           && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
-        return this.showUI(true);
+        // al mostrar tras oculto, reset si hubo falsa navegación
+        this.showUI();
+        return;
       }
       if (e.key === "ArrowUp")        this.move(-1);
       else if (e.key === "ArrowDown") this.move(1);
@@ -243,13 +257,13 @@ class PlayerJS {
     window.addEventListener("wheel", e => {
       e.preventDefault();
       if (!this.containerEl.classList.contains("active")) {
-        this.showUI(true);
+        this.showUI();
       } else {
         this.move(e.deltaY > 0 ? 1 : -1);
       }
     });
 
-    // Spinner y retry on error
+    // Spinner y reintento en error
     this.videoEl.addEventListener("waiting",
       () => this.spinnerEl.classList.remove("hidden")
     );
@@ -293,16 +307,10 @@ class PlayerJS {
       if (!this._isDragging) return;
       this._isDragging = false;
       const deltaY = e.changedTouches[0].clientY - this._touchStartY;
-      const steps  = Math.round(-deltaY / (listEl.children[0].offsetHeight +
-                          parseFloat(getComputedStyle(listEl.children[0]).marginTop) +
-                          parseFloat(getComputedStyle(listEl.children[0]).marginBottom)));
-      this.currentIndex = (this.currentIndex + steps + this.playlist.length)
-                          % this.playlist.length;
+      const steps  = Math.round(-deltaY / itemH);
+      this.move(steps);          // usa move() para marcar falsa navegación
       listEl.style.transition = "transform .3s ease";
       listEl.style.transform  = `translateY(${baseY}px)`;
-      Array.from(listEl.children).forEach((el,i) =>
-        el.classList.toggle("focused", i === this.half)
-      );
     });
   }
 }

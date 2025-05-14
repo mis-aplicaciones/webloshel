@@ -20,7 +20,7 @@ class PlayerJS {
     this.visibleCount  = 7;
     this.half          = Math.floor(this.visibleCount / 2);
 
-    // Drag-touch
+    // Para touch-drag
     this._touchStartY  = 0;
     this._isDragging   = false;
 
@@ -32,6 +32,7 @@ class PlayerJS {
     this.addUIListeners();
     this.videoEl.autoplay = true;
     this.monitorPlayback();
+    // Auto-hide loop
     setInterval(() => {
       if (Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
@@ -43,18 +44,18 @@ class PlayerJS {
   initClock() {
     const upd = () => {
       const d = new Date();
-      let h = d.getHours(), m = String(d.getMinutes()).padStart(2,"0");
-      const am = h>=12?"PM":"AM";
-      h = h%12||12;
+      let h = d.getHours(), m = String(d.getMinutes()).padStart(2, "0");
+      const am = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
       this.clockEl.innerText = `${h}:${m} ${am}`;
     };
-    setInterval(upd,1000);
+    setInterval(upd, 1000);
     upd();
   }
 
   /**
-   * Muestra el playlist.
-   * @param {boolean} resetFocus - si true, centra en canal en reproducción
+   * Muestra/actualiza el playlist.
+   * @param {boolean} resetFocus  Si true, centra en el canal en reproducción
    */
   showUI(resetFocus = false) {
     if (resetFocus) {
@@ -102,7 +103,7 @@ class PlayerJS {
 
     item.append(lbl, img, btn);
 
-    // click/touch → reproducción inmediata
+    // Al hacer click o touch, lanzamos play()
     item.addEventListener("click", () => {
       this.currentIndex = idx;
       this.play();
@@ -129,21 +130,24 @@ class PlayerJS {
     const items = this.playlistEl.children;
     if (!items.length) return;
 
-    const st = getComputedStyle(items[0]);
+    const st    = getComputedStyle(items[0]);
     const itemH = items[0].offsetHeight
                 + parseFloat(st.marginTop)
                 + parseFloat(st.marginBottom);
     const wrapH = this.containerEl
-                   .querySelector(".carousel-wrapper").clientHeight;
+                   .querySelector(".carousel-wrapper")
+                   .clientHeight;
     const baseY = wrapH/2 - itemH/2 - this.half * itemH;
 
     this.playlistEl.style.transition = animate
-      ? "transform .3s ease" : "none";
+      ? "transform .3s ease"
+      : "none";
     this.playlistEl.style.transform  = `translateY(${baseY}px)`;
 
-    Array.from(items).forEach((el,i) => {
-      el.classList.toggle("focused", i === this.half);
-    });
+    // foco visual
+    Array.from(items).forEach((el,i) =>
+      el.classList.toggle("focused", i === this.half)
+    );
 
     if (!animate) {
       void this.playlistEl.offsetWidth;
@@ -151,6 +155,9 @@ class PlayerJS {
     }
   }
 
+  /**
+   * Desplaza el carrusel dir pasos.
+   */
   move(dir) {
     const N = this.playlist.length;
     this.currentIndex = (this.currentIndex + dir + N) % N;
@@ -160,25 +167,26 @@ class PlayerJS {
   }
 
   playCurrent() {
-    const idx = this.currentIndex;
-    const f   = this.playlist[idx];
-    this.playbackIndex = idx;
+    const f = this.playlist[this.currentIndex];
+    this.playbackIndex = this.currentIndex;
 
+    // limpiar instancias previas
     if (this.hls)        { this.hls.destroy(); this.hls = null; }
     if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
+    // HLS
     if (f.file.endsWith(".m3u8") && Hls.isSupported()) {
       this.hls = new Hls({
-        maxBufferLength: 30,
-        liveSyncDurationCount: 3,
-        enableWorker: true
+        maxBufferLength:30, liveSyncDurationCount:3, enableWorker:true
       });
       this.hls.loadSource(f.file);
       this.hls.attachMedia(this.videoEl);
       this.hls.on(Hls.Events.MANIFEST_PARSED,
         () => this.videoEl.play()
       );
-    } else if (window.shaka && shaka.Player.isBrowserSupported()) {
+    }
+    // Shaka
+    else if (window.shaka && shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.videoEl);
       this.shakaPlayer.load(f.file)
         .then(() => this.videoEl.play())
@@ -186,7 +194,9 @@ class PlayerJS {
           this.videoEl.src = f.file;
           this.videoEl.play();
         });
-    } else {
+    }
+    // Fallback simple
+    else {
       this.videoEl.src = f.file;
       this.videoEl.play();
     }
@@ -203,49 +213,43 @@ class PlayerJS {
     let last = 0;
     setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) {
-          this.playCurrent();
-        }
+        if (this.videoEl.currentTime === last) this.playCurrent();
         last = this.videoEl.currentTime;
       }
     }, 5000);
   }
 
   addUIListeners() {
-    // mostrar UI sin reset al mouse/touch general
+    // Muestra UI (sin reset) con mouse, click o touch en cualquier parte
     ["mousemove","click","touchstart"].forEach(ev =>
       window.addEventListener(ev, () => this.showUI(false))
     );
 
-    // teclado
+    // Flechas y Enter
     window.addEventListener("keydown", e => {
-      if (["ArrowUp","ArrowDown","Enter"].includes(e.key))
-        e.preventDefault();
+      if (["ArrowUp","ArrowDown","Enter"].includes(e.key)) e.preventDefault();
 
+      // Si está oculto y flechas arriba/abajo ➔ show+reset
       if (!this.containerEl.classList.contains("active")
-          && (e.key === "ArrowUp" || e.key === "ArrowDown"))
-      {
+          && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
         return this.showUI(true);
       }
-
       if (e.key === "ArrowUp")        this.move(-1);
       else if (e.key === "ArrowDown") this.move(1);
       else if (e.key === "Enter")     this.playCurrent();
     });
 
-    // rueda dentro de carousel-wrapper
-    const wrapper = this.containerEl.querySelector(".carousel-wrapper");
-    wrapper.addEventListener("wheel", e => {
+    // Rueda en toda la ventana
+    window.addEventListener("wheel", e => {
       e.preventDefault();
-      // si estaba oculto, mostramos con reset-focus
       if (!this.containerEl.classList.contains("active")) {
-        return this.showUI(true);
+        this.showUI(true);
+      } else {
+        this.move(e.deltaY > 0 ? 1 : -1);
       }
-      // si ya visible, desplazamos
-      this.move(e.deltaY > 0 ? 1 : -1);
     });
 
-    // spinner y reintento on error
+    // Spinner y retry on error
     this.videoEl.addEventListener("waiting",
       () => this.spinnerEl.classList.remove("hidden")
     );
@@ -289,21 +293,16 @@ class PlayerJS {
       if (!this._isDragging) return;
       this._isDragging = false;
       const deltaY = e.changedTouches[0].clientY - this._touchStartY;
-      const steps  = Math.round(-deltaY / itemH);
-
+      const steps  = Math.round(-deltaY / (listEl.children[0].offsetHeight +
+                          parseFloat(getComputedStyle(listEl.children[0]).marginTop) +
+                          parseFloat(getComputedStyle(listEl.children[0]).marginBottom)));
       this.currentIndex = (this.currentIndex + steps + this.playlist.length)
-                           % this.playlist.length;
-      // snap al centro
+                          % this.playlist.length;
       listEl.style.transition = "transform .3s ease";
       listEl.style.transform  = `translateY(${baseY}px)`;
-
-      // focus visual
       Array.from(listEl.children).forEach((el,i) =>
         el.classList.toggle("focused", i === this.half)
       );
-
-      // ¡Y reproducimos el canal donde soltaste!
-      this.play();
     });
   }
 }

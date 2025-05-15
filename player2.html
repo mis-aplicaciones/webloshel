@@ -13,15 +13,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
   </head>
   <body>
+    <!-- VIDEO + SPINNER + RELOJ -->
     <div id="player-container">
       <video id="player-video" autoplay playsinline></video>
       <div id="video-loading-spinner" class="spinner hidden"></div>
       <div id="clock-container" class="clock hidden"></div>
     </div>
 
+    <!-- PLAYLIST -->
     <div id="playlist-container">
       <div class="carousel-wrapper">
         <div class="carousel-list" id="carouselList"></div>
+      </div>
+    </div>
+
+    <!-- MENÚ TV (Android TV) -->
+    <div id="tv-menu" class="tv-menu hidden" tabindex="-1">
+      <!-- Top bar -->
+      <div class="tv-menu-top">
+        <div class="tv-menu-img">
+          <img id="tv-menu-img" src="" alt="Canal" />
+        </div>
+        <div class="tv-menu-quality" id="tv-menu-quality">HD</div>
+      </div>
+      <!-- Botones inferior -->
+      <div class="tv-menu-bottom">
+        <button id="btn-return" class="tv-menu-btn" tabindex="0">
+          <i class="bi bi-arrow-left-circle-fill"></i>
+        </button>
+        <button id="btn-pause" class="tv-menu-btn" tabindex="-1">
+          <i id="icon-pause" class="bi bi-pause-circle-fill"></i>
+        </button>
+        <button id="btn-close" class="tv-menu-btn" tabindex="-1">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
       </div>
     </div>
 

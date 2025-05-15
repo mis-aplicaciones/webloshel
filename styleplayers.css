@@ -143,7 +143,35 @@ body, html {
   pointer-events: auto;
   transform: scale(1.05);
 }
-
+/* MENÚ TV overlay */
+.tv-menu {
+  position:fixed; inset:0; background:rgba(0,0,0,0.7);
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding:20px; z-index:1000;
+}
+.tv-menu.hidden { display:none; }
+.tv-menu-top {
+  display:flex; justify-content:space-between; align-items:center;
+}
+.tv-menu-img img {
+  width:80px; height:45px; object-fit:cover; border-radius:4px;
+}
+.tv-menu-quality {
+  font-size:1.2rem; font-weight:bold;
+  background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px;
+}
+.tv-menu-bottom {
+  display:flex; justify-content:space-around; align-items:center;
+}
+.tv-menu-btn {
+  width:60px; height:60px;
+  background:#fff; border:none; border-radius:50%;
+  display:flex; justify-content:center; align-items:center;
+  font-size:1.5rem; opacity:.3; transition:opacity .2s;
+}
+.tv-menu-btn:focus {
+  opacity:1; outline:2px solid #007AFF;
+}
 /* ─── MEDIA QUERIES (smartphones/tablets) ─────────────────────────── */
 @media (max-width: 768px) {
   /* ocultar reloj y channel-title en móviles */

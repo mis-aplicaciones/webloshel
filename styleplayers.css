@@ -38,12 +38,6 @@ body, html {
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 .hidden { display: none; }
-/* Reloj */
-.clock {
-  position: absolute; top: 10px; right: 15px;
-  font-size: 18px; text-shadow: 0 0 6px rgba(0,0,0,0.6);
-  z-index: 99;
-}
 
 /* ─── PLAYLIST CONTAINER ───────────────────────────────────────────── */
 #playlist-container {
@@ -143,39 +137,104 @@ body, html {
   pointer-events: auto;
   transform: scale(1.05);
 }
-/* MENÚ TV overlay */
+/* … (TU CSS DEL PLAYLIST Y VIDEO SIN CAMBIOS) … */
+
+/* ─── MENÚ TV OVERLAY ───────────────────────────────────────────────── */
 .tv-menu {
-  position:fixed; inset:0; background:rgba(0,0,0,0.7);
-  display:flex; flex-direction:column; justify-content:space-between;
-  padding:20px; z-index:1000;
+  position: fixed; inset: 0;
+  /* Degradado semitransparente: más transparente arriba, más oscuro abajo */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.158)70%,
+    rgba(0, 0, 0, 0.8)100%
+  );
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 2vh; /* usar vh para escalado */
+  z-index: 1000;
 }
-.tv-menu.hidden { display:none; }
+.tv-menu.hidden { display: none !important; }
+
+/* Top del menú */
 .tv-menu-top {
-  display:flex; justify-content:space-between; align-items:center;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tv-menu-img {
+  display: flex; flex-direction: column; align-items: center;
 }
 .tv-menu-img img {
-  width:80px; height:45px; object-fit:cover; border-radius:4px;
+  width: 12vh; /* ajuste en vh */
+  height: 7vh; /* ajuste en vh */
+  object-fit: cover; border-radius: 4px;
 }
+/* Número de canal */
+.tv-menu-channel-number {
+  margin-top: 1vh;
+  font-size: 3vh;
+  font-weight: bold;
+  color: #fff;
+}
+/* Calidad */
 .tv-menu-quality {
-  font-size:1.2rem; font-weight:bold;
-  background:rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px;
+  margin-top: 0.5vh;
+  font-size: 1.6vh;
+  color: #ccc;
+  background: rgba(255, 0, 0, 0.589);
+  padding: 0.5vh 1vh; border-radius: 3px;
 }
+/* Reloj HH:MM, sin AM/PM */
+.tv-menu-time {
+  font-size: 5vh; /* para cambiar fuente, modifica aquí */
+  color: #fff;
+}
+
+/* Bottom del menú */
 .tv-menu-bottom {
-  display:flex; justify-content:space-around; align-items:center;
+  display: flex; justify-content: space-between; align-items: center;
 }
+/* Agrupación izquierda */
+.tv-menu-group-left {
+  display: flex; gap: 1vh;
+}
+
+/* Botones circulares del menú */
 .tv-menu-btn {
-  width:60px; height:60px;
-  background:#fff; border:none; border-radius:50%;
-  display:flex; justify-content:center; align-items:center;
-  font-size:1.5rem; opacity:.3; transition:opacity .2s;
+  background: #fff; border: none; border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  opacity: .3; transition: opacity .2s;
+  /* Tamaño más pequeño en vh */
+  width: 7vh; height: 7vh;
+  font-size: 4vh;
 }
 .tv-menu-btn:focus {
-  opacity:1; outline:2px solid #007AFF;
+  opacity: 1; outline: 2px solid #007AFF;
 }
+
+/* Tooltip */
+.tv-menu-tooltip {
+  position: absolute;
+  bottom: 15vh; /* sobre los botones */
+  left: 50%; transform: translateX(-50%);
+  padding: 1vh 2vh;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 2vh;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.tv-menu-tooltip.hidden {
+  opacity: 0;
+}
+.tv-menu-tooltip.visible {
+  opacity: 1;
+}
+
+
 /* ─── MEDIA QUERIES (smartphones/tablets) ─────────────────────────── */
 @media (max-width: 768px) {
   /* ocultar reloj y channel-title en móviles */
-  #clock-container { display: none !important; }
+  .clock { display: none !important; }
   /* playlist ocupa toda la pantalla */
   #playlist-container { width: 100vw; left: -100vw; }
   /* ajustes de tamaño ya definidos arriba */

@@ -382,8 +382,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       number: "101",
       image: "img/CANAL ATV.png",
-      title: "ATV",
-      file: "https://d19e55ehz2il4i.cloudfront.net/index.m3u8"
+      title: "COPS",
+      file: "https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8"
     },
     {
       number: "102",
@@ -434,9 +434,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       number: "109",
       image: "img/canalorbittv.png",
-      title: "ORBIT TV",
+      title: "AFV TV",
       file:
-        "https://ss3.domint.net:3134/otv_str/orbittv/playlist.m3u8"
+        "https://linear-46.frequency.stream/dist/plex/46/hls/master/playlist.m3u8"
     },
     {
       number: "110",

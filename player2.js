@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "101",
-      image: "img/CANAL ATV.png",
+      image: "img/CANAL-COPS.png",
       title: "COPS",
       file: "https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8"
     },
@@ -433,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "109",
-      image: "img/canalorbittv.png",
+      image: "img/CANAL-AFV.png",
       title: "AFV TV",
       file:
         "https://linear-46.frequency.stream/dist/plex/46/hls/master/playlist.m3u8"

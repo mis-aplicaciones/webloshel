@@ -48,25 +48,30 @@ class PlayerJS {
   }
 
   init() {
+    // Reloj
     this.updateClock();
     setInterval(() => this.updateClock(), 60000);
+
     this.addUIListeners();
     this.initMenuActions();
     this.videoEl.autoplay = true;
     this.monitorPlayback();
+
+    // Auto‐hide playlist only
     setInterval(() => {
-      if (!this.overlayActive &&
-          Date.now() - this.lastNavTime > this.autoHide) {
+      if (!this.overlayActive
+          && Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
       }
     }, 500);
+
     this.initTouchDrag();
   }
 
   updateClock() {
     const d = new Date();
-    let h = d.getHours() % 12 || 12;
-    let m = String(d.getMinutes()).padStart(2, "0");
+    let h = d.getHours() % 12 || 12,
+        m = String(d.getMinutes()).padStart(2, "0");
     this.timeEl.textContent = `${h}:${m}`;
   }
 
@@ -74,44 +79,41 @@ class PlayerJS {
   /*                    MENU TV                      */
   /*──────────────────────────────────────────────────*/
   initMenuActions() {
-    // Volver
     this.btnReturn.addEventListener("click", () => history.back());
-    // Lista
     this.btnList.addEventListener("click", () => {
       this.hideMenu();
       this.showUI();
     });
-    // Pausa/Reanudar
     this.btnPause.addEventListener("click", () => {
       if (this.videoEl.paused) {
         this.videoEl.play();
-        this.iconPause.className = "bi bi-pause-fill";
+        this.iconPause.className = "bi bi-pause-circle-fill";
         this.btnPause.dataset.title = "Pausa";
       } else {
         this.videoEl.pause();
-        this.iconPause.className = "bi bi-play-fill";
+        this.iconPause.className = "bi bi-play-circle-fill";
         this.btnPause.dataset.title = "Reanudar";
       }
       this.resetMenuTimer();
     });
-    // Cerrar overlay
     this.btnClose.addEventListener("click", () => this.hideMenu());
 
-    // Tooltip en focus
-    [this.btnReturn, this.btnList, this.btnPause, this.btnClose].forEach(btn => {
-      btn.addEventListener("focus", () => this.showTooltip(btn));
-    });
+    // Tooltip on focus
+    [this.btnReturn, this.btnList, this.btnPause, this.btnClose]
+      .forEach(btn => {
+        btn.addEventListener("focus", () => this.showTooltip(btn));
+      });
   }
 
   showMenu() {
     this.overlayActive = true;
     this.containerEl.classList.remove("active");
 
-    // Actualiza miniatura, canal y calidad
+    // Update thumbnail, channel number & quality
     const cur = this.playlist[this.playbackIndex] || {};
     this.imgEl.src            = cur.image || "";
-    this.chanNumEl.textContent = cur.number || "";
-    this.qualityEl.textContent = `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
+    this.chanNumEl.textContent= cur.number||"";
+    this.qualityEl.textContent= `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
 
     this.menuEl.classList.remove("hidden");
     this.btnReturn.focus();
@@ -135,7 +137,6 @@ class PlayerJS {
     this.tooltipEl.textContent = title;
     this.tooltipEl.classList.remove("hidden");
     this.tooltipEl.classList.add("visible");
-    // reposicionar horizontalmente
     const rect = btn.getBoundingClientRect();
     this.tooltipEl.style.left = `${rect.left + rect.width/2}px`;
     this.resetMenuTimer();
@@ -185,24 +186,29 @@ class PlayerJS {
     const item = document.createElement("div");
     item.className = "carousel-item";
     item.dataset.idx = idx;
+
     const lbl = document.createElement("div");
     lbl.className = "item-label";
-    lbl.innerHTML = `<span>${data.number||''}</span>`;
+    lbl.innerHTML = `<span>${data.number||""}</span>`;
+
     const img = document.createElement("img");
     img.src = data.image||""; img.alt = data.title||"";
+
     const btn = document.createElement("button");
     btn.className = "carousel-button";
     btn.textContent = data.title||"";
+
     item.append(lbl, img, btn);
     item.addEventListener("click", ()=>{ this.currentIndex = idx; this.play(); });
     item.addEventListener("touchend", e=>{ e.preventDefault(); this.currentIndex = idx; this.play(); });
+
     return item;
   }
 
   renderCarousel() {
     const N = this.playlist.length;
     this.playlistEl.innerHTML = "";
-    for (let off=-this.half; off<=this.half; off++){
+    for (let off=-this.half; off<=this.half; off++) {
       const idx = ((this.currentIndex+off)%N+N)%N;
       this.playlistEl.appendChild(this.createItem(idx));
     }
@@ -212,13 +218,24 @@ class PlayerJS {
     const items = this.playlistEl.children;
     if (!items.length) return;
     const st = getComputedStyle(items[0]);
-    const itemH = items[0].offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
-    const wrapH = this.containerEl.querySelector(".carousel-wrapper").clientHeight;
+    const itemH = items[0].offsetHeight
+                + parseFloat(st.marginTop)
+                + parseFloat(st.marginBottom);
+    const wrapH = this.containerEl
+                   .querySelector(".carousel-wrapper").clientHeight;
     const baseY = wrapH/2 - itemH/2 - this.half*itemH;
-    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
-    this.playlistEl.style.transform  = `translateY(${baseY}px)`;
-    Array.from(items).forEach((el,i)=> el.classList.toggle("focused", i===this.half));
-    if (!animate){ void this.playlistEl.offsetWidth; this.playlistEl.style.transition="transform .3s ease"; }
+
+    this.playlistEl.style.transition = animate
+      ? "transform .3s ease"
+      : "none";
+    this.playlistEl.style.transform = `translateY(${baseY}px)`;
+    Array.from(items).forEach((el,i)=>
+      el.classList.toggle("focused", i===this.half)
+    );
+    if (!animate) {
+      void this.playlistEl.offsetWidth;
+      this.playlistEl.style.transition = "transform .3s ease";
+    }
   }
 
   move(dir) {
@@ -235,10 +252,11 @@ class PlayerJS {
   /*──────────────────────────────────────────────────*/
   playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
-    this.playbackIndex = this.currentIndex;
+    this.playbackIndex     = this.currentIndex;
     this.hasUncommittedNav = false;
     if (this.hls){ this.hls.destroy(); this.hls=null; }
     if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer=null; }
+
     if (f.file?.endsWith(".m3u8") && Hls.isSupported()){
       this.hls=new Hls({maxBufferLength:30,liveSyncDurationCount:3,enableWorker:true});
       this.hls.loadSource(f.file);
@@ -247,11 +265,14 @@ class PlayerJS {
     }
     else if (window.shaka && shaka.Player.isBrowserSupported()){
       this.shakaPlayer=new shaka.Player(this.videoEl);
-      this.shakaPlayer.load(f.file).then(()=>this.videoEl.play()).catch(()=>{
-        this.videoEl.src=f.file; this.videoEl.play();
-      });
+      this.shakaPlayer.load(f.file)
+        .then(()=>this.videoEl.play())
+        .catch(()=>{ this.videoEl.src=f.file; this.videoEl.play(); });
     }
-    else { this.videoEl.src=f.file; this.videoEl.play(); }
+    else {
+      this.videoEl.src = f.file;
+      this.videoEl.play();
+    }
     this.videoEl.title = f.title||"";
   }
 
@@ -264,7 +285,7 @@ class PlayerJS {
   monitorPlayback() {
     let last=0;
     setInterval(()=>{
-      if (!this.videoEl.paused && !this.videoEl.ended){
+      if (!this.videoEl.paused && !this.videoEl.ended) {
         if (this.videoEl.currentTime===last) this.playCurrent();
         last=this.videoEl.currentTime;
       }
@@ -275,61 +296,81 @@ class PlayerJS {
   /*            GLOBAL EVENT LISTENERS               */
   /*──────────────────────────────────────────────────*/
   addUIListeners() {
-    ["mousemove","click","touchstart"].forEach(ev =>
+    ["mousemove","click","touchstart"].forEach(ev=>
       window.addEventListener(ev, ()=> this.showUI())
     );
-    window.addEventListener("keydown", e=>{
-      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter"].includes(e.key))
-        e.preventDefault();
 
-      if (this.overlayActive){
-        // Navegación izq/der entre los 4 botones
-        if (e.key==="ArrowLeft"){
-          if (document.activeElement===this.btnReturn) return;
+    window.addEventListener("keydown", e=>{
+      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
+           "ChannelUp","ChannelDown"].includes(e.key)
+          || [33,34].includes(e.keyCode)) {
+        e.preventDefault();
+      }
+
+      // Cambio de canal con botones especiales
+      if (e.key==="ChannelUp" || e.keyCode===33) {
+        this.move(-1);
+        this.playCurrent();
+        return;
+      }
+      if (e.key==="ChannelDown" || e.keyCode===34) {
+        this.move(1);
+        this.playCurrent();
+        return;
+      }
+
+      // Dentro del overlay: izq/der/enter para navegar botones
+      if (this.overlayActive) {
+        if (e.key==="ArrowLeft") {
           if (document.activeElement===this.btnList)   this.btnReturn.focus();
-          else if (document.activeElement===this.btnPause)  this.btnList.focus();
-          else if (document.activeElement===this.btnClose)  this.btnPause.focus();
+          else if (document.activeElement===this.btnPause) this.btnList.focus();
+          else if (document.activeElement===this.btnClose) this.btnPause.focus();
         }
-        else if (e.key==="ArrowRight"){
+        else if (e.key==="ArrowRight") {
           if (document.activeElement===this.btnReturn) this.btnList.focus();
           else if (document.activeElement===this.btnList) this.btnPause.focus();
           else if (document.activeElement===this.btnPause) this.btnClose.focus();
-          else if (document.activeElement===this.btnClose) return;
         }
-        else if (e.key==="Enter"){
+        else if (e.key==="Enter") {
           document.activeElement.click();
         }
         this.resetMenuTimer();
         return;
       }
 
-      if (e.key==="ArrowLeft"){
+      // Abrir overlay con ArrowLeft
+      if (e.key==="ArrowLeft") {
         this.showMenu();
         return;
       }
+
+      // Abrir playlist con flechas Arriba/Abajo si oculto
       if (!this.containerEl.classList.contains("active")
-          && (e.key==="ArrowUp"||e.key==="ArrowDown")){
+          && (e.key==="ArrowUp"||e.key==="ArrowDown")) {
         this.showUI();
         return;
       }
-      if (e.key==="ArrowUp") this.move(-1);
+
+      // Navegación playlist
+      if (e.key==="ArrowUp")        this.move(-1);
       else if (e.key==="ArrowDown") this.move(1);
-      else if (e.key==="Enter") this.playCurrent();
+      else if (e.key==="Enter")     this.playCurrent();
     });
 
+    // Rueda global para playlist
     window.addEventListener("wheel", e=>{
       e.preventDefault();
       if (this.overlayActive) return;
-      if (!this.containerEl.classList.contains("active")){
+      if (!this.containerEl.classList.contains("active")) {
         this.showUI();
       } else {
         this.move(e.deltaY>0?1:-1);
       }
     });
 
-    this.videoEl.addEventListener("waiting",   ()=>this.spinnerEl.classList.remove("hidden"));
-    this.videoEl.addEventListener("playing",   ()=>this.spinnerEl.classList.add("hidden"));
-    this.videoEl.addEventListener("error",     ()=>this.playCurrent());
+    this.videoEl.addEventListener("waiting", ()=>this.spinnerEl.classList.remove("hidden"));
+    this.videoEl.addEventListener("playing", ()=>this.spinnerEl.classList.add("hidden"));
+    this.videoEl.addEventListener("error",   ()=>this.playCurrent());
   }
 
   /*──────────────────────────────────────────────────*/
@@ -338,12 +379,12 @@ class PlayerJS {
   initTouchDrag() {
     const wrapper=this.containerEl.querySelector(".carousel-wrapper");
     const listEl=this.playlistEl;
-    let itemH,baseY;
+    let itemH, baseY;
     const recalc=()=>{
       const first=listEl.children[0];
       const st=getComputedStyle(first);
       itemH=first.offsetHeight+parseFloat(st.marginTop)+parseFloat(st.marginBottom);
-      baseY = wrapper.clientHeight/2 - itemH/2 - this.half*itemH;
+      baseY=wrapper.clientHeight/2 - itemH/2 - this.half*itemH;
     };
     wrapper.addEventListener("touchstart", e=>{
       recalc();
@@ -353,14 +394,14 @@ class PlayerJS {
     });
     wrapper.addEventListener("touchmove", e=>{
       if(!this._isDragging) return;
-      const deltaY=e.touches[0].clientY-this._touchStartY;
-      listEl.style.transform=`translateY(${baseY+deltaY}px)`;
+      const d=e.touches[0].clientY-this._touchStartY;
+      listEl.style.transform=`translateY(${baseY+d}px)`;
     });
     wrapper.addEventListener("touchend", e=>{
       if(!this._isDragging) return;
       this._isDragging=false;
-      const deltaY=e.changedTouches[0].clientY-this._touchStartY;
-      const steps=Math.round(-deltaY/itemH);
+      const d=e.changedTouches[0].clientY-this._touchStartY;
+      const steps=Math.round(-d/itemH);
       this.move(steps);
       listEl.style.transition="transform .3s ease";
       listEl.style.transform=`translateY(${baseY}px)`;

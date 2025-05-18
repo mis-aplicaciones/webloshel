@@ -495,10 +495,10 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "112",
-      image: "img/CANAL-PANAMERICANA.png",
-      title: "PANAMERICANA TV",
+      image: "img/CANAL-OXIGENO.png",
+      title: "OXIGENO 2",
       file:
-        "https://sae12.playlist.live-video.net/v1/playlist/CsEFxVRK_puBYGmeHU892DSzPw_0F7k2LcmjK5v6nOtlbp7If0bppqXSBjLQ8OkLekBQp0X9h7hineXw8N-HPbjeiXY-OumZnlNteUxp4KeYuY90gE-oyL5IviBybDaQBoKxfcLq0PVIIUN2vT4QPSBw-PJPVRXXYaYVnD7mLvgRGUUiwTUgMIyfau_3cs2X5o-r-QieHdlOUoYFE6Fq_s9y7ZB_sc9IzqxXhNx2v5FN_cJ82b0l1ut3ibcBfejXOcMz1Ruo6zy-GObNAzmTdrG4c-YtE9TOQhsd4Nk0yxn8Nj_8mrcZrtTOFQT6Mf0Xpf3gADtOYnVhv98ZPOI8tC7p60wd6l78PmY9eUoZHaOxWeG1mewNWUvgtLa736byVXK9aCn2M9YJVyD8Bbqh_bgc7vjg-6frisDan84X62qTEHhW2i6K0_vQbKAM-ZKp3GVie_UUfKJhzhNYixck3NnKKdgdwVlZV2uRDsfUhxjSFyb_1-qU8Oif8xAA1wTfsrzEvt3KUCaJRaStJy916sqOVK2DMRF94p9JO03W3JdnKuv-F5TNe08xUSx7RP5rFEUymMWqKfrS1g4wPhKJ5fyXbMGpIRW-JXiKnAiu8tBjWv-9KMndZRTxXifASBPLWTh21OB4Dw9_PFHM9yJtr1d-7K5We69IH3MdLZeW7Q3IvIw6AoEPDrNiSqiiesRris2SZbwDZ9VZ33lDU7Dy76vZavvf-j0KV9A7ZtN_CbSRRYsOJisW23pFaFMMBrS4zEATYXmiQA2AhL5DSzdv1z8zoc_x8_b1SUS6bAg0DGVlH5ziY6YPkpxxF5A6Ip0HoDHAT4aoXiLMlw7Lp_OZcgAsHU2AUpwLZFzn4UlhFZdxpFJqIqqQDhLZWqWs3u6Gjcl09zWDWIWpOxpZ2FT8MtWf-0VwwTAv5HosPzuzbAQapd_hGgw-XHWq5hxqoE1mhbAgASoJdXMtZWFzdC0yMIIM.m3u8"
+        "https://vcp.myplaytv.com/oxigenotv/oxigenotv/playlist.m3u8"
     },
     {
       number: "113",

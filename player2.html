@@ -9,14 +9,33 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styleplayers.css" />
+    <!-- Hls.js y Shaka Player (para MSE) -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
+    <!-- FFmpeg.wasm (versión mínima que incluye core) -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.1/dist/ffmpeg.min.js"></script>
+    <style>
+      /* Oculto la carga de FFmpeg hasta que se necesite */
+      .ffmpeg-loading {
+        display: none;
+        font-size: 1rem;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
   </head>
   <body>
     <!-- VIDEO + SPINNER -->
     <div id="player-container">
       <video id="player-video" autoplay playsinline></video>
       <div id="video-loading-spinner" class="spinner hidden"></div>
+      <!-- Mensaje de “Cargando/transcodificando” -->
+      <div id="ffmpeg-status" class="ffmpeg-loading">
+        Transcodificando para compatibilidad…
+      </div>
     </div>
 
     <!-- PLAYLIST -->
@@ -40,7 +59,6 @@
       </div>
 
       <div class="tv-menu-bottom">
-        <!-- Agrupamos Return + Lista -->
         <div class="tv-menu-group-left">
           <button
             id="btn-return"
@@ -48,7 +66,7 @@
             data-title="Volver"
             tabindex="0"
           >
-            <i class="bi bi-arrow-left-short"></i>
+            <i class="bi bi-arrow-left-circle-fill"></i>
           </button>
           <button
             id="btn-list"
@@ -65,7 +83,7 @@
           data-title="Pausa"
           tabindex="-1"
         >
-          <i id="icon-pause" class="bi bi-pause-fill"></i>
+          <i id="icon-pause" class="bi bi-pause-circle-fill"></i>
         </button>
         <button
           id="btn-close"
@@ -73,11 +91,10 @@
           data-title="Cerrar"
           tabindex="-1"
         >
-          <i class="bi bi-x"></i>
+          <i class="bi bi-x-circle-fill"></i>
         </button>
       </div>
 
-      <!-- Tooltip sobre botón enfocado -->
       <div id="tv-menu-tooltip" class="tv-menu-tooltip hidden"></div>
     </div>
 

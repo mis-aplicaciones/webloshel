@@ -1,15 +1,12 @@
-const { createFFmpeg, fetchFile } = FFmpeg; // FFmpeg.wasm
-
 class PlayerJS {
   constructor() {
-    // ELEMENTOS BÁSICOS
+    // Elementos básicos
     this.videoEl      = document.getElementById("player-video");
     this.playlistEl   = document.getElementById("carouselList");
     this.containerEl  = document.getElementById("playlist-container");
     this.spinnerEl    = document.getElementById("video-loading-spinner");
-    this.ffmpegStatus = document.getElementById("ffmpeg-status");
 
-    // OVERLAY TV
+    // Overlay TV
     this.menuEl      = document.getElementById("tv-menu");
     this.imgEl       = document.getElementById("tv-menu-img");
     this.chanNumEl   = document.getElementById("tv-menu-channel-number");
@@ -25,39 +22,32 @@ class PlayerJS {
     this.overlayActive = false;
     this.menuTimer     = null;
 
-    // ÍNDICES Y FLAGS
+    // Índices y flags
     this.currentIndex      = 0;
     this.playbackIndex     = 0;
     this.hasUncommittedNav = false;
 
-    // PLAYLIST Y REPRODUCTORES
+    // Playlist y reproductores
     this.playlist      = [];
     this.hls           = null;
     this.shakaPlayer   = null;
 
-    // AUTO-HIDE UI
+    // Auto‐hide UI
     this.lastNavTime   = Date.now();
     this.autoHide      = 5000;
 
-    // CARRUSEL
+    // Carrusel
     this.visibleCount  = 7;
     this.half          = Math.floor(this.visibleCount / 2);
 
-    // TOUCH-DRAG
+    // Touch‐drag
     this._touchStartY  = 0;
     this._isDragging   = false;
-
-    // FFmpeg.wasm INSTANCE (para transcodificar si es necesario)
-    this.ffmpeg        = null;
-    this.ffmpegReady   = false;
 
     this.init();
   }
 
-  async init() {
-    // Iniciar FFmpeg.wasm (pero no bloquear resto)
-    this.initFFmpeg();
-
+  init() {
     // Reloj
     this.updateClock();
     setInterval(() => this.updateClock(), 60000);
@@ -67,31 +57,15 @@ class PlayerJS {
     this.videoEl.autoplay = true;
     this.monitorPlayback();
 
-    // Auto-hide playlist only
+    // Auto‐hide playlist only
     setInterval(() => {
-      if (!this.overlayActive &&
-          Date.now() - this.lastNavTime > this.autoHide) {
+      if (!this.overlayActive
+          && Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
       }
     }, 500);
 
     this.initTouchDrag();
-  }
-
-  async initFFmpeg() {
-    // Cargar FFmpeg.wasm solo si aún no está listo
-    this.ffmpeg = createFFmpeg({ log: true });
-    this.ffmpegStatus.textContent = "Descargando FFmpeg…";
-    this.ffmpegStatus.style.display = "block";
-    try {
-      await this.ffmpeg.load();
-      this.ffmpegReady = true;
-      this.ffmpegStatus.style.display = "none";
-    } catch (err) {
-      console.error("Error cargando FFmpeg.wasm:", err);
-      this.ffmpegStatus.textContent = "No se pudo cargar FFmpeg. Fallback nativo sólo.";
-      setTimeout(() => this.ffmpegStatus.style.display = "none", 3000);
-    }
   }
 
   updateClock() {
@@ -225,15 +199,8 @@ class PlayerJS {
     btn.textContent = data.title||"";
 
     item.append(lbl, img, btn);
-    item.addEventListener("click", ()=>{ 
-      this.currentIndex = idx; 
-      this.play(); 
-    });
-    item.addEventListener("touchend", e => { 
-      e.preventDefault(); 
-      this.currentIndex = idx; 
-      this.play(); 
-    });
+    item.addEventListener("click", ()=>{ this.currentIndex = idx; this.play(); });
+    item.addEventListener("touchend", e=>{ e.preventDefault(); this.currentIndex = idx; this.play(); });
 
     return item;
   }
@@ -241,7 +208,7 @@ class PlayerJS {
   renderCarousel() {
     const N = this.playlist.length;
     this.playlistEl.innerHTML = "";
-    for (let off=-this.half; off<=this.half; off++){
+    for (let off=-this.half; off<=this.half; off++) {
       const idx = ((this.currentIndex+off)%N+N)%N;
       this.playlistEl.appendChild(this.createItem(idx));
     }
@@ -283,175 +250,30 @@ class PlayerJS {
   /*──────────────────────────────────────────────────*/
   /*                PLAYBACK & CONTROLES             */
   /*──────────────────────────────────────────────────*/
-  async playCurrent() {
+  playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
     this.playbackIndex     = this.currentIndex;
     this.hasUncommittedNav = false;
+    if (this.hls){ this.hls.destroy(); this.hls=null; }
+    if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer=null; }
 
-    // Detenemos cualquier Hls/Shaka existente
-    if (this.hls) {
-      this.hls.destroy(); this.hls = null;
-    }
-    if (this.shakaPlayer) {
-      this.shakaPlayer.destroy(); this.shakaPlayer = null;
-    }
-    this.videoEl.pause();
-    this.videoEl.removeAttribute("src");
-    this.videoEl.load();
-
-    if (!f.file) return;
-
-    // --------- 1) Fallback nativo para Android TV (ExoPlayer) ---------
-    const ua = navigator.userAgent;
-    if (/Android/.test(ua) && /TV/.test(ua)) {
-      // Suponiendo que tu WebView tiene un bridge para ExoPlayer
-      if (window.AndroidTVInterface && AndroidTVInterface.openStream) {
-        AndroidTVInterface.openStream(f.file);
-        return;
-      }
-      // Si no hay bridge, confiamos en el HLS nativo del WebView
-      if (this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
-        this.videoEl.src = f.file;
-        this.videoEl.play().catch(err => console.error("Error nativo HLS:", err));
-        return;
-      }
-    }
-
-    // --------- 2) Intentar Hls.js (MSE) ---------
-    if (f.file.endsWith(".m3u8") && Hls.isSupported()) {
-      this.hls = new Hls({
-        maxBufferLength: 30,
-        liveSyncDurationCount: 3,
-        enableWorker: true
-      });
+    if (f.file?.endsWith(".m3u8") && Hls.isSupported()){
+      this.hls=new Hls({maxBufferLength:30,liveSyncDurationCount:3,enableWorker:true});
       this.hls.loadSource(f.file);
       this.hls.attachMedia(this.videoEl);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        this.videoEl.play();
-      });
-      this.hls.on(Hls.Events.ERROR, async (event, data) => {
-        console.warn("Hls.js error:", data);
-        this.hls.destroy();
-        this.hls = null;
-        // Si hay problemas de códec, pasamos a transcodificación
-        await this.attemptFFmpegTranscode(f.file);
-      });
-      return;
+      this.hls.on(Hls.Events.MANIFEST_PARSED, ()=>this.videoEl.play());
     }
-
-    // --------- 3) Intentar Shaka Player (DASH, etc.) ---------
-    if (window.shaka && shaka.Player.isBrowserSupported()) {
-      try {
-        this.shakaPlayer = new shaka.Player(this.videoEl);
-        await this.shakaPlayer.load(f.file);
-        this.videoEl.play();
-        return;
-      } catch (err) {
-        console.warn("Shaka error:", err);
-        if (this.shakaPlayer) {
-          this.shakaPlayer.destroy();
-          this.shakaPlayer = null;
-        }
-        // Caemos a transcodificación si es HLS con códecs raros
-        if (f.file.endsWith(".m3u8")) {
-          await this.attemptFFmpegTranscode(f.file);
-          return;
-        }
-      }
+    else if (window.shaka && shaka.Player.isBrowserSupported()){
+      this.shakaPlayer=new shaka.Player(this.videoEl);
+      this.shakaPlayer.load(f.file)
+        .then(()=>this.videoEl.play())
+        .catch(()=>{ this.videoEl.src=f.file; this.videoEl.play(); });
     }
-
-    // --------- 4) Fallback nativo HLS (Safari, iOS, WebView compatible) ---------
-    if (f.file.endsWith(".m3u8") && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+    else {
       this.videoEl.src = f.file;
-      this.videoEl.load();
-      this.videoEl.play().catch(err => {
-        console.error("Error reproducción nativa HLS:", err);
-        // Intentar transcodificación si no funciona
-        this.attemptFFmpegTranscode(f.file);
-      });
-      return;
+      this.videoEl.play();
     }
-
-    // --------- 5) Transcodificación con FFmpeg.wasm como último recurso ---------
-    if (f.file.endsWith(".m3u8")) {
-      await this.attemptFFmpegTranscode(f.file);
-      return;
-    }
-
-    // --------- 6) Reproducción directa por URL (fallback final) ---------
-    console.warn("Asignando src directo:", f.file);
-    this.videoEl.src = f.file;
-    this.videoEl.play().catch(err => {
-      console.error("Reproducción directa falló:", err);
-    });
-  }
-
-  /** 
-   * Si llegamos aquí, Hls.js y Shaka fallaron. 
-   * Intentamos transcodificar unos segundos con FFmpeg.wasm.
-   */
-  async attemptFFmpegTranscode(url) {
-    if (!this.ffmpegReady) {
-      console.warn("FFmpeg no está listo, intentando reproducción nativa…");
-      this.videoEl.src = url;
-      this.videoEl.play().catch(err => console.error("Error nativo:", err));
-      return;
-    }
-
-    try {
-      this.ffmpegStatus.textContent = "Transcodificando para compatibilidad…";
-      this.ffmpegStatus.style.display = "block";
-
-      // 1) Descarga el playlist manifest (m3u8)
-      const manifestResp = await fetch(url);
-      const manifestText = await manifestResp.text();
-
-      // 2) Buscamos el primer segmento .ts
-      const lines = manifestText.split("\n");
-      let firstTs = null;
-      for (let line of lines) {
-        line = line.trim();
-        if (line && !line.startsWith("#")) {
-          firstTs = line;
-          break;
-        }
-      }
-      if (!firstTs) throw new Error("No se encontró segmento TS");
-
-      // 3) Calculamos URL completo del segmento
-      let base = url.substring(0, url.lastIndexOf("/") + 1);
-      const tsUrl = firstTs.startsWith("http") ? firstTs : (base + firstTs);
-
-      // 4) Descargamos el primer segmento TS
-      const tsResponse = await fetch(tsUrl);
-      const tsData = new Uint8Array(await tsResponse.arrayBuffer());
-      this.ffmpeg.FS("writeFile", "seg0.ts", tsData);
-
-      // 5) Ejecutamos transcodificación: tomamos primer segmento y lo transcodificamos a mp4
-      await this.ffmpeg.run(
-        "-i", "seg0.ts",
-        "-c:v", "libx264", "-c:a", "aac",
-        "-t", "5",      // recodifica solo los primeros 5 segundos
-        "-f", "mp4",
-        "out.mp4"
-      );
-
-      // 6) Leemos el resultado
-      const data = this.ffmpeg.FS("readFile", "out.mp4");
-      const blob = new Blob([data.buffer], { type: "video/mp4" });
-      const blobUrl = URL.createObjectURL(blob);
-
-      this.videoEl.src = blobUrl;
-      await this.videoEl.play();
-      this.ffmpegStatus.style.display = "none";
-    } catch (err) {
-      console.error("Error transcodificando:", err);
-      this.ffmpegStatus.textContent = "No se puede reproducir este canal.";
-      setTimeout(() => this.ffmpegStatus.style.display = "none", 3000);
-      // Intentar fallback nativo
-      this.videoEl.src = url;
-      this.videoEl.play().catch(() => {});
-    }
+    this.videoEl.title = f.title||"";
   }
 
   play() {
@@ -461,59 +283,55 @@ class PlayerJS {
   }
 
   monitorPlayback() {
-    let last = 0;
-    setInterval(() => {
+    let last=0;
+    setInterval(()=>{
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) {
-          this.playCurrent();
-        }
-        last = this.videoEl.currentTime;
+        if (this.videoEl.currentTime===last) this.playCurrent();
+        last=this.videoEl.currentTime;
       }
-    }, 5000);
+    },5000);
   }
 
   /*──────────────────────────────────────────────────*/
   /*            GLOBAL EVENT LISTENERS               */
   /*──────────────────────────────────────────────────*/
   addUIListeners() {
-    ["mousemove","click","touchstart"].forEach(ev =>
-      window.addEventListener(ev, () => this.showUI())
+    ["mousemove","click","touchstart"].forEach(ev=>
+      window.addEventListener(ev, ()=> this.showUI())
     );
 
-    window.addEventListener("keydown", e => {
-      const key = e.key;
-      const code = e.keyCode;
+    window.addEventListener("keydown", e=>{
       if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
-           "ChannelUp","ChannelDown"].includes(key)
-          || [33,34].includes(code)) {
+           "ChannelUp","ChannelDown"].includes(e.key)
+          || [33,34].includes(e.keyCode)) {
         e.preventDefault();
       }
 
-      // Botones ChannelUp / ChannelDown (cambiar canal)
-      if (key === "ChannelUp" || code === 33) {
+      // Cambio de canal con botones especiales
+      if (e.key==="ChannelUp" || e.keyCode===33) {
         this.move(-1);
         this.playCurrent();
         return;
       }
-      if (key === "ChannelDown" || code === 34) {
+      if (e.key==="ChannelDown" || e.keyCode===34) {
         this.move(1);
         this.playCurrent();
         return;
       }
 
-      // Dentro del overlay: izq/der/enter navegar botones
+      // Dentro del overlay: izq/der/enter para navegar botones
       if (this.overlayActive) {
-        if (key === "ArrowLeft") {
-          if (document.activeElement === this.btnList)   this.btnReturn.focus();
-          else if (document.activeElement === this.btnPause) this.btnList.focus();
-          else if (document.activeElement === this.btnClose) this.btnPause.focus();
+        if (e.key==="ArrowLeft") {
+          if (document.activeElement===this.btnList)   this.btnReturn.focus();
+          else if (document.activeElement===this.btnPause) this.btnList.focus();
+          else if (document.activeElement===this.btnClose) this.btnPause.focus();
         }
-        else if (key === "ArrowRight") {
-          if (document.activeElement === this.btnReturn) this.btnList.focus();
-          else if (document.activeElement === this.btnList) this.btnPause.focus();
-          else if (document.activeElement === this.btnPause) this.btnClose.focus();
+        else if (e.key==="ArrowRight") {
+          if (document.activeElement===this.btnReturn) this.btnList.focus();
+          else if (document.activeElement===this.btnList) this.btnPause.focus();
+          else if (document.activeElement===this.btnPause) this.btnClose.focus();
         }
-        else if (key === "Enter") {
+        else if (e.key==="Enter") {
           document.activeElement.click();
         }
         this.resetMenuTimer();
@@ -521,38 +339,38 @@ class PlayerJS {
       }
 
       // Abrir overlay con ArrowLeft
-      if (key === "ArrowLeft") {
+      if (e.key==="ArrowLeft") {
         this.showMenu();
         return;
       }
 
-      // Mostrar playlist con flechas Arriba/Abajo si está oculto
+      // Abrir playlist con flechas Arriba/Abajo si oculto
       if (!this.containerEl.classList.contains("active")
-          && (key === "ArrowUp" || key === "ArrowDown")) {
+          && (e.key==="ArrowUp"||e.key==="ArrowDown")) {
         this.showUI();
         return;
       }
 
       // Navegación playlist
-      if (key === "ArrowUp")        this.move(-1);
-      else if (key === "ArrowDown") this.move(1);
-      else if (key === "Enter")     this.playCurrent();
+      if (e.key==="ArrowUp")        this.move(-1);
+      else if (e.key==="ArrowDown") this.move(1);
+      else if (e.key==="Enter")     this.playCurrent();
     });
 
     // Rueda global para playlist
-    window.addEventListener("wheel", e => {
+    window.addEventListener("wheel", e=>{
       e.preventDefault();
       if (this.overlayActive) return;
       if (!this.containerEl.classList.contains("active")) {
         this.showUI();
       } else {
-        this.move(e.deltaY > 0 ? 1 : -1);
+        this.move(e.deltaY>0?1:-1);
       }
     });
 
-    this.videoEl.addEventListener("waiting",   () => this.spinnerEl.classList.remove("hidden"));
-    this.videoEl.addEventListener("playing",   () => this.spinnerEl.classList.add("hidden"));
-    this.videoEl.addEventListener("error",     () => this.playCurrent());
+    this.videoEl.addEventListener("waiting", ()=>this.spinnerEl.classList.remove("hidden"));
+    this.videoEl.addEventListener("playing", ()=>this.spinnerEl.classList.add("hidden"));
+    this.videoEl.addEventListener("error",   ()=>this.playCurrent());
   }
 
   /*──────────────────────────────────────────────────*/
@@ -574,16 +392,16 @@ class PlayerJS {
       this._isDragging=true;
       listEl.style.transition="none";
     });
-    wrapper.addEventListener("touchmove", e => {
+    wrapper.addEventListener("touchmove", e=>{
       if(!this._isDragging) return;
-      const deltaY=e.touches[0].clientY - this._touchStartY;
-      listEl.style.transform=`translateY(${baseY+deltaY}px)`;
+      const d=e.touches[0].clientY-this._touchStartY;
+      listEl.style.transform=`translateY(${baseY+d}px)`;
     });
     wrapper.addEventListener("touchend", e=>{
       if(!this._isDragging) return;
       this._isDragging=false;
-      const deltaY=e.changedTouches[0].clientY - this._touchStartY;
-      const steps=Math.round(-deltaY/itemH);
+      const d=e.changedTouches[0].clientY-this._touchStartY;
+      const steps=Math.round(-d/itemH);
       this.move(steps);
       listEl.style.transition="transform .3s ease";
       listEl.style.transform=`translateY(${baseY}px)`;
@@ -610,9 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "102",
-      image: "img/canalnorselva.png",
-      title: "NORSELVA",
-      file: "http://clubtv.link/may1705/phpcode/lista0.php?c=24&token=Tecnoplus11&f=.m3u8"
+      image: "img/CANAL-DODO.png",
+      title: "DODO TV",
+      file: "https://cloud5.streaminglivehd.com:3651/hybrid/play.m3u8"
     },
     {
       number: "103",
@@ -630,8 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
       number: "105",
       image: "img/CANAL-AMC.png",
       title: "AMC",
-      file:
-        "http://vegafibratv.com:8085/AMC/index.m3u8"
+      file: "https://amc-amcespanol-1-us.lg.wurl.tv/playlist.m3u8"
     },
     {
       number: "106",
@@ -697,10 +514,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "115",
-      image: "img/CANAL-RETROPLUS.png",
-      title: "RETRO",
-      file:
-        "https://ssh101stream.ssh101.com/akamaissh101/ssh101/retroplustv03/playlist.m3u8"
+      image: "img/CANAL-INFAST.png",
+      title: "INFAST",
+      file: "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00861-terninternation-lifestylelatam-lges/playlist.m3u8"
     },
     {
       number: "116",
@@ -718,10 +534,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "118",
-      image: "img/CANAL-BAYRES.png",
-      title: "BAYRES TV",
-      file:
-        "https://streaming02.gbasat.com.ar:19360/bayrestv/bayrestv.m3u8"
+      image: "img/CANAL-SONYCOMEDY.png",
+      title: "SONY COMEDIA",
+      file: "https://spt-sonyonecomedias-mx.xiaomi.wurl.tv/playlist.m3u8"
     }
     ,
     {

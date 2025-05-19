@@ -37,7 +37,7 @@ class PlayerJS {
     this.autoHide      = 5000;
 
     // Carrusel
-    this.visibleCount  = 7;
+    this.visibleCount  = 5;
     this.half          = Math.floor(this.visibleCount / 2);
 
     // Touch‐drag
@@ -48,7 +48,7 @@ class PlayerJS {
   }
 
   init() {
-    // Reloj
+    // Configurar reloj
     this.updateClock();
     setInterval(() => this.updateClock(), 60000);
 
@@ -57,7 +57,7 @@ class PlayerJS {
     this.videoEl.autoplay = true;
     this.monitorPlayback();
 
-    // Auto‐hide playlist only
+    // Auto‐hide sólo para playlist
     setInterval(() => {
       if (!this.overlayActive
           && Date.now() - this.lastNavTime > this.autoHide) {
@@ -70,8 +70,8 @@ class PlayerJS {
 
   updateClock() {
     const d = new Date();
-    let h = d.getHours() % 12 || 12,
-        m = String(d.getMinutes()).padStart(2, "0");
+    let h = d.getHours() % 12 || 12;
+    let m = String(d.getMinutes()).padStart(2, "0");
     this.timeEl.textContent = `${h}:${m}`;
   }
 
@@ -87,18 +87,17 @@ class PlayerJS {
     this.btnPause.addEventListener("click", () => {
       if (this.videoEl.paused) {
         this.videoEl.play();
-        this.iconPause.className = "bi bi-pause-circle-fill";
+        this.iconPause.className = "bi bi-pause-fill";
         this.btnPause.dataset.title = "Pausa";
       } else {
         this.videoEl.pause();
-        this.iconPause.className = "bi bi-play-circle-fill";
+        this.iconPause.className = "bi bi-play-fill";
         this.btnPause.dataset.title = "Reanudar";
       }
       this.resetMenuTimer();
     });
     this.btnClose.addEventListener("click", () => this.hideMenu());
 
-    // Tooltip on focus
     [this.btnReturn, this.btnList, this.btnPause, this.btnClose]
       .forEach(btn => {
         btn.addEventListener("focus", () => this.showTooltip(btn));
@@ -109,10 +108,9 @@ class PlayerJS {
     this.overlayActive = true;
     this.containerEl.classList.remove("active");
 
-    // Update thumbnail, channel number & quality
     const cur = this.playlist[this.playbackIndex] || {};
     this.imgEl.src            = cur.image || "";
-    this.chanNumEl.textContent= cur.number||"";
+    this.chanNumEl.textContent= cur.number || "";
     this.qualityEl.textContent= `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
 
     this.menuEl.classList.remove("hidden");
@@ -137,6 +135,7 @@ class PlayerJS {
     this.tooltipEl.textContent = title;
     this.tooltipEl.classList.remove("hidden");
     this.tooltipEl.classList.add("visible");
+
     const rect = btn.getBoundingClientRect();
     this.tooltipEl.style.left = `${rect.left + rect.width/2}px`;
     this.resetMenuTimer();
@@ -174,7 +173,7 @@ class PlayerJS {
     this.hasUncommittedNav = false;
     this.renderCarousel();
     this.updateCarousel(false);
-    this.showUI();
+    // Ya no invocamos this.showUI(): playlist NO se muestra al cargar
     this.playCurrent();
   }
 
@@ -189,18 +188,26 @@ class PlayerJS {
 
     const lbl = document.createElement("div");
     lbl.className = "item-label";
-    lbl.innerHTML = `<span>${data.number||""}</span>`;
+    lbl.innerHTML = `<span>${data.number || ""}</span>`;
 
     const img = document.createElement("img");
-    img.src = data.image||""; img.alt = data.title||"";
+    img.src = data.image || ""; 
+    img.alt = data.title || "";
 
     const btn = document.createElement("button");
     btn.className = "carousel-button";
-    btn.textContent = data.title||"";
+    btn.textContent = data.title || "";
 
     item.append(lbl, img, btn);
-    item.addEventListener("click", ()=>{ this.currentIndex = idx; this.play(); });
-    item.addEventListener("touchend", e=>{ e.preventDefault(); this.currentIndex = idx; this.play(); });
+    item.addEventListener("click", () => { 
+      this.currentIndex = idx; 
+      this.play(); 
+    });
+    item.addEventListener("touchend", e => { 
+      e.preventDefault(); 
+      this.currentIndex = idx; 
+      this.play(); 
+    });
 
     return item;
   }
@@ -208,13 +215,13 @@ class PlayerJS {
   renderCarousel() {
     const N = this.playlist.length;
     this.playlistEl.innerHTML = "";
-    for (let off=-this.half; off<=this.half; off++) {
-      const idx = ((this.currentIndex+off)%N+N)%N;
+    for (let off = -this.half; off <= this.half; off++) {
+      const idx = ((this.currentIndex + off) % N + N) % N;
       this.playlistEl.appendChild(this.createItem(idx));
     }
   }
 
-  updateCarousel(animate=true) {
+  updateCarousel(animate = true) {
     const items = this.playlistEl.children;
     if (!items.length) return;
     const st = getComputedStyle(items[0]);
@@ -225,13 +232,13 @@ class PlayerJS {
                    .querySelector(".carousel-wrapper").clientHeight;
     const baseY = wrapH/2 - itemH/2 - this.half*itemH;
 
-    this.playlistEl.style.transition = animate
-      ? "transform .3s ease"
-      : "none";
-    this.playlistEl.style.transform = `translateY(${baseY}px)`;
-    Array.from(items).forEach((el,i)=>
-      el.classList.toggle("focused", i===this.half)
-    );
+    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
+    this.playlistEl.style.transform  = `translateY(${baseY}px)`;
+
+    Array.from(items).forEach((el,i) => {
+      el.classList.toggle("focused", i === this.half);
+    });
+
     if (!animate) {
       void this.playlistEl.offsetWidth;
       this.playlistEl.style.transition = "transform .3s ease";
@@ -240,7 +247,7 @@ class PlayerJS {
 
   move(dir) {
     const N = this.playlist.length;
-    this.currentIndex = (this.currentIndex + dir + N)%N;
+    this.currentIndex = (this.currentIndex + dir + N) % N;
     this.hasUncommittedNav = true;
     this.lastNavTime = Date.now();
     this.renderCarousel();
@@ -248,32 +255,46 @@ class PlayerJS {
   }
 
   /*──────────────────────────────────────────────────*/
-  /*                PLAYBACK & CONTROLES             */
+  /*                REPRODUCCIÓN                     */
   /*──────────────────────────────────────────────────*/
   playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
-    this.playbackIndex     = this.currentIndex;
+    this.playbackIndex = this.currentIndex;
     this.hasUncommittedNav = false;
-    if (this.hls){ this.hls.destroy(); this.hls=null; }
-    if (this.shakaPlayer){ this.shakaPlayer.destroy(); this.shakaPlayer=null; }
 
-    if (f.file?.endsWith(".m3u8") && Hls.isSupported()){
-      this.hls=new Hls({maxBufferLength:30,liveSyncDurationCount:3,enableWorker:true});
-      this.hls.loadSource(f.file);
+    if (this.hls) { this.hls.destroy(); this.hls = null; }
+    if (this.shakaPlayer) { this.shakaPlayer.destroy(); this.shakaPlayer = null; }
+
+    // Detección robusta de m3u8 (incluso con parámetros o HTTP)
+    const url = (f.file || "").trim();
+    const isM3U8 = /\.m3u8($|\?)/i.test(url);
+
+    if (isM3U8 && window.Hls && Hls.isSupported()) {
+      this.hls = new Hls({
+        maxBufferLength: 30,
+        liveSyncDurationCount: 3,
+        enableWorker: true
+      });
+      this.hls.loadSource(url);
       this.hls.attachMedia(this.videoEl);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, ()=>this.videoEl.play());
+      this.hls.on(Hls.Events.MANIFEST_PARSED, () => this.videoEl.play());
     }
-    else if (window.shaka && shaka.Player.isBrowserSupported()){
-      this.shakaPlayer=new shaka.Player(this.videoEl);
-      this.shakaPlayer.load(f.file)
-        .then(()=>this.videoEl.play())
-        .catch(()=>{ this.videoEl.src=f.file; this.videoEl.play(); });
+    else if (window.shaka && shaka.Player.isBrowserSupported()) {
+      this.shakaPlayer = new shaka.Player(this.videoEl);
+      this.shakaPlayer.load(url)
+        .then(() => this.videoEl.play())
+        .catch(() => {
+          this.videoEl.src = url;
+          this.videoEl.play();
+        });
     }
     else {
-      this.videoEl.src = f.file;
+      // Fallback HTML5 <video> para MP4 o m3u8:
+      this.videoEl.src = url;
       this.videoEl.play();
     }
-    this.videoEl.title = f.title||"";
+
+    this.videoEl.title = f.title || "";
   }
 
   play() {
@@ -283,128 +304,151 @@ class PlayerJS {
   }
 
   monitorPlayback() {
-    let last=0;
-    setInterval(()=>{
+    let last = 0;
+    setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime===last) this.playCurrent();
-        last=this.videoEl.currentTime;
+        if (this.videoEl.currentTime === last) {
+          // Si se congela, reintenta
+          this.playCurrent();
+        }
+        last = this.videoEl.currentTime;
       }
-    },5000);
+    }, 5000);
   }
 
   /*──────────────────────────────────────────────────*/
-  /*            GLOBAL EVENT LISTENERS               */
+  /*            EVENTOS GLOBALES                      */
   /*──────────────────────────────────────────────────*/
   addUIListeners() {
-    ["mousemove","click","touchstart"].forEach(ev=>
-      window.addEventListener(ev, ()=> this.showUI())
+    // Mostrar playlist con interacción
+    ["mousemove","click","touchstart"].forEach(ev =>
+      window.addEventListener(ev, () => this.showUI())
     );
 
-    window.addEventListener("keydown", e=>{
-      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
-           "ChannelUp","ChannelDown"].includes(e.key)
-          || [33,34].includes(e.keyCode)) {
+    window.addEventListener("keydown", e => {
+      const key = e.key;
+      const code = e.keyCode;
+
+      // Prevenir scroll nativo si usamos estas teclas
+      if ([
+        "ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
+        "ChannelUp","ChannelDown"
+      ].includes(key) || [33,34].includes(code)) {
         e.preventDefault();
       }
 
-      // Cambio de canal con botones especiales
-      if (e.key==="ChannelUp" || e.keyCode===33) {
+      // Cambio de canal con botones dedicados
+      if (key === "ChannelUp" || code === 33) {
         this.move(-1);
         this.playCurrent();
         return;
       }
-      if (e.key==="ChannelDown" || e.keyCode===34) {
+      if (key === "ChannelDown" || code === 34) {
         this.move(1);
         this.playCurrent();
         return;
       }
 
-      // Dentro del overlay: izq/der/enter para navegar botones
+      // Dentro del overlay: navegación entre botones
       if (this.overlayActive) {
-        if (e.key==="ArrowLeft") {
-          if (document.activeElement===this.btnList)   this.btnReturn.focus();
-          else if (document.activeElement===this.btnPause) this.btnList.focus();
-          else if (document.activeElement===this.btnClose) this.btnPause.focus();
+        if (key === "ArrowLeft") {
+          if (document.activeElement === this.btnList)   this.btnReturn.focus();
+          else if (document.activeElement === this.btnPause) this.btnList.focus();
+          else if (document.activeElement === this.btnClose) this.btnPause.focus();
         }
-        else if (e.key==="ArrowRight") {
-          if (document.activeElement===this.btnReturn) this.btnList.focus();
-          else if (document.activeElement===this.btnList) this.btnPause.focus();
-          else if (document.activeElement===this.btnPause) this.btnClose.focus();
+        else if (key === "ArrowRight") {
+          if (document.activeElement === this.btnReturn) this.btnList.focus();
+          else if (document.activeElement === this.btnList) this.btnPause.focus();
+          else if (document.activeElement === this.btnPause) this.btnClose.focus();
         }
-        else if (e.key==="Enter") {
+        else if (key === "Enter") {
           document.activeElement.click();
         }
         this.resetMenuTimer();
         return;
       }
 
-      // Abrir overlay con ArrowLeft
-      if (e.key==="ArrowLeft") {
+      // Flecha izquierda fuera del overlay → abre menú
+      if (key === "ArrowLeft") {
         this.showMenu();
         return;
       }
 
-      // Abrir playlist con flechas Arriba/Abajo si oculto
+      // Flechas arriba/abajo fuera del overlay → abre playlist si está oculto
       if (!this.containerEl.classList.contains("active")
-          && (e.key==="ArrowUp"||e.key==="ArrowDown")) {
+          && (key === "ArrowUp" || key === "ArrowDown")) {
         this.showUI();
         return;
       }
 
       // Navegación playlist
-      if (e.key==="ArrowUp")        this.move(-1);
-      else if (e.key==="ArrowDown") this.move(1);
-      else if (e.key==="Enter")     this.playCurrent();
+      if (key === "ArrowUp")        this.move(-1);
+      else if (key === "ArrowDown") this.move(1);
+      else if (key === "Enter")     this.playCurrent();
     });
 
     // Rueda global para playlist
-    window.addEventListener("wheel", e=>{
+    window.addEventListener("wheel", e => {
       e.preventDefault();
       if (this.overlayActive) return;
       if (!this.containerEl.classList.contains("active")) {
         this.showUI();
       } else {
-        this.move(e.deltaY>0?1:-1);
+        this.move(e.deltaY > 0 ? 1 : -1);
       }
     });
 
-    this.videoEl.addEventListener("waiting", ()=>this.spinnerEl.classList.remove("hidden"));
-    this.videoEl.addEventListener("playing", ()=>this.spinnerEl.classList.add("hidden"));
-    this.videoEl.addEventListener("error",   ()=>this.playCurrent());
+    // Spinner y retry on error
+    this.videoEl.addEventListener("waiting", () =>
+      this.spinnerEl.classList.remove("hidden")
+    );
+    this.videoEl.addEventListener("playing", () =>
+      this.spinnerEl.classList.add("hidden")
+    );
+    this.videoEl.addEventListener("error", () =>
+      this.playCurrent()
+    );
   }
 
   /*──────────────────────────────────────────────────*/
-  /*               TOUCH‐DRAG LOGIC                 */
+  /*               TOUCH‐DRAG LOGIC                  */
   /*──────────────────────────────────────────────────*/
   initTouchDrag() {
-    const wrapper=this.containerEl.querySelector(".carousel-wrapper");
-    const listEl=this.playlistEl;
+    const wrapper = this.containerEl.querySelector(".carousel-wrapper");
+    const listEl  = this.playlistEl;
     let itemH, baseY;
-    const recalc=()=>{
-      const first=listEl.children[0];
-      const st=getComputedStyle(first);
-      itemH=first.offsetHeight+parseFloat(st.marginTop)+parseFloat(st.marginBottom);
-      baseY=wrapper.clientHeight/2 - itemH/2 - this.half*itemH;
+
+    const recalc = () => {
+      const first = listEl.children[0];
+      const st = getComputedStyle(first);
+      itemH = first.offsetHeight
+            + parseFloat(st.marginTop)
+            + parseFloat(st.marginBottom);
+      const wrapH = wrapper.clientHeight;
+      baseY = wrapH/2 - itemH/2 - this.half * itemH;
     };
-    wrapper.addEventListener("touchstart", e=>{
+
+    wrapper.addEventListener("touchstart", e => {
       recalc();
-      this._touchStartY=e.touches[0].clientY;
-      this._isDragging=true;
-      listEl.style.transition="none";
+      this._touchStartY = e.touches[0].clientY;
+      this._isDragging  = true;
+      listEl.style.transition = "none";
     });
-    wrapper.addEventListener("touchmove", e=>{
-      if(!this._isDragging) return;
-      const d=e.touches[0].clientY-this._touchStartY;
-      listEl.style.transform=`translateY(${baseY+d}px)`;
+
+    wrapper.addEventListener("touchmove", e => {
+      if (!this._isDragging) return;
+      const deltaY = e.touches[0].clientY - this._touchStartY;
+      listEl.style.transform = `translateY(${baseY + deltaY}px)`;
     });
-    wrapper.addEventListener("touchend", e=>{
-      if(!this._isDragging) return;
-      this._isDragging=false;
-      const d=e.changedTouches[0].clientY-this._touchStartY;
-      const steps=Math.round(-d/itemH);
+
+    wrapper.addEventListener("touchend", e => {
+      if (!this._isDragging) return;
+      this._isDragging = false;
+      const deltaY = e.changedTouches[0].clientY - this._touchStartY;
+      const steps  = Math.round(-deltaY / itemH);
       this.move(steps);
-      listEl.style.transition="transform .3s ease";
-      listEl.style.transform=`translateY(${baseY}px)`;
+      listEl.style.transition = "transform .3s ease";
+      listEl.style.transform  = `translateY(${baseY}px)`;
     });
   }
 }
@@ -563,13 +607,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "121",
+      number: "122",
       image: "img/CANAL-MEGACINE.png",
       title: "MEGA CINE TV",
       file:
         "https://cnn.hostlagarto.com/megacinetv/index.m3u8"
     }
-
+    ,
+    {
+      number: "123",
+      image: "img/CANAL-DMJ.png",
+      title: "DMJ",
+      file:
+        "https://stmv1.voxhdnet.com/dmjsurtv/dmjsurtv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "124",
+      image: "img/CANAL ATV.png",
+      title: "HISTORY 2",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
+    }
     
   ]);
 });

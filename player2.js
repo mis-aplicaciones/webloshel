@@ -561,5 +561,15 @@ document.addEventListener("DOMContentLoaded", () => {
       file:
         "https://xumo-drct-ch835-ekq0p.fast.nbcuni.com/live/master.m3u8"
     }
+    ,
+    {
+      number: "121",
+      image: "img/CANAL-MEGACINE.png",
+      title: "MEGA CINE TV",
+      file:
+        "https://cnn.hostlagarto.com/megacinetv/index.m3u8"
+    }
+
+    
   ]);
 });

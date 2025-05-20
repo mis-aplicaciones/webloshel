@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reproductor</title>
+    <title>Reproductor con DVR</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
@@ -28,6 +28,7 @@
 
     <!-- MENÚ TV (Android TV) -->
     <div id="tv-menu" class="tv-menu hidden">
+      <!-- Parte superior: miniatura, número de canal, calidad y reloj -->
       <div class="tv-menu-top">
         <div class="tv-menu-img">
           <img id="tv-menu-img" src="" alt="Canal actual" />
@@ -39,7 +40,9 @@
         <div id="tv-menu-time" class="tv-menu-time">12:00</div>
       </div>
 
+      <!-- Parte inferior: GRUPOS -->
       <div class="tv-menu-bottom">
+        <!-- Grupo Izquierdo: Volver + Canales -->
         <div class="tv-menu-group-left">
           <button
             id="btn-return"
@@ -58,24 +61,48 @@
             <i class="bi bi-list-ul"></i>
           </button>
         </div>
-        <button
-          id="btn-pause"
-          class="tv-menu-btn"
-          data-title="Pausa"
-          tabindex="-1"
-        >
-          <i id="icon-pause" class="bi bi-pause-fill"></i>
-        </button>
-        <button
-          id="btn-close"
-          class="tv-menu-btn"
-          data-title="Cerrar"
-          tabindex="-1"
-        >
-          <i class="bi bi-x"></i>
-        </button>
+
+        <!-- Grupo Central: Pause/Resume + DVR + Live -->
+        <div class="tv-menu-group-center">
+          <!-- Botón Pause / Reanudar -->
+          <button
+            id="btn-pause"
+            class="tv-menu-btn"
+            data-title="Pausa"
+            tabindex="-1"
+          >
+            <i id="icon-pause" class="bi bi-pause-fill"></i>
+          </button>
+          <!-- Barra de Progreso DVR -->
+          <div id="dvr-container">
+            <div id="dvr-progress"></div>
+            <div id="dvr-knob"></div>
+          </div>
+          <!-- Botón En Vivo -->
+          <button
+            id="btn-live"
+            class="tv-menu-btn"
+            data-title="En Vivo"
+            tabindex="-1"
+          >
+            <i id="icon-live" class="bi bi-broadcast" style="color: red"></i>
+          </button>
+        </div>
+
+        <!-- Grupo Derecho: Cerrar -->
+        <div class="tv-menu-group-right">
+          <button
+            id="btn-close"
+            class="tv-menu-btn"
+            data-title="Cerrar"
+            tabindex="-1"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
       </div>
 
+      <!-- Tooltip sobre botón enfocado -->
       <div id="tv-menu-tooltip" class="tv-menu-tooltip hidden"></div>
     </div>
 

@@ -1,12 +1,12 @@
 class PlayerJS {
   constructor() {
-    // Elementos básicos
+    // Elementos básicos del reproductor
     this.videoEl      = document.getElementById("player-video");
     this.playlistEl   = document.getElementById("carouselList");
     this.containerEl  = document.getElementById("playlist-container");
     this.spinnerEl    = document.getElementById("video-loading-spinner");
 
-    // Overlay TV
+    // Elementos del Menú TV
     this.menuEl      = document.getElementById("tv-menu");
     this.imgEl       = document.getElementById("tv-menu-img");
     this.chanNumEl   = document.getElementById("tv-menu-channel-number");
@@ -16,27 +16,35 @@ class PlayerJS {
     this.btnList     = document.getElementById("btn-list");
     this.btnPause    = document.getElementById("btn-pause");
     this.iconPause   = document.getElementById("icon-pause");
+    this.btnLive     = document.getElementById("btn-live");
+    this.iconLive    = document.getElementById("icon-live");
     this.btnClose    = document.getElementById("btn-close");
     this.tooltipEl   = document.getElementById("tv-menu-tooltip");
 
+    // Elementos DVR (barra de progreso)
+    this.dvrContainer = document.getElementById("dvr-container");
+    this.dvrProgress  = document.getElementById("dvr-progress");
+    this.dvrKnob      = document.getElementById("dvr-knob");
+
     this.overlayActive = false;
     this.menuTimer     = null;
+    this.dvrInterval   = null;  // temporizador para actualizar la barra de progreso
 
-    // Índices y flags
+    // Índices y flags para playlist
     this.currentIndex      = 0;
     this.playbackIndex     = 0;
     this.hasUncommittedNav = false;
 
-    // Playlist y reproductores
+    // Playlist y reproductores (HLS / Shaka)
     this.playlist      = [];
     this.hls           = null;
     this.shakaPlayer   = null;
 
-    // Auto‐hide UI
+    // Auto‐hide playlist
     this.lastNavTime   = Date.now();
     this.autoHide      = 5000;
 
-    // Carrusel
+    // Configuración del carrusel
     this.visibleCount  = 5;
     this.half          = Math.floor(this.visibleCount / 2);
 
@@ -48,7 +56,7 @@ class PlayerJS {
   }
 
   init() {
-    // Configurar reloj
+    // Reloj del menú (se actualiza cada minuto)
     this.updateClock();
     setInterval(() => this.updateClock(), 60000);
 
@@ -57,10 +65,10 @@ class PlayerJS {
     this.videoEl.autoplay = true;
     this.monitorPlayback();
 
-    // Auto‐hide sólo para playlist
+    // Auto‐hide SOLO para playlist
     setInterval(() => {
-      if (!this.overlayActive
-          && Date.now() - this.lastNavTime > this.autoHide) {
+      if (!this.overlayActive &&
+          Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
       }
     }, 500);
@@ -68,6 +76,9 @@ class PlayerJS {
     this.initTouchDrag();
   }
 
+  /**
+   * Actualiza el reloj HH:MM (formato 12h sin AM/PM).
+   */
   updateClock() {
     const d = new Date();
     let h = d.getHours() % 12 || 12;
@@ -75,43 +86,92 @@ class PlayerJS {
     this.timeEl.textContent = `${h}:${m}`;
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*                    MENU TV                      */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*                     MENU TV (DVR)                       */
+  /*──────────────────────────────────────────────────────────*/
   initMenuActions() {
+    // 1) Volver → history.back()
     this.btnReturn.addEventListener("click", () => history.back());
+
+    // 2) Canales → mostrar playlist
     this.btnList.addEventListener("click", () => {
       this.hideMenu();
       this.showUI();
     });
+
+    // 3) Pausa / Reanudar, activa modo DVR
     this.btnPause.addEventListener("click", () => {
       if (this.videoEl.paused) {
+        // Si estaba pausado, reanuda al vivo
         this.videoEl.play();
         this.iconPause.className = "bi bi-pause-fill";
         this.btnPause.dataset.title = "Pausa";
+
+        // Botón "En Vivo" vuelve al color rojo
+        this.iconLive.style.color = "red";
+
+        // Detener actualización del DVR
+        this.stopDvrInterval();
       } else {
+        // Si estaba reproduciendo, pausar y entrar en modo DVR
         this.videoEl.pause();
         this.iconPause.className = "bi bi-play-fill";
         this.btnPause.dataset.title = "Reanudar";
+
+        // Botón "En Vivo" se pone gris
+        this.iconLive.style.color = "gray";
+
+        // Iniciar actualización del DVR cada 500ms
+        this.startDvrInterval();
       }
       this.resetMenuTimer();
     });
+
+    // 4) En Vivo → saltar al final del buffer y reproducir
+    this.btnLive.addEventListener("click", () => {
+      const buf = this.videoEl.buffered;
+      if (buf.length > 0) {
+        const livePoint = buf.end(buf.length - 1);
+        this.videoEl.currentTime = livePoint;
+      }
+      this.videoEl.play();
+      // Asegurar icono Pause y Live en estado "vivo"
+      this.iconPause.className = "bi bi-pause-circle-fill";
+      this.btnPause.dataset.title = "Pausa";
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.resetMenuTimer();
+    });
+
+    // 5) Cerrar overlay
     this.btnClose.addEventListener("click", () => this.hideMenu());
 
-    [this.btnReturn, this.btnList, this.btnPause, this.btnClose]
-      .forEach(btn => {
-        btn.addEventListener("focus", () => this.showTooltip(btn));
-      });
+    // Tooltip sobre cada botón cuando reciba foco
+    [
+      this.btnReturn,
+      this.btnList,
+      this.btnPause,
+      this.btnLive,
+      this.btnClose
+    ].forEach(btn => {
+      btn.addEventListener("focus", () => this.showTooltip(btn));
+    });
   }
 
+  /**
+   * Muestra el menú: oculta el playlist, actualiza miniatura,
+   * número de canal, calidad, y coloca el foco en “Volver”.
+   */
   showMenu() {
     this.overlayActive = true;
+    // Ocultar playlist
     this.containerEl.classList.remove("active");
 
+    // Update thumbnail, channel number & quality
     const cur = this.playlist[this.playbackIndex] || {};
     this.imgEl.src            = cur.image || "";
-    this.chanNumEl.textContent= cur.number || "";
-    this.qualityEl.textContent= `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
+    this.chanNumEl.textContent = cur.number || "";
+    this.qualityEl.textContent = `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
 
     this.menuEl.classList.remove("hidden");
     this.btnReturn.focus();
@@ -123,6 +183,7 @@ class PlayerJS {
     this.menuEl.classList.add("hidden");
     this.hideTooltip();
     clearTimeout(this.menuTimer);
+    this.stopDvrInterval();
   }
 
   resetMenuTimer() {
@@ -135,9 +196,8 @@ class PlayerJS {
     this.tooltipEl.textContent = title;
     this.tooltipEl.classList.remove("hidden");
     this.tooltipEl.classList.add("visible");
-
     const rect = btn.getBoundingClientRect();
-    this.tooltipEl.style.left = `${rect.left + rect.width/2}px`;
+    this.tooltipEl.style.left = `${rect.left + rect.width / 2}px`;
     this.resetMenuTimer();
   }
 
@@ -146,9 +206,9 @@ class PlayerJS {
     this.tooltipEl.classList.add("hidden");
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*                   PLAYLIST UI                   */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*                   PLAYLIST UI (oculto al inicio)        */
+  /*──────────────────────────────────────────────────────────*/
   showUI() {
     if (!this.overlayActive && this.hasUncommittedNav) {
       this.currentIndex = this.playbackIndex;
@@ -173,13 +233,13 @@ class PlayerJS {
     this.hasUncommittedNav = false;
     this.renderCarousel();
     this.updateCarousel(false);
-    // Ya no invocamos this.showUI(): playlist NO se muestra al cargar
+    // No llamamos a showUI() aquí: playlist permanece oculto al cargar
     this.playCurrent();
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*                  CARRUSEL LOGIC                 */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*                  CARRUSEL LOGIC                         */
+  /*──────────────────────────────────────────────────────────*/
   createItem(idx) {
     const data = this.playlist[idx] || {};
     const item = document.createElement("div");
@@ -191,7 +251,7 @@ class PlayerJS {
     lbl.innerHTML = `<span>${data.number || ""}</span>`;
 
     const img = document.createElement("img");
-    img.src = data.image || ""; 
+    img.src = data.image || "";
     img.alt = data.title || "";
 
     const btn = document.createElement("button");
@@ -199,14 +259,14 @@ class PlayerJS {
     btn.textContent = data.title || "";
 
     item.append(lbl, img, btn);
-    item.addEventListener("click", () => { 
-      this.currentIndex = idx; 
-      this.play(); 
+    item.addEventListener("click", () => {
+      this.currentIndex = idx;
+      this.play();
     });
-    item.addEventListener("touchend", e => { 
-      e.preventDefault(); 
-      this.currentIndex = idx; 
-      this.play(); 
+    item.addEventListener("touchend", e => {
+      e.preventDefault();
+      this.currentIndex = idx;
+      this.play();
     });
 
     return item;
@@ -230,12 +290,14 @@ class PlayerJS {
                 + parseFloat(st.marginBottom);
     const wrapH = this.containerEl
                    .querySelector(".carousel-wrapper").clientHeight;
-    const baseY = wrapH/2 - itemH/2 - this.half*itemH;
+    const baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
 
-    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
-    this.playlistEl.style.transform  = `translateY(${baseY}px)`;
+    this.playlistEl.style.transition = animate
+      ? "transform .3s ease"
+      : "none";
+    this.playlistEl.style.transform = `translateY(${baseY}px)`;
 
-    Array.from(items).forEach((el,i) => {
+    Array.from(items).forEach((el, i) => {
       el.classList.toggle("focused", i === this.half);
     });
 
@@ -254,19 +316,19 @@ class PlayerJS {
     this.updateCarousel(true);
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*                REPRODUCCIÓN                     */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*                REPRODUCCIÓN & DVR LOGIC                */
+  /*──────────────────────────────────────────────────────────*/
   playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
-    this.playbackIndex = this.currentIndex;
+    this.playbackIndex     = this.currentIndex;
     this.hasUncommittedNav = false;
 
     if (this.hls) { this.hls.destroy(); this.hls = null; }
     if (this.shakaPlayer) { this.shakaPlayer.destroy(); this.shakaPlayer = null; }
 
-    // Detección robusta de m3u8 (incluso con parámetros o HTTP)
     const url = (f.file || "").trim();
+    // Detectar robustamente .m3u8 (http, parámetros, mayúsculas/minúsculas)
     const isM3U8 = /\.m3u8($|\?)/i.test(url);
 
     if (isM3U8 && window.Hls && Hls.isSupported()) {
@@ -289,12 +351,16 @@ class PlayerJS {
         });
     }
     else {
-      // Fallback HTML5 <video> para MP4 o m3u8:
+      // Fallback HTML5 <video> para MP4 o .m3u8 no soportados
       this.videoEl.src = url;
       this.videoEl.play();
     }
 
     this.videoEl.title = f.title || "";
+
+    // Cuando cambia de canal, el botón "En Vivo" vuelve a rojo y se detiene DVR
+    this.iconLive.style.color = "red";
+    this.stopDvrInterval();
   }
 
   play() {
@@ -308,7 +374,7 @@ class PlayerJS {
     setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
         if (this.videoEl.currentTime === last) {
-          // Si se congela, reintenta
+          // Si se congela, reintenta reproducir
           this.playCurrent();
         }
         last = this.videoEl.currentTime;
@@ -316,11 +382,10 @@ class PlayerJS {
     }, 5000);
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*            EVENTOS GLOBALES                      */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*            EVENTOS GLOBALES (Teclado / Rueda)            */
+  /*──────────────────────────────────────────────────────────*/
   addUIListeners() {
-    // Mostrar playlist con interacción
     ["mousemove","click","touchstart"].forEach(ev =>
       window.addEventListener(ev, () => this.showUI())
     );
@@ -329,15 +394,22 @@ class PlayerJS {
       const key = e.key;
       const code = e.keyCode;
 
-      // Prevenir scroll nativo si usamos estas teclas
+      // Prevenir scroll nativo
       if ([
         "ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
-        "ChannelUp","ChannelDown"
-      ].includes(key) || [33,34].includes(code)) {
+        "MediaPlayPause","Pause"," " /*Space*/, "ChannelUp","ChannelDown"
+      ].includes(key) || [32,179,33,34].includes(code)) {
         e.preventDefault();
       }
 
-      // Cambio de canal con botones dedicados
+      // Mapeo para botón especial de “Pause/Resume” del control remoto:
+      if (key === "MediaPlayPause" || key === "Pause" || code === 179) {
+        // Disparar la misma lógica que btnPause.click()
+        this.btnPause.click();
+        return;
+      }
+
+      // Cambio de canal con ChannelUp (código 33) / ChannelDown (código 34)
       if (key === "ChannelUp" || code === 33) {
         this.move(-1);
         this.playCurrent();
@@ -349,17 +421,19 @@ class PlayerJS {
         return;
       }
 
-      // Dentro del overlay: navegación entre botones
+      // Si el overlay está activo, navegación entre sus botones
       if (this.overlayActive) {
         if (key === "ArrowLeft") {
-          if (document.activeElement === this.btnList)   this.btnReturn.focus();
+          if (document.activeElement === this.btnList)    this.btnReturn.focus();
           else if (document.activeElement === this.btnPause) this.btnList.focus();
-          else if (document.activeElement === this.btnClose) this.btnPause.focus();
+          else if (document.activeElement === this.btnLive)  this.btnPause.focus();
+          else if (document.activeElement === this.btnClose) this.btnLive.focus();
         }
         else if (key === "ArrowRight") {
           if (document.activeElement === this.btnReturn) this.btnList.focus();
           else if (document.activeElement === this.btnList) this.btnPause.focus();
-          else if (document.activeElement === this.btnPause) this.btnClose.focus();
+          else if (document.activeElement === this.btnPause) this.btnLive.focus();
+          else if (document.activeElement === this.btnLive)  this.btnClose.focus();
         }
         else if (key === "Enter") {
           document.activeElement.click();
@@ -374,14 +448,14 @@ class PlayerJS {
         return;
       }
 
-      // Flechas arriba/abajo fuera del overlay → abre playlist si está oculto
+      // Flechas arriba/abajo fuera del overlay → muestra playlist si oculto
       if (!this.containerEl.classList.contains("active")
           && (key === "ArrowUp" || key === "ArrowDown")) {
         this.showUI();
         return;
       }
 
-      // Navegación playlist
+      // Navegación del playlist
       if (key === "ArrowUp")        this.move(-1);
       else if (key === "ArrowDown") this.move(1);
       else if (key === "Enter")     this.playCurrent();
@@ -398,7 +472,7 @@ class PlayerJS {
       }
     });
 
-    // Spinner y retry on error
+    // Spinner + retry on error
     this.videoEl.addEventListener("waiting", () =>
       this.spinnerEl.classList.remove("hidden")
     );
@@ -410,9 +484,9 @@ class PlayerJS {
     );
   }
 
-  /*──────────────────────────────────────────────────*/
-  /*               TOUCH‐DRAG LOGIC                  */
-  /*──────────────────────────────────────────────────*/
+  /*──────────────────────────────────────────────────────────*/
+  /*               TOUCH‐DRAG EN EL PLAYLIST                  */
+  /*──────────────────────────────────────────────────────────*/
   initTouchDrag() {
     const wrapper = this.containerEl.querySelector(".carousel-wrapper");
     const listEl  = this.playlistEl;
@@ -425,7 +499,7 @@ class PlayerJS {
             + parseFloat(st.marginTop)
             + parseFloat(st.marginBottom);
       const wrapH = wrapper.clientHeight;
-      baseY = wrapH/2 - itemH/2 - this.half * itemH;
+      baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
     };
 
     wrapper.addEventListener("touchstart", e => {
@@ -448,8 +522,45 @@ class PlayerJS {
       const steps  = Math.round(-deltaY / itemH);
       this.move(steps);
       listEl.style.transition = "transform .3s ease";
-      listEl.style.transform  = `translateY(${baseY}px)`;
+      listEl.style.transform = `translateY(${baseY}px)`;
     });
+  }
+
+  /*──────────────────────────────────────────────────────────────────*/
+  /*                 DVR – Actualizar la Barra de Progreso            */
+  /*──────────────────────────────────────────────────────────────────*/
+  startDvrInterval() {
+    // Actualizar cada 500 ms
+    this.stopDvrInterval();
+    this.dvrInterval = setInterval(() => {
+      const buf = this.videoEl.buffered;
+      if (buf.length > 0) {
+        const start = buf.start(0);
+        const end   = buf.end(buf.length - 1);
+        const current = this.videoEl.currentTime;
+        const totalRange = end - start;
+        if (totalRange > 0) {
+          let ratio = (current - start) / totalRange;
+          if (ratio < 0) ratio = 0;
+          if (ratio > 1) ratio = 1;
+          this.dvrProgress.style.width = `${Math.floor(ratio * 100)}%`;
+          // Mover el knob
+          const containerWidth = this.dvrContainer.clientWidth;
+          const knobX = ratio * containerWidth;
+          this.dvrKnob.style.transform = `translateX(${knobX}px)`;
+        }
+      }
+    }, 500);
+  }
+
+  stopDvrInterval() {
+    if (this.dvrInterval) {
+      clearInterval(this.dvrInterval);
+      this.dvrInterval = null;
+      // Reset de la barra (opcional)
+      // this.dvrProgress.style.width = "0%";
+      // this.dvrKnob.style.transform = "translateX(0px)";
+    }
   }
 }
 

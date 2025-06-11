@@ -464,12 +464,11 @@ document.addEventListener("DOMContentLoaded", () => {
       file:
         "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
     },
-    ,
     {
       number: "101",
-      image: "img/CANAL ATV.png",
-      title: "ATV",
-      file: "https://d19e55ehz2il4i.cloudfront.net/index.m3u8"
+      image: "img/CANAL-AUTENTICA.png",
+      title: "AUTENTICA",
+      file: "https://live.obslivestream.com/autenticatvmux/index.m3u8"
     },
     {
       number: "102",
@@ -631,11 +630,42 @@ document.addEventListener("DOMContentLoaded", () => {
     ,
     {
       number: "125",
-      image: "img/CANAL ATV.png",
+      image: "img/CANAL-H2.png",
       title: "HISTORY 2",
       file:
         "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
     }
-    
+    ,
+    {
+      number: "126",
+      image: "img/CANAL-PALMERASTV.png",
+      title: "PALMERAS TV",
+      file:
+        "https://play.agenciastreaming.com:8081/palmerastv/index.m3u8"
+    }
+    ,
+    {
+      number: "127",
+      image: "img/CANAL-MEGATV.png",
+      title: "MEGA TV",
+      file:
+        "https://mc.servidor.stream:19360/megatv/megatv.m3u8"
+    }
+    ,
+    {
+      number: "128",
+      image: "img/CANAL-AMERICATV.png",
+      title: "AMERICA TV",
+      file:
+        "https://live-evg1.tv360.bitel.com.pe/bitel/americatv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "129",
+      image: "img/CANAL ATV.png",
+      title: "ATV",
+      file:
+        "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
+    }
   ]);
 });

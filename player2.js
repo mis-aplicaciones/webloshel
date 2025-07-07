@@ -544,10 +544,10 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "113",
-      image: "img/CANAL-OXIGENO.png",
-      title: "OXIGENO 2",
+      image: "img/CANAL-CINECANAL.png",
+      title: "CINECANAL",
       file:
-        "https://vcp.myplaytv.com/oxigenotv/oxigenotv/playlist.m3u8"
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/CINECANAL/index.m3u8"
     },
     {
       number: "114",
@@ -666,6 +666,14 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ATV",
       file:
         "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
+    },
+    {
+      number: "130",
+      image: "img/CANAL-SONYCHANNEL.png",
+      title: "SONY CHANNEL",
+      file:
+        "https://fl3.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
     }
+    
   ]);
 });

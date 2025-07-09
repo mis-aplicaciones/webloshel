@@ -674,6 +674,13 @@ document.addEventListener("DOMContentLoaded", () => {
       file:
         "https://fl3.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
     }
-    
+    ,
+    {
+      number: "131",
+      image: "img/CANAL-SONYCHANNEL.png",
+      title: "SONY CHANNEL",
+      file:
+        "https://s39.fastream.to/hls2/18/00074/0n6sc8wqnuzf_n/index-v1-a1.m3u8?t=iwAc5-VJpFTCQNAfQfEL-cqXC_3HTmHvu2NeKKZAqJw&s=1752040401&e=43200&v=12323057&i=0.3&sp=0"
+    }
   ]);
 });

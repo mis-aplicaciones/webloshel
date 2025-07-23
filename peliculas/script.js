@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const botonCompartir = document.getElementById("botonCompartir");
   if (botonCompartir) {
       botonCompartir.addEventListener("click", function () {
-          const compartirUrl = "https://www.mediafire.com/file/ax1zxvdcf3xcaez/LoShel-v-9-9-9.apk/file";
+          const compartirUrl = "https://www.mediafire.com/file/swwocayu38fn0u3/LoShel-v-9-9-1.apk/file";
           const movieTitle = document.getElementById("movie-title-text").innerText;
           const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
           window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
@@ -71,27 +71,37 @@ if (movieContent) {
 }
   
     // KeyDown Navigation
-    const botonVolver = document.getElementById("back-button");
-    const botonVerAhora = document.querySelector(".movie-buttons a");
-    const navegables = [botonVolver, botonVerAhora];
+   // -------- Navegación por teclado y control remoto --------
+  // Recogemos todos los elementos enfocables
+  const focusable = Array.from(document.querySelectorAll('a, button'));
 
-    document.addEventListener("keydown", function (e) {
-        const currentFocus = document.activeElement;
-        const index = navegables.indexOf(currentFocus);
+  // Añadimos tabindex a todos si no lo tienen
+  focusable.forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+  });
 
-        if (e.key === "ArrowRight") {
-            const nextIndex = (index + 1) % navegables.length;
-            navegables[nextIndex]?.focus();
-        } else if (e.key === "ArrowLeft") {
-            const prevIndex = (index - 1 + navegables.length) % navegables.length;
-            navegables[prevIndex]?.focus();
-        } else if (e.key === "Enter") {
-            currentFocus.click();
-        } else if (e.key === "Backspace" || e.key === "Escape") {
-            e.preventDefault();
-            botonVolver.focus();
-        }
-    });
+  // Enfoque inicial: botón "Ver Ahora"
+  const playButton = document.querySelector('.movie-buttons a');
+  if (playButton) playButton.focus();
+
+  // Manejo de flechas y Enter
+  document.addEventListener('keydown', function (e) {
+    const current = document.activeElement;
+    const idx = focusable.indexOf(current);
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusable[(idx + 1) % focusable.length].focus();
+    }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusable[(idx - 1 + focusable.length) % focusable.length].focus();
+    }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      current.click();
+    }
+  });
 
     // Eliminar bordes de enfoque predeterminados
     document.querySelectorAll("button, a").forEach((element) => {

@@ -68,8 +68,8 @@ body, html {
 
 #back-button:hover,
 #back-button:focus {
-    background-color: #e0b3ff;
-    transform: scale(1.1);
+    background-color: #9d58cc;
+    transform: scale(1.2);
 }
 #logo {
     position: absolute;
@@ -237,8 +237,8 @@ body, html {
 .movie-buttons a:focus, 
 .donar-button a:hover, 
 .donar-button a:focus {
-    background-color: #6e23a6;
-    transform: scale(1.1);
+    background-color: #2c0a46;
+    transform: scale(1.2);
 }
 
 .button-aditional {

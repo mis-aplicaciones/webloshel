@@ -1,257 +1,270 @@
-function initializeHome() {
-  const homeContainer = document.querySelector(".home-container");
-  const cards         = document.querySelectorAll(".card");
-  const background    = document.querySelector(".background");
-  const infoGrid      = document.querySelector(".info-grid");
-  const carousels     = document.querySelectorAll(".carousel-container");
+// scripthome.js
 
-  if (!homeContainer || !cards.length || !background || !infoGrid || !carousels.length) {
-    console.error("Faltan elementos esenciales en home.html.");
+let data = null;
+let defs = null;
+let lastFocus = { row: 0, card: 0 };
+let isAnimating = false;
+
+// Calcula estrellas para el rating
+function calcularEstrellas(p) {
+  const MAX = 5;
+  const r = Math.round(p * 2) / 2;
+  const full = Math.floor(r), half = r % 1 !== 0;
+  let html = "";
+  for (let i = 0; i < full; i++) html += '<ion-icon name="star"></ion-icon>';
+  if (half) html += '<ion-icon name="star-half"></ion-icon>';
+  for (let i = 0; i < MAX - full - (half ? 1 : 0); i++)
+    html += '<ion-icon name="star-outline"></ion-icon>';
+  return html;
+}
+
+// Actualiza detalles sin animación
+function updateDetails(item) {
+  const bg    = document.getElementById("background");
+  const img   = document.getElementById("detail-img");
+  const title = document.getElementById("detail-title");
+  const meta  = document.getElementById("detail-meta");
+  const genEl = document.getElementById("detail-genero");
+
+  bg.style.backgroundImage = `url('${item.backgroundUrl}')`;
+  img.src = item.titleimgUrl;
+  title.textContent = item.title;
+
+  meta.innerHTML =
+    `<span>${item.edad}</span> • ` +
+    `<span>${item.hora}h ${item.min}min</span> • ` +
+    `<span>${item.año}</span> • ` +
+    `<span>${calcularEstrellas(item.rating)}</span>`;
+
+  genEl.innerHTML = "";
+  (item.genero || []).forEach(g => {
+    const s = document.createElement("span");
+    s.textContent = g;
+    genEl.appendChild(s);
+  });
+}
+
+// Construye carrusel
+function initCarousel() {
+  const carousel = document.getElementById("carousel");
+  carousel.innerHTML = "";
+  let firstCard = null;
+
+  defs.forEach((def, rowIdx) => {
+    let items = [];
+    if (def.type === "field") {
+      items = data.filter(item => {
+        const v = item[def.field];
+        return Array.isArray(v)
+          ? v.some(x => def.values.includes(x))
+          : def.values.includes(v);
+      });
+    } else if (def.type === "rating") {
+      items = data.filter(item => item.rating >= def.minRating);
+    } else {
+      items = data.filter(item => def.ids.includes(item.id));
+    }
+    if (!items.length) return;
+
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const title = document.createElement("div");
+    title.className = "row-title";
+    title.textContent = def.name;
+
+    const cont = document.createElement("div");
+    cont.className = "cards-container";
+
+    items.forEach((item, idx) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.tabIndex = 0;
+      card.style.backgroundImage = `url('${item.cardimgUrl}')`;
+
+      // Focus: animación y guardado de posición
+      card.addEventListener("focus", () => {
+        lastFocus = { row: rowIdx, card: idx };
+        focusCard(item);
+      });
+
+      // Click sobre card abre el link
+      card.addEventListener("click", () => {
+        window.location.href = item.link;
+      });
+
+      // Enter en card abre el link
+      card.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+          window.location.href = item.link;
+        }
+      });
+
+      cont.appendChild(card);
+      if (!firstCard) firstCard = card;
+    });
+
+    row.append(title, cont);
+    carousel.appendChild(row);
+  });
+
+  return firstCard;
+}
+
+
+// Restaura foco y vista
+function restoreFocus() {
+  const rows = document.querySelectorAll("#carousel .row");
+  const rowEl = rows[lastFocus.row];
+  if (!rowEl) return;
+  rowEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  const card = rowEl.querySelectorAll(".card")[lastFocus.card];
+  if (card) {
+    card.focus();
+    const def = defs[lastFocus.row];
+    let items = [];
+    if (def.type === "field") {
+      items = data.filter(i => {
+        const v = i[def.field];
+        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
+      });
+    } else if (def.type === "rating") {
+      items = data.filter(i => i.rating >= def.minRating);
+    } else {
+      items = data.filter(i => def.ids.includes(i.id));
+    }
+    updateDetails(items[lastFocus.card]);
+  }
+}
+
+// Actualiza con animación, pero salta a updateDetails si ya está animando
+function focusCard(item) {
+  if (isAnimating) {
+    updateDetails(item);
+    return;
+  }
+  isAnimating = true;
+
+  const bg    = document.getElementById("background");
+  const detail= document.getElementById("detail");
+  const img   = document.getElementById("detail-img");
+  const title = document.getElementById("detail-title");
+  const meta  = document.getElementById("detail-meta");
+  const genEl = document.getElementById("detail-genero");
+
+  [bg, detail, img, title, meta, genEl].forEach(el => {
+    el.classList.remove("fade-in");
+    el.classList.add("fade-out");
+  });
+
+  const onEnd = e => {
+    if (e.propertyName !== "opacity") return;
+    bg.removeEventListener("transitionend", onEnd);
+    updateDetails(item);
+    [bg, detail, img, title, meta, genEl].forEach(el => {
+      el.classList.remove("fade-out");
+      el.classList.add("fade-in");
+    });
+    setTimeout(() => { isAnimating = false; }, 300);
+  };
+
+  bg.addEventListener("transitionend", onEnd, { once: true });
+}
+
+// ------- Listeners de teclado (exactamente tu bloque) -------
+document.body.addEventListener("keydown", (e) => {
+  const active = document.activeElement;
+  // botón volver
+  if (["Backspace", "Escape"].includes(e.key)) {
+    window.dispatchEvent(new Event("return-to-sidebar"));
+    return;
+  }
+  if (!active.classList.contains("card")) return;
+  const row = active.closest(".row");
+  const cards = Array.from(row.querySelectorAll(".card"));
+  const idx = cards.indexOf(active);
+  let target;
+  switch (e.key) {
+    case "ArrowRight":
+      if (idx < cards.length - 1) {
+        target = cards[idx + 1];
+        target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+      break;
+    case "ArrowLeft":
+      if (idx > 0) {
+        target = cards[idx - 1];
+        target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+      break;
+    case "ArrowDown":
+      const nr = row.nextElementSibling;
+      if (nr) {
+        target = nr.querySelector(".card");
+        target.focus();
+        nr.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      break;
+    case "ArrowUp":
+      const pr = row.previousElementSibling;
+      if (pr) {
+        target = pr.querySelector(".card");
+        target.focus();
+        pr.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      break;
+      
+  }
+  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key))
+    e.preventDefault();
+});
+
+// Función SPA: inicializa Home
+function initializeHome() {
+  try {
+    defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+    if (!Array.isArray(defs)) defs = [];
+  } catch {
+    defs = [];
+  }
+
+  const car = document.getElementById("carousel");
+  if (!car) {
+    console.error("No encontré #carousel");
     return;
   }
 
-  // Hacemos no-navegables ciertos contenedores
-  [background, infoGrid].forEach(el => el.setAttribute("tabindex", "-1"));
-
-  // Efecto inicial en el primer card
-  const initializeFirstCard = () => {
-    const first = cards[0];
-    first.focus();
-    updateBackground(first);
-    updateInfoGrid(first);
-    first.classList.add("active-card");
-  };
-
-  const updateBackground = card => {
-    const img = card.dataset.background;
-    if (img) background.style.backgroundImage = `url(${img})`;
-  };
-
-  const updateInfoGrid = card => {
-    infoGrid.classList.remove("active");
-    setTimeout(() => {
-      // Extraemos atributos…
-      const title = card.dataset.title || "";
-      const age   = card.dataset.edad  || "N/A";
-      const year  = card.dataset.año   || "N/A";
-      const hrs   = card.dataset.duracionHoras   || "N/A";
-      const mins  = card.dataset.duracionMinutos || "N/A";
-      const genres = (card.dataset.genre || "").split(",").map(g => g.trim());
-
-      infoGrid.querySelector(".info-title img").src = title;
-      infoGrid.querySelector(".info-item h4").innerHTML = `
-        <span id="edad">${age}</span>
-        <span id="año">${year}</span>
-        <span id="duracion-horas">${hrs}</span>
-        <span id="duracion-minutos">${mins}</span>
-      `;
-      const genreContainer = infoGrid.querySelector(".info-genero");
-      genreContainer.innerHTML = "";
-      genres.forEach(g => {
-        const d = document.createElement("div");
-        d.classList.add("genre");
-        d.textContent = g;
-        genreContainer.appendChild(d);
-      });
-      infoGrid.classList.add("active");
-    }, 300);
-  };
-
-  // Asegura que el card enfocado quede a la vista
-  function ensureCardVisibility(card) {
-    const track = card.closest(".carousel-track");
-    if (!track) return;
-    const cRect = card.getBoundingClientRect();
-    const tRect = track.getBoundingClientRect();
-    if (cRect.left < tRect.left)
-      track.scrollLeft -= (tRect.left - cRect.left) + 20;
-    if (cRect.right > tRect.right)
-      track.scrollLeft += (cRect.right - tRect.right) + 20;
-  }
-
-  // Acción de “salir al sidebar”: despacha el evento genérico
-  const returnToSidebar = () => {
-    cards.forEach(c => {
-      c.classList.remove("active-card");
-      c.blur();
-    });
-    window.dispatchEvent(new Event("return-to-sidebar"));
-  };
-
-  // Wiring de carruseles
-  carousels.forEach((carousel, idx) => {
-    const track = carousel.querySelector(".carousel-track");
-    const nextB = carousel.querySelector(".nav-button.next");
-    const prevB = carousel.querySelector(".nav-button.prev");
-
-    nextB.addEventListener("click", () => {
-      const max = track.scrollWidth - track.clientWidth;
-      track.scrollLeft = Math.min(track.scrollLeft + cards[0].offsetWidth + 20, max);
-    });
-    prevB.addEventListener("click", () => {
-      track.scrollLeft = Math.max(track.scrollLeft - cards[0].offsetWidth - 20, 0);
-    });
-
-    carousel.addEventListener("keydown", e => {
-      const focused = document.activeElement;
-
-      switch (e.key) {
-        case "ArrowRight":
-          if (focused.nextElementSibling) focused.nextElementSibling.focus();
-          break;
-        case "ArrowLeft":
-          if (focused.previousElementSibling) {
-            focused.previousElementSibling.focus();
-          } else {
-            // En primer card → salir
-            returnToSidebar();
-          }
-          break;
-        case "ArrowDown":
-          if (carousels[idx + 1]) {
-            const nextCards = carousels[idx + 1].querySelectorAll(".card");
-            nextCards[0]?.focus();
-          }
-          break;
-        case "ArrowUp":
-          if (carousels[idx - 1]) {
-            const prevCards = carousels[idx - 1].querySelectorAll(".card");
-            prevCards[0]?.focus();
-          }
-          break;
-        case "Enter":
-          const link = focused.querySelector("a");
-          if (link) window.location.href = link.href;
-          break;
-        case "Backspace":
-        case "Escape":
-          // Teclas de vuelta directa
-          returnToSidebar();
-          break;
-      }
-    });
-  });
-
-  // Eventos de hover/focus/click sobre los cards
-  cards.forEach(card => {
-    card.addEventListener("mouseenter", () => {
-      updateBackground(card);
-      updateInfoGrid(card);
-      card.classList.add("active-card");
-    });
-    card.addEventListener("mouseleave", () => {
-      card.classList.remove("active-card");
-    });
-    card.addEventListener("focus", () => {
-      updateBackground(card);
-      updateInfoGrid(card);
-      card.classList.add("active-card");
-      ensureCardVisibility(card);
-    });
-    card.addEventListener("blur", () => {
-      card.classList.remove("active-card");
-    });
-    card.addEventListener("click", () => {
-      const a = card.querySelector("a");
-      if (a) window.location.href = a.href;
-    });
-  });
-
-  // Quitar outline amarillo de Android TV
-  const style = document.createElement("style");
-  style.textContent = `
-    *:focus { outline: none; }
-    .active-card:focus { outline: 2px solid white; }
-    .nav-button:focus { outline: 2px solid white; }
-  `;
-  document.head.appendChild(style);
-
-  // Arrancamos
-  initializeFirstCard();
-  console.log("Home inicializado correctamente");
-    // ** funciones para slider **
-    document.addEventListener("DOMContentLoaded", () => {
-      const slider = document.querySelector(".carousel-wrapper");
-      const items = document.querySelectorAll(".carousel-item");
-      const dots = document.querySelectorAll(".pagination .dot");
-      const itemCount = items.length;
-      let activeIndex = 0;
-      let isScrolling = false;
-    
-      // Actualizar el estado activo de los dots
-      const updateDots = () => {
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("active", index === activeIndex);
-        });
-      };
-    
-      // Mover el carrusel al card correspondiente
-      const scrollToItem = (index) => {
-        if (isScrolling) return; // Evitar múltiples desplazamientos simultáneos
-        isScrolling = true;
-    
-        activeIndex = index;
-        slider.scrollTo({
-          left: items[activeIndex].offsetLeft,
-          behavior: "smooth",
-        });
-    
-        updateDots();
-    
-        setTimeout(() => {
-          isScrolling = false;
-        }, 600); // Tiempo de transición
-      };
-    
-      // Cambiar al siguiente card
-      const goToNext = () => {
-        if (activeIndex < itemCount - 1) {
-          scrollToItem(activeIndex + 1);
-        } else {
-          scrollToItem(0); // Volver al inicio
+  if (!data) {
+    fetch("moviebase.json")
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(json => {
+        data = json;
+        const first = initCarousel();
+        if (first) {
+          first.focus();
+          lastFocus = { row:0, card:0 };
+          focusCard(data[0]);
         }
-      };
-    
-      // Cambiar al card anterior
-      const goToPrev = () => {
-        if (activeIndex > 0) {
-          scrollToItem(activeIndex - 1);
-        } else {
-          scrollToItem(itemCount - 1); // Ir al final
-        }
-      };
-    
-      // Manejar clics en los dots
-      dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-          scrollToItem(index);
-        });
+      })
+      .catch(err => {
+        console.error(err);
+        car.innerHTML =
+          '<div style="color:red;padding:2rem;">Error loading data</div>';
       });
-    
-      // Soporte para gestos táctiles
-      let startX = 0;
-    
-      slider.addEventListener("touchstart", (e) => {
-        startX = e.touches[0].clientX;
-      });
-    
-      slider.addEventListener("touchend", (e) => {
-        const endX = e.changedTouches[0].clientX;
-    
-        if (startX > endX + 50) goToNext(); // Deslizar hacia la izquierda
-        else if (startX < endX - 50) goToPrev(); // Deslizar hacia la derecha
-      });
-    
-      // Auto-scroll cada 5 segundos
-      setInterval(() => {
-        goToNext();
-      }, 5000);
-    
-      // Inicializar estado de los dots
-      updateDots();
-    });
-    
-    console.log("Home inicializado correctamente");
+  } else {
+    if (!car.children.length) initCarousel();
+    restoreFocus();
   }
+}
 
-
+window.initializeHome = initializeHome;

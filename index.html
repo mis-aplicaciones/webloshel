@@ -1,76 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive App</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bienvenido</title>
+    <link rel="stylesheet" href="style/common.css" />
   </head>
   <body>
     <div id="loading-screen">
-      <div class="spinner"></div>
+      <div class="logo-load"></div>
     </div>
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="./img/logo001.png" alt="Logo" />
+
+    <div id="landing">
+      <div class="hero">
+        <div class="logo-hero"></div>
+        <h1>Tu plataforma de películas</h1>
+        <button id="enter-btn">Ingresar gratis</button>
       </div>
-      <ul class="menu">
-        <li class="menu-item active" data-section="home.html" tabindex="4">
-          <i class="bi bi-house-door"></i>
-          <div class="highlight"></div>
-        </li>
-        <li class="menu-item" data-section="movies.html" tabindex="5">
-          <i class="bi bi-play-circle"></i>
-          <div class="highlight"></div>
-        </li>
-        <li class="menu-item" data-section="series.html" tabindex="6">
-          <i class="bi bi-collection-play"></i>
-          <div class="highlight"></div>
-        </li>
-        <li class="menu-item" data-section="tv.html" tabindex="7">
-          <i class="bi bi-tv"></i>
-          <div class="highlight"></div>
-        </li>
-        <li class="menu-item" data-section="donar.html" tabindex="8">
-          <i class="bi bi-heart"></i>
-          <div class="highlight"></div>
-        </li>
-        <li class="menu-item" data-section="notificacion.html" tabindex="9">
-          <i class="bi bi-bell"></i>
-          <div class="highlight"></div>
-        </li>
-      </ul>
-      <div class="user menu-item" tabindex="10" data-section="usuario.html">
-        <i class="bi bi-person-circle"></i>
-        <div class="highlight"></div>
-      </div>
-    </aside>
+    </div>
 
-    <main class="content">
-      <h1>Bienvenido a la Web App</h1>
-    </main>
+    <script src="script/detect.js"></script>
+    <script>
+      const LOGO_ANIM_DURATION = 1000;
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loading-screen").classList.add("hidden");
+          document.getElementById("landing").classList.add("visible");
+          document.querySelector(".logo-hero").classList.add("visible");
+        }, LOGO_ANIM_DURATION);
+      });
 
-    <footer class="footer">
-      <ul class="menu">
-        <li class="menu-item" data-section="home.html">
-          <i class="bi bi-house-door"></i>
-        </li>
-        <li class="menu-item" data-section="movies.html">
-          <i class="bi bi-play-circle"></i>
-        </li>
-        <li class="menu-item" data-section="series.html">
-          <i class="bi bi-collection-play"></i>
-        </li>
-        <li class="menu-item" data-section="tv.html">
-          <i class="bi bi-tv"></i>
-        </li>
-      </ul>
-    </footer>
-
-    <script src="script.js"></script>
+      const enterBtn = document.getElementById("enter-btn");
+      enterBtn.addEventListener("click", () => {
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          const dev = detectDevice();
+          if (dev === "android-tv") location.href = "smarttv.html";
+          else if (dev === "mobile") location.href = "/androidtv/mobile.html";
+          else location.href = "desktop.html";
+        }, 500);
+      });
+      enterBtn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") enterBtn.click();
+      });
+    </script>
   </body>
 </html>

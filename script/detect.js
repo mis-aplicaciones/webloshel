@@ -1,10 +1,22 @@
+// detect.js
+
 function detectDevice() {
     const ua = navigator.userAgent.toLowerCase();
-    if (/android/.test(ua) && /\stv\;/.test(ua)) return 'android-tv';
-    if (/android/.test(ua) || /iphone|ipad|ipod/.test(ua)) return 'mobile';
-    return 'desktop';
+    const isTvUA = ua.includes("smart-tv")
+                 || ua.includes("googletv")
+                 || ua.includes("hbbtv")
+                 || ua.includes("androidtv");
+    const isAndroid = ua.includes("android");
+    const isiOS     = /iphone|ipad|ipod/.test(ua);
+    const isMobile  = isAndroid || isiOS;
+    if (isTvUA || (isAndroid && window.innerWidth >= 960 && !("ontouchstart" in window))) {
+      return "android-tv";
+    }
+    if (isMobile) {
+      return "mobile";
+    }
+    return "desktop";
   }
   
-  // Exponer para index.html
   window.detectDevice = detectDevice;
   

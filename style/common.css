@@ -1,0 +1,96 @@
+/* common.css */
+
+/* Reset & full-screen */
+* { box-sizing: border-box; margin:0; padding:0; }
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  font-family:sans-serif; background:#000;
+}
+
+/* Loading screen */
+#loading-screen {
+  position:fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  background:#000;
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999; transition:opacity .4s ease;
+}
+#loading-screen.hidden {
+  opacity:0; pointer-events:none;
+}
+
+/* Logo inicial */
+.logo-load {
+  width:15vh; height:15vh;
+  background: url('/img/logo001.png') center/contain no-repeat !important;
+  animation: logo-start 1s ease-in-out forwards;
+}
+@keyframes logo-start {
+  0%   { transform: scale(1) translateY(0); opacity:1; }
+  50%  { transform: scale(1.05) translateY(-2vh); opacity:1; }
+  100% { transform: scale(0.33) translateY(-20vh); opacity:0; }
+}
+
+/* Landing */
+#landing {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  background: url('/img/hero-bg.jpeg') center/cover no-repeat !important;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .4s ease;
+}
+#landing.visible {
+  opacity:1; pointer-events:auto;
+}
+.hero {
+  background:rgba(0,0,0,0.5);
+  padding:2vh 3vw; border-radius:1vh;
+  text-align:center; color:#fff;
+}
+.logo-hero {
+  width:8vh; height:8vh;
+  background: url('/img/logo001.png') center/contain no-repeat !important;
+  margin:0 auto 1vh;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease;
+}
+.logo-hero.visible {
+  opacity:1; transform:translateY(0);
+}
+.hero h1 {
+  font-size:5vh; margin-bottom:2vh;
+}
+#enter-btn {
+  padding:1.5vh 3vh;
+  font-size:2.5vh; background:#8a2be2;
+  color:#fff; border:none; border-radius:.5vh;
+  cursor:pointer; transition:background .3s,transform .2s;
+}
+#enter-btn:hover,
+#enter-btn:focus {
+  background:#a65cee; transform:scale(1.05); outline:none;
+}
+
+/* Fade-out before redirect */
+body.fade-out {
+  animation: fadeOut .5s forwards;
+}
+@keyframes fadeOut {
+  to { opacity:0; }
+}
+
+/* Focus visible */
+#enter-btn:focus {
+  outline:.3vh solid #fff;
+}
+
+/* Touch adjustments */
+@media (pointer:coarse) {
+  #enter-btn { padding:2vh 4vh; font-size:3vh; }
+}
+
+/* Small screens */
+@media (max-width:600px) {
+  .hero h1 { font-size:6vw; }
+  #enter-btn { font-size:4vw; }
+}

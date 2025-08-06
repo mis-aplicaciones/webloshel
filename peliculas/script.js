@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       3: "Comedia",
       4: "Drama",
       5: "Suspenso",
-      6: "Ciencia Ficción",
+      6: "Sci-fi",
       7: "Animación",
       8: "Fantasía",
       9: "Terror",
@@ -55,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
       13: "Documental",
       14: "Superhéroes",
       15: "Infantil",
+      16: "Familiar",
+      17: "Musical",
   };
   const generoElemento = document.getElementById("genero");
   if (generoElemento) {
@@ -71,37 +73,27 @@ if (movieContent) {
 }
   
     // KeyDown Navigation
-   // -------- Navegación por teclado y control remoto --------
-  // Recogemos todos los elementos enfocables
-  const focusable = Array.from(document.querySelectorAll('a, button'));
+    const botonVolver = document.getElementById("back-button");
+    const botonVerAhora = document.querySelector(".movie-buttons a");
+    const navegables = [botonVolver, botonVerAhora];
 
-  // Añadimos tabindex a todos si no lo tienen
-  focusable.forEach(el => {
-    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-  });
+    document.addEventListener("keydown", function (e) {
+        const currentFocus = document.activeElement;
+        const index = navegables.indexOf(currentFocus);
 
-  // Enfoque inicial: botón "Ver Ahora"
-  const playButton = document.querySelector('.movie-buttons a');
-  if (playButton) playButton.focus();
-
-  // Manejo de flechas y Enter
-  document.addEventListener('keydown', function (e) {
-    const current = document.activeElement;
-    const idx = focusable.indexOf(current);
-
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      focusable[(idx + 1) % focusable.length].focus();
-    }
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      focusable[(idx - 1 + focusable.length) % focusable.length].focus();
-    }
-    else if (e.key === 'Enter') {
-      e.preventDefault();
-      current.click();
-    }
-  });
+        if (e.key === "ArrowRight") {
+            const nextIndex = (index + 1) % navegables.length;
+            navegables[nextIndex]?.focus();
+        } else if (e.key === "ArrowLeft") {
+            const prevIndex = (index - 1 + navegables.length) % navegables.length;
+            navegables[prevIndex]?.focus();
+        } else if (e.key === "Enter") {
+            currentFocus.click();
+        } else if (e.key === "Backspace" || e.key === "Escape") {
+            e.preventDefault();
+            botonVolver.focus();
+        }
+    });
 
     // Eliminar bordes de enfoque predeterminados
     document.querySelectorAll("button, a").forEach((element) => {

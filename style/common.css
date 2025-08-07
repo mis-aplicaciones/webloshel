@@ -1,43 +1,77 @@
 /* common.css */
 
-/* Reset & full-screen */
-* { box-sizing: border-box; margin:0; padding:0; }
+/* Reset y full-screen */
+* { box-sizing:border-box; margin:0; padding:0; }
 html, body {
   width:100%; height:100%; overflow:hidden;
   font-family:sans-serif; background:#000;
 }
 
-/* Loading screen */
+/* 1. Modal de plataforma */
+#platform-modal {
+  position:fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,0.9);
+  color:#fff; display:flex;
+  flex-direction:column; align-items:center; justify-content:center;
+  z-index:10000; transition:opacity .3s ease;
+}
+#platform-modal.hidden {
+  opacity:0; pointer-events:none;
+}
+#platform-modal h2 {
+  margin-bottom:2vh; font-size:3vh;
+}
+.platform-options {
+  display:flex; gap:4vw;
+}
+.plat-btn {
+  background:transparent; border:2px solid #8a2be2;
+  border-radius:1vh; padding:2vh 2vw;
+  color:#fff; font-size:2vh;
+  display:flex; flex-direction:column; align-items:center;
+  cursor:pointer; transition:background .3s,transform .2s;
+  outline:none;
+}
+.plat-btn img {
+  width:6vh; height:6vh; margin-bottom:1vh;
+}
+.plat-btn:focus,
+.plat-btn:hover {
+  background:rgba(138,43,226,0.3);
+  transform:scale(1.05);
+}
+
+/* 2. Loading screen */
 #loading-screen {
   position:fixed; top:0; left:0;
   width:100vw; height:100vh;
-  background:#000;
-  display:flex; align-items:center; justify-content:center;
-  z-index:9999; transition:opacity .4s ease;
+  background:#000; display:flex;
+  align-items:center; justify-content:center;
+  z-index:9000; transition:opacity .4s;
 }
 #loading-screen.hidden {
   opacity:0; pointer-events:none;
 }
-
-/* Logo inicial */
 .logo-load {
-  width:15vh; height:15vh;
-  background: url('../img/logo001.png') center/contain no-repeat !important;
-  animation: logo-start 1s ease-in-out forwards;
+  width:12vh; height:12vh;
+  background:url("../img/logo001.png") center/contain no-repeat;
+  animation:logo-start 1s ease-in-out forwards;
 }
 @keyframes logo-start {
-  0%   { transform: scale(1) translateY(0); opacity:1; }
-  50%  { transform: scale(1.05) translateY(-2vh); opacity:1; }
-  100% { transform: scale(0.33) translateY(-20vh); opacity:0; }
+  0%   {transform:scale(1) translateY(0); opacity:1;}
+  50%  {transform:scale(1.05) translateY(-2vh);}
+  100% {transform:scale(0.33) translateY(-20vh); opacity:0;}
 }
 
-/* Landing */
+/* 3. Landing */
 #landing {
   position:absolute; top:0; left:0;
   width:100%; height:100%;
-  background: url('../img/hero-bg.jpeg') center/cover no-repeat !important;
+  background:url("../img/hero-bg.jpeg") center/cover no-repeat;
   display:flex; align-items:center; justify-content:center;
-  opacity:0; pointer-events:none; transition:opacity .4s ease;
+  opacity:0; pointer-events:none;
+  transition:opacity .4s;
 }
 #landing.visible {
   opacity:1; pointer-events:auto;
@@ -48,11 +82,11 @@ html, body {
   text-align:center; color:#fff;
 }
 .logo-hero {
-  width:8vh; height:8vh;
-  background: url('../img/logo001.png') center/contain no-repeat !important;
+  width:4vh; height:4vh;
+  background:url("../img/logo001.png") center/contain no-repeat;
   margin:0 auto 1vh;
   opacity:0; transform:translateY(10px);
-  transition:opacity .4s ease, transform .4s ease;
+  transition:opacity .4s, transform .4s;
 }
 .logo-hero.visible {
   opacity:1; transform:translateY(0);
@@ -65,32 +99,29 @@ html, body {
   font-size:2.5vh; background:#8a2be2;
   color:#fff; border:none; border-radius:.5vh;
   cursor:pointer; transition:background .3s,transform .2s;
+  outline:none;
 }
 #enter-btn:hover,
 #enter-btn:focus {
-  background:#a65cee; transform:scale(1.05); outline:none;
+  background:#a65cee; transform:scale(1.05);
 }
 
-/* Fade-out before redirect */
+/* Fade-out antes de redirigir */
 body.fade-out {
-  animation: fadeOut .5s forwards;
+  animation:fadeOut .5s forwards;
 }
-@keyframes fadeOut {
-  to { opacity:0; }
-}
+@keyframes fadeOut { to { opacity:0; } }
 
-/* Focus visible */
-#enter-btn:focus {
-  outline:.3vh solid #fff;
-}
-
-/* Touch adjustments */
+/* Ajustes touch */
 @media (pointer:coarse) {
-  #enter-btn { padding:2vh 4vh; font-size:3vh; }
+  .plat-btn { padding:3vh 3vw; font-size:2.5vh; }
+  #enter-btn { font-size:3vh; padding:2vh 4vh; }
 }
 
-/* Small screens */
+/* Pantallas pequeñas */
 @media (max-width:600px) {
+  .plat-btn img { width:5vh; height:5vh; }
+  .plat-btn span { font-size:3vw; }
   .hero h1 { font-size:6vw; }
   #enter-btn { font-size:4vw; }
 }

@@ -1,0 +1,462 @@
+/* General */
+body {
+  margin: 0;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #121124;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* Contenedor info-content */
+.info-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.info-grid {
+  display: flex;
+  gap: 5px;
+  margin-left: 12%;
+  flex-direction: column;
+  opacity: 0; /* Inicialmente invisible */
+  transform: translateX(-10px); /* Posición inicial fuera de vista */
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Transiciones */
+}
+
+.info-grid.active {
+  opacity: 1; /* Visible */
+  transform: translateX(0); /* En su posición original */
+}
+
+.info-title {
+  width: 45vh;
+  padding: 0 10px 15px;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suavizar cambios */
+}
+
+.info-item,
+.info-genero {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 10px 10px;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.info-item h4 {
+  color: #ffffff;
+  margin: 0;
+  font-weight: bold;
+  font-size: 2vh;
+  transition: color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.info-item h4 i {
+  background-color: #6e6abd;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.info-title img {
+  width: 100%;
+  height: 70%;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.info-genero .genre {
+  font-size: 2vh;
+  padding: 5px 10px;
+  border: 1.5px solid #8a2be2;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0);
+  margin: 5px;
+  transition: border-color 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+/* Fondo dinámico */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.background-gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #121124 30%, rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+.home-container{
+  width: 100%; 
+    margin: 0% 0px 0px 5%;    
+    overflow-y: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer/Edge */
+scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+/* Resalte de card activo */
+.active-card {
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco transparente */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6); /* Sombra */
+  transform: scale(1.05); /* Pequeño agrandado */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Sección de carruseles */
+.carousel-section {
+  margin-top: 50vh; /* Compensa la altura de info-content */
+  overflow-y: auto;
+  height: calc(100vh - 50vh);
+}
+
+/* Ajustes para carruseles */
+.carousel-container {
+  margin-bottom: 20px;
+  padding: 0 10px 10px;
+}
+
+.carousel-title {
+  font-size: 1.1rem;
+  margin: 0 29px 10px;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Carrusel */
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 10px; /* Espaciado inicial */
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer/Edge */
+scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+.carousel-track::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit browsers */
+  }
+
+.card {
+  flex: 0 0 auto; /* Tamaño fijo */
+  width: 203px; /* Mantener el tamaño fijo */
+  height: 114px;
+  border-radius: 10px;
+  overflow: hidden;
+  
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card:hover,
+.card:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  
+}
+
+/* Botones de navegación */
+.nav-button {
+  background: rgba(255, 255, 255, 0.089); /* Fondo transparente */
+  color: white;
+  border: 0;
+  width: 20px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  transition: transform 0.2s, background-color 0.3s;
+  z-index: 2;
+}
+
+.nav-button.next {
+  right: 10px;
+}
+
+.nav-button.prev {
+  left: 10px;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco */
+  color: black;
+  transform: scale(1.2); /* Agrandado */
+}
+
+
+.nav-button:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+/* Estilos para los span con icono de punto */
+ /* Estilos para los span con icono de punto */
+ .info-item h4 span:not(#edad):not(#duracion-minutos)::before {
+  content: '\2022'; /* Punto como icono */
+  margin-right: 5px;
+ color: #8a2be2;
+}
+
+/* Estilos para el div fijo "Inicio" */
+.inicio-fixed {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  background: linear-gradient(to right, transparent, #8a2be2);
+  border-radius: 5px;
+  user-select: none;
+  pointer-events: none;
+}
+.carousel-section {
+  margin-top: 50vh; /* Compensa la altura de info-content */
+  overflow-y: auto;
+  height: calc(100vh - 50vh);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Scrollbar transparente */
+}
+
+.carousel-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.carousel-section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+
+/* Contenedor del slider */
+/* Mobile Carousel */
+/* Mobile Carousel */
+.mobile-carousel {
+  display: none;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-wrapper {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  position: relative;
+  height: 60vh;
+  scroll-snap-align: center;
+}
+
+.card-background {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, #121124 15%, transparent 85%);
+  z-index: 1;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 15%;
+  right: 5%;
+  z-index: 2;
+  width: 90%;
+}
+
+.content-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.info-column {
+  flex: 2;
+}
+
+.button-column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Título */
+.info-column h2 {
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+/* Detalles */
+.details {
+  margin-bottom: 10px;
+  font-size: 2vh;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.details .age {
+  background-color: #6e6abd;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 2vh;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+}
+
+.category {
+  padding: 5px 10px;
+  border: 2px solid #8a2be2;
+  border-radius: 15px;
+  font-size: 1.5vh;
+  font-weight: bold;
+  background: transparent;
+  color: white;
+}
+
+/* Botón "Ver Ahora" */
+.watch-now {
+  padding: 8px 20px;
+  background-color: #8a2be2;
+  color: white;
+  font-size: 2vh;
+  text-decoration: none;
+  border: none;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+.bi-play-circle-fill::before {
+  font-size: 2.55vh;
+}
+.watch-now:hover {
+  background-color: #6e23a6;
+}
+
+/* Responsive */
+@media (max-width: 719px) {
+  .mobile-carousel {
+    display: block;
+  }
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 719px) {
+  .slider{
+    height: 60vh;
+}
+  .background {
+    display: none;
+  }
+  
+  .home-container{   
+    margin: 0;   
+  }
+  .info-grid {
+    margin-top: 60%;
+    flex-direction: column;
+    align-items: center;
+}
+  .info-content {
+    display: none;
+    height: 60vh;
+    justify-content: center;
+  }
+
+  .carousel-section {
+    margin-top: 0;
+    height: 100vh; 
+}
+
+  .inicio-fixed {
+    font-size:small;
+    padding: 5px 15px;
+  }
+
+  .carousel-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* Smooth snapping for smaller screens */
+  }
+  
+  .card {
+    width: 48%;
+    height: 80px; /* Adjust for smaller screens */
+  }
+  
+  .nav-button {
+    display: none; /* Hide navigation buttons on smaller screens */
+  }
+  
+  .carousel-title {
+    font-size: 0.9rem;
+  }
+  .inicio-fixed {
+    display: none;
+  }
+}
+/* Responsividad */
+@media (max-width: 380px) {
+  .carousel-title {
+    font-size: 0.8rem;
+    }
+    .info-grid {
+      grid-template-columns: 1fr;
+      margin-left: 20px;
+    }
+    .card {
+    width: 100px;
+    height: 70px; /* Further reduce card size */
+    }
+}
+
+
+
+
+
+
+

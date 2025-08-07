@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styleshome.css" />
+    <title>Home - Web App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="home-container">
+      <!-- Fondo dinámico -->
+      <div class="background">
+        <div class="background-gradient"></div>
+      </div>
+
+      <!-- Nuevo Contenedor Info -->
+      <div class="info-content">
+        <div class="info-grid">
+          <div class="info-title">
+            <img
+              src="https://via.placeholder.com/300x200"
+              alt="Imagen Ejemplo"
+            />
+          </div>
+          <div class="info-item">
+            <h4>
+              <span id="edad"><i>13+</i></span>
+              <span id="año">2025</span>
+              <span id="duracion-horas">1h</span>
+              <span id="duracion-minutos">59min</span>
+            </h4>
+          </div>
+          <div class="info-genero">
+            <div class="genre">Acción</div>
+            <div class="genre">Susenso</div>
+            <div class="genre">Ciencia Ficción</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Carruseles -->
+      <div class="carousel-section">
+        <!-- Slider -->
+        <div class="mobile-carousel">
+          <div class="carousel-wrapper">
+            <!-- Card 1 -->
+            <div class="carousel-item">
+              <div
+                class="card-background"
+                style="
+                  background-image: url('https://image.tmdb.org/t/p/original/8NsqDXtXLZk6KJ1dTNWeEosD4lu.jpg');
+                "
+              >
+                <div class="gradient-overlay"></div>
+                <div class="card-info">
+                  <div class="content-grid">
+                    <!-- Primera columna -->
+                    <div class="info-column">
+                      <h2>Ballerina</h2>
+                      <div class="details">
+                        <span class="age">18+</span>
+                        <span class="dot"></span>
+                        <span>2025</span>
+                        <span class="dot"></span>
+                        <span>2h 5min</span>
+                      </div>
+                      <div class="categories">
+                        <span class="category">Acción</span>
+                        <span class="category">Suspenso</span>
+                        <span class="category">Crimen</span>
+                      </div>
+                    </div>
+                    <!-- Segunda columna -->
+                    <div class="button-column">
+                      <a
+                        href="//ok.ru/videoembed/11518958176839?nochat=1&autoplay=1"
+                        class="watch-now"
+                      >
+                        <i class="bi bi-play-circle-fill"></i> Ver
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="carousel-item">
+              <div
+                class="card-background"
+                style="
+                  background-image: url('https://image.tmdb.org/t/p/original/cBz8qxIqudFMsciFgBYKIiaEWlG.jpg');
+                "
+              >
+                <div class="gradient-overlay"></div>
+                <div class="card-info">
+                  <div class="content-grid">
+                    <!-- Primera columna -->
+                    <div class="info-column">
+                      <h2>Capitán América: Brave New World</h2>
+                      <div class="details">
+                        <span class="age">13+</span>
+                        <span class="dot"></span>
+                        <span>2024</span>
+                        <span class="dot"></span>
+                        <span>1h 59min</span>
+                      </div>
+                      <div class="categories">
+                        <span class="category">Acción</span>
+                        <span class="category">Suspenso</span>
+                        <span class="category">Sci-fi</span>
+                      </div>
+                    </div>
+                    <!-- Segunda columna -->
+                    <div class="button-column">
+                      <a
+                        href="//ok.ru/videoembed/11487181736519?nochat=1&autoplay=1"
+                        class="watch-now"
+                      >
+                        <i class="bi bi-play-circle-fill"></i> Ver
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="carousel-item">
+              <div
+                class="card-background"
+                style="
+                  background-image: url('https://image.tmdb.org/t/p/original/uKb22E0nlzr914bA9KyA5CVCOlV.jpg');
+                "
+              >
+                <div class="gradient-overlay"></div>
+                <div class="card-info">
+                  <div class="content-grid">
+                    <div class="info-column">
+                      <h2>Wicked</h2>
+                      <div class="details">
+                        <span class="age">7+</span>
+                        <span class="dot"></span>
+                        <span>2024</span>
+                        <span class="dot"></span>
+                        <span>2h 42min</span>
+                      </div>
+                      <div class="categories">
+                        <span class="category">Drama</span>
+                        <span class="category">Romance</span>
+                        <span class="category">Fantasía</span>
+                      </div>
+                    </div>
+                    <div class="button-column">
+                      <a
+                        href="//ok.ru/videoembed/8990787898107?nochat=1&autoplay=1"
+                        class="watch-now"
+                      >
+                        <i class="bi bi-play-circle-fill"></i> Ver
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Carrusel de peliculas tv 1 -->
+        <section class="carousel-container" id="carousel-1">
+          <h2 class="carousel-title">Nuevos Ingresos</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-1">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <!-- Pelicula 0 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/3vVhAWCmO4h34O8iUpjHisaQmtq.jpg"
+                data-title="https://image.tmdb.org/t/p/original/dYLO1k4t1GZXuvreVdGA6Okwkyy.png"
+                data-edad="<i>13+</i>"
+                data-año="2025"
+                data-duracion-horas="2h"
+                data-duracion-minutos="0min"
+                data-genre="Acción, Suspenso, Sci-fi"
+              >
+                <a
+                  href="peliculas/P-149-1-6-5-M3GAN2.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/66RevrrXlGQ8jR3IWLNOUvMvgbH.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 1 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/n3AaJXdWbkGtdRwfVGw5FNrloUQ.jpg"
+                data-title="https://image.tmdb.org/t/p/original/d5hliESxiKVZUgB8u3brh71Hy9v.png"
+                data-edad="<i>18+</i>"
+                data-año="2025"
+                data-duracion-horas="2h"
+                data-duracion-minutos="5min"
+                data-genre="Acción, Suspenso, Crimen"
+              >
+                <a
+                  href="peliculas/P-146-1-5-12-Bailarina.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/rIeaf2NLSlw11wT8IoBocHhid1y.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 2 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/7Q2CmqIVJuDAESPPp76rWIiA0AD.jpg"
+                data-title="https://image.tmdb.org/t/p/original/qKeHfyr5Jc8daiqwwDhNbu6Ujt1.png"
+                data-edad="<i>13+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="34min"
+                data-genre="Acción, Aventura, Drama"
+              >
+                <a
+                  href="peliculas/P-140-1-2-4-KarateKid_Legends.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/aDumN4tLeNws7zwzibCXllLdxsB.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 3 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/x38H9MMe3gvs4DyN0JOeW5FXtpm.jpg"
+                data-title="https://image.tmdb.org/t/p/original/sZQyzO2K39u69LUmgN5bGqecT7K.png"
+                data-edad="<i>18+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="42min"
+                data-genre="Acción, Fantasía, Aventura"
+              >
+                <a
+                  href="peliculas/P-141-1-8-2-Tierrasperdidas.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/uxs6N1G0RxVmVIzIDKpqCxx2Wfo.jpg"
+                  alt="Card 1"
+                />
+              </div>
+            </div>
+            <button class="nav-button next" data-carousel="carousel-1">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel de peliculas tv 2 -->
+        <section class="carousel-container" id="carousel-2">
+          <h2 class="carousel-title">Películas Recomendadas</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-2">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <!-- Pelicula 0 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/hwlyY7LJdEFbCPaGNXiskKKmJ5X.jpg"
+                data-title="https://image.tmdb.org/t/p/original/wmVMlAKbp6Dcreh91rPqhYDpjKG.png"
+                data-edad="<i>18+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="31min"
+                data-genre="Acción, Crimen, Suspenso"
+              >
+                <a
+                  href="peliculas/P-132-1-12-5-Amenazaenelaire.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/tLQkFAyLd4fS79UEzrEpsvw9eO6.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 1 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/wM2Yxpihaz8ZJDXYlO1mrgyfI8f.jpg"
+                data-title="https://image.tmdb.org/t/p/original/87ZmZT3mnp2m0FQMkLUVHOJTLqP.png"
+                data-edad="<i>18+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="38min"
+                data-genre="Terror, Comedia"
+              >
+                <a
+                  href="peliculas/P-131-9-3-TheMonkey.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/270hd3fc6mlfr7rRAr5CROaJ43h.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 2 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/jt2HI4GBjkOK6E8T8qRjYIqUJMc.jpg"
+                data-title="https://image.tmdb.org/t/p/original/5mYaJUHJzztfYcw5XeJTkw0iDqt.png"
+                data-edad="<i>13+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="59min"
+                data-genre="Acción, Suspenso, Sci-fi"
+              >
+                <a
+                  href="peliculas/P-128-1-5-6-CapitanAmerica_BraveNewWorld.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/gKsXcXxrAaUFmcdkfn5KUoeGxPx.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 3 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/dTT15C48BQtuIFOAAri4okEsO2P.jpg"
+                data-title="https://image.tmdb.org/t/p/original/e0x3Y4Hy1dqnnwXAsZG5WT2jMrF.png"
+                data-edad="<i>14+</i>"
+                data-año="2014"
+                data-duracion-horas="2h"
+                data-duracion-minutos="01min"
+                data-genre="Fantasía, Acción, Terror"
+              >
+                <a
+                  href="peliculas/P-001-8-1-9-Constantine.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/fHNuFWvFngVw6FaOzFpYn3yckxq.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 4 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/eK8HiCLv4zo6iZ0NbjZnmD9LZkd.jpg"
+                data-title="https://image.tmdb.org/t/p/original/9JOsvYaCkvfDXR1GE7yjaFZIiss.png"
+                data-edad="<i>07+</i>"
+                data-año="2024"
+                data-duracion-horas="1h"
+                data-duracion-minutos="42min"
+                data-genre="Animación, Sci-fi, Familia"
+              >
+                <a
+                  href="peliculas/P-003-7-6-Robotsalvaje.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/vYSaaBbI2JScbCiD4PvByPbmPYz.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 5 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/vkYXofvsFHargOTLpPD1Y7vs5Dx.jpg"
+                data-title="https://image.tmdb.org/t/p/original/pkmETOK3v31t01lyDqJjSucLdfP.png"
+                data-edad="<i>18+</i>"
+                data-año="2024"
+                data-duracion-horas="1h"
+                data-duracion-minutos="45min"
+                data-genre="Acción, Crimen, Suspenso, Drama"
+              >
+                <a
+                  href="peliculas/P-004-1-12-5-4-Kill_MasacreenelTren.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/zwWI0vlgTNkPqxrgP1MdjoJ5Nl.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 6 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/rn8Sg6C8aWKRWdqY4hIpmOaiuqS.jpg"
+                data-title="https://image.tmdb.org/t/p/original/hwwjqwFOQMOvcrIDnLf0WzDsQtU.png"
+                data-edad="<i>18+</i>"
+                data-año="2025"
+                data-duracion-horas="1h"
+                data-duracion-minutos="45min"
+                data-genre="Terror, Suspenso"
+              >
+                <a
+                  href="peliculas/P-007-9-5-Hombrelobo.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/iHw5jjb9k4cTNiZJabhAfk6qBXR.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 7 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/jTOeWjamUKGxWVUO1TMZXqQUarw.jpg"
+                data-title="https://image.tmdb.org/t/p/original/d7CXqCdnHmf5uXbbVwIOb8eCjYv.png"
+                data-edad="<i>7+</i>"
+                data-año="2024"
+                data-duracion-horas="2h"
+                data-duracion-minutos="42min"
+                data-genre="Drama, Romance, Fantasía"
+              >
+                <a
+                  href="peliculas/P-010-4-11-8-Wicked.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/ndgaAkooNS1Bw1FCmRHOPgcyPAg.jpg"
+                  alt="Card 1"
+                />
+              </div>
+            </div>
+            <button class="nav-button next" data-carousel="carousel-1">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel 2 -->
+        <section class="carousel-container" id="carousel-3">
+          <h2 class="carousel-title">Disfruta la Semana Santa</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-3">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <!-- Pelicula 1 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/u7AZ5CdT2af8buRjmYCPXNyJssd.jpg"
+                data-title="https://image.tmdb.org/t/p/original/f4tmZDlrV8Ehz1CfVUQzeJBSN1O.png"
+                data-edad="<i>07+</i>"
+                data-año="2014"
+                data-duracion-horas="1h"
+                data-duracion-minutos="39min"
+                data-genre="Acción, Comedia"
+              >
+                <a
+                  href="peliculas/P-127-1-3-PandaPlan.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/vpaC0urwKnthk1wkbX4cy9EtR1G.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 2 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/8aMQoBRViVbZxqR3lPXhD2ocFuU.jpg"
+                data-title="https://image.tmdb.org/t/p/original/cdYP3sB05KPehNhjEvoIpyi8pUw.png"
+                data-edad="<i>13+</i>"
+                data-año="2014"
+                data-duracion-horas="2h"
+                data-duracion-minutos="30min"
+                data-genre="Aventura, Drama, Acción"
+              >
+                <a
+                  href="peliculas/P-136-2-4-1-Exodus_Diosesyreyes.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/1bGNqu2h2mbMaQIj9zggBFP7G8o.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 3 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/mJUS8Je7QV3TruhNxhD6oltRpTA.jpg"
+                data-title="https://image.tmdb.org/t/p/original/yudbOwBMh7RKOFnZYrVQCWF1TKU.png"
+                data-edad="<i>13+</i>"
+                data-año="2014"
+                data-duracion-horas="2h"
+                data-duracion-minutos="18min"
+                data-genre="Aventura, Drama"
+              >
+                <a
+                  href="peliculas/P-135-4-2-Noe.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/7Y5BtBLKRoXLqfMHjEgXyXmp0ZM.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 4 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/vfbxysLCXrvcI8NdzeQTR1Kxfky.jpg"
+                data-title="https://image.tmdb.org/t/p/original/qwaFSnULkBt4fDuUqOFOiPMyaxw.png"
+                data-edad="<i>13+</i>"
+                data-año="2024"
+                data-duracion-horas="1h"
+                data-duracion-minutos="50min"
+                data-genre="Drama, Historia, Acción"
+              >
+                <a
+                  href="peliculas/P-137-4-2-1-Maria.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/ab05asKPjJ9FadAIKsSHSmMTORN.jpg"
+                  alt="Card 1"
+                />
+              </div>
+            </div>
+            <button class="nav-button next" data-carousel="carousel-2">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel 3 -->
+        <section class="carousel-container" id="carousel-4">
+          <h2 class="carousel-title">Las más populares</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-4">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <!-- Pelicula 0 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/wDpSSSPp8FQQ7oLYgDSeNDj40IZ.jpg"
+                data-title="https://image.tmdb.org/t/p/original/xLRVNUSvJ8OuKtRyNHWaa6qzZp8.png"
+                data-edad="<i>18+</i>"
+                data-año="2024"
+                data-duracion-horas="1h"
+                data-duracion-minutos="44min"
+                data-genre="Terror, Suspenso"
+              >
+                <a
+                  href="peliculas/P-133-9-5-Apartamento7A.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/tbxqPFlPOoLkd1TCqyCF0qcv7fU.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 1 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/xBwtP27cx8WfjHJVFkpuV6F1RES.jpg"
+                data-title="https://image.tmdb.org/t/p/original/y49rcN29AFhGhPEyybGdYpYbOqm.png"
+                data-edad="<i>18+</i>"
+                data-año="2022"
+                data-duracion-horas="2h"
+                data-duracion-minutos="27min"
+                data-genre="Acción, Crimen, Suspenso"
+              >
+                <a
+                  href="peliculas/P-134-10-4-Sinnovedadenelfrente.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/8uD0NJV4VTYktABtH5rmsKBjdsk.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 2 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/85ZtxTnFyaDcftmLnEBaf6ssdoN.jpg"
+                data-title="https://image.tmdb.org/t/p/original/1ILJNoXf7niVkbYQz1uuOcNo87n.png"
+                data-edad="<i>18+</i>"
+                data-año="2019"
+                data-duracion-horas="1h"
+                data-duracion-minutos="59min"
+                data-genre="Bélica, Historia, Suspense, Drama"
+              >
+                <a
+                  href="peliculas/P-138-10-5-4-1917.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/1DWeInTa8XPhWHcGIvivKEuNMCd.jpg"
+                  alt="Card 1"
+                />
+              </div>
+            </div>
+            <button class="nav-button next" data-carousel="carousel-3">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+        <!-- Carrusel 4 -->
+        <section class="carousel-container" id="carousel-5">
+          <h2 class="carousel-title">Jurassic Colección</h2>
+          <div class="carousel">
+            <button class="nav-button prev" data-carousel="carousel-5">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="carousel-track">
+              <!-- Pelicula 1 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/jzt9HuhIAdH9qp0K2MA1m5V8sgq.jpg"
+                data-title="https://image.tmdb.org/t/p/original/7mk6WxEiJq5rd2m69nKptREhgu8.png"
+                data-edad="<i>13+</i>"
+                data-año="1993"
+                data-duracion-horas="2h"
+                data-duracion-minutos="7min"
+                data-genre="Acción, Ciencia Ficción"
+              >
+                <a
+                  href="peliculas/P-139-1-6-JurassicPark.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/mlolzwV6VrKOZJ1SfYbPHXXDD4p.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 2 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/Aggp8HKlt9MuA3cagoOk7Gp5yI4.jpg"
+                data-title="https://image.tmdb.org/t/p/original/3JAxX6mdwFv2nghBfUA4gYMKpUX.png"
+                data-edad="<i>13+</i>"
+                data-año="1997"
+                data-duracion-horas="2h"
+                data-duracion-minutos="8min"
+                data-genre="Aventura, Acción, Ciencia Ficción"
+              >
+                <a
+                  href="peliculas/P-142-2-1-6-Elmundoperdido_JurassicPark2.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/koFaElDomBD8miT6F6Gggy0o9ah.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 3 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/rl2mFCm04GqHOz3RjSzrXqWB3M9.jpg"
+                data-title="https://image.tmdb.org/t/p/original/4FtcsSLKmuTKlL9IlHM5O0N8mFn.png"
+                data-edad="<i>13+</i>"
+                data-año="2001"
+                data-duracion-horas="1h"
+                data-duracion-minutos="32min"
+                data-genre="Aventura, Acción, Ciencia Ficción"
+              >
+                <a
+                  href="peliculas/P-143-2-1-5-6-JurassicParkIII.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/3oYj3rRz59VgjZUTU4TL5tGYnSN.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 4 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/9OywzJLgobAbSGfhMXligzTylko.jpg"
+                data-title="https://image.tmdb.org/t/p/original/8TsSMAK89DiOOg3vP9baQEt1DNi.png"
+                data-edad="<i>13+</i>"
+                data-año="2015"
+                data-duracion-horas="2h"
+                data-duracion-minutos="4min"
+                data-genre="Acción, Aventura, Ciencia Ficción"
+              >
+                <a
+                  href="peliculas/P-144-1-2-6-JurassicWorld.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/bpMP2d4f1yo6GLCEuRthx0SZeIs.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 5 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/cdcHaYM7xueTktmtmDVwONfAdCI.jpg"
+                data-title="https://image.tmdb.org/t/p/original/pGb6aKBDRI46C2h0B0mHH54x6Tm.png"
+                data-edad="<i>13+</i>"
+                data-año="2018"
+                data-duracion-horas="2h"
+                data-duracion-minutos="9min"
+                data-genre="Acción, Aventura, Ciencia Ficción, Suspenso"
+              >
+                <a
+                  href="peliculas/P-145-1-2-6-5-JurassicWorld_Elreinocaido.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/zr2R7hvAl1awiZO1PFsGPz12r2S.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 6 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/drLh6MtjBu1YmIXxDeXVmYSHmHU.jpg"
+                data-title="https://image.tmdb.org/t/p/original/va5NU8qdUhy0tgwiqubC7jopEdU.png"
+                data-edad="<i>13+</i>"
+                data-año="2022"
+                data-duracion-horas="2h"
+                data-duracion-minutos="27min"
+                data-genre="Acción, Aventura, Sci-fi, Suspenso"
+              >
+                <a
+                  href="peliculas/P-147-2-1-6-JurassicWorld_Dominion.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/ulHKFMHDY4yThQ1QvIdNagicD9r.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 7 -->
+              <div
+                class="card"
+                tabindex="0"
+                data-background="https://image.tmdb.org/t/p/original/dV6Shp9rtnYWJ80DYU3GUsg3r9m.jpg"
+                data-title="https://image.tmdb.org/t/p/original/A1z92ISvvpoopHpIKn3Cr4TMGt8.png"
+                data-edad="<i>13+</i>"
+                data-año="2025"
+                data-duracion-horas="2h"
+                data-duracion-minutos="14min"
+                data-genre="Sci-fi, Aventura, Acción"
+              >
+                <a
+                  href="peliculas/P-148-6-2-1-JurassicWorld_Elrenacer.html"
+                  rel="noopener noreferrer"
+                ></a>
+                <img
+                  src="https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg"
+                  alt="Card 1"
+                />
+              </div>
+              <!-- Pelicula 8 -->
+            </div>
+            <button class="nav-button next" data-carousel="carousel-2">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Div fijo para Inicio -->
+    <div class="inicio-fixed">Inicio</div>
+    <script src="scripthome.js"></script>
+  </body>
+</html>

@@ -2,22 +2,28 @@
 
 function detectDevice() {
   const ua = navigator.userAgent.toLowerCase();
+  const isAndroid = ua.includes("android");
+  // Detectamos si hay pantalla táctil
+  const hasTouch =
+    ("ontouchstart" in window) ||
+    (navigator.maxTouchPoints || 0) > 0;
 
-  // 1) Android TV → “android” sin “mobile”
-  if (ua.includes("android") && !ua.includes("mobile")) {
+  // 1) Android sin touch → Android TV
+  if (isAndroid && !hasTouch) {
     return "android-tv";
   }
-
-  // 2) Android Móvil o iOS → “android” con “mobile” o iOS
+  // 2) Android con touch, o iOS → móvil/tablet
   if (
-    (ua.includes("android") && ua.includes("mobile")) ||
+    (isAndroid && hasTouch) ||
     /iphone|ipad|ipod/.test(ua)
   ) {
     return "mobile";
   }
-
-  // 3) Cualquier otro → Desktop
+  // 3) Resto → desktop
   return "desktop";
 }
 
 window.detectDevice = detectDevice;
+
+window.detectDevice = detectDevice;
+

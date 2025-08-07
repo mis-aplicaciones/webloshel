@@ -17,19 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadContent(section) {
     cleanupSection();
-    fetch(section).then(res => {
-      if (!res.ok) throw new Error();
-      return res.text();
-    }).then(html => {
-      content.innerHTML = html;
-      activeSection = section;
-      updateFooterActiveState(section);
-      initializeSectionScripts(section);
-    }).catch(() => {
-      content.innerHTML = '<p>Error al cargar contenido.</p>';
-    });
+  
+    fetch(section)
+      .then(res => {
+        if (!res.ok) throw new Error(`No se pudo cargar ${section}`);
+        return res.text();
+      })
+      .then(htmlText => {
+        // 1) parseamos el HTML completo (puede ser un documento entero o un fragmento)
+        const parser = new DOMParser();
+        const doc    = parser.parseFromString(htmlText, "text/html");
+        // 2) extraemos SOLO el contenido de <body>
+        const bodyHTML = doc.body.innerHTML;
+        // 3) lo inyectamos en tu <main class="content">
+        content.innerHTML = bodyHTML;
+  
+        activeSection = section;
+        updateFooterActiveState(section);
+        initializeSectionScripts(section);
+      })
+      .catch(err => {
+        console.error(err);
+        content.innerHTML = `<p style="color:red;">Error al cargar ${section}</p>`;
+      });
   }
-
+  
   function updateFooterActiveState(section) {
     footerMenuItems.forEach(fi => {
       fi.classList.toggle("active", fi.dataset.section === section);

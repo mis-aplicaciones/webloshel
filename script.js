@@ -1,67 +1,64 @@
+// script.js
+// Gestión global de la SPA: sidebar y carga de secciones dinámicas
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Elementos fijos
   const loadingScreen   = document.getElementById("loading-screen");
   const menuItems       = Array.from(document.querySelectorAll(".sidebar .menu-item"));
   const footerMenuItems = Array.from(document.querySelectorAll(".footer .menu-item"));
   const content         = document.querySelector(".content");
 
-  let currentFocus  = "menu";      // "menu" o "content"
-  let activeSection = "home.html";
-  let currentScript = null;
+  // Estado global
+  let currentFocus   = "menu";          // "menu" o "content"
+  let activeSection  = "home.html";
+  let currentScript  = null;
 
+  // Mostrar/ocultar pantalla de carga
   function hideLoadingScreen() {
     setTimeout(() => {
       loadingScreen.style.opacity = "0";
-      setTimeout(() => loadingScreen.style.display = "none", 500);
+      setTimeout(() => {
+        loadingScreen.style.display = "none";
+      }, 500);
     }, 1000);
   }
 
-  function loadContent(section) {
-    cleanupSection();
-    fetch(section)
-      .then(res => {
-        if (!res.ok) throw new Error(`No se pudo cargar ${section}`);
-        return res.text();
-      })
-      .then(htmlText => {
-        // parsear y extraer sólo el body del fragmento o documento
-        const doc = new DOMParser().parseFromString(htmlText, "text/html");
-        content.innerHTML = doc.body.innerHTML;
-  
-        activeSection = section;
-        updateFooterActiveState(section);
-        initializeSectionScripts(section);
-      })
-      .catch(err => {
-        console.error(err);
-        content.innerHTML = `<p style="color:red;">Error al cargar ${section}</p>`;
-      });
-  }
-  
-
+  // Carga y arranque de cada sección
   function initializeSectionScripts(section) {
+    // Deshabilitar navegación del sidebar
     document.removeEventListener("keydown", sidebarKeyListener);
     currentFocus = "content";
 
-    let scriptPath, initFn;
+    // Determinar ruta y función init
+    let scriptPath = "";
+    let initFn     = "";
+
     switch (section) {
-      case "home.html":    scriptPath="scripthome.js";    initFn="initializeHome";    break;
-      case "movies.html":  scriptPath="scriptmovie.js";   initFn="initializeMovie";   break;
-      case "series.html":  scriptPath="scriptserie.js";   initFn="initializeSerie";   break;
-      case "tv.html":      scriptPath="scripttv.js";      initFn="initializeTv";      break;
-      case "usuario.html": scriptPath="scriptusuario.js"; initFn="initializeUsuario"; break;
-      default: console.error("Sección desconocida", section); return;
+      case "home.html":    scriptPath = "scripthome.js";  initFn = "initializeHome";    break;
+      case "movies.html":  scriptPath = "scriptmovie.js"; initFn = "initializeMovie";  break;
+      case "series.html":  scriptPath = "scriptserie.js"; initFn = "initializeSerie";  break;
+      case "tv.html":      scriptPath = "scripttv.js";    initFn = "initializeTv";      break;
+      case "usuario.html": scriptPath = "scriptusuario.js";initFn = "initializeUsuario";break;
+      default:
+        console.error(`Sección desconocida: ${section}`);
+        return;
     }
 
+    // Insertar y ejecutar
     const script = document.createElement("script");
     script.src = scriptPath;
     script.onload = () => {
-      if (typeof window[initFn]==="function") window[initFn]();
-      else console.error(`No se encontró ${initFn} en ${scriptPath}`);
+      if (typeof window[initFn] === "function") {
+        window[initFn]();
+      } else {
+        console.error(`Función ${initFn} no encontrada en ${scriptPath}`);
+      }
     };
     document.body.appendChild(script);
     currentScript = script;
   }
 
+  // Limpiar script anterior
   function cleanupSection() {
     if (currentScript) {
       document.body.removeChild(currentScript);
@@ -69,70 +66,98 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ********** Sidebar navigation **********
+  // Cargar HTML al content
+  function loadContent(section) {
+    cleanupSection();
+    fetch(section)
+      .then(res => {
+        if (!res.ok) throw new Error("No se pudo cargar la sección");
+        return res.text();
+      })
+      .then(html => {
+        content.innerHTML = html;
+        activeSection = section;
+        updateFooterActiveState(section);
+        initializeSectionScripts(section);
+      })
+      .catch(err => {
+        console.error(err);
+        content.innerHTML = '<p>Error al cargar contenido.</p>';
+      });
+  }
+
+  // Marcar active en footer
+  function updateFooterActiveState(section) {
+    footerMenuItems.forEach(item => {
+      item.classList.toggle("active", item.dataset.section === section);
+    });
+  }
+
+  // ******************************************************************
+  // Navegación del sidebar (solo mientras currentFocus == "menu")
+  // ******************************************************************
   function sidebarKeyListener(e) {
     if (currentFocus !== "menu") return;
-
-    const focusedIndex = menuItems.findIndex(mi=> mi === document.activeElement);
-    let nextIndex = focusedIndex;
+    const activeIndex = menuItems.findIndex(mi => mi.classList.contains("active"));
+    let idx = activeIndex;
 
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        nextIndex = (focusedIndex + 1) % menuItems.length;
-        menuItems[nextIndex].focus();
-        return;
+        idx = (activeIndex + 1) % menuItems.length;
+        break;
       case "ArrowUp":
         e.preventDefault();
-        nextIndex = (focusedIndex - 1 + menuItems.length) % menuItems.length;
-        menuItems[nextIndex].focus();
-        return;
+        idx = (activeIndex - 1 + menuItems.length) % menuItems.length;
+        break;
       case "Enter":
         e.preventDefault();
-        // Al ejecutar, movemos la franja ::before y cargamos
-        menuItems.forEach(mi=>mi.classList.remove("active"));
-        footerMenuItems.forEach(fi=>fi.classList.remove("active"));
-        document.activeElement.classList.add("active");
-        loadContent(document.activeElement.dataset.section);
+        const section = menuItems[activeIndex].dataset.section;
+        loadContent(section);
         return;
       default:
         return;
     }
+
+    menuItems[activeIndex].classList.remove("active");
+    menuItems[idx].classList.add("active");
+    menuItems[idx].focus();
   }
   document.addEventListener("keydown", sidebarKeyListener);
 
-  // Click/touch en sidebar items
-  menuItems.forEach(mi=>{
-    mi.addEventListener("click", ()=>{
-      menuItems.forEach(x=>x.classList.remove("active"));
-      footerMenuItems.forEach(x=>x.classList.remove("active"));
-      mi.classList.add("active");
-      loadContent(mi.dataset.section);
+  // Click / touch en sidebar y footer
+  [...menuItems, ...footerMenuItems].forEach(item => {
+    item.addEventListener("click", () => {
+      // Reset active
+      menuItems.forEach(mi => mi.classList.remove("active"));
+      footerMenuItems.forEach(fi => fi.classList.remove("active"));
+
+      item.classList.add("active");
+      loadContent(item.dataset.section);
     });
   });
 
-  // Click/touch en footer
-  footerMenuItems.forEach(fi=>{
-    fi.addEventListener("click", ()=>{
-      menuItems.forEach(x=>x.classList.remove("active"));
-      footerMenuItems.forEach(x=>x.classList.remove("active"));
-      fi.classList.add("active");
-      loadContent(fi.dataset.section);
-    });
-  });
-
-  // Evento de retorno al sidebar
+  // ******************************************************************
+  // Retorno desde sección: reactivar sidebar
+  // ******************************************************************
   window.addEventListener("return-to-sidebar", () => {
+    // Limpiar sección activa
     cleanupSection();
-    currentFocus = "menu";
+
+    // Reactivar listener de sidebar
+    document.removeEventListener("keydown", sidebarKeyListener);
     document.addEventListener("keydown", sidebarKeyListener);
+    currentFocus = "menu";
+
+    // Focar elemento activo
     const active = document.querySelector(".sidebar .menu-item.active");
     if (active) active.focus();
   });
 
-  // Init
+  // ******************************************************************
+  // Inicialización global
+  // ******************************************************************
   menuItems[0].classList.add("active");
-  menuItems[0].focus();
   loadContent("home.html");
   window.addEventListener("load", hideLoadingScreen);
 });

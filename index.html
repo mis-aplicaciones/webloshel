@@ -34,10 +34,20 @@
       enterBtn.addEventListener("click", () => {
         document.body.classList.add("fade-out");
         setTimeout(() => {
-          const dev = detectDevice();
-          if (dev === "android-tv")      location.href = "smarttv.html";
-else if (dev === "mobile")     location.href = "androidtv/mobile.html";
-else                            location.href = "desktop.html";
+          let dev = detectDevice();
+          // si preguntamos, esperamos a que window.__detected esté definido
+          if (window.__detected) dev = window.__detected;
+
+          switch (dev) {
+            case "android-tv":
+              location.href = "smarttv.html";
+              break;
+            case "mobile":
+              location.href = "androidtv/mobile.html";
+              break;
+            default:
+              location.href = "desktop.html";
+          }
         }, 500);
       });
       enterBtn.addEventListener("keydown", (e) => {
@@ -46,4 +56,3 @@ else                            location.href = "desktop.html";
     </script>
   </body>
 </html>
-

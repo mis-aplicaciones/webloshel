@@ -17,24 +17,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadContent(section) {
     cleanupSection();
-    fetch(section).then(res => {
-      if (!res.ok) throw new Error();
-      return res.text();
-    }).then(html => {
-      content.innerHTML = html;
-      activeSection = section;
-      updateFooterActiveState(section);
-      initializeSectionScripts(section);
-    }).catch(() => {
-      content.innerHTML = '<p>Error al cargar contenido.</p>';
-    });
+    fetch(section)
+      .then(res => {
+        if (!res.ok) throw new Error(`No se pudo cargar ${section}`);
+        return res.text();
+      })
+      .then(htmlText => {
+        // parsear y extraer sólo el body del fragmento o documento
+        const doc = new DOMParser().parseFromString(htmlText, "text/html");
+        content.innerHTML = doc.body.innerHTML;
+  
+        activeSection = section;
+        updateFooterActiveState(section);
+        initializeSectionScripts(section);
+      })
+      .catch(err => {
+        console.error(err);
+        content.innerHTML = `<p style="color:red;">Error al cargar ${section}</p>`;
+      });
   }
-
-  function updateFooterActiveState(section) {
-    footerMenuItems.forEach(fi => {
-      fi.classList.toggle("active", fi.dataset.section === section);
-    });
-  }
+  
 
   function initializeSectionScripts(section) {
     document.removeEventListener("keydown", sidebarKeyListener);

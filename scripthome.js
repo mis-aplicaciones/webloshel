@@ -82,16 +82,19 @@ function initCarousel() {
       card.tabIndex = 0;
       card.style.backgroundImage = `url('${item.cardimgUrl}')`;
 
-      // Focus: animación y guardado de posición
       card.addEventListener("focus", () => {
         lastFocus = { row: rowIdx, card: idx };
         focusCard(item);
       });
 
-      // Click / Enter sobre card abre el link
-      card.addEventListener("click", () => window.location.href = item.link);
+      card.addEventListener("click", () => {
+        window.location.href = item.link;
+      });
+
       card.addEventListener("keydown", e => {
-        if (e.key === "Enter") window.location.href = item.link;
+        if (e.key === "Enter") {
+          window.location.href = item.link;
+        }
       });
 
       cont.appendChild(card);
@@ -105,6 +108,7 @@ function initCarousel() {
   return firstCard;
 }
 
+
 // Restaura foco y vista
 function restoreFocus() {
   const rows = document.querySelectorAll("#carousel .row");
@@ -114,7 +118,6 @@ function restoreFocus() {
   const card = rowEl.querySelectorAll(".card")[lastFocus.card];
   if (card) {
     card.focus();
-    // Actualiza detalle sin animación
     const def = defs[lastFocus.row];
     let items = [];
     if (def.type === "field") {
@@ -131,7 +134,7 @@ function restoreFocus() {
   }
 }
 
-// Actualiza con animación, o directo si ya está animando
+// Actualiza con animación
 function focusCard(item) {
   if (isAnimating) {
     updateDetails(item);
@@ -238,42 +241,73 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-// Función SPA: inicializa Home
+// --- Función SPA: inicializa Home (VERSIÓN MEJORADA) ---
 function initializeHome() {
-  try {
-    defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-    if (!Array.isArray(defs)) defs = [];
-  } catch {
-    defs = [];
-  }
+  const execute = () => {
+    const car = document.getElementById("carousel");
+    
+    try {
+      defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+      if (!Array.isArray(defs)) defs = [];
+    } catch {
+      defs = [];
+    }
+    
+    if (defs.length === 0) {
+        console.warn("carouselDefs no definido. Usando fallback.");
+        defs = [
+            { "name": "Estrenos 2025", "type": "field", "field": "año", "values": ["2025"] },
+            { "name": "Acción", "type": "field", "field": "genero", "values": ["Acción"] },
+            { "name": "Mejor Valoradas", "type": "rating", "minRating": 3.5 }
+        ];
+    }
 
-  const car = document.getElementById("carousel");
-  if (!car) {
-    console.error("No encontré #carousel");
-    return;
-  }
+    if (!data) {
+      fetch("moviebase.json")
+        .then(r => { if (!r.ok) throw new Error("Error de red"); return r.json(); })
+        .then(json => {
+          data = json;
+          const first = initCarousel();
+          if (first) {
+            first.focus();
+            lastFocus = { row: 0, card: 0 };
+            
+            const firstDef = defs[0];
+            let firstItems = [];
+             if (firstDef.type === "field") {
+                firstItems = data.filter(item => {
+                    const v = item[firstDef.field];
+                    return Array.isArray(v) ? v.some(x => firstDef.values.includes(x)) : firstDef.values.includes(v);
+                });
+            } else if (firstDef.type === "rating") {
+                firstItems = data.filter(item => item.rating >= firstDef.minRating);
+            } else {
+                firstItems = data.filter(item => firstDef.ids.includes(item.id));
+            }
+            
+            if(firstItems.length > 0){
+                 focusCard(firstItems[0]);
+            } else {
+                 focusCard(data[0]);
+            }
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          car.innerHTML = '<div style="color:red;padding:2rem;">Error al cargar los datos.</div>';
+        });
+    } else {
+      if (!car.children.length) initCarousel();
+      restoreFocus();
+    }
+  };
 
-  if (!data) {
-    fetch("moviebase.json")
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(json => {
-        data = json;
-        const first = initCarousel();
-        if (first) {
-          first.focus();
-          lastFocus = { row:0, card:0 };
-          focusCard(data[0]);
-        }
-      })
-      .catch(err => {
-        console.error("Error loading JSON", err);
-        car.innerHTML =
-          '<div style="color:red;padding:2rem;">Error loading data</div>';
-      });
-  } else {
-    if (!car.children.length) initCarousel();
-    restoreFocus();
-  }
+  const poller = setInterval(() => {
+    if (document.getElementById("carousel")) {
+      clearInterval(poller);
+      execute();
+    }
+  }, 100);
 }
 
 window.initializeHome = initializeHome;

@@ -134,7 +134,7 @@ function restoreFocus() {
   }
 }
 
-// Actualiza con animación, pero salta a updateDetails si ya está animando
+// Actualiza con animación
 function focusCard(item) {
   if (isAnimating) {
     updateDetails(item);
@@ -168,13 +168,18 @@ function focusCard(item) {
   bg.addEventListener("transitionend", onEnd, { once: true });
 }
 
-// ------- Listeners de teclado (sin cambios) -------
+// ------- Listeners de teclado -------
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
-  if (["Backspace", "Escape"].includes(e.key)) {
+
+  // --- CORRECCIÓN PARA EL BOTÓN "ATRÁS" DEL CONTROL REMOTO ---
+  // Se añade la comprobación de `e.keyCode === 4` y `e.preventDefault()`.
+  if (e.key === "Backspace" || e.key === "Escape" || e.keyCode === 4) {
+    e.preventDefault(); // Evita que la TV intente cerrar la app.
     window.dispatchEvent(new Event("return-to-sidebar"));
     return;
   }
+
   if (!active.classList.contains("card")) return;
   const row = active.closest(".row");
   const cards = Array.from(row.querySelectorAll(".card"));
@@ -228,7 +233,6 @@ function initializeHome() {
       defs = [];
     }
     
-    // Fallback si no hay definiciones para el carrusel
     if (defs.length === 0) {
         console.warn("carouselDefs no definido. Usando fallback.");
         defs = [
@@ -248,7 +252,6 @@ function initializeHome() {
             first.focus();
             lastFocus = { row: 0, card: 0 };
             
-            // Encuentra el primer item real que se muestra para actualizar los detalles correctamente
             const firstDef = defs[0];
             let firstItems = [];
              if (firstDef.type === "field") {
@@ -265,7 +268,7 @@ function initializeHome() {
             if(firstItems.length > 0){
                  focusCard(firstItems[0]);
             } else {
-                 focusCard(data[0]); // Fallback
+                 focusCard(data[0]);
             }
           }
         })
@@ -279,7 +282,6 @@ function initializeHome() {
     }
   };
 
-  // Espera a que el elemento #carousel esté disponible en el DOM
   const poller = setInterval(() => {
     if (document.getElementById("carousel")) {
       clearInterval(poller);

@@ -92,9 +92,7 @@ function initCarousel() {
       });
 
       card.addEventListener("keydown", e => {
-        if (e.key === "Enter") {
-          window.location.href = item.link;
-        }
+        if (e.key === "Enter") window.location.href = item.link;
       });
 
       cont.appendChild(card);
@@ -108,7 +106,6 @@ function initCarousel() {
   return firstCard;
 }
 
-
 // Restaura foco y vista
 function restoreFocus() {
   const rows = document.querySelectorAll("#carousel .row");
@@ -118,12 +115,15 @@ function restoreFocus() {
   const card = rowEl.querySelectorAll(".card")[lastFocus.card];
   if (card) {
     card.focus();
+    // actualiza detalles para ese ítem
     const def = defs[lastFocus.row];
     let items = [];
     if (def.type === "field") {
       items = data.filter(i => {
         const v = i[def.field];
-        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
+        return Array.isArray(v)
+          ? v.some(x => def.values.includes(x))
+          : def.values.includes(v);
       });
     } else if (def.type === "rating") {
       items = data.filter(i => i.rating >= def.minRating);
@@ -172,10 +172,9 @@ function focusCard(item) {
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
 
-  // --- CORRECCIÓN PARA EL BOTÓN "ATRÁS" DEL CONTROL REMOTO ---
-  // Se añade la comprobación de `e.keyCode === 4` y `e.preventDefault()`.
-  if (e.key === "Backspace" || e.key === "Escape" || e.keyCode === 4) {
-    e.preventDefault(); // Evita que la TV intente cerrar la app.
+  // “Atrás” del control remoto
+  if (["Backspace","Escape"].includes(e.key) || e.keyCode === 4) {
+    e.preventDefault();
     window.dispatchEvent(new Event("return-to-sidebar"));
     return;
   }
@@ -185,109 +184,88 @@ document.body.addEventListener("keydown", (e) => {
   const cards = Array.from(row.querySelectorAll(".card"));
   const idx = cards.indexOf(active);
   let target;
+
   switch (e.key) {
     case "ArrowRight":
       if (idx < cards.length - 1) {
-        target = cards[idx + 1];
-        target.focus();
-        target.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        target = cards[idx+1];
       }
       break;
     case "ArrowLeft":
       if (idx > 0) {
-        target = cards[idx - 1];
-        target.focus();
-        target.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        target = cards[idx-1];
+      } else {
+        // si estamos en el primer card → volvemos al sidebar
+        window.dispatchEvent(new Event("return-to-sidebar"));
+        e.preventDefault();
+        return;
       }
       break;
     case "ArrowDown":
-      const nr = row.nextElementSibling;
-      if (nr) {
-        target = nr.querySelector(".card");
-        target.focus();
-        nr.scrollIntoView({ behavior: "smooth", block: "start" });
+      {
+        const nr = row.nextElementSibling;
+        if (nr) target = nr.querySelector(".card");
       }
       break;
     case "ArrowUp":
-      const pr = row.previousElementSibling;
-      if (pr) {
-        target = pr.querySelector(".card");
-        target.focus();
-        pr.scrollIntoView({ behavior: "smooth", block: "start" });
+      {
+        const pr = row.previousElementSibling;
+        if (pr) target = pr.querySelector(".card");
       }
       break;
   }
-  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key))
+
+  if (target) {
+    target.focus();
+    target.scrollIntoView({ behavior:"smooth", inline:"center", block:"nearest"});
+    // asegurar también scroll de la fila
+    const parentRow = target.closest(".row");
+    parentRow.scrollIntoView({ behavior:"smooth", block:"start" });
     e.preventDefault();
+  }
 });
 
-// --- Función SPA: inicializa Home (VERSIÓN MEJORADA) ---
+// --- Función SPA: inicializa Home ---
 function initializeHome() {
   const execute = () => {
     const car = document.getElementById("carousel");
-    
     try {
-      defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+      defs = JSON.parse(localStorage.getItem("carouselDefs")||"[]");
       if (!Array.isArray(defs)) defs = [];
     } catch {
       defs = [];
     }
-    
-    if (defs.length === 0) {
-        console.warn("carouselDefs no definido. Usando fallback.");
-        defs = [
-            { "name": "Estrenos 2025", "type": "field", "field": "año", "values": ["2025"] },
-            { "name": "Acción", "type": "field", "field": "genero", "values": ["Acción"] },
-            { "name": "Mejor Valoradas", "type": "rating", "minRating": 3.5 }
-        ];
+    // fallback
+    if (!defs.length) {
+      defs = [
+        { name:"Estrenos 2025", type:"field",   field:"año",     values:["2025"] },
+        { name:"Acción",        type:"field",   field:"genero",  values:["Acción"] },
+        { name:"Top Valoradas", type:"rating",  minRating:3.5 }
+      ];
     }
-
     if (!data) {
       fetch("moviebase.json")
-        .then(r => { if (!r.ok) throw new Error("Error de red"); return r.json(); })
-        .then(json => {
+        .then(r=>{ if(!r.ok) throw Error(); return r.json(); })
+        .then(json=>{
           data = json;
           const first = initCarousel();
-          if (first) {
-            first.focus();
-            lastFocus = { row: 0, card: 0 };
-            
-            const firstDef = defs[0];
-            let firstItems = [];
-             if (firstDef.type === "field") {
-                firstItems = data.filter(item => {
-                    const v = item[firstDef.field];
-                    return Array.isArray(v) ? v.some(x => firstDef.values.includes(x)) : firstDef.values.includes(v);
-                });
-            } else if (firstDef.type === "rating") {
-                firstItems = data.filter(item => item.rating >= firstDef.minRating);
-            } else {
-                firstItems = data.filter(item => firstDef.ids.includes(item.id));
-            }
-            
-            if(firstItems.length > 0){
-                 focusCard(firstItems[0]);
-            } else {
-                 focusCard(data[0]);
-            }
-          }
+          if (first) { first.focus(); lastFocus={row:0,card:0}; focusCard(json[0]); }
         })
-        .catch(err => {
-          console.error(err);
+        .catch(_=>{
           car.innerHTML = '<div style="color:red;padding:2rem;">Error al cargar los datos.</div>';
         });
     } else {
-      if (!car.children.length) initCarousel();
+      if(!car.children.length) initCarousel();
       restoreFocus();
     }
   };
-
-  const poller = setInterval(() => {
+  // esperar a que #carousel exista
+  const poll = setInterval(()=>{
     if (document.getElementById("carousel")) {
-      clearInterval(poller);
+      clearInterval(poll);
       execute();
     }
-  }, 100);
+  },100);
 }
 
 window.initializeHome = initializeHome;

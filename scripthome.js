@@ -82,15 +82,14 @@ function initCarousel() {
       card.tabIndex = 0;
       card.style.backgroundImage = `url('${item.cardimgUrl}')`;
 
+      // Focus: animación y guardado de posición
       card.addEventListener("focus", () => {
         lastFocus = { row: rowIdx, card: idx };
         focusCard(item);
       });
 
-      card.addEventListener("click", () => {
-        window.location.href = item.link;
-      });
-
+      // Click / Enter sobre card abre el link
+      card.addEventListener("click", () => window.location.href = item.link);
       card.addEventListener("keydown", e => {
         if (e.key === "Enter") window.location.href = item.link;
       });
@@ -115,15 +114,13 @@ function restoreFocus() {
   const card = rowEl.querySelectorAll(".card")[lastFocus.card];
   if (card) {
     card.focus();
-    // actualiza detalles para ese ítem
+    // Actualiza detalle sin animación
     const def = defs[lastFocus.row];
     let items = [];
     if (def.type === "field") {
       items = data.filter(i => {
         const v = i[def.field];
-        return Array.isArray(v)
-          ? v.some(x => def.values.includes(x))
-          : def.values.includes(v);
+        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
       });
     } else if (def.type === "rating") {
       items = data.filter(i => i.rating >= def.minRating);
@@ -134,7 +131,7 @@ function restoreFocus() {
   }
 }
 
-// Actualiza con animación
+// Actualiza con animación, o directo si ya está animando
 function focusCard(item) {
   if (isAnimating) {
     updateDetails(item);
@@ -168,18 +165,17 @@ function focusCard(item) {
   bg.addEventListener("transitionend", onEnd, { once: true });
 }
 
-// ------- Listeners de teclado -------
+// ------- Listeners de teclado (tal como especificaste) -------
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
-
-  // “Atrás” del control remoto
-  if (["Backspace","Escape"].includes(e.key) || e.keyCode === 4) {
-    e.preventDefault();
+  // botón volver
+  if (["Backspace", "Escape"].includes(e.key)) {
     window.dispatchEvent(new Event("return-to-sidebar"));
+    e.preventDefault();
     return;
   }
-
   if (!active.classList.contains("card")) return;
+
   const row = active.closest(".row");
   const cards = Array.from(row.querySelectorAll(".card"));
   const idx = cards.indexOf(active);
@@ -188,84 +184,96 @@ document.body.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowRight":
       if (idx < cards.length - 1) {
-        target = cards[idx+1];
+        target = cards[idx + 1];
+        target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
+
     case "ArrowLeft":
-      if (idx > 0) {
-        target = cards[idx-1];
-      } else {
-        // si estamos en el primer card → volvemos al sidebar
+      if (idx === 0) {
+        // Primer card: volvemos al sidebar
         window.dispatchEvent(new Event("return-to-sidebar"));
         e.preventDefault();
         return;
       }
-      break;
-    case "ArrowDown":
-      {
-        const nr = row.nextElementSibling;
-        if (nr) target = nr.querySelector(".card");
+      if (idx > 0) {
+        target = cards[idx - 1];
+        target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
-    case "ArrowUp":
-      {
-        const pr = row.previousElementSibling;
-        if (pr) target = pr.querySelector(".card");
+
+    case "ArrowDown": {
+      const nr = row.nextElementSibling;
+      if (nr) {
+        target = nr.querySelector(".card");
+        target.focus();
+        nr.scrollIntoView({ behavior: "smooth", block: "start" });
       }
       break;
+    }
+
+    case "ArrowUp": {
+      const pr = row.previousElementSibling;
+      if (pr) {
+        target = pr.querySelector(".card");
+        target.focus();
+        pr.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      break;
+    }
   }
 
-  if (target) {
-    target.focus();
-    target.scrollIntoView({ behavior:"smooth", inline:"center", block:"nearest"});
-    // asegurar también scroll de la fila
-    const parentRow = target.closest(".row");
-    parentRow.scrollIntoView({ behavior:"smooth", block:"start" });
+  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
     e.preventDefault();
   }
 });
 
-// --- Función SPA: inicializa Home ---
+// Función SPA: inicializa Home
 function initializeHome() {
-  const execute = () => {
-    const car = document.getElementById("carousel");
-    try {
-      defs = JSON.parse(localStorage.getItem("carouselDefs")||"[]");
-      if (!Array.isArray(defs)) defs = [];
-    } catch {
-      defs = [];
-    }
-    // fallback
-    if (!defs.length) {
-      defs = [
-        { name:"Estrenos 2025", type:"field",   field:"año",     values:["2025"] },
-        { name:"Acción",        type:"field",   field:"genero",  values:["Acción"] },
-        { name:"Top Valoradas", type:"rating",  minRating:3.5 }
-      ];
-    }
-    if (!data) {
-      fetch("moviebase.json")
-        .then(r=>{ if(!r.ok) throw Error(); return r.json(); })
-        .then(json=>{
-          data = json;
-          const first = initCarousel();
-          if (first) { first.focus(); lastFocus={row:0,card:0}; focusCard(json[0]); }
-        })
-        .catch(_=>{
-          car.innerHTML = '<div style="color:red;padding:2rem;">Error al cargar los datos.</div>';
-        });
-    } else {
-      if(!car.children.length) initCarousel();
-      restoreFocus();
-    }
-  };
-  // esperar a que #carousel exista
-  const poll = setInterval(()=>{
-    if (document.getElementById("carousel")) {
-      clearInterval(poll);
-      execute();
-    }
-  },100);
+  try {
+    defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+    if (!Array.isArray(defs)) defs = [];
+  } catch {
+    defs = [];
+  }
+
+  const car = document.getElementById("carousel");
+  if (!car) {
+    console.error("No encontré #carousel");
+    return;
+  }
+
+  if (!data) {
+    fetch("moviebase.json")
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(json => {
+        data = json;
+        const first = initCarousel();
+        if (first) {
+          first.focus();
+          lastFocus = { row:0, card:0 };
+          focusCard(data[0]);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading JSON", err);
+        car.innerHTML =
+          '<div style="color:red;padding:2rem;">Error loading data</div>';
+      });
+  } else {
+    if (!car.children.length) initCarousel();
+    restoreFocus();
+  }
 }
 
 window.initializeHome = initializeHome;

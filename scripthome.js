@@ -177,10 +177,10 @@ function focusCard(item) {
   bg.addEventListener("transitionend", onEnd, { once: true });
 }
 
-// ------- Listeners de teclado -------
+// ------- Listeners de teclado (tal como especificaste) -------
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
-  
+  // botón volver
   if (["Backspace", "Escape"].includes(e.key)) {
     window.dispatchEvent(new Event("return-to-sidebar"));
     e.preventDefault();
@@ -198,11 +198,17 @@ document.body.addEventListener("keydown", (e) => {
       if (idx < cards.length - 1) {
         target = cards[idx + 1];
         target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
 
     case "ArrowLeft":
       if (idx === 0) {
+        // Primer card: volvemos al sidebar
         window.dispatchEvent(new Event("return-to-sidebar"));
         e.preventDefault();
         return;
@@ -210,13 +216,18 @@ document.body.addEventListener("keydown", (e) => {
       if (idx > 0) {
         target = cards[idx - 1];
         target.focus();
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
 
     case "ArrowDown": {
       const nr = row.nextElementSibling;
       if (nr) {
-        target = nr.querySelectorAll(".card")[idx] || nr.querySelector(".card");
+        target = nr.querySelector(".card");
         target.focus();
         nr.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -226,17 +237,12 @@ document.body.addEventListener("keydown", (e) => {
     case "ArrowUp": {
       const pr = row.previousElementSibling;
       if (pr) {
-        target = pr.querySelectorAll(".card")[idx] || pr.querySelector(".card");
+        target = pr.querySelector(".card");
         target.focus();
         pr.scrollIntoView({ behavior: "smooth", block: "start" });
       }
       break;
     }
-  }
-
-  // Ahora el scrollIntoView se maneja con el foco en la tarjeta gracias al CSS
-  if (["ArrowRight", "ArrowLeft"].includes(e.key) && document.activeElement.classList.contains('card')) {
-       document.activeElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
   if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
@@ -291,3 +297,4 @@ function initializeHome() {
 }
 
 window.initializeHome = initializeHome;
+

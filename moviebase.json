@@ -9,7 +9,7 @@
     ],
     "backgroundUrl": "https://image.tmdb.org/t/p/original/n3AaJXdWbkGtdRwfVGw5FNrloUQ.jpg",
     "rating": 3.5,
-    "link": "peliculas/1-5-12-Bailarina.html",
+    "link": "peliculas/1-Bailarina.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/q40cm0yiEgsTZNYZpsUULOKzHk5.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/yaHDtFlvLt0QaYu0xn8m1R41KUz.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
@@ -31,7 +31,7 @@
     ],
     "backgroundUrl": "https://image.tmdb.org/t/p/original/ijuQtFf92ikx7U0WngKNbSYzT60.jpg",
     "rating": 3,
-    "link": "peliculas/2-6-2-1-JurassicWorld_Elrenacer.html",
+    "link": "peliculas/2-JurassicWorld_Elrenacer.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/A1z92ISvvpoopHpIKn3Cr4TMGt8.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/1RICxzeoNCAO5NpcRMIgg1XT6fm.jpg",
@@ -40,8 +40,8 @@
     "año": "2025",
     "hora": "2",
     "min": "14",
-    "sinopsis": "Five years after the events of Jurassic World Dominion, covert operations expert Zora Bennett is contracted to lead a skilled team on a top-secret mission to secure genetic material from the world's three most massive dinosaurs. When Zora's operation intersects with a civilian family whose boating expedition was capsized, they all find themselves stranded on an island where they come face-to-face with a sinister, shocking discovery that's been hidden from the world for decades.",
-    "VideoUrl": "//ok.ru/videoembed/9127306136160?nochat=1&autoplay=1",
+    "sinopsis": "Operadores viajan a una instalación de investigación en la isla para asegurar el ADN que salva vidas de los dinosaurios. La misión se vuelve cada vez más peligrosa, y pronto descubren un siniestro e impactante secreto.",
+    "VideoUrl": "//ok.ru/videoembed/11615367072327?nochat=1&autoplay=1",
     "tipo": 1
   },
   {
@@ -153,5 +153,100 @@
     "hora": "1 h",
     "min": "35 min",
     "edad": "13+"
+  },
+  {
+    "id": "8",
+    "titulo": "Jefes de Estado",
+    "genero": [
+      "Acción",
+      "Suspenso",
+      "Comedia"
+    ],
+    "rating": "3",
+    "videourl": "//ok.ru/videoembed/9563530201625?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/7mfRKmXEIBCmiFJbixe8n2IzFVC.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/1xDev1aS6juHOuhpOIKKlczEdrW.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/2VLbTs11eF3Ecw7coArU1oEGj1G.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/2CSdwqOUMH23cEBodqAJynMFz7c.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/95VecTVP1PBoL7z4jpoh2on0149.jpg",
+    "sinopsis": "El Primer Ministro del Reino Unido y el Presidente de los Estados Unidos mantienen una rivalidad pública que pone en peligro la alianza de sus países. Pero cuando se convierten en objetivos de un poderoso enemigo, se ven obligados a colaborar.",
+    "tipo": 1,
+    "año": "2025",
+    "hora": "1 h",
+    "min": "57 min",
+    "edad": "13+",
+    "link": "peliculas/8-jefes-de-estado.html"
+  },
+  {
+    "id": "9",
+    "titulo": "M3GAN 2.0",
+    "genero": [
+      "Acción",
+      "Ciencia Ficción",
+      "Suspenso"
+    ],
+    "rating": "3.5",
+    "videourl": "//ok.ru/videoembed/11549997337159?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/w0ZFbRvmvrmn0l64LQGy6N14Eum.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/66RevrrXlGQ8jR3IWLNOUvMvgbH.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/dYLO1k4t1GZXuvreVdGA6Okwkyy.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/fBgyUqyu3ioTSQjJJE5RFs2EG3B.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/ptYJSyb1VpZyKhmD6rsA8r47hbn.jpg",
+    "sinopsis": "Con el futuro de la existencia humana en juego, Gemma se da cuenta de que la única opción es resucitar a M3GAN y darle unas cuantas mejoras, haciéndola más rápida, más fuerte y más letal.",
+    "tipo": 1,
+    "año": "2025",
+    "hora": "2 h",
+    "min": "0 min",
+    "edad": "13+",
+    "link": "peliculas/9-m3gan-20.html"
+  },
+  {
+    "id": "10",
+    "titulo": "El sustituto",
+    "genero": [
+      "Acción",
+      "Crimen",
+      "Drama",
+      "Suspenso"
+    ],
+    "rating": "3",
+    "videourl": "//ok.ru/videoembed/9236058868351?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/c5AkvHbOJv0Ec1W4ybEtDsh2DvC.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/hSvOq55PWoxPRNqAtmZPeAa5vJk.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/kD1jtm7TIYENVwt1S9fF8so0Yoh.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jlhe2SKWqW3F7BEQl3sOkgXLtkW.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/uFdLjtlgCbEtkQfBiZQPLfVryr5.jpg",
+    "sinopsis": "Tras realizar varios trabajos para la CIA, el ex marine John Shale hace una visita a su antigua novia, profesora de un instituto de Miami. A su llegada, Shale nota ciertos comportamientos extraños en el centro, incluso en su novia, quien le cuenta que el lugar está prácticamente tomado por una banda de criminales que se dedican a aterrorizar no sólo a los alumnos del instituto, sino también a los profesores.",
+    "tipo": 1,
+    "año": "1996",
+    "hora": "1 h",
+    "min": "54 min",
+    "edad": "18+",
+    "link": "peliculas/10-sustituto.html"
+  },
+  {
+    "id": "11",
+    "titulo": "Superman",
+    "genero": [
+      "Ciencia Ficción",
+      "Aventura",
+      "Acción",
+      "Superhéroes"
+    ],
+    "rating": "3.5",
+    "videourl": "//ok.ru/videoembed/9570281916953?nochat=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/eEAwJXe94sl25zAs1n085DXq9QT.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/GBr1ozQf7WZqSMwNPdb5Xs2eyn.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/wrM6QbXqB3HQ6GCu7k8Ve6ymjP7.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ombsmhYUqR4qqOLOxAyr5V8hbyv.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/eRPN90a6WplkWD7K2NOk6Pq8xhg.jpg",
+    "sinopsis": "El multimillonario tecnológico Lex Luthor aprovecha la oportunidad para quitarse de en medio definitivamente al Hombre de Acero. ¿Podrán la reportera Lois Lane y el compañero de cuatro patas de Superman, Krypto, ayudarle antes de que sea tarde?",
+    "tipo": 1,
+    "año": "2025",
+    "hora": "2 h",
+    "min": "9 min",
+    "edad": "13+",
+    "link": "peliculas/11-superman.html"
   }
+
 ]

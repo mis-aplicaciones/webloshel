@@ -1,5 +1,4 @@
-// scripthome.js (actualizado)
-// Mantener la API: window.initializeHome()
+// scripthome.js
 
 let data = null;
 let defs = null;
@@ -9,7 +8,7 @@ let isAnimating = false;
 // Calcula estrellas para el rating
 function calcularEstrellas(p) {
   const MAX = 5;
-  const r = Math.round((p || 0) * 2) / 2;
+  const r = Math.round(p * 2) / 2;
   const full = Math.floor(r), half = r % 1 !== 0;
   let html = "";
   for (let i = 0; i < full; i++) html += '<ion-icon name="star"></ion-icon>';
@@ -19,7 +18,7 @@ function calcularEstrellas(p) {
   return html;
 }
 
-// Update details immediately (no animation)
+// Actualiza detalles sin animación
 function updateDetails(item) {
   const bg    = document.getElementById("background");
   const img   = document.getElementById("detail-img");
@@ -27,14 +26,245 @@ function updateDetails(item) {
   const meta  = document.getElementById("detail-meta");
   const genEl = document.getElementById("detail-genero");
 
-  if (bg) bg.style.backgroundImage = `url('${item.backgroundUrl}')`;
-  if (img) img.src = item.titleimgUrl || "";
-  if (title) title.textContent = item.title || "";
+  bg.style.backgroundImage = `url('${item.backgroundUrl}')`;
+  img.src = item.titleimgUrl;
+  title.textContent = item.title;
 
-  if (meta) {
-    meta.innerHTML =
-      `<span>${item.edad || ""}</span> • ` +
-      `<span>${item.hora || ""}h ${item.min || ""}min</span> • ` +
+  meta.innerHTML =
+    `<span>${item.edad}</span> • ` +
+    `<span>${item.hora}h ${item.min}min</span> • ` +
+    `<span>${item.año}</span> • ` +
+    `<span>${calcularEstrellas(item.rating)}</span>`;
+
+  genEl.innerHTML = "";
+  (item.genero || []).forEach(g => {
+    const s = document.createElement("span");
+    s.textContent = g;
+    genEl.appendChild(s);
+  });
+}
+
+// Construye carrusel
+function initCarousel() {
+  const carousel = document.getElementById("carousel");
+  carousel.innerHTML = "";
+  let firstCard = null;
+
+  defs.forEach((def, rowIdx) => {
+    let items = [];
+    if (def.type === "field") {
+      items = data.filter(item => {
+        const v = item[def.field];
+        return Array.isArray(v)
+          ? v.some(x => def.values.includes(x))
+          : def.values.includes(v);
+      });
+    } else if (def.type === "rating") {
+      items = data.filter(item => item.rating >= def.minRating);
+    } else {
+      items = data.filter(item => def.ids.includes(item.id));
+    }
+    if (!items.length) return;
+
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const title = document.createElement("div");
+    title.className = "row-title";
+    title.textContent = def.name;
+
+    const cont = document.createElement("div");
+    cont.className = "cards-container";
+
+    items.forEach((item, idx) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.tabIndex = 0;
+      card.style.backgroundImage = `url('${item.cardimgUrl}')`;
+
+      // Focus: animación y guardado de posición
+      card.addEventListener("focus", () => {
+        lastFocus = { row: rowIdx, card: idx };
+        focusCard(item);
+      });
+
+      // Click / Enter sobre card abre el link
+      card.addEventListener("click", () => window.location.href = item.link);
+      card.addEventListener("keydown", e => {
+        if (e.key === "Enter") window.location.href = item.link;
+      });
+
+      cont.appendChild(card);
+      if (!firstCard) firstCard = card;
+    });
+
+    row.append(title, cont);
+    carousel.appendChild(row);
+  });
+
+  return firstCard;
+}
+
+// Restaura foco y vista
+function restoreFocus() {
+  const rows = document.querySelectorAll("#carousel .row");
+  const rowEl = rows[lastFocus.row];
+  if (!rowEl) return;
+  rowEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  const card = rowEl.querySelectorAll(".card")[lastFocus.card];
+  if (card) {
+    card.focus();
+    // Actualiza detalle sin animación
+    const def = defs[lastFocus.row];
+    let items = [];
+    if (def.type === "field") {
+      items = data.filter(i => {
+        const v = i[def.field];
+        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
+      });
+    } else if (def.type === "rating") {
+      items = data.filter(i => i.rating >= def.minRating);
+    } else {
+      items = data.filter(i => def.ids.includes(i.id));
+    }
+    updateDetails(items[lastFocus.card]);
+  }
+}
+
+// Actualiza con animación, o directo si ya está animando
+function focusCard(item) {
+  if (isAnimating) {
+    updateDetails(item);
+    return;
+  }
+  isAnimating = true;
+
+  const bg    = document.getElementById("background");
+  const detail= document.getElementById("detail");
+  const img   = document.getElementById("detail-img");
+  const title = document.getElementById("detail-title");
+  const meta  = document.getElementById("detail-meta");
+  const genEl = document.getElementById("detail-genero");
+
+  [bg, detail, img, title, meta, genEl].forEach(el => {
+    el.classList.remove("fade-in");
+    el.classList.add("fade-out");
+  });
+
+  const onEnd = e => {
+    if (e.propertyName !== "opacity") return;
+    bg.removeEventListener("transitionend", onEnd);
+    updateDetails(item);
+    [bg, detail, img, title, meta, genEl].forEach(el => {
+      el.classList.remove("fade-out");
+      el.classList.add("fade-in");
+    });
+    setTimeout(() => { isAnimating = false; }, 300);
+  };
+
+  bg.addEventListener("transitionend", onEnd, { once: true });
+}
+
+// ------- Listeners de teclado -------
+document.body.addEventListener("keydown", (e) => {
+  const active = document.activeElement;
+
+  // Botón volver → sidebar
+  if (["Backspace", "Escape"].includes(e.key)) {
+    window.dispatchEvent(new Event("return-to-sidebar"));
+    return;
+  }
+
+  if (!active.classList.contains("card")) return;
+
+  const row     = active.closest(".row");
+  const cards   = Array.from(row.querySelectorAll(".card"));
+  const idx     = cards.indexOf(active);
+  let   target;
+
+  switch (e.key) {
+    case "ArrowRight":
+      if (idx < cards.length - 1) {
+        target = cards[idx + 1];
+      }
+      break;
+
+    case "ArrowLeft":
+      if (idx > 0) {
+        target = cards[idx - 1];
+      } else {
+        // En primer card de la fila → salto al sidebar
+        window.dispatchEvent(new Event("return-to-sidebar"));
+        e.preventDefault();
+        return;
+      }
+      break;
+
+    case "ArrowDown":
+      // Solo si no es la última fila
+      if (row.nextElementSibling) {
+        target = row.nextElementSibling.querySelector(".card");
+      }
+      break;
+
+    case "ArrowUp":
+      // Solo si no es la primera fila
+      if (row.previousElementSibling) {
+        target = row.previousElementSibling.querySelector(".card");
+      }
+      break;
+  }
+
+  if (target) {
+    target.focus();
+    target.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block:  e.key === "ArrowUp" || e.key === "ArrowDown" ? "start" : "nearest"
+    });
+    e.preventDefault();
+  }
+});
+
+// Función SPA: inicializa Home
+function initializeHome() {
+  try {
+    defs = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+    if (!Array.isArray(defs)) defs = [];
+  } catch {
+    defs = [];
+  }
+
+  const car = document.getElementById("carousel");
+  if (!car) {
+    console.error("No encontré #carousel");
+    return;
+  }
+
+  if (!data) {
+    fetch("moviebase.json")
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(json => {
+        data = json;
+        const first = initCarousel();
+        if (first) {
+          first.focus();
+          lastFocus = { row:0, card:0 };
+          focusCard(data[0]);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading JSON", err);
+        car.innerHTML =
+          '<div style="color:red;padding:2rem;">Error loading data</div>';
+      });
+  } else {
+    if (!car.children.length) initCarousel();
+    restoreFocus();
+  }
+}
+
+window.initializeHome = initializeHome;      `<span>${item.hora || ""}h ${item.min || ""}min</span> • ` +
       `<span>${item.año || ""}</span> • ` +
       `<span>${calcularEstrellas(item.rating)}</span>`;
   }
@@ -239,21 +469,18 @@ function focusCard(item) {
   }
 }
 
-// ------- Listeners de teclado (tu bloque que funciona, extendido) -------
+// ------- Listeners de teclado (tal como especificaste) -------
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
-
-  // Back / Escape -> siempre volver al sidebar
+  // botón volver
   if (["Backspace", "Escape"].includes(e.key)) {
     window.dispatchEvent(new Event("return-to-sidebar"));
     e.preventDefault();
     return;
   }
-
-  if (!active || !active.classList.contains("card")) return;
+  if (!active.classList.contains("card")) return;
 
   const row = active.closest(".row");
-  if (!row) return;
   const cards = Array.from(row.querySelectorAll(".card"));
   const idx = cards.indexOf(active);
   let target;
@@ -263,14 +490,17 @@ document.body.addEventListener("keydown", (e) => {
       if (idx < cards.length - 1) {
         target = cards[idx + 1];
         target.focus();
-        // Solo centrar horizontalmente en su fila (sin afectar otras filas)
-        ensureCardVisibility(target);
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
 
     case "ArrowLeft":
       if (idx === 0) {
-        // Si estamos en el primer card de la fila, saltamos al sidebar
+        // Primer card: volvemos al sidebar
         window.dispatchEvent(new Event("return-to-sidebar"));
         e.preventDefault();
         return;
@@ -278,7 +508,11 @@ document.body.addEventListener("keydown", (e) => {
       if (idx > 0) {
         target = cards[idx - 1];
         target.focus();
-        ensureCardVisibility(target);
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
       break;
 
@@ -286,15 +520,8 @@ document.body.addEventListener("keydown", (e) => {
       const nr = row.nextElementSibling;
       if (nr) {
         target = nr.querySelector(".card");
-        // Posicionar la fila objetivo en la zona de interacción (ver título)
+        target.focus();
         nr.scrollIntoView({ behavior: "smooth", block: "start" });
-        // después de que la fila suba, enfocamos y centramos su card
-        setTimeout(() => {
-          if (target) {
-            target.focus();
-            ensureCardVisibility(target);
-          }
-        }, 180);
       }
       break;
     }
@@ -303,26 +530,17 @@ document.body.addEventListener("keydown", (e) => {
       const pr = row.previousElementSibling;
       if (pr) {
         target = pr.querySelector(".card");
+        target.focus();
         pr.scrollIntoView({ behavior: "smooth", block: "start" });
-        setTimeout(() => {
-          if (target) {
-            target.focus();
-            ensureCardVisibility(target);
-          }
-        }, 180);
       }
       break;
     }
-
-    default:
-      return;
   }
 
   if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
     e.preventDefault();
   }
 });
-
 // Función SPA: inicializa Home
 function initializeHome() {
   try {
@@ -394,3 +612,4 @@ function initializeHome() {
 
 // Exponer initializeHome para script.js
 window.initializeHome = initializeHome;
+

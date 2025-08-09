@@ -1,193 +1,138 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* styleshome.css — sustituye tu CSS actual del prototipo */
+
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Fuente y layout base */
 @font-face {
   font-family: "MyFont";
   src: url("fonts/Outfit-Regular.woff2") format("woff2"),
-       url("fonts/Outfit-Regular.woff")  format("woff");
-  font-weight: lighter;
+       url("fonts/Outfit-Regular.woff") format("woff");
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
-body, html {
-  width: 100%;
-  height: 100%;
-  font-family: "MyFont", Arial, sans-serif;
-  background: #121124;
-  overflow: hidden;
-}
+html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; background:#121124; }
 
+/* Background & detail area */
 #background {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top:0; left:0; width:100%; height:100%;
   background-size: cover;
   background-position: center;
-  opacity: 1;
+  opacity:1;
   transition: opacity 0.3s ease, background-image 0s;
-  z-index: 1;
+  z-index:1;
 }
-#background.fade-out { opacity: 0; }
-#background.fade-in  { opacity: 1; }
-
 .background-gradient {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  position:absolute; top:0; left:0; width:100%; height:100%;
   background: linear-gradient(to right, #121124 30%, rgba(0,0,0,0.3));
-  z-index: 1;
+  z-index:1;
 }
 
 #detail {
   position: absolute;
-  top: 0;
-  left: 0;
-  margin-left: 5%;           /* ← añadido */
-  width: 95%;                /* ajustado para compensar el margen */
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  top:0; left:5%;           /* <-- margen izquierdo pedido (5%) */
+  width: 90%;              /* toma el resto */
+  height:50vh;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
   padding-left: 2vw;
-  color: #fff;
-  opacity: 1;
+  color:#fff;
+  opacity:1;
   transition: opacity 0.3s ease;
-  z-index: 2;
+  z-index:2;
 }
-#detail.fade-out { opacity: 0; }
-#detail.fade-in  { opacity: 1; }
+#detail.fade-out { opacity:0; }
+#detail.fade-in { opacity:1; }
 
 #detail img {
-  width: 33.8vh; height: 19.1vh;
-  object-fit: contain;
-  margin-bottom: 1vh;
-  opacity: 1;
+  width:33.8vh; height:19.1vh; object-fit:contain; margin-bottom:1vh;
   transition: opacity 0.3s ease;
 }
-#detail img.fade-out { opacity: 0; }
-#detail img.fade-in  { opacity: 1; }
-
-#detail h2,
-#detail .meta,
-#detail .genero {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-#detail h2.fade-out,
-#detail .meta.fade-out,
-#detail .genero.fade-out {
-  opacity: 0;
-}
-#detail h2.fade-in,
-#detail .meta.fade-in,
-#detail .genero.fade-in {
-  opacity: 1;
-}
-
-#detail h2 {
-  font-size: 5.7vh;
-  margin-bottom: 1vh;
-}
+#detail h2 { font-size:5.7vh; margin-bottom:1vh; }
 
 /* meta: edad, duración, año, rating */
 #detail .meta {
-  margin-bottom: 1vh;
-  display: flex;
-  align-items: center;
-  font-size: 2.2vh;
-  gap: 0.8vh;
+  margin-bottom:1vh;
+  display:flex;
+  align-items:center;
+  font-size:2.2vh;
+  gap:0.8vh;
 }
-#detail .meta span {
-  padding: 0.5vh 1vh;
-  border-radius: 2vh;
-  color: #fff;
-  white-space: nowrap;
-}
-#detail .meta span:first-child {
-  background: purple;
-  font-weight: bold;
-}
+#detail .meta span { padding:0.5vh 1vh; border-radius:2vh; color:#fff; white-space:nowrap; }
+#detail .meta span:first-child { background: purple; font-weight:bold; }
 
 /* genero badges */
-#detail .genero {
-  display: flex;
-  gap: 0.5vh;
-  flex-wrap: wrap;
-}
-#detail .genero span {
-  padding: 0.5vh 1vh;
-  font-size: small;
-  border: 2px solid purple;
-  border-radius: 2.5vh;
-}
+#detail .genero { display:flex; gap:0.5vh; flex-wrap:wrap; }
+#detail .genero span { padding:0.5vh 1vh; font-size:small; border:2px solid purple; border-radius:2.5vh; }
 
-/* Carousel */
+/* Carousel: margen izquierdo pedido (5%) y altura 40vh */
 #carousel {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-left: 5%;           /* ← añadido */
-  width: 95%;                /* ajustado para compensar el margen */
-  height: 40vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  position:absolute;
+  bottom:0; left:5%;          /* <-- margen izquierdo pedido (5%) */
+  width:95%;
+  height:40vh;
+  overflow-y:auto;
+  overflow-x:hidden;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   padding-bottom: 40vh;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 75%,
-    rgba(0, 0, 0, 0) 95%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 75%,
-    rgba(0, 0, 0, 0) 95%
-  );
-  z-index: 2;
-}
-/* transparent scrollbar */
-#carousel::-webkit-scrollbar {
-  width: 1vh;
-}
-#carousel::-webkit-scrollbar-track {
-  background: transparent;
-}
-#carousel::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 1vh;
-}
-#carousel {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.2) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 95%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 95%);
+  z-index:2;
 }
 
+/* Scrollbar del carousel (vertical) — muy discreto/transparente */
+#carousel::-webkit-scrollbar { width: 1vh; }
+#carousel::-webkit-scrollbar-track { background: transparent; }
+#carousel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.02); border-radius:1vh; }
+/* Firefox */
+#carousel { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.02) transparent; }
+
+/* Row / title / container */
 .row {
   scroll-snap-align: start;
   height: calc(3vh + 19.1vh + 4vh);
   padding: 2vh 0;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1vh;
-  position: relative;
-  z-index: 2;
+  display:flex;
+  flex-direction:column;
+  margin-bottom:1vh;
+  position:relative;
+  z-index:2;
 }
 .row-title {
-  height: 3vh;
-  font-size: 2.5vh;
-  line-height: 3vh;
-  color: #fff;
-  padding-left: 2vw;
-  text-align: left;
-  z-index: 3;
+  height:3vh; font-size:2.5vh; line-height:3vh; color:#fff;
+  padding-left:2vw; text-align:left; z-index:3;
 }
+
+/* CARDS CONTAINER
+   - overflow-x: auto para permitir desplazamiento horizontal sólo de esta fila
+   - overflow-y: hidden evita scroll vertical adicional
+   - hide scrollbars via vendor rules (Webkit, Firefox, IE) -> scroll funcional pero invisible
+*/
+
 .cards-container {
-  display: flex;
-  z-index: 3;
+  display:flex;
+  gap: 0;
+  align-items: center;
+  overflow-x: auto;      /* permite scroll horizontal por fila */
+  overflow-y: hidden;    /* evita scroll vertical en la fila */
+  -webkit-overflow-scrolling: touch;
+  padding: 0 1vh;
 }
+
+/* Ocultar scrollbars en .cards-container (Webkit) */
+.cards-container::-webkit-scrollbar {  display: none; }
+/* Firefox */
+.cards-container { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* Asegura que items no se rompan de línea (cuando se use inline behavior) y mantenga layout flex */
+.cards-container .card { flex: 0 0 auto; }
+
+/* Card */
 .card {
   flex: 0 0 auto;
   width: 33.8vh;
@@ -196,12 +141,20 @@ body, html {
   background-position: center;
   border-radius: 1vh;
   margin: 1vh;
-  scroll-snap-align: start;
   transition: transform 0.3s ease;
-  z-index: 3;
+  z-index:3;
 }
-.card:focus,
-.card:hover {
-  outline: none;
-  transform: scale(1.05);
+.card:focus, .card:hover { outline:none; transform: scale(1.05); }
+
+/* Mantener el scrollbar vertical del carousel transparente en todos los navegadores */
+#carousel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0); }
+
+/* Opciones responsive mínimas */
+@media (max-width: 800px) {
+  #detail { left: 4%; width: 92%; }
+  #carousel { left: 4%; width: 92%; }
 }
+
+/* helpers para fade classes (coinciden con tu JS) */
+.fade-out { opacity: 0 !important; transition: opacity 0.25s ease; }
+.fade-in  { opacity: 1 !important; transition: opacity 0.25s ease; }

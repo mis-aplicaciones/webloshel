@@ -313,7 +313,7 @@ function loadDefsPriority() {
   return new Promise(async (resolve) => {
     // 1) intentar archivo en la raíz del mismo origen (útil si lo incluyes en la APK o en la raíz del hosting)
     try {
-      const json = await tryFetchWithTimeout('/carouselDefs.json', 3000);
+      const json = await tryFetchWithTimeout('./carouselDefs.json', 3000);
       if (Array.isArray(json)) { defs = json; resolve(); return; }
     } catch (e) {
       // continúa al siguiente intento

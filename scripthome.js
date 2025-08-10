@@ -309,28 +309,75 @@ function tryFetchWithTimeout(url, timeout = 4000) {
   });
 }
 
+// ----------------- carga robusta de defs (reemplazar loadDefsPriority) -------------
+function tryFetchWithTimeout(url, timeout = 4000) {
+  return new Promise((resolve, reject) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    fetch(url, { signal: controller.signal, mode: 'cors' })
+      .then(r => { clearTimeout(id); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(json => resolve(json))
+      .catch(err => { clearTimeout(id); reject(err); });
+  });
+}
+
 function loadDefsPriority() {
   return new Promise(async (resolve) => {
-    // 1) intentar archivo en la raíz del mismo origen (útil si lo incluyes en la APK o en la raíz del hosting)
-    try {
-      const json = await tryFetchWithTimeout('/carouselDefs.json', 3000);
-      if (Array.isArray(json)) { defs = json; resolve(); return; }
-    } catch (e) {
-      // continúa al siguiente intento
-    }
+    const candidateLocal = [
+      '/carouselDefs.json',    // si tu hosting sirve en la raíz (https)
+      'carouselDefs.json',     // relativo (útil en file:// o cuando el archivo está junto al index)
+      './carouselDefs.json',
+      'file:///android_asset/carouselDefs.json' // intento para WebView Android empaquetado
+    ];
+    // RAW GitHub (ajusta si tienes otro repo/branch)
+    const candidateRemote = [
+      'https://raw.githubusercontent.com/mis-aplicaciones/webloshel/main/carouselDefs.json',
+      REMOTE_DEFS_URL // si definiste explicitamente en el script, lo intentará también
+    ].filter(Boolean);
 
-    // 2) si REMOTE_DEFS_URL está configurada, intentar
-    if (REMOTE_DEFS_URL) {
+    console.log('loadDefsPriority: intentando rutas locales/remotas...');
+
+    // 1) probar locales primero (rápido), cada una con timeout corto
+    for (const url of candidateLocal) {
       try {
-        const json = await tryFetchWithTimeout(REMOTE_DEFS_URL, 4000);
-        if (Array.isArray(json)) { defs = json; resolve(); return; }
-      } catch (e) {
-        // continúa
+        console.log('loadDefsPriority: intentando (local) ->', url);
+        const json = await tryFetchWithTimeout(url, 2500);
+        if (Array.isArray(json)) {
+          defs = json;
+          console.log('loadDefsPriority: cargado desde', url);
+          resolve();
+          return;
+        } else {
+          console.warn('loadDefsPriority: archivo no es array desde', url);
+        }
+      } catch (err) {
+        console.log('loadDefsPriority: fallo local', url, err && err.message ? err.message : err);
       }
     }
 
-    // 3) fallback: localStorage
+    // 2) probar remotos (raw github u otro)
+    for (const url of candidateRemote) {
+      try {
+        console.log('loadDefsPriority: intentando (remote) ->', url);
+        const json = await tryFetchWithTimeout(url, 4000);
+        if (Array.isArray(json)) {
+          defs = json;
+          console.log('loadDefsPriority: cargado desde', url);
+          // opcional: guarda copia local para debugging/offline
+          try { localStorage.setItem('carouselDefs', JSON.stringify(json)); } catch(e){ }
+          resolve();
+          return;
+        } else {
+          console.warn('loadDefsPriority: remote no es array', url);
+        }
+      } catch (err) {
+        console.log('loadDefsPriority: fallo remote', url, err && err.message ? err.message : err);
+      }
+    }
+
+    // 3) fallback a localStorage
     try {
+      console.log('loadDefsPriority: fallback a localStorage');
       const ls = JSON.parse(localStorage.getItem('carouselDefs') || '[]');
       defs = Array.isArray(ls) ? ls : [];
     } catch {
@@ -375,4 +422,5 @@ function initializeHome() {
 }
 
 window.initializeHome = initializeHome;
+
 

@@ -297,18 +297,6 @@ document.body.addEventListener("keydown", (e) => {
   if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) e.preventDefault();
 });
 
-// ---------------------- CARGA DE DEFS ----------------------
-// Intenta en orden: 1) /carouselDefs.json (root del paquete), 2) REMOTE_DEFS_URL (si está), 3) localStorage
-function tryFetchWithTimeout(url, timeout = 4000) {
-  return new Promise((resolve, reject) => {
-    const controller = new AbortController();
-    const id = setTimeout(() => { controller.abort(); }, timeout);
-    fetch(url, { signal: controller.signal, mode: 'cors' })
-      .then(r => { clearTimeout(id); if (!r.ok) throw new Error('Not OK'); return r.json(); })
-      .then(json => resolve(json))
-      .catch(err => { clearTimeout(id); reject(err); });
-  });
-}
 
 // ----------------- carga robusta de defs (reemplazar loadDefsPriority) -------------
 function tryFetchWithTimeout(url, timeout = 4000) {
@@ -423,6 +411,7 @@ function initializeHome() {
 }
 
 window.initializeHome = initializeHome;
+
 
 
 

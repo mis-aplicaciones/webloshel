@@ -36,106 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Reemplaza la función initializeSectionScripts en tu script.js por esta versión
-function initializeSectionScripts(section) {
-  // Deshabilitar navegación del sidebar
-  document.removeEventListener("keydown", sidebarKeyListener);
-  currentFocus = "content";
+  function initializeSectionScripts(section) {
+    document.removeEventListener("keydown", sidebarKeyListener);
+    currentFocus = "content";
 
-  // Determinar ruta y función init
-  let scriptPath = "";
-  let initFn = "";
+    let scriptPath, initFn;
+    switch (section) {
+      case "home.html":    scriptPath="scripthome.js";    initFn="initializeHome";    break;
+      case "movies.html":  scriptPath="scriptmovie.js";   initFn="initializeMovie";   break;
+      case "series.html":  scriptPath="scriptserie.js";   initFn="initializeSerie";   break;
+      case "tv.html":      scriptPath="scripttv.js";      initFn="initializeTv";      break;
+      case "usuario.html": scriptPath="scriptusuario.js"; initFn="initializeUsuario"; break;
+      default: console.error("Sección desconocida", section); return;
+    }
 
-  switch (section) {
-    case "home.html":
-      scriptPath = "scripthome.js";
-      initFn = "initializeHome";
-      break;
-    case "movies.html":
-      scriptPath = "scriptmovie.js";
-      initFn = "initializeMovie";
-      break;
-    case "series.html":
-      scriptPath = "scriptserie.js";
-      initFn = "initializeSerie";
-      break;
-    case "tv.html":
-      scriptPath = "scripttv.js";
-      initFn = "initializeTv";
-      break;
-    case "usuario.html":
-      scriptPath = "scriptusuario.js";
-      initFn = "initializeUsuario";
-      break;
-    default:
-      console.error(`Sección desconocida: ${section}`);
-      return;
-  }
-
-  // Insertar script
-  const script = document.createElement("script");
-  script.src = scriptPath;
-
-  script.onload = () => {
-    console.log(`Script ${scriptPath} cargado.`);
-
-    // Polling: esperamos hasta que window[initFn] exista y el HTML insertado tenga el contenedor necesario.
-    // Esto evita problemas por timings distintos en WebView / APK.
-    const start = Date.now();
-    const timeout = 3500; // ms - ajusta si lo necesitas
-    const pollInterval = 50;
-
-    const checkReady = () => {
-      // 1) existe la función
-      const hasFn = (typeof window[initFn] === "function");
-
-      // 2) elemento mínimo existente en content — para home usamos #carousel.
-      // Ajusta según la sección si hay otras que no usan #carousel.
-      let hasDom = true;
-      if (initFn === "initializeHome") {
-        hasDom = !!document.getElementById("carousel");
-      } else if (initFn === "initializeTv") {
-        // ejemplo: tv podría necesitar .card-container o #tv-background
-        hasDom = !!document.querySelector(".card-container") || !!document.getElementById("tv-background");
-      } else {
-        // por defecto asumimos que el content ya está allí
-        hasDom = true;
-      }
-
-      if (hasFn && hasDom) {
-        try {
-          console.log(`Ejecutando ${initFn}()`);
-          window[initFn]();
-        } catch (err) {
-          console.error(`Error al ejecutar ${initFn}:`, err);
-        }
-        return;
-      }
-
-      if (Date.now() - start > timeout) {
-        console.warn(`Timeout esperando a ${initFn} o DOM para sección ${section}. hasFn=${hasFn}, hasDom=${hasDom}`);
-        // Intentamos ejecutar si la función existe (aunque DOM falte), para permitir errores más visibles
-        if (hasFn) {
-          try { window[initFn](); } catch (err) { console.error(err); }
-        }
-        return;
-      }
-
-      // volver a verificar
-      setTimeout(checkReady, pollInterval);
+    const script = document.createElement("script");
+    script.src = scriptPath;
+    script.onload = () => {
+      if (typeof window[initFn]==="function") window[initFn]();
+      else console.error(`No se encontró ${initFn} en ${scriptPath}`);
     };
-
-    checkReady();
-  };
-
-  script.onerror = (e) => {
-    console.error(`Error al cargar script ${scriptPath}`, e);
-  };
-
-  document.body.appendChild(script);
-  currentScript = script;
-}
-
+    document.body.appendChild(script);
+    currentScript = script;
+  }
 
   function cleanupSection() {
     if (currentScript) {

@@ -7,7 +7,8 @@ let isAnimating = false;
 
 // Si quieres apuntar a una URL pública (raw.githubusercontent o pages) ponla aquí.
 // Ejemplo: "https://raw.githubusercontent.com/miusuario/mirepo/main/carouselDefs.json"
-const REMOTE_DEFS_URL = "https://github.com/mis-aplicaciones/webloshel/blob/main/carouselDefs.json"; // pon aquí la URL RAW si la tienes
+const REMOTE_DEFS_URL = "https://raw.githubusercontent.com/mis-aplicaciones/webloshel/main/carouselDefs.json
+"; // pon aquí la URL RAW si la tienes
 
 // Helper estrellas
 function calcularEstrellas(p) {
@@ -422,5 +423,6 @@ function initializeHome() {
 }
 
 window.initializeHome = initializeHome;
+
 
 

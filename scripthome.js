@@ -1,16 +1,14 @@
-// scripthome.js  (base provista por ti, con randomización por fila y opción remote defs)
+// scripthome.js  (versión corregida: toma todas las defs del admin y soporta 'search')
 
-// estado global (mantener compatibles con cualquier reinserción)
 let data = null;
 let defs = null;
 let lastFocus = { row: 0, card: 0 };
 let isAnimating = false;
 
-// Si quieres que el home consuma defs desde un JSON alojado (admin -> escribe ese JSON)
-// pon la URL aquí; si la dejas null, se usará localStorage tal como ahora.
-const REMOTE_DEFS_URL = null; // ejemplo: "https://mi-servidor.com/carouselDefs.json"
+// Si quieres cargar defs desde URL remota ponla aquí, si no null -> usa localStorage.
+const REMOTE_DEFS_URL = null;
 
-// ---------------- helper: estrellas ----------------
+// ---------------- helper estrellas ----------------
 function calcularEstrellas(p) {
   const MAX = 5;
   const r = Math.round((p || 0) * 2) / 2;
@@ -54,7 +52,7 @@ function updateDetails(item) {
   }
 }
 
-// ----------------- animación detalle -----------------
+// ---------------- focus detalle con animación ----------------
 function focusCard(item) {
   if (!item) return;
   if (isAnimating) {
@@ -92,15 +90,13 @@ function focusCard(item) {
 
   if (bg) {
     bg.addEventListener("transitionend", onEnd, { once: true });
-    // fallback por si no ocurre transitionend
     setTimeout(onEnd, 800);
   } else {
     onEnd();
   }
 }
 
-// ----------------- seeded RNG + shuffle -----------------
-// mulberry32 PRNG
+// ----------------- seeded RNG + shuffle (si quieres mantener shuffle diario) -----------------
 function mulberry32(seed) {
   return function() {
     let t = seed += 0x6D2B79F5;
@@ -109,8 +105,6 @@ function mulberry32(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-
-// Fisher-Yates shuffle usando PRNG
 function shuffleWithRng(array, rng) {
   const a = array.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -120,161 +114,197 @@ function shuffleWithRng(array, rng) {
   return a;
 }
 
-// ----------------- initCarousel (con random diario) -----------------
+// ----------------- Construcción del carrusel (AHORA: crea todas las filas del admin) -----------------
 function initCarousel() {
   const carousel = document.getElementById("carousel");
   if (!carousel) return null;
   carousel.innerHTML = "";
   let firstCard = null;
 
-  // Día en UTC (cada 24h varía): usar floor(Date.now()/86400000)
+  // día UTC para semilla (si usas shuffle por fila)
   const daySeed = Math.floor(Date.now() / 86400000);
 
   if (!Array.isArray(defs)) defs = [];
 
+  console.log("scripthome: renderizando", defs.length, "columnas");
+
   defs.forEach((def, rowIdx) => {
-    // obtener items filtrados SAFELY (si campo no existe, reportamos y devolvemos [])
+    // filtrar items dependiendo del tipo (incluye ahora 'search')
     let items = [];
     try {
       if (def.type === "field") {
-        items = data.filter(item => {
-          const v = item[def.field];
-          if (v === undefined) return false;
-          return Array.isArray(v)
-            ? v.some(x => def.values.includes(x))
-            : def.values.includes(v);
-        });
-      } else if (def.type === "rating") {
-        items = data.filter(item => Number(item.rating || 0) >= Number(def.minRating || 0));
-      } else if (def.type === "collection") {
-        items = data.filter(item => (def.ids || []).includes(item.id));
-      } else {
-        // fallback: intentar filtrar por propiedad "field" si existe
-        if (def.field) {
+        // si def.values no existe o está vacío -> devolvemos [] (fila vacía visible)
+        const vals = Array.isArray(def.values) ? def.values : [];
+        if (vals.length) {
           items = data.filter(item => {
             const v = item[def.field];
-            if (v === undefined) return false;
-            return Array.isArray(v)
-              ? v.some(x => def.values.includes(x))
-              : def.values.includes(v);
+            if (v === undefined || v === null) return false;
+            if (Array.isArray(v)) return v.some(x => vals.includes(x));
+            return vals.includes(String(v));
           });
+        } else {
+          items = [];
+        }
+      } else if (def.type === "rating") {
+        const minR = Number(def.minRating || 0);
+        items = data.filter(item => Number(item.rating || 0) >= minR);
+      } else if (def.type === "collection") {
+        const ids = Array.isArray(def.ids) ? def.ids.map(Number) : [];
+        items = data.filter(item => ids.includes(Number(item.id)));
+      } else if (def.type === "search") {
+        // soporta search por term (titulo/sinopsis) o ids si el admin seleccionó ids
+        if (Array.isArray(def.ids) && def.ids.length) {
+          const ids = def.ids.map(Number);
+          items = data.filter(d => ids.includes(Number(d.id)));
+        } else if (def.term && def.term.trim()) {
+          const t = def.term.toLowerCase();
+          items = data.filter(d => (d.title || "").toLowerCase().includes(t) || (d.sinopsis || "").toLowerCase().includes(t));
+        } else {
+          items = [];
+        }
+      } else {
+        // tipo desconocido: intentar fallback a field si existe 'field' en def
+        if (def.field && Array.isArray(def.values) && def.values.length) {
+          const vals = def.values;
+          items = data.filter(item => {
+            const v = item[def.field];
+            if (v === undefined || v === null) return false;
+            if (Array.isArray(v)) return v.some(x => vals.includes(x));
+            return vals.includes(String(v));
+          });
+        } else {
+          items = [];
         }
       }
     } catch (err) {
-      console.warn("initCarousel: error filtrando def", def, err);
+      console.warn("Error filtrando def:", def, err);
       items = [];
     }
 
-    if (!items || !items.length) return;
-
-    // mezclar con semilla: daySeed combinado con rowIdx para que cada fila tenga su propia mezcla.
+    // mezclar por fila (opcional): si quieres quitar, comenta estas 3 lineas
     const seed = (daySeed + rowIdx + 1) >>> 0;
     const rng = mulberry32(seed);
-    const shuffled = shuffleWithRng(items, rng);
+    if (items && items.length > 1) items = shuffleWithRng(items, rng);
 
-    // construir row
+    // crear fila (siempre la creamos, aunque items.length === 0)
     const row = document.createElement("div");
     row.className = "row";
 
-    // Mantener altura original más algo de margen para zoom — si quieres ajustar, cambia el valor
-    // NO sobrescribo estilos que rompan tu template, sólo dejo posibilidad si quieres.
-    // row.style.height = "calc(3vh + 19.1vh + 4vh)"; // si quieres cambiarlo, activar
-
     const title = document.createElement("div");
     title.className = "row-title";
-    title.textContent = def.name || "";
+    title.textContent = def.name || "(Sin título)";
 
     const cont = document.createElement("div");
     cont.className = "cards-container";
-    // evitar scrollbars visibles (CSS idealmente), pero aseguramos overflow
     cont.style.overflowX = "auto";
     cont.style.overflowY = "hidden";
 
-    // opcional: almacenar scrollLeft por fila
+    // placeholder cuando no hay items
+    if (!items || !items.length) {
+      const empty = document.createElement("div");
+      empty.className = "row-empty";
+      empty.textContent = "No hay elementos para esta columna";
+      empty.style.opacity = "0.45";
+      empty.style.padding = "1rem";
+      cont.appendChild(empty);
+    } else {
+      items.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.tabIndex = 0;
+        card.style.backgroundImage = `url('${item.cardimgUrl || ""}')`;
+        card.dataset.link = item.link || "";
+
+        card.addEventListener("focus", () => {
+          lastFocus = { row: rowIdx, card: idx };
+          focusCard(item);
+          const contEl = card.closest(".cards-container");
+          if (contEl) {
+            const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
+            contEl.scrollLeft = offset;
+            row.dataset.scrollLeft = offset;
+          }
+        });
+
+        card.addEventListener("click", () => {
+          if (item.link) window.location.href = item.link;
+        });
+
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && item.link) window.location.href = item.link;
+        });
+
+        cont.appendChild(card);
+        if (!firstCard) firstCard = card;
+      });
+    }
+
+    // guardar conteiner scroll cuando se mueve
     cont.addEventListener("scroll", () => {
       row.dataset.scrollLeft = cont.scrollLeft;
-    });
-
-    shuffled.forEach((item, idx) => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.tabIndex = 0;
-      card.style.backgroundImage = `url('${item.cardimgUrl || ""}')`;
-      // guardar link para Enter/click
-      card.dataset.link = item.link || "";
-
-      card.addEventListener("focus", () => {
-        lastFocus = { row: rowIdx, card: idx };
-        focusCard(item);
-        // centrar visibilidad horizontalmente (si tu CSS requiere, se puede ajustar)
-        const contEl = card.closest(".cards-container");
-        if (contEl) {
-          const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
-          contEl.scrollLeft = offset;
-          row.dataset.scrollLeft = offset;
-        }
-      });
-
-      card.addEventListener("click", () => {
-        if (item.link) window.location.href = item.link;
-      });
-
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && item.link) window.location.href = item.link;
-      });
-
-      cont.appendChild(card);
-      if (!firstCard) firstCard = card;
     });
 
     row.appendChild(title);
     row.appendChild(cont);
     carousel.appendChild(row);
+
+    console.log(`Columna '${def.name}' (${def.type}) -> items: ${items.length}`);
   });
 
   return firstCard;
 }
 
-// ----------------- restoreFocus (mantener tu lógica, restaurando scrollLeft) -------------
+// ----------------- restoreFocus (restaura scrollLeft de la fila) -------------
 function restoreFocus() {
   const rows = document.querySelectorAll("#carousel .row");
   const rowEl = rows[lastFocus.row];
   if (!rowEl) return;
 
-  // hacemos visible la fila correctamente (título + fila)
   rowEl.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  // restaurar scrollLeft horizontal si existía
   const cont = rowEl.querySelector(".cards-container");
   if (cont) {
     const stored = Number(rowEl.dataset.scrollLeft || 0);
     if (!isNaN(stored)) cont.scrollLeft = stored;
   }
 
-  const card = rowEl.querySelectorAll(".card")[lastFocus.card];
+  const cards = rowEl.querySelectorAll(".card");
+  const card = cards[lastFocus.card];
   if (card) {
     card.focus();
-    // actualizar detalles para el ítem concreto: reconstruir items del def
+    // reconstruir items del def y actualizar detalles
     const def = defs[lastFocus.row];
     if (!def) return;
     let items = [];
     if (def.type === "field") {
-      items = data.filter(i => {
-        const v = i[def.field];
-        if (v === undefined) return false;
-        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
-      });
+      const vals = Array.isArray(def.values) ? def.values : [];
+      if (vals.length) {
+        items = data.filter(i => {
+          const v = i[def.field];
+          if (v === undefined || v === null) return false;
+          if (Array.isArray(v)) return v.some(x => vals.includes(x));
+          return vals.includes(String(v));
+        });
+      }
     } else if (def.type === "rating") {
-      items = data.filter(i => i.rating >= def.minRating);
-    } else {
-      items = data.filter(i => def.ids.includes(i.id));
+      items = data.filter(i => Number(i.rating || 0) >= Number(def.minRating || 0));
+    } else if (def.type === "collection") {
+      items = data.filter(i => (def.ids || []).includes(i.id));
+    } else if (def.type === "search") {
+      if (Array.isArray(def.ids) && def.ids.length) {
+        items = data.filter(d => def.ids.includes(d.id));
+      } else if (def.term) {
+        const t = def.term.toLowerCase();
+        items = data.filter(d => (d.title || "").toLowerCase().includes(t) || (d.sinopsis || "").toLowerCase().includes(t));
+      }
     }
+
     const item = items[Math.min(lastFocus.card, items.length - 1)];
     if (item) updateDetails(item);
   }
 }
 
-// ----------------- teclado: mantengo tu bloque que funciona --------------
+// ----------------- teclado: bloque que dijiste funciona ----------------
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
   // botón volver
@@ -344,60 +374,45 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-// ----------------- carga de defs: remoto opcional + fallback localStorage -------------
+// ----------------- carga defs desde remoto (opcional) o localStorage -------------
 function loadDefsFromRemoteIfNeeded() {
   return new Promise((resolve) => {
     if (!REMOTE_DEFS_URL) {
-      // fallback directo a localStorage
       try {
         const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
         defs = Array.isArray(ls) ? ls : [];
       } catch {
         defs = [];
       }
+      console.log("scripthome: defs cargadas desde localStorage:", defs.length);
       resolve();
       return;
     }
 
-    // intentamos fetch remoto (con timeout)
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), 4000);
 
     fetch(REMOTE_DEFS_URL, { signal: controller.signal })
-      .then(r => {
-        clearTimeout(id);
-        if (!r.ok) throw new Error("No OK");
-        return r.json();
-      })
+      .then(r => { clearTimeout(id); if (!r.ok) throw new Error("No OK"); return r.json(); })
       .then(json => {
         if (Array.isArray(json)) {
           defs = json;
-          // también guardamos localmente como copia
           try { localStorage.setItem("carouselDefs", JSON.stringify(json)); } catch {}
         } else {
-          // fallback local
-          try {
-            const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-            defs = Array.isArray(ls) ? ls : [];
-          } catch {
-            defs = [];
-          }
+          try { const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]"); defs = Array.isArray(ls) ? ls : []; } catch { defs = []; }
         }
       })
       .catch(() => {
-        // fallback a localStorage
-        try {
-          const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-          defs = Array.isArray(ls) ? ls : [];
-        } catch {
-          defs = [];
-        }
+        try { const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]"); defs = Array.isArray(ls) ? ls : []; } catch { defs = []; }
       })
-      .finally(() => resolve());
+      .finally(() => {
+        console.log("scripthome: defs cargadas (remote fallback local):", defs.length);
+        resolve();
+      });
   });
 }
 
-// ----------------- inicializador (mantengo tu estructura) ------------------
+// ----------------- inicializador (mantiene tu estructura y comportamiento) ------------------
 function initializeHome() {
   const car = document.getElementById("carousel");
   if (!car) {
@@ -405,16 +420,9 @@ function initializeHome() {
     return;
   }
 
-  // Cargar defs (remote o local)
   loadDefsFromRemoteIfNeeded().then(() => {
-    // si no hay defs, mantenemos un set por defecto (como tu fallback)
-    if (!defs || !defs.length) {
-      defs = [
-        { name:"Estrenos 2025", type:"field",   field:"año",     values:["2025"] },
-        { name:"Acción",        type:"field",   field:"genero",  values:["Acción"] },
-        { name:"Top Valoradas", type:"rating",  minRating:3.5 }
-      ];
-    }
+    // Si defs está vacío, dejamos el arreglo vacío (pero no forzamos los 3 por defecto).
+    if (!defs || !Array.isArray(defs)) defs = [];
 
     if (!data) {
       fetch("moviebase.json")
@@ -425,7 +433,6 @@ function initializeHome() {
           if (first) {
             first.focus();
             lastFocus = { row: 0, card: 0 };
-            // intenta seleccionar item con id 1 si existe, si no el primero
             const firstItem = data.find(it => it.id === 1) || data[0];
             if (firstItem) focusCard(firstItem);
           }

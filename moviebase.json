@@ -222,7 +222,7 @@
     "hora": "1 h",
     "min": "54 min",
     "edad": "18+",
-    "link": "peliculas/10-el-sustituto.html"
+    "link": "peliculas/10-sustituto.html"
   },
   {
     "id": "11",
@@ -247,6 +247,48 @@
     "min": "9 min",
     "edad": "13+",
     "link": "peliculas/11-superman.html"
+  },
+  {
+    "id": "12",
+    "titulo": "Screamboat",
+    "genero": [
+      "Terror",
+      "Comedia"
+    ],
+    "rating": "2",
+    "videourl": "//ok.ru/videoembed/9923888745049?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/r2u7GCYhxtpZbprKJIgdAkGQow3.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/zyMFOTj2oOAlTHaFju766U0GGv0.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/5o0UPWnv6p4QTTSEri9zhKDsVWi.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/Ak6jQfWJ8tAwYLrF8CbJ1C1mAnM.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/69xVmO42I1NoZXYUU85oGH9PxEl.jpg",
+    "sinopsis": "Es una reinterpretación del cortometraje animado de Walt Disney y Ub Iwerks de 1928, Steamboat Willie. La trama sigue a un grupo de neoyorquinos aterrorizados por un ratón monstruoso llamado Steamboat Willie.",
+    "tipo": 1,
+    "año": "2025",
+    "hora": "1 h",
+    "min": "42 min",
+    "edad": "18+",
+    "link": "peliculas/12-screamboat.html"
+  },
+  {
+    "id": "13",
+    "titulo": "Turno nocturno",
+    "genero": [
+      "Terror"
+    ],
+    "rating": "3",
+    "videourl": "//ok.ru/videoembed/9719636626083?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/o5vasl0xbZWWKQnAlaBTSgntHH2.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/5VjZbfvSxyLEhLCON1NmMJdWTp0.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/x9AySz3k2BkUWl0DWrlR2EUiCH5.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/qFPSQLIb922GT0pRsesu3sEwN91.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/jnX2JQIbYwCLhHenhQFBFw6fozR.jpg",
+    "sinopsis": "En los pasillos oscuros de un hospital, deambula el fantasma de una enfermera conocida como \"La planchada\", famosa por su aspecto impecable. Mientras los pacientes creen que ella está ahí para ayudarlos, las enfermeras y doctores conocen la verdad: deben seguir sus reglas al pie de la letra. \"Que nada se te olvide. No te distraigas. No te relaciones con el personal. No te duermas nunca\". Rebeca, una nueva enfermera en periodo de prueba, no solo debe demostrar su valía ante sus superiores, sino también enfrentarse a esta misteriosa y temida entidad.",
+    "tipo": 1,
+    "año": "2024",
+    "hora": "1 h",
+    "min": "47 min",
+    "edad": "18+",
+    "link": "peliculas/13-turno-nocturno.html"
   }
-
 ]

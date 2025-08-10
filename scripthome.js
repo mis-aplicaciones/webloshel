@@ -1,16 +1,15 @@
-// scripthome.js  (base provista por ti, con randomización por fila y opción remote defs)
+// scripthome.js (versión que intenta leer carouselDefs.json desde la raíz, luego REMOTE url y luego localStorage)
 
-// estado global (mantener compatibles con cualquier reinserción)
 let data = null;
 let defs = null;
 let lastFocus = { row: 0, card: 0 };
 let isAnimating = false;
 
-// Si quieres que el home consuma defs desde un JSON alojado (admin -> escribe ese JSON)
-// pon la URL aquí; si la dejas null, se usará localStorage tal como ahora.
-const REMOTE_DEFS_URL = null; // ejemplo: "https://mi-servidor.com/carouselDefs.json"
+// Si quieres apuntar a una URL pública (raw.githubusercontent o pages) ponla aquí.
+// Ejemplo: "https://raw.githubusercontent.com/miusuario/mirepo/main/carouselDefs.json"
+const REMOTE_DEFS_URL = null; // pon aquí la URL RAW si la tienes
 
-// ---------------- helper: estrellas ----------------
+// Helper estrellas
 function calcularEstrellas(p) {
   const MAX = 5;
   const r = Math.round((p || 0) * 2) / 2;
@@ -18,18 +17,17 @@ function calcularEstrellas(p) {
   let html = "";
   for (let i = 0; i < full; i++) html += '<ion-icon name="star"></ion-icon>';
   if (half) html += '<ion-icon name="star-half"></ion-icon>';
-  for (let i = 0; i < MAX - full - (half ? 1 : 0); i++)
-    html += '<ion-icon name="star-outline"></ion-icon>';
+  for (let i = 0; i < MAX - full - (half ? 1 : 0); i++) html += '<ion-icon name="star-outline"></ion-icon>';
   return html;
 }
 
-// ---------------- update details ----------------
+// updateDetails, focusCard, shuffle helpers (idénticos a tu versión robusta)
 function updateDetails(item) {
   if (!item) return;
-  const bg    = document.getElementById("background");
-  const img   = document.getElementById("detail-img");
+  const bg = document.getElementById("background");
+  const img = document.getElementById("detail-img");
   const title = document.getElementById("detail-title");
-  const meta  = document.getElementById("detail-meta");
+  const meta = document.getElementById("detail-meta");
   const genEl = document.getElementById("detail-genero");
 
   if (bg) bg.style.backgroundImage = `url('${item.backgroundUrl || ""}')`;
@@ -54,7 +52,6 @@ function updateDetails(item) {
   }
 }
 
-// ----------------- animación detalle -----------------
 function focusCard(item) {
   if (!item) return;
   if (isAnimating) {
@@ -71,10 +68,7 @@ function focusCard(item) {
   const genEl = document.getElementById("detail-genero");
 
   [bg, detail, img, title, meta, genEl].forEach(el => {
-    if (el) {
-      el.classList.remove("fade-in");
-      el.classList.add("fade-out");
-    }
+    if (el) { el.classList.remove("fade-in"); el.classList.add("fade-out"); }
   });
 
   const onEnd = (e) => {
@@ -82,25 +76,20 @@ function focusCard(item) {
     if (bg) bg.removeEventListener("transitionend", onEnd);
     updateDetails(item);
     [bg, detail, img, title, meta, genEl].forEach(el => {
-      if (el) {
-        el.classList.remove("fade-out");
-        el.classList.add("fade-in");
-      }
+      if (el) { el.classList.remove("fade-out"); el.classList.add("fade-in"); }
     });
     setTimeout(() => { isAnimating = false; }, 300);
   };
 
   if (bg) {
     bg.addEventListener("transitionend", onEnd, { once: true });
-    // fallback por si no ocurre transitionend
-    setTimeout(onEnd, 800);
+    setTimeout(onEnd, 800); // fallback
   } else {
     onEnd();
   }
 }
 
-// ----------------- seeded RNG + shuffle -----------------
-// mulberry32 PRNG
+// RNG + shuffle
 function mulberry32(seed) {
   return function() {
     let t = seed += 0x6D2B79F5;
@@ -109,8 +98,6 @@ function mulberry32(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-
-// Fisher-Yates shuffle usando PRNG
 function shuffleWithRng(array, rng) {
   const a = array.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -120,45 +107,33 @@ function shuffleWithRng(array, rng) {
   return a;
 }
 
-// ----------------- initCarousel (con random diario) -----------------
+// initCarousel (mezcla por fila usando seed diario)
 function initCarousel() {
   const carousel = document.getElementById("carousel");
   if (!carousel) return null;
   carousel.innerHTML = "";
   let firstCard = null;
 
-  // Día en UTC (cada 24h varía): usar floor(Date.now()/86400000)
   const daySeed = Math.floor(Date.now() / 86400000);
 
   if (!Array.isArray(defs)) defs = [];
 
   defs.forEach((def, rowIdx) => {
-    // obtener items filtrados SAFELY (si campo no existe, reportamos y devolvemos [])
     let items = [];
     try {
       if (def.type === "field") {
         items = data.filter(item => {
           const v = item[def.field];
           if (v === undefined) return false;
-          return Array.isArray(v)
-            ? v.some(x => def.values.includes(x))
-            : def.values.includes(v);
+          return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
         });
       } else if (def.type === "rating") {
         items = data.filter(item => Number(item.rating || 0) >= Number(def.minRating || 0));
       } else if (def.type === "collection") {
         items = data.filter(item => (def.ids || []).includes(item.id));
-      } else {
-        // fallback: intentar filtrar por propiedad "field" si existe
-        if (def.field) {
-          items = data.filter(item => {
-            const v = item[def.field];
-            if (v === undefined) return false;
-            return Array.isArray(v)
-              ? v.some(x => def.values.includes(x))
-              : def.values.includes(v);
-          });
-        }
+      } else if (def.type === "search") {
+        const term = (def.term || "").toLowerCase();
+        items = data.filter(item => (item.title||"").toLowerCase().includes(term) || (item.sinopsis||"").toLowerCase().includes(term));
       }
     } catch (err) {
       console.warn("initCarousel: error filtrando def", def, err);
@@ -167,18 +142,12 @@ function initCarousel() {
 
     if (!items || !items.length) return;
 
-    // mezclar con semilla: daySeed combinado con rowIdx para que cada fila tenga su propia mezcla.
     const seed = (daySeed + rowIdx + 1) >>> 0;
     const rng = mulberry32(seed);
     const shuffled = shuffleWithRng(items, rng);
 
-    // construir row
     const row = document.createElement("div");
     row.className = "row";
-
-    // Mantener altura original más algo de margen para zoom — si quieres ajustar, cambia el valor
-    // NO sobrescribo estilos que rompan tu template, sólo dejo posibilidad si quieres.
-    // row.style.height = "calc(3vh + 19.1vh + 4vh)"; // si quieres cambiarlo, activar
 
     const title = document.createElement("div");
     title.className = "row-title";
@@ -186,11 +155,10 @@ function initCarousel() {
 
     const cont = document.createElement("div");
     cont.className = "cards-container";
-    // evitar scrollbars visibles (CSS idealmente), pero aseguramos overflow
     cont.style.overflowX = "auto";
     cont.style.overflowY = "hidden";
 
-    // opcional: almacenar scrollLeft por fila
+    // almacenar scrollLeft por fila
     cont.addEventListener("scroll", () => {
       row.dataset.scrollLeft = cont.scrollLeft;
     });
@@ -200,13 +168,11 @@ function initCarousel() {
       card.className = "card";
       card.tabIndex = 0;
       card.style.backgroundImage = `url('${item.cardimgUrl || ""}')`;
-      // guardar link para Enter/click
       card.dataset.link = item.link || "";
 
       card.addEventListener("focus", () => {
         lastFocus = { row: rowIdx, card: idx };
         focusCard(item);
-        // centrar visibilidad horizontalmente (si tu CSS requiere, se puede ajustar)
         const contEl = card.closest(".cards-container");
         if (contEl) {
           const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
@@ -215,13 +181,8 @@ function initCarousel() {
         }
       });
 
-      card.addEventListener("click", () => {
-        if (item.link) window.location.href = item.link;
-      });
-
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && item.link) window.location.href = item.link;
-      });
+      card.addEventListener("click", () => { if (item.link) window.location.href = item.link; });
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter" && item.link) window.location.href = item.link; });
 
       cont.appendChild(card);
       if (!firstCard) firstCard = card;
@@ -235,16 +196,14 @@ function initCarousel() {
   return firstCard;
 }
 
-// ----------------- restoreFocus (mantener tu lógica, restaurando scrollLeft) -------------
+// restoreFocus (restaura scrollLeft y foco)
 function restoreFocus() {
   const rows = document.querySelectorAll("#carousel .row");
   const rowEl = rows[lastFocus.row];
   if (!rowEl) return;
 
-  // hacemos visible la fila correctamente (título + fila)
   rowEl.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  // restaurar scrollLeft horizontal si existía
   const cont = rowEl.querySelector(".cards-container");
   if (cont) {
     const stored = Number(rowEl.dataset.scrollLeft || 0);
@@ -254,7 +213,7 @@ function restoreFocus() {
   const card = rowEl.querySelectorAll(".card")[lastFocus.card];
   if (card) {
     card.focus();
-    // actualizar detalles para el ítem concreto: reconstruir items del def
+    // reconstruir items del def y actualizar detalles
     const def = defs[lastFocus.row];
     if (!def) return;
     let items = [];
@@ -266,18 +225,20 @@ function restoreFocus() {
       });
     } else if (def.type === "rating") {
       items = data.filter(i => i.rating >= def.minRating);
-    } else {
+    } else if (def.type === "collection") {
       items = data.filter(i => def.ids.includes(i.id));
+    } else if (def.type === "search") {
+      const term = (def.term || "").toLowerCase();
+      items = data.filter(i => (i.title||"").toLowerCase().includes(term) || (i.sinopsis||"").toLowerCase().includes(term));
     }
     const item = items[Math.min(lastFocus.card, items.length - 1)];
     if (item) updateDetails(item);
   }
 }
 
-// ----------------- teclado: mantengo tu bloque que funciona --------------
+// teclado (tu bloque funcional)
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
-  // botón volver
   if (["Backspace", "Escape"].includes(e.key)) {
     window.dispatchEvent(new Event("return-to-sidebar"));
     e.preventDefault();
@@ -302,7 +263,6 @@ document.body.addEventListener("keydown", (e) => {
 
     case "ArrowLeft":
       if (idx === 0) {
-        // Primer card: volvemos al sidebar
         window.dispatchEvent(new Event("return-to-sidebar"));
         e.preventDefault();
         return;
@@ -318,10 +278,7 @@ document.body.addEventListener("keydown", (e) => {
       const nr = row.nextElementSibling;
       if (nr) {
         target = nr.querySelector(".card");
-        if (target) {
-          target.focus();
-          nr.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        if (target) { target.focus(); nr.scrollIntoView({ behavior: "smooth", block: "start" }); }
       }
       break;
     }
@@ -330,89 +287,71 @@ document.body.addEventListener("keydown", (e) => {
       const pr = row.previousElementSibling;
       if (pr) {
         target = pr.querySelector(".card");
-        if (target) {
-          target.focus();
-          pr.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        if (target) { target.focus(); pr.scrollIntoView({ behavior: "smooth", block: "start" }); }
       }
       break;
     }
   }
 
-  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
-    e.preventDefault();
-  }
+  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) e.preventDefault();
 });
 
-// ----------------- carga de defs: remoto opcional + fallback localStorage -------------
-function loadDefsFromRemoteIfNeeded() {
-  return new Promise((resolve) => {
-    if (!REMOTE_DEFS_URL) {
-      // fallback directo a localStorage
-      try {
-        const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-        defs = Array.isArray(ls) ? ls : [];
-      } catch {
-        defs = [];
-      }
-      resolve();
-      return;
-    }
-
-    // intentamos fetch remoto (con timeout)
+// ---------------------- CARGA DE DEFS ----------------------
+// Intenta en orden: 1) /carouselDefs.json (root del paquete), 2) REMOTE_DEFS_URL (si está), 3) localStorage
+function tryFetchWithTimeout(url, timeout = 4000) {
+  return new Promise((resolve, reject) => {
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 4000);
-
-    fetch(REMOTE_DEFS_URL, { signal: controller.signal })
-      .then(r => {
-        clearTimeout(id);
-        if (!r.ok) throw new Error("No OK");
-        return r.json();
-      })
-      .then(json => {
-        if (Array.isArray(json)) {
-          defs = json;
-          // también guardamos localmente como copia
-          try { localStorage.setItem("carouselDefs", JSON.stringify(json)); } catch {}
-        } else {
-          // fallback local
-          try {
-            const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-            defs = Array.isArray(ls) ? ls : [];
-          } catch {
-            defs = [];
-          }
-        }
-      })
-      .catch(() => {
-        // fallback a localStorage
-        try {
-          const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
-          defs = Array.isArray(ls) ? ls : [];
-        } catch {
-          defs = [];
-        }
-      })
-      .finally(() => resolve());
+    const id = setTimeout(() => { controller.abort(); }, timeout);
+    fetch(url, { signal: controller.signal, mode: 'cors' })
+      .then(r => { clearTimeout(id); if (!r.ok) throw new Error('Not OK'); return r.json(); })
+      .then(json => resolve(json))
+      .catch(err => { clearTimeout(id); reject(err); });
   });
 }
 
-// ----------------- inicializador (mantengo tu estructura) ------------------
+function loadDefsPriority() {
+  return new Promise(async (resolve) => {
+    // 1) intentar archivo en la raíz del mismo origen (útil si lo incluyes en la APK o en la raíz del hosting)
+    try {
+      const json = await tryFetchWithTimeout('/carouselDefs.json', 3000);
+      if (Array.isArray(json)) { defs = json; resolve(); return; }
+    } catch (e) {
+      // continúa al siguiente intento
+    }
+
+    // 2) si REMOTE_DEFS_URL está configurada, intentar
+    if (REMOTE_DEFS_URL) {
+      try {
+        const json = await tryFetchWithTimeout(REMOTE_DEFS_URL, 4000);
+        if (Array.isArray(json)) { defs = json; resolve(); return; }
+      } catch (e) {
+        // continúa
+      }
+    }
+
+    // 3) fallback: localStorage
+    try {
+      const ls = JSON.parse(localStorage.getItem('carouselDefs') || '[]');
+      defs = Array.isArray(ls) ? ls : [];
+    } catch {
+      defs = [];
+    }
+    resolve();
+  });
+}
+
+// inicializador
 function initializeHome() {
   const car = document.getElementById("carousel");
-  if (!car) {
-    console.error("initializeHome: no encontré #carousel");
-    return;
-  }
+  if (!car) { console.error("initializeHome: no encontré #carousel"); return; }
 
-  // Cargar defs (remote o local)
-  loadDefsFromRemoteIfNeeded().then(() => {
-    // si no hay defs, mantenemos un set por defecto (como tu fallback)
+  loadDefsPriority().then(() => {
     if (!defs || !defs.length) {
+      // Si quieres cambiar el fallback por defecto edítalo aquí
       defs = [
-        { name:"Estrenos 2025", type:"field",   field:"año",     values:["2025"] },
-        { name:"Acción",        type:"field",   field:"genero",  values:["Acción"] },
-        { name:"Top Valoradas", type:"rating",  minRating:3.5 }
+        { name:"Estrenos 2025", type:"field", field:"año", values:["2025"] },
+        { name:"Acción", type:"field", field:"genero", values:["Acción"] },
+        { name:"Top Valoradas", type:"rating", minRating:3.5 }
       ];
     }
 
@@ -422,13 +361,7 @@ function initializeHome() {
         .then(json => {
           data = json || [];
           const first = initCarousel();
-          if (first) {
-            first.focus();
-            lastFocus = { row: 0, card: 0 };
-            // intenta seleccionar item con id 1 si existe, si no el primero
-            const firstItem = data.find(it => it.id === 1) || data[0];
-            if (firstItem) focusCard(firstItem);
-          }
+          if (first) { first.focus(); lastFocus = { row:0, card:0 }; const firstItem = data.find(it=>it.id===1) || data[0]; if(firstItem) focusCard(firstItem); }
         })
         .catch(err => {
           console.error("initializeHome: error al cargar moviebase.json", err);

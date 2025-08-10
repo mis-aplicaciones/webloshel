@@ -1,0 +1,42 @@
+[
+  {
+    "name": "2025 Releases",
+    "type": "field",
+    "field": "año",
+    "values": [
+      "2025"
+    ]
+  },
+  {
+    "name": "Acción",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Acción"
+    ]
+  },
+  {
+    "name": "Noches de Crimen",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Crimen"
+    ]
+  },
+  {
+    "name": "Cuando la Ciencia Desafía",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Ciencia Ficción"
+    ]
+  },
+  {
+    "name": "Más Allá del Miedo",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Terror"
+    ]
+  }
+]

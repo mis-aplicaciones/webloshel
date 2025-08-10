@@ -407,7 +407,14 @@ function initializeHome() {
 
   // Cargar defs (remote o local)
   loadDefsFromRemoteIfNeeded().then(() => {
-    
+    // si no hay defs, mantenemos un set por defecto (como tu fallback)
+    if (!defs || !defs.length) {
+      defs = [
+        { name:"Estrenos 2025", type:"field",   field:"año",     values:["2025"] },
+        { name:"Acción",        type:"field",   field:"genero",  values:["Acción"] },
+        { name:"Top Valoradas", type:"rating",  minRating:3.5 }
+      ];
+    }
 
     if (!data) {
       fetch("moviebase.json")

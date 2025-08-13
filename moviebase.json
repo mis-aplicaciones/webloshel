@@ -290,5 +290,49 @@
     "min": "47 min",
     "edad": "18+",
     "link": "peliculas/13-turno-nocturno.html"
+  },
+  {
+    "id": "14",
+    "titulo": "El sustituto 2",
+    "genero": [
+      "Acción",
+      "Suspenso",
+      "Crimen"
+    ],
+    "rating": "2.5",
+    "videourl": "//ok.ru/videoembed/9236058802815?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/gWvTNBTRk4My2hZFW61Ljb6SCyT.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/c7cEsSzvtTRqQEaWVH8q8W6C7ag.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4H5kD2YzuC75ETk7H8pKwdPXBWy.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/kCr4dwR0r6ksfQAGK5YUi9sdkuc.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vk95MEsk43QMUsyxC3yd6Bz2Ett.jpg",
+    "sinopsis": "Secuela de \"El sustituto\" sobre los conflictos entre profesores y alumnos.\n El mercenario Karl Thomansson se infiltra como profesor en un instituto de Brooklyn con alto índice de violencia para averiguar quien mató a su hermano. A pesar de los intentos de los alumnos por hacerle la vida imposible, Karl conseguirá ganarse su respeto.",
+    "tipo": 1,
+    "año": "1998",
+    "hora": "1 h",
+    "min": "30 min",
+    "edad": "18+",
+    "link": "peliculas/14-el-sustituto-2.html"
+  },
+  {
+    "id": "15",
+    "titulo": "Enemy",
+    "genero": [
+      "Suspenso"
+    ],
+    "rating": "3",
+    "videourl": "//ok.ru/videoembed/10071625501244?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/deYWtXTc56YdXyIuuMuA8dvBY16.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/dFoPewVwGprUYV4XdvssdNOOmEu.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4ghwIHc3yeCAN65IzVfWrBwASxn.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/k8G9Ib4K4uQkh9pPXBGRaQMxCTV.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/z2jFaycGfHsw4QPxiiuIxb9NMae.jpg",
+    "sinopsis": "Adam es un afable profesor de historia que lleva una vida bastante monótona. Un día, viendo una película, descubre a un actor que es idéntico a él. Obsesionado con la idea de tener un doble, la búsqueda de ese hombre tendrá para él consecuencias inesperadas...",
+    "tipo": 1,
+    "año": "2014",
+    "hora": "1 h",
+    "min": "31 min",
+    "edad": "18+",
+    "link": "peliculas/15-enemy.html"
   }
 ]

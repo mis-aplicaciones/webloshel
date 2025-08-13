@@ -1,6 +1,6 @@
 [
   {
-    "name": "2025 Releases",
+    "name": "Descubrimientos del 2025",
     "type": "field",
     "field": "año",
     "values": [
@@ -37,6 +37,14 @@
     "field": "genero",
     "values": [
       "Terror"
+    ]
+  },
+  {
+    "name": "Suspenso",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Suspenso"
     ]
   }
 ]

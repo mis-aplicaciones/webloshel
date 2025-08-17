@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const botonCompartir = document.getElementById("botonCompartir");
     botonCompartir.addEventListener("click", function () {
-      const compartirUrl = "https://www.mediafire.com/file/uk7icwe9mfbu4le/LoShel-v.9.9.apk/file"; // Reemplaza esto con la URL de tu página
+      const compartirUrl = "https://www.mediafire.com/file/ax1zxvdcf3xcaez/LoShel-v-9-9-9.apk/file"; // Reemplaza esto con la URL de tu página
       const movieTitle = document.getElementById("movie-title-text").innerText;
       const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
   
@@ -197,4 +197,5 @@ document.addEventListener("DOMContentLoaded", function () {
       movieContent.style.bottom = "60px";
     }
   });
+
   

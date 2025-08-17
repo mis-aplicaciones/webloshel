@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const botonCompartir = document.getElementById("botonCompartir");
   if (botonCompartir) {
       botonCompartir.addEventListener("click", function () {
-          const compartirUrl = "https://www.mediafire.com/file/swwocayu38fn0u3/LoShel-v-9-9-1.apk/file";
+          const compartirUrl = "https://www.mediafire.com/file/ax1zxvdcf3xcaez/LoShel-v-9-9-9.apk/file";
           const movieTitle = document.getElementById("movie-title-text").innerText;
           const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
           window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
@@ -100,6 +100,7 @@ if (movieContent) {
         element.style.outline = "none";
     });
 });
+
 
 
 

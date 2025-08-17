@@ -234,7 +234,7 @@
       "Superhéroes"
     ],
     "rating": "3.5",
-    "videourl": "//ok.ru/videoembed/9570281916953?nochat=1&autoplay=1",
+    "videourl": "//ok.ru/videoembed/9570281916953?nochat=1",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/eEAwJXe94sl25zAs1n085DXq9QT.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/GBr1ozQf7WZqSMwNPdb5Xs2eyn.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/wrM6QbXqB3HQ6GCu7k8Ve6ymjP7.png",
@@ -334,5 +334,28 @@
     "min": "31 min",
     "edad": "18+",
     "link": "peliculas/15-enemy.html"
+  },
+  {
+    "id": "16",
+    "titulo": "Aulas violentas",
+    "genero": [
+      "Acción",
+      "Suspenso",
+      "Crimen"
+    ],
+    "rating": "2",
+    "videourl": "//ok.ru/videoembed/3484099349132?nochat=1&autoplay=1",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/h170P8UJVqgGfo00vmA2vRnT7zj.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/rnpzVN4zQQOfLxtkoQ2jjGLXTyP.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/1mtNoRVzgmOSNJ7ZyiSQ6PoMahC.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/zQ7rVfLbl72ZGoj3MGszLtMmNL7.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/zQ7rVfLbl72ZGoj3MGszLtMmNL7.jpg",
+    "sinopsis": "Acaba de escapar de un campo de prisioneros y su prioridad ahora es cumplir la promesa que hizo a un compañero en su lecho de muerte: entregar una medalla a su hija, quien trabaja como profesora en un conflictivo colegio.",
+    "tipo": 1,
+    "año": "1999",
+    "hora": "2 h",
+    "min": "0 min",
+    "edad": "18+",
+    "link": "peliculas/16-aulas-violentas.html"
   }
 ]

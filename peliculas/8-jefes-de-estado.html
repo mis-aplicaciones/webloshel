@@ -8,7 +8,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
+  <style data-playerstyle="true">
+            /* Overlay (full screen) */
+            #player-overlay{ display:none; position:fixed; inset:0; z-index:99999; align-items:center; justify-content:center; background:rgba(0,0,0,0.95); transition:opacity .45s ease; }
+            #player-overlay.show{ display:flex; opacity:1; pointer-events:auto; }
+            #player-overlay.hide{ opacity:0; pointer-events:none; }
+            #player-overlay .player-wrap{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+            #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; }
+    
+            /* Ocultar chrome solo cuando el player está activo */
+            body.player-active #background-section,
+            body.player-active .background-gradient,
+            body.player-active #imagen-1,
+            body.player-active #imagen-2,
+            body.player-active #movie-content,
+            body.player-active .movie-content,
+            body.player-active .button-aditional,
+            body.player-active .movie-buttons{
+              opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.995);
+              transition: opacity .45s ease, transform .45s ease, visibility .45s;
+            }
+    
+            /* Badge central para touch (feedback) */
+            #center-pause { position: absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:100000; display:none; align-items:center; justify-content:center; }
+            #center-pause.show{ display:flex; animation: pop .28s ease; }
+            #center-pause i{ font-size: 8vh; color: rgba(255,255,255,0.95); text-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+            @keyframes pop{ 0%{ transform:translate(-50%,-50%) scale(0.6); opacity:0 } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
+          </style></head>
   <body>
     <!-- Botón Volver -->
     <a href="../index.html" id="back-button"><i class="bi bi-arrow-left-short"></i></a>
@@ -17,10 +43,10 @@
     <!-- Contenido principal -->
     <div id="content">
       <!-- Elementos Ocultos -->
-      <input type="hidden" id="ID_pelicula" value="8">
+      <input type="hidden" id="ID_pelicula" value="18">
       <input type="hidden" id="cover-url" value="https://image.tmdb.org/t/p/original/1xDev1aS6juHOuhpOIKKlczEdrW.jpg">
-      <input type="hidden" id="cover-url-2" value="https://image.tmdb.org/t/p/original/2CSdwqOUMH23cEBodqAJynMFz7c.jpg">
-      <input type="hidden" id="pagina-nombre" value="8-accion-suspenso-comedia-jefes-de-estado.html">
+      <input type="hidden" id="cover-url-2" value="https://image.tmdb.org/t/p/original/lVgE5oLzf7ABmzyASEVcjYyHI41.jpg">
+      <input type="hidden" id="pagina-nombre" value="18-jefes-de-estado.html">
 
       <!-- Fondo Dinámico -->
       <div id="background-section">
@@ -59,12 +85,12 @@
         <div id="genero" class="genre-section" data-genre-ids="1,2"></div>
 
         <!-- Descripción de la Película -->
-        <div id="descripcion" class="movie-description">El Primer Ministro del Reino Unido y el Presidente de los Estados Unidos mantienen una rivalidad pública que pone en peligro la alianza de sus países. Pero cuando se convierten en objetivos de un poderoso enemigo, se ven obligados a colaborar.</div>
+        <div id="descripcion" class="movie-description">El primer ministro del Reino Unido y el presidente de EE. UU. tienen una rivalidad pública que pone en riesgo la alianza entre sus países. Pero cuando se convierten en el blanco de un poderoso enemigo, se ven obligados a confiar el uno en el otro. Aliados con Noel, una agente del MI6, intenta frustrar una conspiración que amenaza al mundo libre.</div>
 
         <!-- Boton de play y donacion -->
         <div class="button-movie-and-donation">
           <div class="movie-buttons">
-            <a id="video1" href="//ok.ru/videoembed/9563530201625?nochat=1&amp;autoplay=1">
+            <a id="video1" href="#" onclick="openPlayer('https://archive.org/download/jefes-de-estado/Jefes%20de%20Estado.ia.mp4','mp4'); return false;">
               <i class="bi bi-play-fill"></i><span> Ver Ahora</span>
             </a>
           </div>
@@ -105,4 +131,39 @@
     <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   
 
-</body></html>
+<div id="player-overlay" class="hide">
+            <div class="player-wrap">
+              <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                <video id="player-video" playsinline="" webkit-playsinline=""></video>
+                <div id="center-pause"><i class="bi bi-pause-fill"></i></div>
+              </div>
+            </div>
+          </div><script data-player="true" type="text/javascript">
+            (function(){
+              window._hlsInstance = null; window._playerState = { playing:false, paused:false, src:'', type:'' };
+              function _attachHls(video, src){ try{ if(window.Hls && Hls.isSupported()){ if(window._hlsInstance && window._hlsInstance.destroy){ window._hlsInstance.destroy(); window._hlsInstance = null; } const hls = new Hls(); window._hlsInstance = hls; hls.loadSource(src); hls.attachMedia(video); } else { video.src = src; } } catch(e){ console.error('Hls attach error', e); video.src = src; } }
+    
+              window.openPlayer = function(src, type){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); const center = document.getElementById('center-pause'); if(!overlay||!video) return; if(window._playerState.src !== src || window._playerState.type !== type){ try{ if(window._hlsInstance && window._hlsInstance.destroy){ window._hlsInstance.destroy(); window._hlsInstance = null; } }catch(e){} video.removeAttribute('src'); if(type==='m3u8'){ _attachHls(video, src); } else { video.src = src; } window._playerState.src = src; window._playerState.type = type; }
+                document.body.classList.add('player-active'); overlay.classList.remove('hide'); overlay.classList.add('show'); overlay.style.pointerEvents = 'auto';
+                // intentar reproducir (los navegadores pueden pedir interacción)
+                video.muted = false; video.play().catch(()=>{});
+                window._playerState.playing = true; window._playerState.paused = false;
+                const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'false'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>'; }
+              };
+    
+              window.pauseAndReveal = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); const center = document.getElementById('center-pause'); if(!overlay||!video) return; if(!video.paused) try{ video.pause(); }catch(e){} window._playerState.paused = true; window._playerState.playing = false; overlay.classList.remove('show'); overlay.classList.add('hide'); overlay.style.pointerEvents = 'none'; document.body.classList.remove('player-active'); const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'true'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>'; }
+                if(center){ center.classList.remove('show'); void center.offsetWidth; center.classList.add('show'); setTimeout(()=>{ center.classList.remove('show'); }, 900); }
+              };
+    
+              window.resumeFromPause = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); if(!overlay||!video) return; document.body.classList.add('player-active'); overlay.classList.remove('hide'); overlay.classList.add('show'); overlay.style.pointerEvents = 'auto'; try{ video.play().catch(()=>{}); }catch(e){} window._playerState.paused = false; window._playerState.playing = true; const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'false'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>'; } };
+    
+              window.closePlayerCompletely = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); if(video){ try{ video.pause(); }catch(e){} try{ video.removeAttribute('src'); }catch(e){} } if(window._hlsInstance && window._hlsInstance.destroy){ try{ window._hlsInstance.destroy(); }catch(e){} window._hlsInstance = null; } if(overlay){ overlay.classList.remove('show'); overlay.classList.add('hide'); overlay.style.pointerEvents = 'none'; } document.body.classList.remove('player-active'); const btn = document.getElementById('video1'); if(btn) btn.innerHTML = '<i class="bi bi-play-fill"></i><span> Ver Ahora</span>'; window._playerState = { playing:false, paused:false, src:'', type:'' } };
+    
+              // Enter/D-pad and Escape
+              document.addEventListener('keydown', function(e){ const tag = document.activeElement && document.activeElement.tagName; if(tag==='INPUT' || tag==='TEXTAREA') return; if(e.key==='Enter'){ const video = document.getElementById('player-video'); const overlay = document.getElementById('player-overlay'); if(!video||!overlay) return; const overlayVisible = overlay.classList.contains('show'); if(overlayVisible && !video.paused){ pauseAndReveal(); } else if(window._playerState.paused){ resumeFromPause(); } else if(!overlayVisible && window._playerState.playing){ resumeFromPause(); } } else if(e.key==='Escape'){ closePlayerCompletely(); } });
+    
+              // TOUCH: tap to toggle pause/reveal (and resume)
+              (function(){ const video = document.getElementById('player-video'); if(!video) return; video.addEventListener('touchend', function(ev){ ev.preventDefault(); if(window._playerState.playing && !video.paused){ pauseAndReveal(); } else if(window._playerState.paused){ resumeFromPause(); } }, { passive: false }); })();
+    
+            })();
+          </script></body></html>

@@ -19,7 +19,7 @@
     "hora": "2",
     "min": "5",
     "sinopsis": "Taking place during the events of John Wick: Chapter 3 – Parabellum, Eve Macarro begins her training in the assassin traditions of the Ruska Roma.",
-    "VideoUrl": "//ok.ru/videoembed/11518958176839?nochat=1&autoplay=1",
+    "VideoUrl": "//ok.ru/videoembed/9550060587545?nochat=1&autoplay=1",
     "tipo": 1
   },
   {
@@ -163,19 +163,20 @@
       "Comedia"
     ],
     "rating": "3",
-    "videourl": "//ok.ru/videoembed/9563530201625?nochat=1&autoplay=1",
+    "videourl": "https://archive.org/download/jefes-de-estado/Jefes%20de%20Estado.ia.mp4",
+    "video_type": "mp4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/7mfRKmXEIBCmiFJbixe8n2IzFVC.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/1xDev1aS6juHOuhpOIKKlczEdrW.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/2VLbTs11eF3Ecw7coArU1oEGj1G.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/2CSdwqOUMH23cEBodqAJynMFz7c.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/lVgE5oLzf7ABmzyASEVcjYyHI41.jpg",
     "backgroundmovil": "https://image.tmdb.org/t/p/original/95VecTVP1PBoL7z4jpoh2on0149.jpg",
-    "sinopsis": "El Primer Ministro del Reino Unido y el Presidente de los Estados Unidos mantienen una rivalidad pública que pone en peligro la alianza de sus países. Pero cuando se convierten en objetivos de un poderoso enemigo, se ven obligados a colaborar.",
+    "sinopsis": "El primer ministro del Reino Unido y el presidente de EE. UU. tienen una rivalidad pública que pone en riesgo la alianza entre sus países. Pero cuando se convierten en el blanco de un poderoso enemigo, se ven obligados a confiar el uno en el otro. Aliados con Noel, una agente del MI6, intenta frustrar una conspiración que amenaza al mundo libre.",
     "tipo": 1,
     "año": "2025",
     "hora": "1 h",
     "min": "57 min",
     "edad": "13+",
-    "link": "peliculas/8-jefes-de-estado.html"
+    "link": "peliculas/18-jefes-de-estado.html"
   },
   {
     "id": "9",
@@ -225,28 +226,28 @@
     "link": "peliculas/10-el-sustituto.html"
   },
   {
-    "id": "11",
+    "id": "18",
     "titulo": "Superman",
     "genero": [
       "Ciencia Ficción",
       "Aventura",
-      "Acción",
-      "Superhéroes"
+      "Acción"
     ],
     "rating": "3.5",
-    "videourl": "//ok.ru/videoembed/9570281916953?nochat=1",
-    "backgroundUrl": "https://image.tmdb.org/t/p/original/eEAwJXe94sl25zAs1n085DXq9QT.jpg",
+    "videourl": "https://archive.org/serve/superman-latino/superman%20latino.ia.mp4",
+    "video_type": "mp4",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/3p7QDtjTO0WWyYTCvCjM8Yj4Rff.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/GBr1ozQf7WZqSMwNPdb5Xs2eyn.jpg",
-    "titleimgUrl": "https://image.tmdb.org/t/p/original/wrM6QbXqB3HQ6GCu7k8Ve6ymjP7.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ombsmhYUqR4qqOLOxAyr5V8hbyv.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/eRPN90a6WplkWD7K2NOk6Pq8xhg.jpg",
-    "sinopsis": "El multimillonario tecnológico Lex Luthor aprovecha la oportunidad para quitarse de en medio definitivamente al Hombre de Acero. ¿Podrán la reportera Lois Lane y el compañero de cuatro patas de Superman, Krypto, ayudarle antes de que sea tarde?",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/9zhG3UxD9o0qdxyfE3dMKZfl01s.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/wPLysNDLffQLOVebZQCbXJEv6E6.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/4kIYA6VbOTHKyI36tqF2XdYHpQt.jpg",
+    "sinopsis": "En un mundo que ha perdido la fe en la bondad, Superman lucha por reconciliar su herencia kryptoniana con los valores humanos que moldearon su carácter. Criado en la Tierra, representa la verdad, la justicia y el estilo americano, pero debe enfrentarse a un mundo cínico que cuestiona sus ideales. Entre el deber de proteger a la humanidad y la búsqueda de su identidad, Superman demuestra que la esperanza y la bondad nunca pasan de moda, incluso en los tiempos más oscuros, inspirando a otros a creer en un futuro mejor.",
     "tipo": 1,
     "año": "2025",
     "hora": "2 h",
     "min": "9 min",
     "edad": "13+",
-    "link": "peliculas/11-superman.html"
+    "link": "peliculas/18-superman.html"
   },
   {
     "id": "12",
@@ -357,5 +358,29 @@
     "min": "0 min",
     "edad": "18+",
     "link": "peliculas/16-aulas-violentas.html"
+  },
+  {
+    "id": "17",
+    "titulo": "Thunderbolts*",
+    "genero": [
+      "Acción",
+      "Ciencia Ficción",
+      "Aventura"
+    ],
+    "rating": "3.5",
+    "videourl": "https://archive.org/download/thunderbolts.-2025.720p-dual-lat/Thunderbolts.2025.720p-Dual-Lat.mp4",
+    "video_type": "mp4",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/wJ169asYPPQOA3vk1u6oLRcatWE.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/ffQJClNiOpoc0ywxBgY6y1vBuxC.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/jpDCjWduAFkJH9Y1g8sZGaso7eD.png",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/yBdljcPFFaj54aWVgj36MB47Pb6.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/tXsZxHpkSs0A6CvTysVKlDnsQBy.jpg",
+    "sinopsis": "Un grupo de supervillanos poco convencional es reclutado para hacer misiones para el gobierno: Yelena Belova, Bucky Barnes, Red Guardian, Ghost, Taskmaster y John Walker. Después de verse atrapados en una trampa mortal urdida por Valentina Allegra de Fontaine, estos marginados deben embarcarse en una peligrosa misión que les obligará a enfrentarse a los recovecos más oscuros de su pasado.",
+    "tipo": 1,
+    "año": "2025",
+    "hora": "2 h",
+    "min": "7 min",
+    "edad": "13+",
+    "link": "peliculas/17-thunderbolts.html"
   }
 ]

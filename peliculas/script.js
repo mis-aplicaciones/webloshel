@@ -85,6 +85,7 @@
   // Control visibility / inactivity vars
   let controlsHideTimer = null;
   let controlsVisible = true;
+  let keepControlsVisible = false; // <- BANDERA: cuando true, no se auto-ocultan los controles
 
   function injectOverlayHtml() {
     if ($("#player-overlay")) return;
@@ -98,7 +99,8 @@
       #player-overlay.hide{ opacity:0; pointer-events:none; }
       #player-overlay .player-wrap{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; }
       #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; outline:none; }
-      #player-controls{ position: absolute; bottom: 24px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; transition: opacity .28s ease, transform .28s ease; }
+      /* subí el contenedor de controles: bottom aumentado (antes 24px) */
+      #player-controls{ position: absolute; bottom: 64px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; transition: opacity .28s ease, transform .28s ease; }
       #player-controls.controls-hidden{ opacity: 0; transform: translateY(12px) scale(.99); pointer-events: none; }
       #player-controls button{ background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: none; color: #fff; padding:10px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; min-width:48px; height:48px; cursor:pointer; transition:transform .12s ease, background .12s; }
       #player-controls button:focus{ transform: scale(1.06); box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 0 6px var(--player-focus-color); outline:none; }
@@ -116,13 +118,13 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 100020;
-        width: 40vh;       /* <-- tamaño aumentado en vh */
-        max-width: 250px;  /* <-- límite en px */
+        width: 40vh;
+        max-width: 250px;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       }
-            #player-title-thumb img{ width:100%; height:auto; display:block; }
+      #player-title-thumb img{ width:100%; height:auto; display:block; }
       #player-legend.controls-hidden, #player-age-badge.controls-hidden, #player-title-thumb.controls-hidden { opacity:0; transform:translateY(6px) scale(.995); transition: opacity .28s ease, transform .28s ease; pointer-events:none; }
       @keyframes pop{ 0%{ transform:translate(-50%,-50%) scale(0.6); opacity:0 } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
     `;
@@ -196,9 +198,14 @@
     if (badge) { badge.style.display = ""; badge.classList.remove("controls-hidden"); }
     if (thumb) { thumb.style.display = ""; thumb.classList.remove("controls-hidden"); }
     controlsVisible = true;
-    resetControlsHideTimer();
+    // solo programamos auto-hide si la bandera NO está activada
+    if (!keepControlsVisible) resetControlsHideTimer();
   }
   function hideControls() {
+    if (keepControlsVisible) {
+      // si estamos en modo "mantener visible" no ocultamos
+      return;
+    }
     const pc = $id("player-controls");
     const legend = $id("player-legend");
     const badge = $id("player-age-badge");
@@ -213,6 +220,7 @@
     if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
     const overlay = $id("player-overlay");
     if (!overlay || !overlay.classList.contains("show")) return;
+    if (keepControlsVisible) return; // no iniciar timer si debemos mantener visibles
     controlsHideTimer = setTimeout(() => { hideControls(); }, CONTROLS_HIDE_MS);
   }
   function onUserActivityInPlayer() {
@@ -285,29 +293,66 @@
       timeDiv.textContent = `${formatTime(video.currentTime||0)} / ${formatTime(video.duration||0)}`;
     }
 
+    // PLAY / PAUSE handler - aquí detectamos pausa desde botón de control
     btnPlay.onclick = () => {
       if (video.muted) video.muted = false;
-      if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+      if (video.paused) {
+        // si estaba pausado -> reanudar
+        video.play().catch(()=>{});
+        // al reanudar, quitamos la bandera que obliga a mantener visibles los controles
+        keepControlsVisible = false;
+        resetControlsHideTimer();
+      } else {
+        // si estaba reproduciendo -> pausamos y mantenemos controles visibles
+        try { video.pause(); } catch(e) {}
+        keepControlsVisible = true;       // <--- bandera que mantiene visibles los controles
+        showControls();                   // asegurar que estén visibles
+      }
       updatePlayIcon();
       onUserActivityInPlayer();
     };
+
     btnRew.onclick = () => { try { video.currentTime = Math.max(0, (video.currentTime||0) - 10); } catch(e){} tick(); onUserActivityInPlayer(); };
     btnFwd.onclick = () => { try { video.currentTime = Math.min(video.duration||Infinity, (video.currentTime||0) + 10); } catch(e){} tick(); onUserActivityInPlayer(); };
 
-    btnPauseReveal.onclick = () => { pauseAndRevealWithFocusLock(); };
+    // Pause & reveal (igual que antes) - este flujo también deberá mantener visible la UI
+    btnPauseReveal.onclick = () => {
+      // Pausar y mostrar la UI (mantener visible)
+      pauseAndRevealWithFocusLock();
+      keepControlsVisible = true; // asegurar que no se auto-oculte mientras está en pausa+reveal
+      showControls();
+    };
 
     progress.setAttribute("aria-disabled", "true");
     progress.disabled = true;
     progress.style.pointerEvents = "none";
 
-    video.addEventListener("play", () => { _state.playing = true; _state.paused = false; updatePlayIcon(); });
-    video.addEventListener("pause", () => { _state.playing = false; _state.paused = true; updatePlayIcon(); });
+    // Eventos video
+    video.addEventListener("play", () => {
+      _state.playing = true; _state.paused = false;
+      // al reproducir, quitamos la bandera y reactivamos auto-hide
+      keepControlsVisible = false;
+      resetControlsHideTimer();
+      updatePlayIcon();
+    });
+    video.addEventListener("pause", () => {
+      _state.playing = false; _state.paused = true;
+      updatePlayIcon();
+      // si pause viene de otro origen distinto a btnPauseReveal/btnPlay, mantenemos visibilidad por seguridad breve
+      // (no alteramos keepControlsVisible aquí — btnPlay/btnPauseReveal ya lo controlan)
+    });
     video.addEventListener("timeupdate", tick);
     video.addEventListener("loadedmetadata", tick);
-    video.addEventListener("ended", () => { updatePlayIcon(); });
+    video.addEventListener("ended", () => {
+      updatePlayIcon();
+      // terminar: limpiamos bandera y permitimos ocultado
+      keepControlsVisible = false;
+      resetControlsHideTimer();
+    });
 
     const interval = setInterval(tick, 300);
 
+    // Intentar autoplay: primero con sonido; si falla, hacemos fallback a muted autoplay
     try {
       await video.play();
     } catch (err) {
@@ -320,6 +365,7 @@
       }
     }
 
+    // enfoque en play del overlay para D-pad
     setTimeout(() => { btnPlay && btnPlay.focus(); updatePlayIcon(); }, 150);
 
     resetControlsHideTimer();
@@ -344,7 +390,6 @@
       document.removeEventListener("mousemove", activityHandler);
       document.removeEventListener("touchend", activityHandler);
       if (playerControls) playerControls.classList.remove("controls-hidden");
-      // restore legend/badge/thumb display (they are inline style controlled)
     }
 
     overlay._cleanup = cleanup;
@@ -383,6 +428,9 @@
     tryFocus();
     setTimeout(tryFocus, 50);
     setTimeout(tryFocus, 200);
+
+    // al pausar por este método, forzamos mantener los controles visibles
+    keepControlsVisible = true;
 
     if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
     const playerControls = $id("player-controls");
@@ -459,6 +507,9 @@
       pagePlay.setAttribute("aria-pressed", "false");
     }
 
+    // quitar el lock de mantener controles visibles y permitir auto-hide
+    keepControlsVisible = false;
+
     if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
     window._focusLock = false;
 
@@ -466,7 +517,11 @@
     resetControlsHideTimer();
 
     setTimeout(() => {
-      try { if (overlayPlay) overlayPlay.focus({ preventScroll: false }); } catch (err) { try { overlayPlay && overlayPlay.focus(); } catch (e) {} }
+      try {
+        if (overlayPlay) overlayPlay.focus({ preventScroll: false });
+      } catch (err) {
+        try { overlayPlay && overlayPlay.focus(); } catch (e) {}
+      }
     }, 120);
   }
 
@@ -487,7 +542,7 @@
       if (overlayVisible) onUserActivityInPlayer();
 
       if (overlayVisible) {
-        // Get only real buttons inside the controls (in source order)
+        // Get only visible buttons inside the controls (in source order)
         const controls = Array.from(document.querySelectorAll("#player-controls button")).filter(b => b.offsetParent !== null);
         if (!controls || controls.length === 0) {
           if (e.key === "Enter") {
@@ -696,7 +751,6 @@
       document.documentElement.style.setProperty('--player-focus-color', FOCUS_RING_COLOR);
       const st = document.getElementById("player-overlay-styles");
       if (st) {
-        // replace the variable at runtime (best-effort)
         st.textContent = st.textContent.replace(/:root\s*\{[^}]*\}/, `:root { --player-focus-color: ${FOCUS_RING_COLOR}; }`);
       }
     } catch (e) { console.warn('setPlayerFocusColor error', e); }

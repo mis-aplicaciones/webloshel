@@ -116,8 +116,8 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 100020;
-        width: 18vh;       /* <-- tamaño aumentado en vh */
-        max-width: 180px;  /* <-- límite en px */
+        width: 40vh;       /* <-- tamaño aumentado en vh */
+        max-width: 250px;  /* <-- límite en px */
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -143,9 +143,9 @@
         <div id="player-age-badge" class="controls-visible" style="display:none;">N/A</div>
 
         <div id="player-legend" class="controls-visible" style="display:none;">
-          <span><i class="bi bi-arrow-left-right"></i> ← → : moverse</span>
+          <span><i class="bi bi-arrow-left-short"></i><i class="bi bi-arrow-right-short"></i> moverse</span>
           <span style="opacity:.85">|</span>
-          <span><i class="bi bi-box-arrow-in-down-right"></i> Enter: seleccionar</span>
+          <span><i class="bi bi-record-circle"></i> Enter: seleccionar</span>
         </div>
 
         <div id="player-controls" role="toolbar" aria-label="Controles de reproducción">

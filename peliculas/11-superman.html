@@ -1,105 +1,78 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generado por Loshelsistem 1.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-  <style data-playerstyle="true">
-            /* Overlay (full screen) */
-            #player-overlay{ display:none; position:fixed; inset:0; z-index:99999; align-items:center; justify-content:center; background:rgba(0,0,0,0.95); transition:opacity .45s ease; }
-            #player-overlay.show{ display:flex; opacity:1; pointer-events:auto; }
-            #player-overlay.hide{ opacity:0; pointer-events:none; }
-            #player-overlay .player-wrap{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
-            #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; }
-    
-            /* Ocultar chrome solo cuando el player está activo */
-            body.player-active #background-section,
-            body.player-active .background-gradient,
-            body.player-active #imagen-1,
-            body.player-active #imagen-2,
-            body.player-active #movie-content,
-            body.player-active .movie-content,
-            body.player-active .button-aditional,
-            body.player-active .movie-buttons{
-              opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.995);
-              transition: opacity .45s ease, transform .45s ease, visibility .45s;
-            }
-    
-            /* Badge central para touch (feedback) */
-            #center-pause { position: absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:100000; display:none; align-items:center; justify-content:center; }
-            #center-pause.show{ display:flex; animation: pop .28s ease; }
-            #center-pause i{ font-size: 8vh; color: rgba(255,255,255,0.95); text-shadow: 0 6px 20px rgba(0,0,0,0.6); }
-            @keyframes pop{ 0%{ transform:translate(-50%,-50%) scale(0.6); opacity:0 } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
-          </style></head>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Generado por Loshelsistem</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
   <body>
-    <!-- Botón Volver -->
-    <a href="../index.html" id="back-button"><i class="bi bi-arrow-left-short"></i></a>
-<!-- Logo -->
-    <img id="logo" src="logo001.png" alt="Logo">
-    <!-- Contenido principal -->
+    <a href="../index.html" id="back-button"
+      ><i class="bi bi-arrow-left-short"></i
+    ></a>
+    <img id="logo" src="logo001.png" alt="Logo" />
     <div id="content">
-      <!-- Elementos Ocultos -->
-      <input type="hidden" id="ID_pelicula" value="18">
-      <input type="hidden" id="cover-url" value="https://image.tmdb.org/t/p/original/GBr1ozQf7WZqSMwNPdb5Xs2eyn.jpg">
-      <input type="hidden" id="cover-url-2" value="https://image.tmdb.org/t/p/original/wPLysNDLffQLOVebZQCbXJEv6E6.jpg">
-      <input type="hidden" id="pagina-nombre" value="18-superman.html">
+      <!-- Hidden inputs (el sistema puede rellenar ID_pelicula) -->
+      <input type="hidden" id="ID_pelicula" value="18" />
+      <input type="hidden" id="cover-url" value="" />
+      <input type="hidden" id="cover-url-2" value="" />
+      <input
+        type="hidden"
+        id="pagina-nombre"
+        value="18-los-cuatro-fantasticos-primeros-pasos.html"
+      />
 
       <!-- Fondo Dinámico -->
-      <div id="background-section">
-        <div class="background-gradient"></div>
-      </div>
+      <div id="background-section"><div class="background-gradient"></div></div>
       <!-- Imagen 1 para el backbroud -->
-      <img src="https://image.tmdb.org/t/p/original/3p7QDtjTO0WWyYTCvCjM8Yj4Rff.jpg" alt="img1" id="imagen-1">
+      <img id="imagen-1" src="" alt="img1" />
       <!-- Imagen 2 para el backbroud smartphone -->
-      <img src="https://image.tmdb.org/t/p/original/4kIYA6VbOTHKyI36tqF2XdYHpQt.jpg" alt="img2" id="imagen-2">
+      <img id="imagen-2" src="" alt="img2" />
 
-      <!-- Sección de Contenido de Película -->
       <div id="movie-content" class="hidden">
-        <!-- Título de la Película (Imagen) -->
-        <div id="movie-title-image">
-          <img src="https://image.tmdb.org/t/p/original/9zhG3UxD9o0qdxyfE3dMKZfl01s.png" alt="Título de la Película">
-        </div>
+        <div id="movie-title-image"><img src="" alt="titulo imagen" /></div>
+        <h2 id="movie-title-text" class="movie-title-text"></h2>
 
-        <!-- Título de la Película (Texto) -->
-        <h2 id="movie-title-text" class="movie-title-text">Superman</h2>
-
-        <!-- Detalles de la Película -->
         <div class="movie-details">
-          <div id="puntuacion" class="movie-rating" data-puntuacion="3">
+          <div id="puntuacion" class="movie-rating" data-puntuacion="0">
             <span class="stars"></span>
           </div>
           <div class="movie-details">
             <h4>
-              <span id="edad">13+</span>
-              <span id="año">2025</span>
-              <span id="duracion-horas">2 h</span>
-              <span id="duracion-minutos">9 min</span>
+              <span id="edad"></span>
+              <span id="año"></span>
+              <span id="duracion-horas"></span>
+              <span id="duracion-minutos"></span>
             </h4>
           </div>
         </div>
-        <!-- Género de la Película -->
-        <div id="genero" class="genre-section" data-genre-ids="1,2"></div>
 
-        <!-- Descripción de la Película -->
-        <div id="descripcion" class="movie-description">En un mundo que ha perdido la fe en la bondad, Superman lucha por reconciliar su herencia kryptoniana con los valores humanos que moldearon su carácter. Criado en la Tierra, representa la verdad, la justicia y el estilo americano, pero debe enfrentarse a un mundo cínico que cuestiona sus ideales. Entre el deber de proteger a la humanidad y la búsqueda de su identidad, Superman demuestra que la esperanza y la bondad nunca pasan de moda, incluso en los tiempos más oscuros, inspirando a otros a creer en un futuro mejor.</div>
+        <div id="genero" class="genre-section" data-genre-ids=""></div>
 
-        <!-- Boton de play y donacion -->
+        <div id="descripcion" class="movie-description"><p></p></div>
+
         <div class="button-movie-and-donation">
           <div class="movie-buttons">
-            <a id="video1" href="#" onclick="openPlayer('https://archive.org/serve/superman-latino/superman%20latino.ia.mp4','mp4'); return false;">
-              <i class="bi bi-play-fill"></i><span> Ver Ahora</span>
-            </a>
+            <a id="video1" href="#"
+              ><i class="bi bi-play-fill"></i><span> Ver Ahora</span></a
+            >
           </div>
           <div class="donar-button">
-            <a href="../donar.html" id="donar-button"><i class="bi bi-piggy-bank"></i> Donar</a>
+            <a href="../donar.html" id="donar-button"
+              ><i class="bi bi-piggy-bank"></i> Donar</a
+            >
           </div>
         </div>
       </div>
-      <!-- Botones Adicionales -->
+
       <div class="button-aditional">
         <div class="add-button">
           <a href="#">
@@ -115,55 +88,34 @@
           </a>
         </div>
         <div class="canal">
-          <a href="../donar.html" id="donar-button2"><i class="bi bi-piggy-bank"></i></a>
+          <a href="../donar.html" id="donar-button2"
+            ><i class="bi bi-piggy-bank"></i
+          ></a>
         </div>
       </div>
     </div>
 
-    <!-- Carrusel -->
     <div id="carrusel-container">
       <div id="carrusel-title">También puedes ver</div>
     </div>
 
-    <!-- Scripts -->
-    <script src="script.js" type="module"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  
+    <!-- El sistema inyectará aquí:
+         <script>window.__movie_id='19'; window.__video_type='mp4';</script>
+         justo antes del script.js
+    -->
 
-<div id="player-overlay" class="hide">
-            <div class="player-wrap">
-              <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-                <video id="player-video" playsinline="" webkit-playsinline=""></video>
-                <div id="center-pause"><i class="bi bi-pause-fill"></i></div>
-              </div>
-            </div>
-          </div><script data-player="true" type="text/javascript">
-            (function(){
-              window._hlsInstance = null; window._playerState = { playing:false, paused:false, src:'', type:'' };
-              function _attachHls(video, src){ try{ if(window.Hls && Hls.isSupported()){ if(window._hlsInstance && window._hlsInstance.destroy){ window._hlsInstance.destroy(); window._hlsInstance = null; } const hls = new Hls(); window._hlsInstance = hls; hls.loadSource(src); hls.attachMedia(video); } else { video.src = src; } } catch(e){ console.error('Hls attach error', e); video.src = src; } }
-    
-              window.openPlayer = function(src, type){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); const center = document.getElementById('center-pause'); if(!overlay||!video) return; if(window._playerState.src !== src || window._playerState.type !== type){ try{ if(window._hlsInstance && window._hlsInstance.destroy){ window._hlsInstance.destroy(); window._hlsInstance = null; } }catch(e){} video.removeAttribute('src'); if(type==='m3u8'){ _attachHls(video, src); } else { video.src = src; } window._playerState.src = src; window._playerState.type = type; }
-                document.body.classList.add('player-active'); overlay.classList.remove('hide'); overlay.classList.add('show'); overlay.style.pointerEvents = 'auto';
-                // intentar reproducir (los navegadores pueden pedir interacción)
-                video.muted = false; video.play().catch(()=>{});
-                window._playerState.playing = true; window._playerState.paused = false;
-                const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'false'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>'; }
-              };
-    
-              window.pauseAndReveal = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); const center = document.getElementById('center-pause'); if(!overlay||!video) return; if(!video.paused) try{ video.pause(); }catch(e){} window._playerState.paused = true; window._playerState.playing = false; overlay.classList.remove('show'); overlay.classList.add('hide'); overlay.style.pointerEvents = 'none'; document.body.classList.remove('player-active'); const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'true'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>'; }
-                if(center){ center.classList.remove('show'); void center.offsetWidth; center.classList.add('show'); setTimeout(()=>{ center.classList.remove('show'); }, 900); }
-              };
-    
-              window.resumeFromPause = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); if(!overlay||!video) return; document.body.classList.add('player-active'); overlay.classList.remove('hide'); overlay.classList.add('show'); overlay.style.pointerEvents = 'auto'; try{ video.play().catch(()=>{}); }catch(e){} window._playerState.paused = false; window._playerState.playing = true; const btn = document.getElementById('video1'); if(btn){ btn.dataset.paused = 'false'; btn.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>'; } };
-    
-              window.closePlayerCompletely = function(){ const overlay = document.getElementById('player-overlay'); const video = document.getElementById('player-video'); if(video){ try{ video.pause(); }catch(e){} try{ video.removeAttribute('src'); }catch(e){} } if(window._hlsInstance && window._hlsInstance.destroy){ try{ window._hlsInstance.destroy(); }catch(e){} window._hlsInstance = null; } if(overlay){ overlay.classList.remove('show'); overlay.classList.add('hide'); overlay.style.pointerEvents = 'none'; } document.body.classList.remove('player-active'); const btn = document.getElementById('video1'); if(btn) btn.innerHTML = '<i class="bi bi-play-fill"></i><span> Ver Ahora</span>'; window._playerState = { playing:false, paused:false, src:'', type:'' } };
-    
-              // Enter/D-pad and Escape
-              document.addEventListener('keydown', function(e){ const tag = document.activeElement && document.activeElement.tagName; if(tag==='INPUT' || tag==='TEXTAREA') return; if(e.key==='Enter'){ const video = document.getElementById('player-video'); const overlay = document.getElementById('player-overlay'); if(!video||!overlay) return; const overlayVisible = overlay.classList.contains('show'); if(overlayVisible && !video.paused){ pauseAndReveal(); } else if(window._playerState.paused){ resumeFromPause(); } else if(!overlayVisible && window._playerState.playing){ resumeFromPause(); } } else if(e.key==='Escape'){ closePlayerCompletely(); } });
-    
-              // TOUCH: tap to toggle pause/reveal (and resume)
-              (function(){ const video = document.getElementById('player-video'); if(!video) return; video.addEventListener('touchend', function(ev){ ev.preventDefault(); if(window._playerState.playing && !video.paused){ pauseAndReveal(); } else if(window._playerState.paused){ resumeFromPause(); } }, { passive: false }); })();
-    
-            })();
-          </script></body></html>
+    <script type="text/javascript">
+      window.__movie_id = "11";
+      window.__video_type = "mp4";
+    </script>
+    <script src="script.js" type="module"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

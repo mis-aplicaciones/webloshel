@@ -1,4 +1,4 @@
-// script.js (plantilla) - player con controles minimalistas, progreso solo lectura y D-pad navigation
+// script.js (plantilla) - player con controles minimalistas, auto-hide legend/title/age y D-pad navigation
 (() => {
   const JSON_PATHS = ["./moviebase.json", "../moviebase.json", "/moviebase.json"];
   const HLS_CDN = "https://cdn.jsdelivr.net/npm/hls.js@latest";
@@ -78,32 +78,56 @@
   let _hlsInstance = null;
   const _state = { playing: false, paused: false, src: "", type: "" };
 
+  // Configurables públicos (defaults)
+  let CONTROLS_HIDE_MS = 5000; // 5 segundos por defecto
+  let FOCUS_RING_COLOR = "rgba(138,88,194,0.28)"; // color por defecto
+
+  // Control visibility / inactivity vars
+  let controlsHideTimer = null;
+  let controlsVisible = true;
+
   function injectOverlayHtml() {
     if ($("#player-overlay")) return;
 
-    // estilos minimalistas y flotantes (inline para no tocar styles.css)
     const style = document.createElement("style");
     style.id = "player-overlay-styles";
     style.textContent = `
+      :root { --player-focus-color: ${FOCUS_RING_COLOR}; }
       #player-overlay{ display:none; position:fixed; inset:0; z-index:99999; align-items:center; justify-content:center; background:rgba(0,0,0,0.92); transition:opacity .35s ease; }
       #player-overlay.show{ display:flex; opacity:1; pointer-events:auto; }
       #player-overlay.hide{ opacity:0; pointer-events:none; }
-      #player-overlay .player-wrap{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+      #player-overlay .player-wrap{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; }
       #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; outline:none; }
-      #player-controls{ position: absolute; bottom: 24px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; }
+      #player-controls{ position: absolute; bottom: 24px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; transition: opacity .28s ease, transform .28s ease; }
+      #player-controls.controls-hidden{ opacity: 0; transform: translateY(12px) scale(.99); pointer-events: none; }
       #player-controls button{ background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: none; color: #fff; padding:10px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; min-width:48px; height:48px; cursor:pointer; transition:transform .12s ease, background .12s; }
-      #player-controls button:focus{ transform: scale(1.06); box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 0 4px rgba(138,88,194,0.12); outline:none; }
+      #player-controls button:focus{ transform: scale(1.06); box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 0 6px var(--player-focus-color); outline:none; }
       #player-controls button:hover{ transform: translateY(-3px); }
       #ctrl-progress{ -webkit-appearance:none; appearance:none; width:320px; height:6px; border-radius:999px; background:rgba(255,255,255,0.15); pointer-events:none; }
       #ctrl-progress::-webkit-slider-thumb{ -webkit-appearance:none; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none; }
       #ctrl-time{ color:#ddd; font-size:0.9rem; min-width:98px; text-align:right; margin-left:6px; }
       #center-pause{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:100020; display:none; align-items:center; justify-content:center; }
       #center-pause.show{ display:flex; animation: pop .28s ease; }
+      #player-legend{ position:absolute; left:18px; bottom:18px; z-index:100020; color:#fff; background: rgba(0,0,0,0.35); padding:8px 12px; border-radius:10px; font-size:0.95rem; display:flex; gap:8px; align-items:center; }
+      #player-age-badge{ position:absolute; left:18px; top:18px; z-index:100020; color:#111; background: #fff; padding:6px 10px; border-radius:8px; font-weight:700; }
+      #player-title-thumb {
+        position: absolute;
+        left: calc(7%);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100020;
+        width: 18vh;       /* <-- tamaño aumentado en vh */
+        max-width: 180px;  /* <-- límite en px */
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      }
+            #player-title-thumb img{ width:100%; height:auto; display:block; }
+      #player-legend.controls-hidden, #player-age-badge.controls-hidden, #player-title-thumb.controls-hidden { opacity:0; transform:translateY(6px) scale(.995); transition: opacity .28s ease, transform .28s ease; pointer-events:none; }
       @keyframes pop{ 0%{ transform:translate(-50%,-50%) scale(0.6); opacity:0 } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
     `;
     document.head.appendChild(style);
 
-    // overlay HTML
     const overlay = document.createElement("div");
     overlay.id = "player-overlay";
     overlay.className = "hide";
@@ -111,6 +135,19 @@
       <div class="player-wrap">
         <video id="player-video" playsinline webkit-playsinline></video>
         <div id="center-pause"><i class="bi bi-pause-fill" style="font-size:7vh;color:rgba(255,255,255,0.95);"></i></div>
+
+        <div id="player-title-thumb" class="controls-visible" style="display:none;">
+          <img id="player-title-thumb-img" src="" alt="title"/>
+        </div>
+
+        <div id="player-age-badge" class="controls-visible" style="display:none;">N/A</div>
+
+        <div id="player-legend" class="controls-visible" style="display:none;">
+          <span><i class="bi bi-arrow-left-right"></i> ← → : moverse</span>
+          <span style="opacity:.85">|</span>
+          <span><i class="bi bi-box-arrow-in-down-right"></i> Enter: seleccionar</span>
+        </div>
+
         <div id="player-controls" role="toolbar" aria-label="Controles de reproducción">
           <button id="ctrl-rew" aria-label="Retroceder 10s"><i class="bi bi-skip-backward-fill" style="font-size:1.2rem;"></i></button>
           <button id="ctrl-play" aria-label="Reproducir/Pausar"><i class="bi bi-play-fill" id="icon-play" style="font-size:1.2rem;"></i></button>
@@ -148,6 +185,42 @@
     }
   }
 
+  // --- Controls auto-hide helpers (ahora afectan legend/title/age también) ---
+  function showControls() {
+    const pc = $id("player-controls");
+    const legend = $id("player-legend");
+    const badge = $id("player-age-badge");
+    const thumb = $id("player-title-thumb");
+    if (pc) pc.classList.remove("controls-hidden");
+    if (legend) { legend.style.display = ""; legend.classList.remove("controls-hidden"); }
+    if (badge) { badge.style.display = ""; badge.classList.remove("controls-hidden"); }
+    if (thumb) { thumb.style.display = ""; thumb.classList.remove("controls-hidden"); }
+    controlsVisible = true;
+    resetControlsHideTimer();
+  }
+  function hideControls() {
+    const pc = $id("player-controls");
+    const legend = $id("player-legend");
+    const badge = $id("player-age-badge");
+    const thumb = $id("player-title-thumb");
+    if (pc) pc.classList.add("controls-hidden");
+    if (legend) legend.classList.add("controls-hidden");
+    if (badge) badge.classList.add("controls-hidden");
+    if (thumb) thumb.classList.add("controls-hidden");
+    controlsVisible = false;
+  }
+  function resetControlsHideTimer() {
+    if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
+    const overlay = $id("player-overlay");
+    if (!overlay || !overlay.classList.contains("show")) return;
+    controlsHideTimer = setTimeout(() => { hideControls(); }, CONTROLS_HIDE_MS);
+  }
+  function onUserActivityInPlayer() {
+    const overlay = $id("player-overlay");
+    if (!overlay || !overlay.classList.contains("show")) return;
+    showControls();
+  }
+
   // abrir player con src y tipo
   async function openPlayer(src, type) {
     injectOverlayHtml();
@@ -159,14 +232,25 @@
     const progress = $id("ctrl-progress");
     const timeDiv = $id("ctrl-time");
     const btnPauseReveal = $id("ctrl-pause-reveal");
-  
+    const playerControls = $id("player-controls");
+    const legend = $id("player-legend");
+    const badge = $id("player-age-badge");
+    const thumb = $id("player-title-thumb");
+    const thumbImg = $id("player-title-thumb-img");
+
     if (!video) return;
-  
-    // si cambió la fuente, limpiar HLS anterior
+
+    // set badge / thumb from UI if available
+    try {
+      const edadUI = ($id("edad") && $id("edad").textContent) || ($id("edad") && $id("edad").value) || "";
+      if (badge) badge.textContent = (String(edadUI || "").trim()) || "N/A";
+      const titleSrc = ($id("movie-title-image") && $id("movie-title-image").querySelector("img") && $id("movie-title-image").querySelector("img").src) || "";
+      if (thumbImg && titleSrc) { thumbImg.src = titleSrc; thumb.style.display = ""; }
+    } catch (e) {}
+
     if (_state.src !== src || _state.type !== type) {
       try { if (_hlsInstance && _hlsInstance.destroy) _hlsInstance.destroy(); } catch (e) {}
       video.removeAttribute("src");
-      // aseguramos que el video no esté forzado muted aquí — lo manejamos para autoplay
       video.muted = false;
       if (type === "m3u8") {
         await ensureHlsLoaded();
@@ -176,21 +260,23 @@
       }
       _state.src = src; _state.type = type;
     }
-  
-    // mostrar overlay
+
     document.body.classList.add("player-active");
     overlay.classList.remove("hide"); overlay.classList.add("show");
     overlay.style.pointerEvents = "auto";
     video.controls = false;
-  
-    // actualizar icono play/pause
+
+    if (playerControls) playerControls.classList.remove("controls-hidden");
+    if (legend) legend.style.display = "";
+    if (badge) badge.style.display = "";
+    if (thumb) thumb.style.display = "";
+
     function updatePlayIcon() {
       const icon = $("#icon-play");
       if (!icon) return;
       icon.className = video.paused ? "bi bi-play-fill" : "bi bi-pause-fill";
     }
-  
-    // progreso (solo lectura)
+
     function tick() {
       if (!video || !progress) return;
       const dur = video.duration || 0;
@@ -198,68 +284,55 @@
       progress.value = Math.floor(video.currentTime || 0);
       timeDiv.textContent = `${formatTime(video.currentTime||0)} / ${formatTime(video.duration||0)}`;
     }
-  
-    // Handlers provisional hasta intentar autoplay
+
     btnPlay.onclick = () => {
-      // Si el video está silenciado por fallback de autoplay, el primer click restaura sonido y reproduce
-      if (video.muted) {
-        video.muted = false; // permitir sonido después de interacción del usuario
-      }
+      if (video.muted) video.muted = false;
       if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
       updatePlayIcon();
+      onUserActivityInPlayer();
     };
-    btnRew.onclick = () => { try { video.currentTime = Math.max(0, (video.currentTime||0) - 10); } catch(e){} tick(); };
-    btnFwd.onclick = () => { try { video.currentTime = Math.min(video.duration||Infinity, (video.currentTime||0) + 10); } catch(e){} tick(); };
-  
-    // Pause & reveal (igual que antes)
-    // Reemplazar el handler existente de btnPauseReveal por esto:
-btnPauseReveal.onclick = () => {
-  // usa la versión que pausa + oculta + asegura foco en #video1
-  pauseAndRevealWithFocusLock();
-};
+    btnRew.onclick = () => { try { video.currentTime = Math.max(0, (video.currentTime||0) - 10); } catch(e){} tick(); onUserActivityInPlayer(); };
+    btnFwd.onclick = () => { try { video.currentTime = Math.min(video.duration||Infinity, (video.currentTime||0) + 10); } catch(e){} tick(); onUserActivityInPlayer(); };
 
-  
-    // Progreso solo lectura
+    btnPauseReveal.onclick = () => { pauseAndRevealWithFocusLock(); };
+
     progress.setAttribute("aria-disabled", "true");
     progress.disabled = true;
     progress.style.pointerEvents = "none";
-  
-    // Eventos video
+
     video.addEventListener("play", () => { _state.playing = true; _state.paused = false; updatePlayIcon(); });
     video.addEventListener("pause", () => { _state.playing = false; _state.paused = true; updatePlayIcon(); });
     video.addEventListener("timeupdate", tick);
     video.addEventListener("loadedmetadata", tick);
     video.addEventListener("ended", () => { updatePlayIcon(); });
-  
-    // interval tick para suavizar
+
     const interval = setInterval(tick, 300);
-  
-    // Intentar autoplay: primero con sonido; si falla, hacemos fallback a muted autoplay
-    let autoplayMutedFallback = false;
+
     try {
-      // intentamos autoplay normal
       await video.play();
     } catch (err) {
-      // bloqueo de autoplay -> silencioso y reintento
       try {
         video.muted = true;
         await video.play();
-        autoplayMutedFallback = true;
-        // opcional: notificar brevemente al usuario (sin alert molesto)
-        console.info("Autoplay sin sonido (fallback). El usuario puede activar sonido con Play.");
+        console.info("Autoplay sin sonido (fallback).");
       } catch (err2) {
-        // no se pudo reproducir aún (algunos navegadores requieren interacción). Dejamos el estado pausado y el usuario deberá pulsar Play.
         console.warn("Autoplay falló incluso en modo silenciado.", err2);
       }
     }
-  
-    // Si se reprodujo en modo silenciado, al primer click en Play el handler lo desmuteará (ver btnPlay.onclick)
-    // focus controles para D-pad
+
     setTimeout(() => { btnPlay && btnPlay.focus(); updatePlayIcon(); }, 150);
-  
-    // cleanup
+
+    resetControlsHideTimer();
+
+    // activity listeners to reveal controls
+    const activityHandler = () => onUserActivityInPlayer();
+    document.addEventListener("keydown", activityHandler);
+    document.addEventListener("mousemove", activityHandler);
+    document.addEventListener("touchend", activityHandler);
+
     function cleanup() {
       clearInterval(interval);
+      if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
       try { video.pause(); } catch(e) {}
       try { video.removeAttribute("src"); } catch(e) {}
       if (_hlsInstance && _hlsInstance.destroy) { try { _hlsInstance.destroy(); } catch(e) {} _hlsInstance = null; }
@@ -267,167 +340,134 @@ btnPauseReveal.onclick = () => {
       overlay.classList.remove("show"); overlay.classList.add("hide"); overlay.style.pointerEvents = "none";
       const pagePlay = $id("video1"); if (pagePlay) pagePlay.innerHTML = '<i class="bi bi-play-fill"></i><span> Ver Ahora</span>';
       _state.playing = false; _state.paused = false; _state.src = ""; _state.type = "";
+      document.removeEventListener("keydown", activityHandler);
+      document.removeEventListener("mousemove", activityHandler);
+      document.removeEventListener("touchend", activityHandler);
+      if (playerControls) playerControls.classList.remove("controls-hidden");
+      // restore legend/badge/thumb display (they are inline style controlled)
     }
-  
+
     overlay._cleanup = cleanup;
     return cleanup;
   }
-  // -----------------------------
-// Pause & Reveal con bloqueo de foco
-// -----------------------------
-function pauseAndRevealWithFocusLock(lockMs = 1800) {
-  const overlay = document.getElementById("player-overlay");
-  const video = document.getElementById("player-video");
-  const pagePlay = document.getElementById("video1");
-  if (!overlay || !video || !pagePlay) {
-    // Fallback directo (similar a tu implementación anterior)
-    try { if (!video.paused) video.pause(); } catch (e) {}
-    if (overlay) { overlay.classList.remove("show"); overlay.classList.add("hide"); overlay.style.pointerEvents = "none"; }
-    document.body.classList.remove("player-active");
-    if (pagePlay) pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
-    return;
-  }
 
-  // 1) Pausar y ocultar overlay como antes
-  try { if (!video.paused) video.pause(); } catch (e) {}
-  _state.paused = true; _state.playing = false;
-  overlay.classList.remove("show"); overlay.classList.add("hide"); overlay.style.pointerEvents = "none";
-  document.body.classList.remove("player-active");
-
-  // 2) Actualizar el botón UI y prepararlo para foco
-  pagePlay.dataset.paused = "true";
-  pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
-  pagePlay.setAttribute("tabindex", "0");
-  pagePlay.setAttribute("aria-pressed", "true");
-
-  // 3) Forzar foco (varios intentos para navegadores testarudos)
-  function tryFocus() {
-    try {
-      pagePlay.focus({ preventScroll: false });
-    } catch (err) {
-      try { pagePlay.focus(); } catch (e) {}
+  // Pause & Reveal con bloqueo de foco
+  function pauseAndRevealWithFocusLock(lockMs = 1800) {
+    const overlay = $id("player-overlay");
+    const video = $id("player-video");
+    const pagePlay = $id("video1");
+    const legend = $id("player-legend");
+    const badge = $id("player-age-badge");
+    const thumb = $id("player-title-thumb");
+    if (!overlay || !video || !pagePlay) {
+      try { if (!video.paused) video.pause(); } catch (e) {}
+      if (overlay) { overlay.classList.remove("show"); overlay.classList.add("hide"); overlay.style.pointerEvents = "none"; }
+      document.body.classList.remove("player-active");
+      if (pagePlay) pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
+      return;
     }
-  }
-  tryFocus();
-  setTimeout(tryFocus, 50);
-  setTimeout(tryFocus, 200);
 
-  // 4) Bloqueo temporal de foco para evitar que flechas o clicks lo muevan inmediatamente
-  //    Mientras window._focusLock === true, intentamos restaurar el foco a pagePlay si se pierde,
-  //    y evitamos que ArrowLeft/Right cambien el foco.
-  if (window._focusLockTimer) {
-    clearTimeout(window._focusLockTimer);
-    window._focusLockTimer = null;
-  }
-  window._focusLock = true;
-
-  const onFocusIn = (ev) => {
-    if (!window._focusLock) return;
-    // si algo distinto a pagePlay ganó foco, restauramos
-    if (ev.target !== pagePlay) {
-      ev.preventDefault();
-      tryFocus();
-    }
-  };
-  const onKeyDownCapture = (ev) => {
-    if (!window._focusLock) return;
-    // bloqueamos flechas laterales para que no muevan foco
-    if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") {
-      ev.stopImmediatePropagation();
-      ev.preventDefault();
-      tryFocus();
-    }
-    // permitir Enter para reanudar (si el user presiona Enter quiere reanudar)
-    if (ev.key === "Enter") {
-      if (pagePlay.dataset.paused === "true") {
-        ev.preventDefault();
-        // desalojar bloqueo y reanudar inmediatamente
-        clearFocusLock();
-        if (window.resumeFromPause) window.resumeFromPause();
-      }
-    }
-  };
-
-  function clearFocusLock() {
-    window._focusLock = false;
-    document.removeEventListener("focusin", onFocusIn, true);
-    document.removeEventListener("keydown", onKeyDownCapture, true);
-    if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
-  }
-
-  document.addEventListener("focusin", onFocusIn, true);
-  document.addEventListener("keydown", onKeyDownCapture, true);
-
-  // auto-sin bloqueo después de lockMs ms
-  window._focusLockTimer = setTimeout(() => {
-    clearFocusLock();
-    // asegurar que el pagePlay siga enfocado cuando se levanta el lock (suave)
-    tryFocus();
-  }, lockMs);
-}
-
-// -----------------------------
-// Reanudar desde pausa (muestra overlay y pone foco en ctrl-play)
-// -----------------------------
-function resumeFromPause() {
-  const overlay = document.getElementById("player-overlay");
-  const video = document.getElementById("player-video");
-  const pagePlay = document.getElementById("video1");
-  const overlayPlay = document.getElementById("ctrl-play") || (document.querySelector("#player-controls button"));
-
-  if (!overlay || !video) {
-    // fallback ligero
-    if (pagePlay) pagePlay.dataset.paused = "false";
-    return;
-  }
-
-  // Mostrar overlay y reanudar
-  document.body.classList.add("player-active");
-  overlay.classList.remove("hide"); overlay.classList.add("show");
-  overlay.style.pointerEvents = "auto";
-
-  try { video.play().catch(()=>{}); } catch (e) {}
-
-  _state.paused = false; _state.playing = true;
-
-  if (pagePlay) {
-    pagePlay.dataset.paused = "false";
-    pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>';
-    pagePlay.setAttribute("aria-pressed", "false");
-  }
-
-  // quitar cualquier bloqueo residual
-  if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
-  window._focusLock = false;
-  document.removeEventListener("focusin", () => {}, true);
-  document.removeEventListener("keydown", () => {}, true);
-
-  // poner foco en el play del overlay (mejor experiencia D-pad)
-  setTimeout(() => {
-    try {
-      if (overlayPlay) overlayPlay.focus({ preventScroll: false });
-    } catch (err) {
-      try { overlayPlay && overlayPlay.focus(); } catch (e) {}
-    }
-  }, 120);
-}
-
-// Exponer (compatibilidad)
-window.pauseAndReveal = pauseAndRevealWithFocusLock;
-window.pauseAndRevealGlobal = pauseAndRevealWithFocusLock;
-window.resumeFromPause = resumeFromPause;
-
-
-  function pauseAndRevealGlobal() {
-    const overlay = $id("player-overlay"), video = $id("player-video");
-    if (!overlay || !video) return;
     try { if (!video.paused) video.pause(); } catch (e) {}
     _state.paused = true; _state.playing = false;
     overlay.classList.remove("show"); overlay.classList.add("hide"); overlay.style.pointerEvents = "none";
     document.body.classList.remove("player-active");
+
+    pagePlay.dataset.paused = "true";
+    pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
+    pagePlay.setAttribute("tabindex", "0");
+    pagePlay.setAttribute("aria-pressed", "true");
+
+    function tryFocus() {
+      try { pagePlay.focus({ preventScroll: false }); } catch (err) { try { pagePlay.focus(); } catch (e) {} }
+    }
+    tryFocus();
+    setTimeout(tryFocus, 50);
+    setTimeout(tryFocus, 200);
+
+    if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
+    const playerControls = $id("player-controls");
+    if (playerControls) playerControls.classList.remove("controls-hidden");
+    if (legend) legend.classList.remove("controls-hidden");
+    if (badge) badge.classList.remove("controls-hidden");
+    if (thumb) thumb.classList.remove("controls-hidden");
+
+    if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
+    window._focusLock = true;
+
+    const onFocusIn = (ev) => {
+      if (!window._focusLock) return;
+      if (ev.target !== pagePlay) {
+        ev.preventDefault();
+        tryFocus();
+      }
+    };
+    const onKeyDownCapture = (ev) => {
+      if (!window._focusLock) return;
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") {
+        ev.stopImmediatePropagation();
+        ev.preventDefault();
+        tryFocus();
+      }
+      if (ev.key === "Enter") {
+        if (pagePlay.dataset.paused === "true") {
+          ev.preventDefault();
+          clearFocusLock();
+          if (window.resumeFromPause) window.resumeFromPause();
+        }
+      }
+    };
+
+    function clearFocusLock() {
+      window._focusLock = false;
+      document.removeEventListener("focusin", onFocusIn, true);
+      document.removeEventListener("keydown", onKeyDownCapture, true);
+      if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
+    }
+
+    document.addEventListener("focusin", onFocusIn, true);
+    document.addEventListener("keydown", onKeyDownCapture, true);
+
+    window._focusLockTimer = setTimeout(() => {
+      clearFocusLock();
+      tryFocus();
+    }, lockMs);
+  }
+
+  // Reanudar desde pausa (muestra overlay y pone foco en ctrl-play)
+  function resumeFromPause() {
+    const overlay = $id("player-overlay");
+    const video = $id("player-video");
     const pagePlay = $id("video1");
-    if (pagePlay) { pagePlay.dataset.paused = "true"; pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>'; }
-    const center = $id("center-pause"); if (center) { center.classList.add("show"); setTimeout(()=>center.classList.remove("show"), 900); }
+    const overlayPlay = $id("ctrl-play") || (document.querySelector("#player-controls button"));
+
+    if (!overlay || !video) {
+      if (pagePlay) pagePlay.dataset.paused = "false";
+      return;
+    }
+
+    document.body.classList.add("player-active");
+    overlay.classList.remove("hide"); overlay.classList.add("show");
+    overlay.style.pointerEvents = "auto";
+
+    try { video.play().catch(()=>{}); } catch (e) {}
+
+    _state.paused = false; _state.playing = true;
+
+    if (pagePlay) {
+      pagePlay.dataset.paused = "false";
+      pagePlay.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pausar</span>';
+      pagePlay.setAttribute("aria-pressed", "false");
+    }
+
+    if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
+    window._focusLock = false;
+
+    const pc = $id("player-controls"); if (pc) pc.classList.remove("controls-hidden");
+    resetControlsHideTimer();
+
+    setTimeout(() => {
+      try { if (overlayPlay) overlayPlay.focus({ preventScroll: false }); } catch (err) { try { overlayPlay && overlayPlay.focus(); } catch (e) {} }
+    }, 120);
   }
 
   function closePlayerCompletely() {
@@ -435,33 +475,48 @@ window.resumeFromPause = resumeFromPause;
     if (overlay && overlay._cleanup) overlay._cleanup();
   }
 
-  // D-PAD / Key handling when overlay visible: navigate between controls; Enter activates
+  // --- Key handling: improved player controls navigation ---
   function installGlobalKeyHandlers() {
+    // single central handler
     document.addEventListener("keydown", (e) => {
       const overlay = $id("player-overlay");
       const overlayVisible = overlay && overlay.classList.contains("show");
       const video = $id("player-video");
 
-      // If overlay visible -> D-pad navigates controls (no direct seek via arrows, only via rewind/forward buttons)
+      // If overlay visible -> reveal controls on any activity
+      if (overlayVisible) onUserActivityInPlayer();
+
       if (overlayVisible) {
-        const controls = Array.from(document.querySelectorAll("#player-controls button"));
+        // Get only real buttons inside the controls (in source order)
+        const controls = Array.from(document.querySelectorAll("#player-controls button")).filter(b => b.offsetParent !== null);
+        if (!controls || controls.length === 0) {
+          if (e.key === "Enter") {
+            const btnPlay = $id("ctrl-play");
+            if (btnPlay) { btnPlay.click(); e.preventDefault(); }
+          }
+          return;
+        }
+
         const active = document.activeElement;
-        const idx = controls.indexOf(active);
+        let idx = controls.indexOf(active);
+        if (idx === -1) {
+          if (e.key === "ArrowLeft") { controls[controls.length - 1].focus(); e.preventDefault(); return; }
+          if (e.key === "ArrowRight" || e.key === "Enter") { controls[0].focus(); if (e.key === "Enter") { e.preventDefault(); controls[0].click(); } e.preventDefault(); return; }
+        }
 
         if (e.key === "ArrowRight") {
           e.preventDefault();
-          const next = idx >= 0 ? controls[(idx + 1) % controls.length] : controls[0];
+          const next = controls[(idx + 1) % controls.length];
           next && next.focus();
         } else if (e.key === "ArrowLeft") {
           e.preventDefault();
-          const prev = idx >= 0 ? controls[(idx - 1 + controls.length) % controls.length] : controls[controls.length - 1];
+          const prev = controls[(idx - 1 + controls.length) % controls.length];
           prev && prev.focus();
         } else if (e.key === "Enter") {
           e.preventDefault();
           if (active && (active.tagName === "BUTTON" || active.tagName === "INPUT")) {
             active.click();
           } else {
-            // fallback toggle play/pause
             const btnPlay = $id("ctrl-play");
             btnPlay && btnPlay.click();
           }
@@ -472,20 +527,20 @@ window.resumeFromPause = resumeFromPause;
         return;
       }
 
-      // If overlay not visible: Enter on #video1 triggers click; left/right move main focus (back, play, donar)
+      // If overlay not visible: main page logic handled elsewhere
+      const focused = document.activeElement;
       if (e.key === "Enter") {
-        const focused = document.activeElement;
-        if (focused && focused.id === "video1") { focused.click(); }
+        if (focused && focused.id === "video1") { focused.click(); e.preventDefault(); }
       }
     });
 
-    // Touch: tap when overlay visible -> pause & reveal or resume
+    // Touch: tap while overlay visible -> pause/reveal or resume
     document.addEventListener("touchend", (ev) => {
       const overlay = $id("player-overlay");
       const video = $id("player-video");
       if (!overlay || !video) return;
       if (overlay.classList.contains("show")) {
-        if (!video.paused) pauseAndRevealGlobal();
+        if (!video.paused) pauseAndRevealWithFocusLock();
         else { overlay.classList.remove("hide"); overlay.classList.add("show"); document.body.classList.add("player-active"); try{ video.play().catch(()=>{}); }catch(e){} }
       }
     }, { passive: false });
@@ -549,7 +604,7 @@ window.resumeFromPause = resumeFromPause;
     }
 
     if (generoEl) renderGeneros(generoEl, entry.genero || []);
-    if (puntuacionStars) crearEstrellas($id("#puntuacion .stars") || puntuacionStars, entry.rating || 0);
+    if (puntuacionStars) crearEstrellas(puntuacionStars, entry.rating || 0);
     if (edadEl) edadEl.textContent = entry.edad || "";
     if (anioEl) anioEl.textContent = entry.año || "";
     if (durH) durH.textContent = entry.hora || "";
@@ -571,7 +626,12 @@ window.resumeFromPause = resumeFromPause;
     } else if ((videoType === "mp4" || videoType === "m3u8") && videoUrl) {
       anchor.setAttribute("href", "#");
       anchor.removeAttribute("target");
-      anchor.onclick = (ev) => { ev && ev.preventDefault(); openPlayer(videoUrl, videoType); return false; };
+      anchor.onclick = (ev) => {
+        ev && ev.preventDefault();
+        if (anchor.dataset.paused === "true" && window.resumeFromPause) { window.resumeFromPause(); return false; }
+        openPlayer(videoUrl, videoType);
+        return false;
+      };
     } else {
       if (videoUrl && videoUrl.includes("ok.ru")) { anchor.setAttribute("href", okToEmbed(videoUrl)); anchor.setAttribute("target", "_blank"); }
       else { anchor.setAttribute("href", "#"); anchor.onclick = (ev) => { ev && ev.preventDefault(); alert("No hay enlace configurado."); }; }
@@ -590,7 +650,6 @@ window.resumeFromPause = resumeFromPause;
     const botonVerAhora = document.querySelector(".movie-buttons a") || $id("video1");
     const navegables = [botonVolver, botonVerAhora, botonDonar].filter(Boolean);
 
-    // main nav: left/right entre back, play, donar
     document.addEventListener("keydown", (e) => {
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
@@ -611,20 +670,12 @@ window.resumeFromPause = resumeFromPause;
       }
     });
 
-    // eliminar outlines por defecto
+    // eliminar outlines por defecto (presentational)
     document.querySelectorAll("button, a").forEach(el => { try { el.style.outline = "none"; } catch (e) {} });
-
-    // instalar key handlers del player
-    installPlayerKeyHandlers();
-  }
-
-  function installPlayerKeyHandlers() {
-    installGlobalKeyHandlers();
   }
 
   // init
   document.addEventListener("DOMContentLoaded", () => {
-    // inicializar estrellas si existe dataset
     const punt = $id("puntuacion");
     if (punt) {
       const ds = punt.dataset.puntuacion || punt.getAttribute("data-puntuacion");
@@ -633,9 +684,31 @@ window.resumeFromPause = resumeFromPause;
     hydrateFromJSON().catch(e => console.warn("hydrate error", e));
   });
 
-  // Exponer para que el sistema pueda invocarlos
+  // Exponer APIs públicas y handlers
   window.openPlayer = openPlayer;
-  window.pauseAndReveal = pauseAndRevealGlobal;
+  window.pauseAndReveal = pauseAndRevealWithFocusLock;
+  window.resumeFromPause = resumeFromPause;
   window.closePlayerCompletely = closePlayerCompletely;
+
+  window.setPlayerFocusColor = function(color) {
+    try {
+      FOCUS_RING_COLOR = color || FOCUS_RING_COLOR;
+      document.documentElement.style.setProperty('--player-focus-color', FOCUS_RING_COLOR);
+      const st = document.getElementById("player-overlay-styles");
+      if (st) {
+        // replace the variable at runtime (best-effort)
+        st.textContent = st.textContent.replace(/:root\s*\{[^}]*\}/, `:root { --player-focus-color: ${FOCUS_RING_COLOR}; }`);
+      }
+    } catch (e) { console.warn('setPlayerFocusColor error', e); }
+  };
+
+  window.setPlayerControlsHideTimeout = function(ms) {
+    if (!isFinite(ms) || ms < 0) return;
+    CONTROLS_HIDE_MS = Number(ms);
+    resetControlsHideTimer();
+  };
+
+  // instalar handlers globales al final (una vez)
+  installGlobalKeyHandlers();
 
 })();

@@ -71,6 +71,19 @@
             >
           </div>
         </div>
+        <!-- RESUME: contenedor fijo en la plantilla, script lo activará si hay progreso -->
+        <div id="resume-container" aria-hidden="true">
+          <div id="resume-inner">
+            <div id="resume-progress" aria-hidden="true">
+              <i id="resume-progress-inner"></i>
+            </div>
+            <div id="resume-text" aria-hidden="true"></div>
+          </div>
+          <!-- el anchor #video1 controlará la reanudación (no duplicamos lógica) -->
+          <a id="resume-continue" href="#" role="button" aria-hidden="true"
+            ><i class="bi bi-pause-fill"></i> Continuar</a
+          >
+        </div>
       </div>
 
       <div class="button-aditional">

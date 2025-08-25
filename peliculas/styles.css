@@ -241,7 +241,21 @@ body, html {
 #carrusel-container{
     display: none;
 }
-
+#resume-container {
+    display: none; /* el script lo mostrará */
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #fff;
+    font-family: "Ubuntu", sans-serif;
+  }
+  #resume-inner { display:flex; gap:8px; align-items:center; }
+  #resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
+  #resume-progress-inner { display:block; height:100%; width:0%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); }
+  #resume-text { font-size:0.92rem; opacity:0.95; }
+  #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
+  
 /* Mobile */
 @media screen and (max-width: 720px) {
     body, html { height: 100vh; overflow:hidden; }
@@ -291,3 +305,16 @@ body.player-active .movie-buttons{
 /* Remove native controls display where possible */
 #player-video::-webkit-media-controls { display:none !important; }
 #player-video { outline:none; -webkit-tap-highlight-color:transparent; }
+#player-title-thumb {
+    position: absolute;
+    left: calc(7%);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100020;
+    width: 18vh;       /* <-- tamaño aumentado en vh */
+    max-width: 180px;  /* <-- límite en px */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+  

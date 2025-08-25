@@ -1,4 +1,4 @@
-// script.js (plantilla) - player con controles minimalistas, auto-hide legend/title/age y D-pad navigation
+// script.js (plantilla) - player con controles minimalistas, auto-hide legend/title/age, D-pad navigation y guardado de progreso en IndexedDB (SOLO IDB)
 (() => {
   const JSON_PATHS = ["./moviebase.json", "../moviebase.json", "/moviebase.json"];
   const HLS_CDN = "https://cdn.jsdelivr.net/npm/hls.js@latest";
@@ -87,6 +87,124 @@
   let controlsVisible = true;
   let keepControlsVisible = false; // <- BANDERA: cuando true, no se auto-ocultan los controles
 
+  // Progress saving vars
+  let _progressAutoSaveInterval = null; // interval id
+  const AUTO_SAVE_INTERVAL_MS = 5000; // cada 5s guardamos progreso
+  const PROGRESS_MIN_SECONDS = 5; // umbral mínimo para guardar
+
+  // ----------------------
+  // IndexedDB helpers (solo IDB)
+  // ----------------------
+  function idbOpen() {
+    return new Promise((res, rej) => {
+      try {
+        const req = indexedDB.open("movie_progress_db", 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains("progress")) {
+            db.createObjectStore("progress", { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => res(req.result);
+        req.onerror = () => rej(req.error);
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  async function idbGet(id) {
+    try {
+      const db = await idbOpen();
+      return await new Promise((res, rej) => {
+        const tx = db.transaction("progress", "readonly");
+        const store = tx.objectStore("progress");
+        const r = store.get(String(id));
+        r.onsuccess = () => { res(r.result || null); db.close(); };
+        r.onerror = () => { rej(r.error); db.close(); };
+      });
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function idbSet(record) {
+    try {
+      const db = await idbOpen();
+      return await new Promise((res, rej) => {
+        const tx = db.transaction("progress", "readwrite");
+        const store = tx.objectStore("progress");
+        const r = store.put(record);
+        r.onsuccess = () => { res(true); db.close(); };
+        r.onerror = () => { rej(r.error); db.close(); };
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async function idbDelete(id) {
+    try {
+      const db = await idbOpen();
+      return await new Promise((res, rej) => {
+        const tx = db.transaction("progress", "readwrite");
+        const store = tx.objectStore("progress");
+        const r = store.delete(String(id));
+        r.onsuccess = () => { res(true); db.close(); };
+        r.onerror = () => { rej(r.error); db.close(); };
+      });
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // public/save helpers (SOLO IDB)
+  async function saveProgress(id, timeSec, durationSec) {
+    if (!id) return false;
+    const payload = {
+      id: String(id),
+      time: Number(timeSec) || 0,
+      duration: Number(durationSec) || 0,
+      updated: Date.now()
+    };
+    // Solo IDB: si falla, lanzamos/logueamos
+    try {
+      await idbSet(payload);
+      return true;
+    } catch (e) {
+      console.warn("saveProgress (IndexedDB) error:", e);
+      return false;
+    }
+  }
+
+  async function getProgress(id) {
+    if (!id) return null;
+    try {
+      const rec = await idbGet(id);
+      return rec;
+    } catch (e) {
+      console.warn("getProgress (IndexedDB) error:", e);
+      return null;
+    }
+  }
+
+  async function deleteProgress(id) {
+    try { await idbDelete(id); return true; } catch(e) { return false; }
+  }
+
+  // try request persistent storage (best-effort)
+  (async function tryRequestPersistent() {
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        const granted = await navigator.storage.persist();
+        console.info("storage.persist()", granted);
+      }
+    } catch (e) { /* ignore */ }
+  })();
+
+  // ----------------------
+  // UI inject / overlay
+  // ----------------------
   function injectOverlayHtml() {
     if ($("#player-overlay")) return;
 
@@ -198,14 +316,10 @@
     if (badge) { badge.style.display = ""; badge.classList.remove("controls-hidden"); }
     if (thumb) { thumb.style.display = ""; thumb.classList.remove("controls-hidden"); }
     controlsVisible = true;
-    // solo programamos auto-hide si la bandera NO está activada
     if (!keepControlsVisible) resetControlsHideTimer();
   }
   function hideControls() {
-    if (keepControlsVisible) {
-      // si estamos en modo "mantener visible" no ocultamos
-      return;
-    }
+    if (keepControlsVisible) return;
     const pc = $id("player-controls");
     const legend = $id("player-legend");
     const badge = $id("player-age-badge");
@@ -220,7 +334,7 @@
     if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
     const overlay = $id("player-overlay");
     if (!overlay || !overlay.classList.contains("show")) return;
-    if (keepControlsVisible) return; // no iniciar timer si debemos mantener visibles
+    if (keepControlsVisible) return;
     controlsHideTimer = setTimeout(() => { hideControls(); }, CONTROLS_HIDE_MS);
   }
   function onUserActivityInPlayer() {
@@ -229,8 +343,99 @@
     showControls();
   }
 
-  // abrir player con src y tipo
-  async function openPlayer(src, type) {
+  // -----------------------------
+  // Resume UI helpers (usar #resume-container del HTML)
+  // -----------------------------
+  function hideResumeUI() {
+    const container = $id("resume-container");
+    const continueBtn = $id("resume-continue");
+    if (container) {
+      container.style.display = "none";
+      container.setAttribute("aria-hidden", "true");
+    }
+    if (continueBtn) {
+      continueBtn.style.display = "none";
+      continueBtn.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  // Muestra el UI de resume en el contenedor fijo del HTML
+  function createResumeUI(anchor, saved) {
+    if (!anchor || !saved) return;
+    const container = $id("resume-container");
+    const inner = $id("resume-progress-inner");
+    const text = $id("resume-text");
+    const continueBtn = $id("resume-continue");
+
+    if (!container) return;
+
+    const pct = (saved.duration && saved.duration > 0) ? Math.min(100, Math.round((saved.time / saved.duration) * 100)) : 0;
+
+    // actualizar barra y texto
+    if (inner) inner.style.width = pct + "%";
+    if (text) text.textContent = `Continuar ${formatTime(saved.time)} (${pct}%)`;
+
+    // marcar anchor como "hay progreso"
+    anchor.dataset.paused = "true";
+    anchor.dataset.savedTime = String(saved.time || 0);
+    anchor.dataset.savedDuration = String(saved.duration || 0);
+    anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
+
+    // mostrar el contenedor y el botón continuar
+    container.style.display = "";
+    container.setAttribute("aria-hidden", "false");
+    if (continueBtn) {
+      continueBtn.style.display = "";
+      continueBtn.setAttribute("aria-hidden", "false");
+      continueBtn.onclick = (ev) => {
+        ev && ev.preventDefault();
+        try { anchor && anchor.click(); } catch (e) { /* ignore */ }
+        return false;
+      };
+    }
+
+    // Asegurar que al hacer click en el anchor se reanude desde saved.time
+    anchor.onclick = (ev) => {
+      ev && ev.preventDefault();
+      const savedTime = Number(anchor.dataset.savedTime || 0);
+      const videoType = anchor.dataset.videoType || (anchor.getAttribute("data-video-type") || null);
+      const href = anchor.getAttribute("data-video-url") || anchor.getAttribute("href") || "";
+      if (href && (href.includes(".mp4") || href.includes(".m3u8"))) {
+        const type = videoType || (href.includes(".m3u8") ? "m3u8" : "mp4");
+        openPlayer(href, type, savedTime);
+      } else {
+        if (anchor.dataset.origOnclick) {
+          try { eval(anchor.dataset.origOnclick); } catch(e) {}
+        } else {
+          alert("No hay enlace configurado para reanudar.");
+        }
+      }
+      return false;
+    };
+  }
+
+  // Actualiza la barra si ya está visible
+  async function updateResumeUIIfPresent(id, cur, dur) {
+    try {
+      const container = $id("resume-container");
+      if (!container || container.getAttribute("aria-hidden") === "true") return;
+      const inner = $id("resume-progress-inner");
+      const textEl = $id("resume-text");
+      const pct = (dur && dur > 0) ? Math.min(100, Math.round((cur / dur) * 100)) : 0;
+      if (inner) inner.style.width = pct + "%";
+      if (textEl) textEl.textContent = `Continuar ${formatTime(cur)} (${pct}%)`;
+      const anchor = $id("video1");
+      if (anchor) {
+        anchor.dataset.savedTime = String(cur || 0);
+        anchor.dataset.savedDuration = String(dur || 0);
+      }
+    } catch (e) {
+      console.warn("updateResumeUIIfPresent error", e);
+    }
+  }
+
+  // abrir player con src y tipo (startAt opcional)
+  async function openPlayer(src, type, startAt = 0) {
     injectOverlayHtml();
     const overlay = $id("player-overlay");
     const video = $id("player-video");
@@ -247,6 +452,9 @@
     const thumbImg = $id("player-title-thumb-img");
 
     if (!video) return;
+
+    // al abrir player ocultamos UI de resume (si estaba visible)
+    hideResumeUI();
 
     // set badge / thumb from UI if available
     try {
@@ -297,16 +505,13 @@
     btnPlay.onclick = () => {
       if (video.muted) video.muted = false;
       if (video.paused) {
-        // si estaba pausado -> reanudar
         video.play().catch(()=>{});
-        // al reanudar, quitamos la bandera que obliga a mantener visibles los controles
         keepControlsVisible = false;
         resetControlsHideTimer();
       } else {
-        // si estaba reproduciendo -> pausamos y mantenemos controles visibles
         try { video.pause(); } catch(e) {}
-        keepControlsVisible = true;       // <--- bandera que mantiene visibles los controles
-        showControls();                   // asegurar que estén visibles
+        keepControlsVisible = true;
+        showControls();
       }
       updatePlayIcon();
       onUserActivityInPlayer();
@@ -315,44 +520,65 @@
     btnRew.onclick = () => { try { video.currentTime = Math.max(0, (video.currentTime||0) - 10); } catch(e){} tick(); onUserActivityInPlayer(); };
     btnFwd.onclick = () => { try { video.currentTime = Math.min(video.duration||Infinity, (video.currentTime||0) + 10); } catch(e){} tick(); onUserActivityInPlayer(); };
 
-    // Pause & reveal (igual que antes) - este flujo también deberá mantener visible la UI
     btnPauseReveal.onclick = () => {
-      // Pausar y mostrar la UI (mantener visible)
       pauseAndRevealWithFocusLock();
-      keepControlsVisible = true; // asegurar que no se auto-oculte mientras está en pausa+reveal
+      keepControlsVisible = true;
       showControls();
+      // al "pausar y mostrar" también queremos mostrar el resume UI (mantenerlo visible)
+      // guardamos progreso inmediatamente (para sincronizar barra)
+      saveCurrentProgressImmediate();
+      // y mostrar resume UI — el hydrateFromJSON creó la lógica del anchor, aquí solo actualizamos UI
+      (async () => {
+        const id = readIdFromPage();
+        if (!id) return;
+        const saved = await getProgress(id);
+        if (saved && saved.time >= PROGRESS_MIN_SECONDS) {
+          createResumeUI($id("video1"), saved);
+        }
+      })();
     };
 
     progress.setAttribute("aria-disabled", "true");
     progress.disabled = true;
     progress.style.pointerEvents = "none";
 
-    // Eventos video
     video.addEventListener("play", () => {
       _state.playing = true; _state.paused = false;
-      // al reproducir, quitamos la bandera y reactivamos auto-hide
       keepControlsVisible = false;
       resetControlsHideTimer();
       updatePlayIcon();
+      startAutoSaveProgress();
+      // al reproducir ocultamos el resume UI (si estaba visible)
+      hideResumeUI();
     });
     video.addEventListener("pause", () => {
       _state.playing = false; _state.paused = true;
       updatePlayIcon();
-      // si pause viene de otro origen distinto a btnPauseReveal/btnPlay, mantenemos visibilidad por seguridad breve
-      // (no alteramos keepControlsVisible aquí — btnPlay/btnPauseReveal ya lo controlan)
+      saveCurrentProgressImmediate();
     });
     video.addEventListener("timeupdate", tick);
-    video.addEventListener("loadedmetadata", tick);
+    video.addEventListener("loadedmetadata", () => {
+      try {
+        if (startAt && startAt > 1 && isFinite(video.duration) && startAt < video.duration) {
+          video.currentTime = startAt;
+        }
+      } catch (e) {}
+      tick();
+    });
     video.addEventListener("ended", () => {
       updatePlayIcon();
-      // terminar: limpiamos bandera y permitimos ocultado
       keepControlsVisible = false;
       resetControlsHideTimer();
+      const pageId = readIdFromPage();
+      if (pageId) { deleteProgress(pageId).catch(()=>{}); } // actualmente borra al terminar
+      saveCurrentProgressImmediate();
+      stopAutoSaveProgress();
+      // al terminar, ocultar resume UI (no hay que reanudar)
+      hideResumeUI();
     });
 
     const interval = setInterval(tick, 300);
 
-    // Intentar autoplay: primero con sonido; si falla, hacemos fallback a muted autoplay
     try {
       await video.play();
     } catch (err) {
@@ -365,7 +591,6 @@
       }
     }
 
-    // enfoque en play del overlay para D-pad
     setTimeout(() => { btnPlay && btnPlay.focus(); updatePlayIcon(); }, 150);
 
     resetControlsHideTimer();
@@ -378,6 +603,7 @@
 
     function cleanup() {
       clearInterval(interval);
+      stopAutoSaveProgress();
       if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
       try { video.pause(); } catch(e) {}
       try { video.removeAttribute("src"); } catch(e) {}
@@ -390,13 +616,46 @@
       document.removeEventListener("mousemove", activityHandler);
       document.removeEventListener("touchend", activityHandler);
       if (playerControls) playerControls.classList.remove("controls-hidden");
+      // asegurar ocultado del resume al cerrar
+      hideResumeUI();
     }
 
     overlay._cleanup = cleanup;
+    overlay._getPlayerElement = () => video;
     return cleanup;
   }
 
+  // -----------------------------
+  // Autosave helpers
+  // -----------------------------
+  function startAutoSaveProgress() {
+    if (_progressAutoSaveInterval) return;
+    _progressAutoSaveInterval = setInterval(saveCurrentProgressImmediate, AUTO_SAVE_INTERVAL_MS);
+  }
+  function stopAutoSaveProgress() {
+    if (_progressAutoSaveInterval) { clearInterval(_progressAutoSaveInterval); _progressAutoSaveInterval = null; }
+  }
+  async function saveCurrentProgressImmediate() {
+    try {
+      const id = readIdFromPage();
+      if (!id) return;
+      const overlay = $id("player-overlay");
+      const video = overlay && overlay._getPlayerElement ? overlay._getPlayerElement() : $id("player-video");
+      if (!video) return;
+      const cur = Math.floor(video.currentTime || 0);
+      const dur = Math.floor(video.duration || 0);
+      if (!isFinite(cur) || cur < 0) return;
+      if (cur < PROGRESS_MIN_SECONDS) return;
+      await saveProgress(id, cur, dur);
+      updateResumeUIIfPresent(id, cur, dur);
+    } catch (e) {
+      console.warn("saveCurrentProgressImmediate error", e);
+    }
+  }
+
+  // -----------------------------
   // Pause & Reveal con bloqueo de foco
+  // -----------------------------
   function pauseAndRevealWithFocusLock(lockMs = 1800) {
     const overlay = $id("player-overlay");
     const video = $id("player-video");
@@ -429,7 +688,6 @@
     setTimeout(tryFocus, 50);
     setTimeout(tryFocus, 200);
 
-    // al pausar por este método, forzamos mantener los controles visibles
     keepControlsVisible = true;
 
     if (controlsHideTimer) { clearTimeout(controlsHideTimer); controlsHideTimer = null; }
@@ -438,6 +696,16 @@
     if (legend) legend.classList.remove("controls-hidden");
     if (badge) badge.classList.remove("controls-hidden");
     if (thumb) thumb.classList.remove("controls-hidden");
+
+    // mostrar resume UI al pausar+mostrar (sin recrearlo si ya existe)
+    (async () => {
+      const id = readIdFromPage();
+      if (!id) return;
+      const saved = await getProgress(id);
+      if (saved && saved.time >= PROGRESS_MIN_SECONDS) {
+        createResumeUI($id("video1"), saved);
+      }
+    })();
 
     if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
     window._focusLock = true;
@@ -516,6 +784,9 @@
     const pc = $id("player-controls"); if (pc) pc.classList.remove("controls-hidden");
     resetControlsHideTimer();
 
+    // al reanudar, ocultar la UI de resume si estaba visible
+    hideResumeUI();
+
     setTimeout(() => {
       try {
         if (overlayPlay) overlayPlay.focus({ preventScroll: false });
@@ -532,17 +803,14 @@
 
   // --- Key handling: improved player controls navigation ---
   function installGlobalKeyHandlers() {
-    // single central handler
     document.addEventListener("keydown", (e) => {
       const overlay = $id("player-overlay");
       const overlayVisible = overlay && overlay.classList.contains("show");
       const video = $id("player-video");
 
-      // If overlay visible -> reveal controls on any activity
       if (overlayVisible) onUserActivityInPlayer();
 
       if (overlayVisible) {
-        // Get only visible buttons inside the controls (in source order)
         const controls = Array.from(document.querySelectorAll("#player-controls button")).filter(b => b.offsetParent !== null);
         if (!controls || controls.length === 0) {
           if (e.key === "Enter") {
@@ -582,14 +850,12 @@
         return;
       }
 
-      // If overlay not visible: main page logic handled elsewhere
       const focused = document.activeElement;
       if (e.key === "Enter") {
         if (focused && focused.id === "video1") { focused.click(); e.preventDefault(); }
       }
     });
 
-    // Touch: tap while overlay visible -> pause/reveal or resume
     document.addEventListener("touchend", (ev) => {
       const overlay = $id("player-overlay");
       const video = $id("player-video");
@@ -628,7 +894,6 @@
     const entry = base.find(x => String(x.id) === String(id));
     if (!entry) { console.warn("Id not present in moviebase.json:", id); return; }
 
-    // mapeo campos
     const titleTextEl = $id("movie-title-text");
     const titleImgEl = $id("movie-title-image") && $id("movie-title-image").querySelector("img");
     const fondo1 = $id("imagen-1"), fondo2 = $id("imagen-2");
@@ -668,11 +933,16 @@
     if (coverInput2 && entry.cardimgUrl2) coverInput2.value = entry.cardimgUrl2;
     if (paginaNombre && entry.link) paginaNombre.value = entry.link;
 
-    // configurar botón play
     const videoType = entry.video_type || window.__video_type || null;
     const videoUrl = entry.videourl || "";
     const anchor = $id("video1");
     if (!anchor) return;
+
+    if (!anchor.dataset.origOnclick && anchor.onclick) {
+      try { anchor.dataset.origOnclick = anchor.onclick.toString(); } catch (e) {}
+    }
+    if (videoUrl) anchor.setAttribute("data-video-url", videoUrl);
+    if (videoType) anchor.setAttribute("data-video-type", videoType);
 
     if (videoType === "ok" && videoUrl) {
       anchor.setAttribute("href", okToEmbed(videoUrl));
@@ -692,14 +962,27 @@
       else { anchor.setAttribute("href", "#"); anchor.onclick = (ev) => { ev && ev.preventDefault(); alert("No hay enlace configurado."); }; }
     }
 
-    // focus en play al abrir
+    // check saved progress and show resume UI if present
+    (async () => {
+      try {
+        const saved = await getProgress(id);
+        if (saved && saved.time && Number(saved.time) >= PROGRESS_MIN_SECONDS) {
+          createResumeUI(anchor, saved);
+          anchor.dataset.savedTime = String(saved.time || 0);
+          anchor.dataset.savedDuration = String(saved.duration || 0);
+        } else {
+          anchor.dataset.paused = "false";
+        }
+      } catch (e) {
+        console.warn("getProgress error", e);
+      }
+    })();
+
     try { if (anchor && typeof anchor.focus === "function") anchor.focus(); } catch (e) {}
 
-    // efecto entrada
     const movieContent = $id("movie-content");
     if (movieContent) setTimeout(() => movieContent.classList.add("visible"), 200);
 
-    // navegación principal: back, play, donar
     const botonVolver = $id("back-button");
     const botonDonar = $id("donar-button") || $id("donar-button2") || (document.querySelector(".donar-button a"));
     const botonVerAhora = document.querySelector(".movie-buttons a") || $id("video1");
@@ -710,7 +993,7 @@
       if (tag === "INPUT" || tag === "TEXTAREA") return;
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         const overlay = $id("player-overlay");
-        if (overlay && overlay.classList.contains("show")) return; // no interferir con player nav
+        if (overlay && overlay.classList.contains("show")) return;
         const current = document.activeElement;
         const idx = navegables.indexOf(current);
         if (idx === -1) {
@@ -725,9 +1008,16 @@
       }
     });
 
-    // eliminar outlines por defecto (presentational)
     document.querySelectorAll("button, a").forEach(el => { try { el.style.outline = "none"; } catch (e) {} });
   }
+
+  // on page unload or visibilitychange save progress (best-effort)
+  window.addEventListener("beforeunload", () => {
+    saveCurrentProgressImmediate();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") saveCurrentProgressImmediate();
+  });
 
   // init
   document.addEventListener("DOMContentLoaded", () => {
@@ -764,5 +1054,8 @@
 
   // instalar handlers globales al final (una vez)
   installGlobalKeyHandlers();
+
+  // Exponer funciones de progreso para depuración (solo IDB)
+  window.__progress = { saveProgress, getProgress, deleteProgress };
 
 })();

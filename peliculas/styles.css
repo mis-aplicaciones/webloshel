@@ -241,21 +241,48 @@ body, html {
 #carrusel-container{
     display: none;
 }
-#resume-container {
-    display: none; /* el script lo mostrará */
-    margin-top: 12px;
+.donar-and-actions { display:flex; gap:12px; align-items:center; }
+      .favorito-button a, .reportar-button a {
+        width: 6vh;
+    height: 6vh;
+    justify-content: center;
+    background-color: #8a2be2;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%;
+    font-size: 2vh;
     display: flex;
-    gap: 10px;
     align-items: center;
-    color: #fff;
-    font-family: "Ubuntu", sans-serif;
-  }
-  #resume-inner { display:flex; gap:8px; align-items:center; }
-  #resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
-  #resume-progress-inner { display:block; height:100%; width:0%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); }
-  #resume-text { font-size:0.92rem; opacity:0.95; }
-  #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
-  
+    gap: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .favorito-button a i, .reportar-button a i { font-size:4vh; }
+      .reportar-button a { width: 6vh;
+        height: 6vh;
+        justify-content: center;
+        background-color: #8a2be2;
+        color: white;
+        text-decoration: none;
+        border-radius: 50%;
+        font-size: 2vh;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: background-color 0.3s ease, transform 0.3s ease; }
+
+      .favorito-button a:hover, .favorito-button a:focus,
+      .reportar-button a:hover, .reportar-button a:focus {
+        background-color:#2c0a46;
+        transform:scale(1.12);
+      }
+ /* resume-container: por defecto oculto (script lo muestra) */
+ #resume-container { display:none; margin-top:12px; gap:10px; align-items:center; color:#fff; font-family:"Ubuntu",sans-serif; }
+ #resume-inner { display:flex; gap:8px; align-items:center; }
+ #resume-progress { width:180px; height:8px; background:rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
+ #resume-progress-inner { display:block; height:100%; width:0%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); }
+ #resume-text { font-size:0.92rem; opacity:0.95; }
+ #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
+
 /* Mobile */
 @media screen and (max-width: 720px) {
     body, html { height: 100vh; overflow:hidden; }
@@ -275,6 +302,9 @@ body, html {
     #logo{ position: absolute; top:8px; left:50%; transform:translateX(-50%); width:5vh; z-index:1001; }
     #donar-button { display:none; }
     .button-aditional .add-button a, .button-aditional button, .button-aditional .canal a { font-size:20px; width:48px; height:48px; }
+    .favorito-button, .reportar-button { display:none !important; }
+    #player-controls { left:0 !important; transform:none !important; width:100% !important; padding:6px 12px !important; box-sizing:border-box; }
+
 }
 
 /* ---------------- Player styles (dormidos) ---------------- */
@@ -305,16 +335,5 @@ body.player-active .movie-buttons{
 /* Remove native controls display where possible */
 #player-video::-webkit-media-controls { display:none !important; }
 #player-video { outline:none; -webkit-tap-highlight-color:transparent; }
-#player-title-thumb {
-    position: absolute;
-    left: calc(7%);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100020;
-    width: 18vh;       /* <-- tamaño aumentado en vh */
-    max-width: 180px;  /* <-- límite en px */
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  }
+
   

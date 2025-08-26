@@ -83,15 +83,45 @@
               ><i class="bi bi-play-fill"></i><span> Ver Ahora</span></a
             >
           </div>
-          <div class="donar-button">
-            <a href="../donar.html" id="donar-button"
-              ><i class="bi bi-piggy-bank"></i> Donar</a
-            >
+
+          <!-- Botones secundarios: Donar, Favorito y Reportar (mismo estilo visual) -->
+          <div class="donar-and-actions">
+            <div class="donar-button">
+              <a href="../donar.html" id="donar-button"
+                ><i class="bi bi-piggy-bank"></i> Donar</a
+              >
+            </div>
+
+            <!-- Favorito: icono corazón + símbolo + (solo UI por ahora) -->
+            <div class="favorito-button">
+              <a
+                href="#"
+                id="favorito"
+                role="button"
+                aria-label="Añadir a favorito"
+                title="Agregar a favoritos"
+              >
+                <i class="bi bi-plus-circle"></i>
+              </a>
+            </div>
+
+            <!-- Reportar video: solo UI por ahora -->
+            <div class="reportar-button">
+              <a
+                href="#"
+                id="reportar-video"
+                role="button"
+                aria-label="Reportar video"
+                title="Reportar video"
+              >
+                <i class="bi bi-exclamation-circle"></i>
+              </a>
+            </div>
           </div>
         </div>
 
         <!-- RESUME: contenedor fijo en la plantilla, script lo activará si hay progreso -->
-        <div id="resume-container" aria-hidden="true">
+        <div id="resume-container" aria-hidden="true" style="display: none">
           <div id="resume-inner">
             <div id="resume-progress" aria-hidden="true">
               <i id="resume-progress-inner"></i>
@@ -99,9 +129,15 @@
             <div id="resume-text" aria-hidden="true"></div>
           </div>
           <!-- el anchor #video1 controlará la reanudación (no duplicamos lógica) -->
-          <a id="resume-continue" href="#" role="button" aria-hidden="true"
-            ><i class="bi bi-pause-fill"></i> Continuar</a
+          <a
+            id="resume-continue"
+            href="#"
+            role="button"
+            aria-hidden="true"
+            style="display: none"
           >
+            <i class="bi bi-pause-fill"></i> Continuar
+          </a>
         </div>
       </div>
 

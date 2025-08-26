@@ -169,7 +169,6 @@
       duration: Number(durationSec) || 0,
       updated: Date.now()
     };
-    // Solo IDB: si falla, lanzamos/logueamos
     try {
       await idbSet(payload);
       return true;
@@ -219,7 +218,6 @@
       #player-overlay.hide{ opacity:0; pointer-events:none; }
       #player-overlay .player-wrap{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; }
       #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; outline:none; }
-      /* contenedor de controles */
       #player-controls{ position: absolute; bottom: 64px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; transition: opacity .28s ease, transform .28s ease; }
       #player-controls.controls-hidden{ opacity: 0; transform: translateY(12px) scale(.99); pointer-events: none; }
       #player-controls button{ background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: none; color: #fff; padding:10px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; min-width:48px; height:48px; cursor:pointer; transition:transform .12s ease, background .12s; }
@@ -247,9 +245,15 @@
       #player-title-thumb img{ width:100%; height:auto; display:block; }
       #player-legend.controls-hidden, #player-age-badge.controls-hidden, #player-title-thumb.controls-hidden { opacity:0; transform:translateY(6px) scale(.995); transition: opacity .28s ease, transform .28s ease; pointer-events:none; }
 
-      /* ---- Mobile overrides for player (≤720px) ---- */
+      /* resume UI (el HTML contiene #resume-container) */
+      #resume-container { display:none; margin-top: 12px; gap: 10px; align-items:center; color:#fff; font-family: "Ubuntu", sans-serif; z-index:100001; position:relative; }
+      #resume-inner { display:flex; gap:8px; align-items:center; }
+      #resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
+      #resume-progress > i { display:block; height:100%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); width:0%; }
+      #resume-text { font-size:0.92rem; opacity:0.95; }
+      #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
+
       @media screen and (max-width:720px) {
-        /* thumb top-right, 20vh */
         #player-title-thumb {
           right: 12px;
           left: auto;
@@ -258,14 +262,8 @@
           width: 20vh;
           max-width: 22vh;
         }
-
-        /* hide legend to reduce clutter */
         #player-legend { display:none !important; }
-
-        /* hide skip buttons for mobile (solo play/pause + progress + pause-reveal) */
         #ctrl-rew, #ctrl-fwd { display:none !important; }
-
-        /* make controls full width and responsive */
         #player-controls {
           left: 0 !important;
           transform: none !important;
@@ -275,15 +273,8 @@
           bottom: 20px !important;
           gap: 8px;
         }
-
-        /* make progress fill remaining space */
         #ctrl-progress { width: 100% !important; max-width: none !important; flex:1 1 auto; height:8px; }
-
-        /* smaller control icons */
         #player-controls button { min-width:44px; height:44px; font-size:1.1rem; }
-
-        /* hide big center pause overlay icon when not needed */
-        #center-pause i { font-size:6vh; }
       }
 
       @keyframes pop{ 0%{ transform:translate(-50%,-50%) scale(0.6); opacity:0 } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1 } }
@@ -419,7 +410,7 @@
     }
 
     const container = $id("resume-container");
-    const inner = $id("resume-progress-inner");
+    const innerBar = $id("resume-progress-inner");
     const text = $id("resume-text");
     const continueBtn = $id("resume-continue");
 
@@ -427,14 +418,17 @@
 
     const pct = (saved.duration && saved.duration > 0) ? Math.min(100, Math.round((saved.time / saved.duration) * 100)) : 0;
 
-    if (inner) inner.style.width = pct + "%";
+    // actualizar ancho barra y texto
+    if (innerBar) innerBar.style.width = pct + "%";
     if (text) text.textContent = `Continuar ${formatTime(saved.time)} (${pct}%)`;
 
+    // set datos en anchor
     anchor.dataset.paused = "true";
     anchor.dataset.savedTime = String(saved.time || 0);
     anchor.dataset.savedDuration = String(saved.duration || 0);
     anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
 
+    // mostrar contenedor y boton continuar
     container.style.display = "";
     container.setAttribute("aria-hidden", "false");
     if (continueBtn) {
@@ -447,6 +441,7 @@
       };
     }
 
+    // mantener la acción de click del anchor (siempre reanuda desde saved.time)
     anchor.onclick = (ev) => {
       ev && ev.preventDefault();
       const savedTime = Number(anchor.dataset.savedTime || 0);
@@ -470,7 +465,7 @@
     try {
       const container = $id("resume-container");
       if (!container || container.getAttribute("aria-hidden") === "true") return;
-      const inner = $id("resume-progress-inner");
+      const innerBar = $id("resume-progress-inner");
       const textEl = $id("resume-text");
       const pct = (dur && dur > 0) ? Math.min(100, Math.round((cur / dur) * 100)) : 0;
 
@@ -481,7 +476,7 @@
         return;
       }
 
-      if (inner) inner.style.width = pct + "%";
+      if (innerBar) innerBar.style.width = pct + "%";
       if (textEl) textEl.textContent = `Continuar ${formatTime(cur)} (${pct}%)`;
       const anchor = $id("video1");
       if (anchor) {
@@ -581,7 +576,6 @@
       pauseAndRevealWithFocusLock();
       keepControlsVisible = true;
       showControls();
-      // al "pausar y mostrar" también queremos mostrar el resume UI (mantenerlo visible)
       saveCurrentProgressImmediate();
       (async () => {
         const id = readIdFromPage();
@@ -624,7 +618,6 @@
 
       progress.addEventListener('input', onProgressInput);
       progress.addEventListener('change', onProgressCommit);
-      // pointerup para algunos navegadores táctiles
       progress.addEventListener('pointerup', onProgressCommit);
     }
 
@@ -634,7 +627,6 @@
       resetControlsHideTimer();
       updatePlayIcon();
       startAutoSaveProgress();
-      // al reproducir ocultamos el resume UI (si estaba visible)
       hideResumeUI();
     });
     video.addEventListener("pause", () => {
@@ -659,7 +651,6 @@
       if (pageId) { deleteProgress(pageId).catch(()=>{}); } // actualmente borra al terminar
       saveCurrentProgressImmediate();
       stopAutoSaveProgress();
-      // al terminar, ocultar resume UI (no hay que reanudar)
       hideResumeUI();
     });
 
@@ -713,7 +704,6 @@
         }
       } catch (e) {}
 
-      // asegurar ocultado del resume al cerrar
       hideResumeUI();
     }
 
@@ -744,13 +734,10 @@
       if (!isFinite(cur) || cur < 0) return;
       if (cur < PROGRESS_MIN_SECONDS) return;
 
-      // Guardar en IDB
-      const savedOk = await saveProgress(id, cur, dur);
+      await saveProgress(id, cur, dur);
 
-      // calcular porcentaje y actuar si es >= FINISHED_PCT
       const pct = (dur && dur > 0) ? Math.round((cur / dur) * 100) : 0;
       if (pct >= FINISHED_PCT) {
-        // considerar finalizado: borrar progreso y ocultar UI
         try { await deleteProgress(id); } catch (e) {}
         hideResumeUI();
         const anchor = $id("video1");
@@ -763,9 +750,7 @@
         return;
       }
 
-      if (savedOk) {
-        updateResumeUIIfPresent(id, cur, dur);
-      }
+      updateResumeUIIfPresent(id, cur, dur);
     } catch (e) {
       console.warn("saveCurrentProgressImmediate error", e);
     }
@@ -981,7 +966,6 @@
       if (overlay.classList.contains("show")) {
         // en lugar de pausar/resumir, mostramos controles para permitir interacción táctil
         showControls();
-        // si estamos en mobile viewport, habilitamos progres bar interacción (por si no está activada)
         if (window.matchMedia && window.matchMedia('(max-width:720px)').matches) {
           const progress = $id("ctrl-progress");
           if (progress) {
@@ -1097,7 +1081,10 @@
             try { await deleteProgress(id); } catch(e) {}
             hideResumeUI();
           } else {
-            createResumeUI(anchor, saved);
+            // AQUI usamos el contenedor fijo del HTML (NO creamos dinámicamente)
+            // Mapeamos a la estructura esperada por createResumeUI
+            const payload = { id: String(saved.id || id), time: Number(saved.time), duration: Number(saved.duration), updated: Number(saved.updated || Date.now()) };
+            createResumeUI(anchor, payload);
             anchor.dataset.savedTime = String(saved.time || 0);
             anchor.dataset.savedDuration = String(saved.duration || 0);
           }

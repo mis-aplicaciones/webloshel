@@ -169,6 +169,7 @@
       duration: Number(durationSec) || 0,
       updated: Date.now()
     };
+    // Solo IDB: si falla, lanzamos/logueamos
     try {
       await idbSet(payload);
       return true;
@@ -218,6 +219,7 @@
       #player-overlay.hide{ opacity:0; pointer-events:none; }
       #player-overlay .player-wrap{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; }
       #player-overlay video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; outline:none; }
+      /* subí el contenedor de controles: bottom aumentado (antes 24px) */
       #player-controls{ position: absolute; bottom: 64px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; padding:8px 12px; backdrop-filter: blur(6px); background: rgba(0,0,0,0.25); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,0.6); z-index:100010; max-width:90%; transition: opacity .28s ease, transform .28s ease; }
       #player-controls.controls-hidden{ opacity: 0; transform: translateY(12px) scale(.99); pointer-events: none; }
       #player-controls button{ background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: none; color: #fff; padding:10px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; min-width:48px; height:48px; cursor:pointer; transition:transform .12s ease, background .12s; }
@@ -245,35 +247,13 @@
       #player-title-thumb img{ width:100%; height:auto; display:block; }
       #player-legend.controls-hidden, #player-age-badge.controls-hidden, #player-title-thumb.controls-hidden { opacity:0; transform:translateY(6px) scale(.995); transition: opacity .28s ease, transform .28s ease; pointer-events:none; }
 
-      /* resume UI (el HTML contiene #resume-container) */
-      #resume-container { display:none; margin-top: 12px; gap: 10px; align-items:center; color:#fff; font-family: "Ubuntu", sans-serif; z-index:100001; position:relative; }
-      #resume-inner { display:flex; gap:8px; align-items:center; }
-      #resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
-      #resume-progress > i { display:block; height:100%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); width:0%; }
-      #resume-text { font-size:0.92rem; opacity:0.95; }
-      #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
-
+      /* Mobile overrides: thumb top-right, hide legend, hide skip buttons, full-width controls, progress flexible */
       @media screen and (max-width:720px) {
-        #player-title-thumb {
-          right: 12px;
-          left: auto;
-          top: 12px;
-          transform: none;
-          width: 20vh;
-          max-width: 22vh;
-        }
+        #player-title-thumb { right:12px; left:auto; top:12px; transform:none; width:20vh; max-width:22vh; }
         #player-legend { display:none !important; }
         #ctrl-rew, #ctrl-fwd { display:none !important; }
-        #player-controls {
-          left: 0 !important;
-          transform: none !important;
-          width: calc(100% - 24px) !important;
-          justify-content: space-between;
-          padding: 8px 12px !important;
-          bottom: 20px !important;
-          gap: 8px;
-        }
-        #ctrl-progress { width: 100% !important; max-width: none !important; flex:1 1 auto; height:8px; }
+        #player-controls { left:0 !important; transform:none !important; width:calc(100% - 24px) !important; justify-content:space-between; padding:8px 12px !important; bottom:20px !important; gap:8px; }
+        #ctrl-progress { width:100% !important; max-width:none !important; flex:1 1 auto; height:8px; }
         #player-controls button { min-width:44px; height:44px; font-size:1.1rem; }
       }
 
@@ -390,6 +370,7 @@
       continueBtn.style.display = "none";
       continueBtn.setAttribute("aria-hidden", "true");
     }
+    // reset anchor visible state
     const anchor = $id("video1");
     if (anchor) {
       anchor.dataset.paused = "false";
@@ -399,18 +380,20 @@
     }
   }
 
+  // Muestra el UI de resume en el contenedor fijo del HTML
   function createResumeUI(anchor, saved) {
     if (!anchor || !saved) return;
     // si ya está al 96% o más consideramos terminado -> limpiar y no mostrar
     const pctCheck = (saved.duration && saved.duration > 0) ? Math.round((saved.time / saved.duration) * 100) : 0;
     if (pctCheck >= FINISHED_PCT) {
+      // borrar registro y salir
       (async () => { try { await deleteProgress(String(saved.id || readIdFromPage())); } catch (e) {} })();
       hideResumeUI();
       return;
     }
 
     const container = $id("resume-container");
-    const innerBar = $id("resume-progress-inner");
+    const inner = $id("resume-progress-inner");
     const text = $id("resume-text");
     const continueBtn = $id("resume-continue");
 
@@ -418,17 +401,17 @@
 
     const pct = (saved.duration && saved.duration > 0) ? Math.min(100, Math.round((saved.time / saved.duration) * 100)) : 0;
 
-    // actualizar ancho barra y texto
-    if (innerBar) innerBar.style.width = pct + "%";
+    // actualizar barra y texto
+    if (inner) inner.style.width = pct + "%";
     if (text) text.textContent = `Continuar ${formatTime(saved.time)} (${pct}%)`;
 
-    // set datos en anchor
+    // marcar anchor como "hay progreso"
     anchor.dataset.paused = "true";
     anchor.dataset.savedTime = String(saved.time || 0);
     anchor.dataset.savedDuration = String(saved.duration || 0);
     anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
 
-    // mostrar contenedor y boton continuar
+    // mostrar el contenedor y el botón continuar
     container.style.display = "";
     container.setAttribute("aria-hidden", "false");
     if (continueBtn) {
@@ -441,7 +424,7 @@
       };
     }
 
-    // mantener la acción de click del anchor (siempre reanuda desde saved.time)
+    // Asegurar que al hacer click en el anchor se reanude desde saved.time
     anchor.onclick = (ev) => {
       ev && ev.preventDefault();
       const savedTime = Number(anchor.dataset.savedTime || 0);
@@ -461,11 +444,12 @@
     };
   }
 
+  // Actualiza la barra si ya está visible
   async function updateResumeUIIfPresent(id, cur, dur) {
     try {
       const container = $id("resume-container");
       if (!container || container.getAttribute("aria-hidden") === "true") return;
-      const innerBar = $id("resume-progress-inner");
+      const inner = $id("resume-progress-inner");
       const textEl = $id("resume-text");
       const pct = (dur && dur > 0) ? Math.min(100, Math.round((cur / dur) * 100)) : 0;
 
@@ -476,7 +460,7 @@
         return;
       }
 
-      if (innerBar) innerBar.style.width = pct + "%";
+      if (inner) inner.style.width = pct + "%";
       if (textEl) textEl.textContent = `Continuar ${formatTime(cur)} (${pct}%)`;
       const anchor = $id("video1");
       if (anchor) {
@@ -576,7 +560,10 @@
       pauseAndRevealWithFocusLock();
       keepControlsVisible = true;
       showControls();
+      // al "pausar y mostrar" también queremos mostrar el resume UI (mantenerlo visible)
+      // guardamos progreso inmediatamente (para sincronizar barra)
       saveCurrentProgressImmediate();
+      // y mostrar resume UI — el hydrateFromJSON creó la lógica del anchor, aquí solo actualizamos UI
       (async () => {
         const id = readIdFromPage();
         if (!id) return;
@@ -591,17 +578,17 @@
     progress.disabled = true;
     progress.style.pointerEvents = "none";
 
-    // === Mobile: permitir touch-seek y listeners solo si estamos en móvil (<=720px) ===
+    // --- MOBILE: habilitar interacción táctil del progress solo en <=720px ---
     const isMobileViewport = (window.matchMedia && window.matchMedia('(max-width:720px)').matches);
     let onProgressInput = null;
     let onProgressCommit = null;
     if (isMobileViewport && progress) {
-      // habilitar interacción
       progress.disabled = false;
       progress.style.pointerEvents = "auto";
 
       onProgressInput = (ev) => {
         const v = Number(ev.target.value || 0);
+        // mostrar tiempo provisional en el timeDiv
         timeDiv.textContent = `${formatTime(v)} / ${formatTime(video.duration||0)}`;
       };
       onProgressCommit = (ev) => {
@@ -610,7 +597,7 @@
           if (isFinite(v) && v >= 0) {
             video.currentTime = Math.min(video.duration || Infinity, v);
             tick();
-            // guardar progreso inmediato tras seek (mejora UX)
+            // guardar el progreso tras el seek
             saveCurrentProgressImmediate();
           }
         } catch (e) {}
@@ -627,6 +614,7 @@
       resetControlsHideTimer();
       updatePlayIcon();
       startAutoSaveProgress();
+      // al reproducir ocultamos el resume UI (si estaba visible)
       hideResumeUI();
     });
     video.addEventListener("pause", () => {
@@ -651,6 +639,7 @@
       if (pageId) { deleteProgress(pageId).catch(()=>{}); } // actualmente borra al terminar
       saveCurrentProgressImmediate();
       stopAutoSaveProgress();
+      // al terminar, ocultar resume UI (no hay que reanudar)
       hideResumeUI();
     });
 
@@ -704,6 +693,7 @@
         }
       } catch (e) {}
 
+      // asegurar ocultado del resume al cerrar
       hideResumeUI();
     }
 
@@ -734,12 +724,16 @@
       if (!isFinite(cur) || cur < 0) return;
       if (cur < PROGRESS_MIN_SECONDS) return;
 
-      await saveProgress(id, cur, dur);
+      // Guardar en IDB
+      const savedOk = await saveProgress(id, cur, dur);
 
+      // calcular porcentaje y actuar si es >= FINISHED_PCT
       const pct = (dur && dur > 0) ? Math.round((cur / dur) * 100) : 0;
       if (pct >= FINISHED_PCT) {
+        // considerar finalizado: borrar progreso y ocultar UI
         try { await deleteProgress(id); } catch (e) {}
         hideResumeUI();
+        // forzar botón a estado "ver ahora"
         const anchor = $id("video1");
         if (anchor) {
           try { anchor.innerHTML = '<i class="bi bi-play-fill"></i><span> Ver Ahora</span>'; } catch(e){}
@@ -750,7 +744,9 @@
         return;
       }
 
-      updateResumeUIIfPresent(id, cur, dur);
+      if (savedOk) {
+        updateResumeUIIfPresent(id, cur, dur);
+      }
     } catch (e) {
       console.warn("saveCurrentProgressImmediate error", e);
     }
@@ -878,6 +874,7 @@
       pagePlay.setAttribute("aria-pressed", "false");
     }
 
+    // quitar el lock de mantener controles visibles y permitir auto-hide
     keepControlsVisible = false;
 
     if (window._focusLockTimer) { clearTimeout(window._focusLockTimer); window._focusLockTimer = null; }
@@ -958,13 +955,13 @@
       }
     });
 
-    // Touch: en mobile, tap while overlay visible -> mostrar controles (permitir interacción con el slider)
+    // --- TOUCH: en lugar de pausar/resumir al tocar pantalla, mostramos controles y permitimos interacción táctil ---
     document.addEventListener("touchend", (ev) => {
       const overlay = $id("player-overlay");
       const video = $id("player-video");
       if (!overlay || !video) return;
       if (overlay.classList.contains("show")) {
-        // en lugar de pausar/resumir, mostramos controles para permitir interacción táctil
+        // mostrar controles para permitir interacción (y en móvil activar el progress si estaba desactivado)
         showControls();
         if (window.matchMedia && window.matchMedia('(max-width:720px)').matches) {
           const progress = $id("ctrl-progress");
@@ -1081,10 +1078,7 @@
             try { await deleteProgress(id); } catch(e) {}
             hideResumeUI();
           } else {
-            // AQUI usamos el contenedor fijo del HTML (NO creamos dinámicamente)
-            // Mapeamos a la estructura esperada por createResumeUI
-            const payload = { id: String(saved.id || id), time: Number(saved.time), duration: Number(saved.duration), updated: Number(saved.updated || Date.now()) };
-            createResumeUI(anchor, payload);
+            createResumeUI(anchor, saved);
             anchor.dataset.savedTime = String(saved.time || 0);
             anchor.dataset.savedDuration = String(saved.duration || 0);
           }

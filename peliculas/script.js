@@ -15,7 +15,16 @@
     if (h > 0) return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
     return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
   }
-
+// Botón Compartir en WhatsApp
+const botonCompartir = document.getElementById("botonCompartir");
+if (botonCompartir) {
+    botonCompartir.addEventListener("click", function () {
+        const compartirUrl = "https://www.mediafire.com/file/ax1zxvdcf3xcaez/LoShel-v-9-9-9.apk/file";
+        const movieTitle = document.getElementById("movie-title-text").innerText;
+        const mensaje = `Hola, estoy mirando ${movieTitle}. Tú también lo puedes ver descargando la app LoShel Movie desde aquí: ${compartirUrl}`;
+        window.open(`whatsapp://send?text=${encodeURIComponent(mensaje)}`);
+    });
+}
   function ajustarPuntuacion(val) {
     if (val >= 4.9) return 5;
     if (val >= 4.5) return 4.5;

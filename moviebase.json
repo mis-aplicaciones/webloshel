@@ -23,26 +23,28 @@
     "tipo": 1
   },
   {
-    "id": 2,
-    "title": "Jurassic World Renace",
-    "genero": [
-      "Acción",
-      "Sci-fi"
-    ],
-    "backgroundUrl": "https://image.tmdb.org/t/p/original/ijuQtFf92ikx7U0WngKNbSYzT60.jpg",
-    "rating": 3,
-    "link": "peliculas/2-jurassicworld_elrenacer.html",
-    "cardimgUrl": "https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg",
+    "id": "2",
+    "titulo": "Jurassic World: El renacer",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/A1z92ISvvpoopHpIKn3Cr4TMGt8.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/1RICxzeoNCAO5NpcRMIgg1XT6fm.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/rTxsUEHPOUAQCGxmtLf5ZuiaLUj.jpg",
-    "edad": "13+",
     "año": "2025",
-    "hora": "2",
-    "min": "14",
+    "hora": "2 h",
+    "min": "13 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9PqACqlgxuDnT7lHgO94s0dpKRf.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vVNlJHA9hvEt1NPvvQ4Z7nVdmOF.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/skSoZMossoIYvzOf2UnaWqLscJl.jpg",
     "sinopsis": "Operadores viajan a una instalación de investigación en la isla para asegurar el ADN que salva vidas de los dinosaurios. La misión se vuelve cada vez más peligrosa, y pronto descubren un siniestro e impactante secreto.",
-    "VideoUrl": "//ok.ru/videoembed/11615367072327?nochat=1&autoplay=1",
-    "tipo": 1
+    "genero": [
+      "Ciencia ficción",
+      "Aventura",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/2-jurassic-world-el-renacer.html"
   },
   {
     "id": "3",
@@ -181,24 +183,25 @@
   {
     "id": "9",
     "titulo": "M3GAN 2.0",
-    "genero": [
-      "Acción",
-      "Ciencia Ficción",
-      "Suspenso"
-    ],
-    "rating": "3.5",
-    "videourl": "//ok.ru/videoembed/11549997337159?nochat=1&autoplay=1",
-    "backgroundUrl": "https://image.tmdb.org/t/p/original/w0ZFbRvmvrmn0l64LQGy6N14Eum.jpg",
-    "cardimgUrl": "https://image.tmdb.org/t/p/original/66RevrrXlGQ8jR3IWLNOUvMvgbH.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/dYLO1k4t1GZXuvreVdGA6Okwkyy.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/fBgyUqyu3ioTSQjJJE5RFs2EG3B.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/ptYJSyb1VpZyKhmD6rsA8r47hbn.jpg",
-    "sinopsis": "Con el futuro de la existencia humana en juego, Gemma se da cuenta de que la única opción es resucitar a M3GAN y darle unas cuantas mejoras, haciéndola más rápida, más fuerte y más letal.",
-    "tipo": 1,
     "año": "2025",
     "hora": "2 h",
     "min": "0 min",
     "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/cEQMqB3ahd4mfeUN6VGC0ouVnZZ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/ptYJSyb1VpZyKhmD6rsA8r47hbn.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/ouKVUyFRJo7ixPAaIjuf1KyUPyj.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/4a63rQqIDTrYNdcnTXdPsQyxVLo.jpg",
+    "sinopsis": "Con el futuro de la existencia humana en juego, Gemma se da cuenta de que la única opción es resucitar a M3GAN y darle unas cuantas mejoras, haciéndola más rápida, más fuerte y más letal.",
+    "genero": [
+      "Acción",
+      "Ciencia ficción",
+      "Suspense"
+    ],
+    "video_type": "ok",
+    "videourl": "//ok.ru/videoembed/11549997337159?nochat=1&autoplay=1",
+    "tipo": 1,
     "link": "peliculas/9-m3gan-20.html"
   },
   {
@@ -391,7 +394,7 @@
       "Aventura"
     ],
     "rating": "3.5",
-    "videourl": "https://archive.org/download/2025-fantasticos-4-espanollatino/2025-fantasticos4-espa%C3%B1ollatino.ia.mp4",
+    "videourl": "https://archive.org/download/20250804_20250804_0751/Los%204%20Fant%C3%A1sticos%20Primeros%20pasos%20Cam-Rip.ia.mp4",
     "video_type": "mp4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/5CKcXxo5aD4BerJM6iy4IX1TJxv.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/fxbmY96OSznbtXYvYK4FxZr7FvA.jpg",
@@ -550,5 +553,102 @@
     "videourl": "https://archive.org/download/resident-evil-isla-de-la-muerte-2023-espanol-latino/Resident.Evil.Death.Island.2023.1080P-Dual-Lat.ia.mp4",
     "tipo": 1,
     "link": "peliculas/24-resident-evil-death-island.html"
+  },
+  {
+    "id": "25",
+    "titulo": "Five Nights at Freddy's",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/xj8NKnsMSRf8PqHcisf0HBCiUDy.png",
+    "año": "2023",
+    "hora": "1 h",
+    "min": "49 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/nuUlSN8VkSdEKEx57i4rIlSft6x.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/g3x9bYAT0rT5kFfocxbdguJqpN1.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/dP6aTajnmITTfipJdb1I66WCMlS.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7BpNtNfxuocYEVREzVMO75hso1l.jpg",
+    "sinopsis": "Un guardia de seguridad con problemas comienza a trabajar en Freddy Fazbear's Pizza. Mientras pasa su primera noche en el trabajo, se da cuenta de que el turno de noche en Freddy's no será tan fácil de superar.",
+    "genero": [
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/fivenightsatfreddys_202506/fivenightsatfreddy%27s%20.mp4",
+    "tipo": 1,
+    "link": "peliculas/25-five-nights-at-freddys.html"
+  },
+  {
+    "id": "26",
+    "titulo": "Una película de Minecraft",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/gdglrgn1lA8H7nIJHwCHfVAmy8i.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "41 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/6YLaXswzDEtxdQRFbtKxMWrn9w2.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/6bd4ClT3BmYlWUEk652X0GGDBkd.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xamBLexcq5KHBRqFuB3BaJZ06lL.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+    "sinopsis": "Cuatro inadaptados se encuentran luchando con problemas ordinarios cuando de repente se ven arrastrados a través de un misterioso portal al Mundo Exterior: un extraño país de las maravillas cúbico que se nutre de la imaginación. Para volver a casa, tendrán que dominar este mundo mientras se embarcan en una búsqueda mágica con un inesperado experto artesano, Steve.",
+    "genero": [
+      "Fantasía",
+      "Comedia",
+      "Aventura",
+      "Familiar"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/minecraft-la-peli-cula-film-box/MINECRAFT%20LA%20PEL%C3%8DCULA%20-%20FILM%20BOX.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/26-una-pelicula-de-minecraft.html"
+  },
+  {
+    "id": "27",
+    "titulo": "Resident Evil",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/ihVAdIZSh2VCSdpqwyACWqEmvWn.png",
+    "año": "2002",
+    "hora": "1 h",
+    "min": "36 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/isHzd6Z2e8ZwHGAyfy7iX7OWeB1.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/lx0gfDUPNklM6o6MNoAWgdE6MKc.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/3xl5P6d9efBkjvozdbskdWYlHtl.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/1UKNef590A0ZaMnxsscIcWuK1Em.jpg",
+    "sinopsis": "En un centro clandestino de investigación genética -con fines militares- de una poderosa multinacional se produce un brote vírico que contamina todo el edificio. Para contener la fuga el ordenador que controla el centro sella toda la instalación y, en un principio se cree que mueren todos los empleados, pero en realidad se han convertido en feroces zombis...",
+    "genero": [
+      "Terror",
+      "Acción",
+      "Suspense",
+      "Ciencia ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/resident-evil-el-muesped-maldito-67771e-82b-9d-73962e-487c-472dc-756fbe-720p/Resident%20Evil%20El%20Muesped%20Maldito%2067771e82b9d73962e487c472dc756fbe-720p.mp4",
+    "tipo": 1,
+    "link": "peliculas/27-resident-evil.html"
+  },
+  {
+    "id": "28",
+    "titulo": "Venom: El último baile",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/niP0a873863IwLrQU0cCrRAINbj.png",
+    "año": "2024",
+    "hora": "1 h",
+    "min": "49 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/mxHE9EVg1PoJmNamcOocI2bCYfO.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/fJJShNWj0YvdceWh7iCnzRZ8BOH.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/jiWlhrR0jAQPy0zwfIYa2gqgMuA.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
+    "sinopsis": "Eddie y Venom están a la fuga. Perseguidos por sus sendos mundos y cada vez más cercados, el dúo se ve abocado a tomar una decisión devastadora que hará que caiga el telón sobre el último baile de Venom y Eddie.",
+    "genero": [
+      "Acción",
+      "Ciencia ficción",
+      "Aventura"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/20250804_20250804_1049/Venom%20El%20%C3%BAltimo%20baile%20%282024%29.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/28-venom-el-ultimo-baile.html"
   }
 ]

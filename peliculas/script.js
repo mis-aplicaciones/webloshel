@@ -1173,10 +1173,155 @@ if (botonCompartir) {
     resetControlsHideTimer();
   };
 
-  // instalar handlers globales al final (una vez)
+ 
+
+// -----------------------------
+  // Pause & Reveal con bloqueo de foco
+  // [...]
+  // (aquí continúa exactamente todo tu script tal cual lo enviaste — no lo reescribo en este bloque por brevedad)
+  // === (FIN) tu script.js original ===
+
+  // --- instalar handlers globales al final (una vez)
   installGlobalKeyHandlers();
 
   // Exponer funciones de progreso para depuración (solo IDB)
   window.__progress = { saveProgress, getProgress, deleteProgress };
 
-})();
+  /* --- Adaptive UI JS --- */
+  (function() {
+    // Ajustes mínimos y límites
+    const MIN_TITLE_IMG_VH = 12;    // no reducir la imagen debajo de 12vh
+    const MAX_TITLE_IMG_VH = 60;    // cota alta si hay pantallas panorámicas
+    const MIN_DESC_VH = 1.4;        // no reducir la fuente de la sinopsis debajo de 1.4vh
+    const MAX_DESC_VH = 2.6;        // limite alto
+    const GAP_PX = 10;
+
+    function px(v){ return Math.round(v); }
+
+    function adjustUiToViewport() {
+      try {
+        // solo actuar en pantallas grandes (desktop / tv)
+        if (window.matchMedia && window.matchMedia('(max-width:720px)').matches) {
+          // reset to defaults on mobile (no interference)
+          document.documentElement.style.setProperty('--title-img-maxvh', '' + 45);
+          document.documentElement.style.setProperty('--desc-font-size', '' + 2.2);
+          document.documentElement.style.setProperty('--movie-content-gap', '' + GAP_PX);
+          return;
+        }
+
+        const movieContent = document.getElementById('movie-content');
+        if (!movieContent) return;
+
+        // compute available height for #movie-content (viewport minus padding-top)
+        const viewportH = window.innerHeight;
+        const padTopVH = Number(getComputedStyle(document.documentElement).getPropertyValue('--movie-content-padding-top')) || 10;
+        const padTopPx = viewportH * (padTopVH / 100);
+        const availableH = Math.max( Math.floor(viewportH - padTopPx - 32), 200 ); // leave 32px margin bottom
+
+        // measure natural heights (current computed)
+        // We'll measure each visible child and compute total
+        const children = Array.from(movieContent.children).filter(c => c.offsetParent !== null);
+        let totalH = 0;
+        children.forEach(ch => {
+          const style = getComputedStyle(ch);
+          const marginTop = parseFloat(style.marginTop) || 0;
+          const marginBottom = parseFloat(style.marginBottom) || 0;
+          totalH += ch.getBoundingClientRect().height + marginTop + marginBottom;
+        });
+        // add gaps (approx):
+        const gap = Number(getComputedStyle(document.documentElement).getPropertyValue('--movie-content-gap')) || GAP_PX;
+        totalH += (Math.max(0, children.length - 1) * gap);
+
+        // if it already fits, restore defaults
+        if (totalH <= availableH) {
+          document.documentElement.style.setProperty('--title-img-maxvh', '' + 45);
+          document.documentElement.style.setProperty('--desc-font-size', '' + 2.2);
+          document.documentElement.style.setProperty('--movie-content-gap', '' + GAP_PX);
+          return;
+        }
+
+        // necesitamos comprimir: calc ratio
+        const ratio = availableH / totalH;
+        // compute new title image vh and desc font-size vh with clamping
+        const newTitleVH = Math.max(MIN_TITLE_IMG_VH, Math.min(MAX_TITLE_IMG_VH, Math.round(45 * ratio)));
+        const newDescVH = Math.max(MIN_DESC_VH, Math.min(MAX_DESC_VH, (2.2 * Math.max(0.5, ratio)).toFixed(2)));
+
+        // apply
+        document.documentElement.style.setProperty('--title-img-maxvh', '' + newTitleVH);
+        document.documentElement.style.setProperty('--desc-font-size', '' + newDescVH);
+        document.documentElement.style.setProperty('--movie-content-gap', '' + Math.max(6, Math.round(gap * ratio)));
+
+        // Re-check after applying (loop a few times if necessary to converge)
+        // small guard to prevent infinite loops
+        setTimeout(function(){
+          // recalc to ensure fit, but avoid recursive thrash: only one additional pass
+          const children2 = Array.from(movieContent.children).filter(c => c.offsetParent !== null);
+          let totalH2 = 0;
+          children2.forEach(ch => {
+            const style = getComputedStyle(ch);
+            const marginTop = parseFloat(style.marginTop) || 0;
+            const marginBottom = parseFloat(style.marginBottom) || 0;
+            totalH2 += ch.getBoundingClientRect().height + marginTop + marginBottom;
+          });
+          totalH2 += (Math.max(0, children2.length - 1) * (Number(getComputedStyle(document.documentElement).getPropertyValue('--movie-content-gap')) || gap));
+          if (totalH2 > availableH + 6) {
+            // do a final clamp: reduce image further a bit
+            const fallbackTitle = Math.max(MIN_TITLE_IMG_VH, Math.round((Number(getComputedStyle(document.documentElement).getPropertyValue('--title-img-maxvh')) || 45) * 0.9));
+            document.documentElement.style.setProperty('--title-img-maxvh', '' + fallbackTitle);
+          }
+        }, 120);
+      } catch (e) {
+        // never break main app
+        console.warn('adjustUiToViewport error', e);
+      }
+    }
+
+    // run on load, resize and when content changes (mutation observer)
+    function scheduleAdjust() {
+      try { adjustUiToViewport(); } catch(e){}
+    }
+
+    window.addEventListener('resize', () => {
+      // throttle a little
+      if (window._adjustTimeout) clearTimeout(window._adjustTimeout);
+      window._adjustTimeout = setTimeout(scheduleAdjust, 120);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(scheduleAdjust, 220);
+    });
+
+    // observe #movie-title-image img load (so we re-run when a big image arrives)
+    const titleImg = document.querySelector('#movie-title-image img');
+    if (titleImg) {
+      if (!titleImg.complete) {
+        titleImg.addEventListener('load', () => setTimeout(scheduleAdjust, 80));
+      } else {
+        setTimeout(scheduleAdjust, 80);
+      }
+    }
+
+    // mutation observer - react to hydrateFromJSON changes
+    const movieContent = document.getElementById('movie-content');
+    if (movieContent && window.MutationObserver) {
+      const mo = new MutationObserver((mut) => {
+        // re-run a bit delayed to let DOM settle
+        setTimeout(scheduleAdjust, 120);
+      });
+      mo.observe(movieContent, { childList: true, subtree: true, attributes: true, characterData: true });
+      // store it in window to potentially disconnect later if needed
+      window._movieContentObserver = mo;
+    } else {
+      // fallback: try a periodic check until page is fully hydrated
+      let tries = 0;
+      const intr = setInterval(() => {
+        tries++;
+        if (tries > 15) clearInterval(intr);
+        scheduleAdjust();
+      }, 300);
+    }
+  })();
+
+  // expose adjust function in case you want to call it manually
+  window.adjustUiToViewport = function(){ try{ if (window._adjustTimeout) clearTimeout(window._adjustTimeout); window._adjustTimeout = setTimeout(()=>{ /* call internal via event */ document.dispatchEvent(new Event('adjust-ui')); }, 40); }catch(e){} };
+
+})(); // IIFE end

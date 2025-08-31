@@ -1,299 +1,334 @@
-/* General Reset */
-body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Ubuntu', sans-serif;
-    overflow: hidden;
-}
-
-/* Fondo dinámico */
-#background-section {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: background-image 0.5s ease-in-out;
-    z-index: -1;
-}
-
-.background-gradient {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, #121124 30%, rgba(0, 0, 0, 0.3));
-    z-index: 1;
-}
-#imagen-1 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
-}
-#imagen-2{
-    display: none;
-}
-
-/* Botón Volver */
-#back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 5vh;
-    height: 5vh;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: black;
-    font-size: 3vh;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    border: none;
-    outline: none;
-    z-index: 999;
-}
-
-#back-button i {
-    font-size: 5.5vh;
-    color: #000;
-}
-
-#back-button:hover,
-#back-button:focus {
-    background-color: #9d58cc;
-    transform: scale(1.2);
-}
-#logo {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 7vh;
-    z-index: 1001;
+:root{
+    /* ADAPTIVE UI defaults */
+    --title-img-maxvh: 45;   /* max height of title image in vh (desktop default) */
+    --desc-font-size: 2.2;   /* description font-size in vh (desktop default) */
+    --movie-content-gap: 10;  /* gap in px */
+    --movie-content-padding-top: 10; /* padding-top in vh (matches your original) */
   }
-
-/* Contenedor Principal */
-#content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 12vh;
-    padding-top: 10vh;
-}
-
-/* Movie Content */
-#movie-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 2;
-    width: 50%;
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-#movie-title-image img {
-    width: 45vh;
-    height: auto;
-}
-
-#movie-title-text {
-    font-size: 5vh;
-    font-weight: bold;
-    color: white;
-    margin: 0;
-}
-
-.movie-details h4 {
-    font-size: 2.8vh;
-    color: #ccc;
-    margin: 0;
-    display: flex;
-    gap: 15px;
-}
-.movie-details h4 span:not(#edad):not(#duracion-minutos)::before {
-    content: '\2022';
-    margin-right: 5px;
-    color: #8a2be2;
-}
-.movie-details i{
-    background-color: #6e6abd;
-    padding: 5px;
-    border-radius: 5px;
-}
-/* Genres */
-.genre {
-    display: inline-block;
-    border: 2px solid #8a2be2;
-    border-radius: 15px;
-    color: white;
-    padding: 5px 10px;
-    margin: 5px;
-    font-size: 2vh;
-}
-
-/* Description */
-.movie-description {
-    font-size: 16px;
-    color: #ddd;
-    line-height: 1.5;
-}
-.movie-description p{
-    font-size: 2.2vh;
-    text-align: justify;
-    line-height: 2.9vh;
-}
-
-/* Movie Details and Buttons */
-.movie-details {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-/* Rating */
-.movie-rating {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #ccc;
-}
-.movie-rating .stars ion-icon {
-    color: white;
-    font-size: 2.5vh;
-}
-.movie-rating .stars {
-    display: flex;
-    gap: 5px;
-    font-size: 20px;
-    color: gold;
-}
-.button-movie-and-donation {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-/* Buttons */
-.movie-buttons i, .donar-button i{
-    font-size: 4vh;
-}
-.movie-buttons a{
-    width: 6vh;
-    height: 6vh;
-    justify-content: center;
-    background-color: #8a2be2;
-    color: white;
-    text-decoration: none;
-    border-radius: 50%;
-    font-size: 2vh;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-.movie-buttons a span {
-    display: none;
-}
-.donar-button a {
-    padding: 6px 14px;
-    background-color: #8a2be2;
-    color: white;
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 2vh;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.movie-buttons a:hover,
-.movie-buttons a:focus, 
-.donar-button a:hover, 
-.donar-button a:focus {
-background-color: #2c0a46;
-transform: scale(1.12);
-}
-
-/* Button-aditional (restaurado) */
-.button-aditional {
-display: none;
-}
-.button-aditional .add-button a, .button-aditional button, .button-aditional .canal a {
-display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:linear-gradient(45deg,#892be210,#6d23a686);color:white;text-decoration:none;font-size:22px;border:none;
-}
-
-/* Carrusel */
-#carrusel-container{
-display: none;
-}
-#resume-container {
-display: none; /* el script lo mostrará */
-margin-top: 12px;
-display: flex;
-gap: 10px;
-align-items: center;
-color: #fff;
-font-family: "Ubuntu", sans-serif;
-}
-    
-#resume-inner { display:flex; gap:8px; align-items:center; }
-    
-#resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
-    
-#resume-progress-inner { display:block; height:100%; width:0%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); }
-    
-#resume-text { font-size:0.92rem; opacity:0.95; }
-    
-#resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
-    
-.donar-and-actions { display:flex; gap:12px; align-items:center; }
-.favorito-button a, .reportar-button a {
-    width: 6vh;
-height: 6vh;
-justify-content: center;
-background-color: #8a2be2;
-color: white;
-text-decoration: none;
-border-radius: 50%;
-font-size: 2vh;
-display: flex;
-align-items: center;
-gap: 4px;
-transition: background-color 0.3s ease, transform 0.3s ease;
+  
+  /* General Reset */
+  body, html {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Ubuntu', sans-serif;
+      overflow: hidden;
   }
-.favorito-button a i, .reportar-button a i { font-size:4vh; }
-.reportar-button a { width: 6vh;
-    height: 6vh;
-    justify-content: center;
-    background-color: #8a2be2;
-    color: white;
-    text-decoration: none;
-    border-radius: 50%;
-    font-size: 2vh;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: background-color 0.3s ease, transform 0.3s ease; }
-
-.favorito-button a:hover, .favorito-button a:focus,
-.reportar-button a:hover, .reportar-button a:focus {
-    background-color:#2c0a46;
-    transform:scale(1.12);
+  
+  /* Fondo dinámico */
+  #background-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease-in-out;
+      z-index: -1;
+  }
+  
+  .background-gradient {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #121124 30%, rgba(0, 0, 0, 0.3));
+      z-index: 1;
+  }
+  #imagen-1 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+  }
+  #imagen-2{
+      display: none;
+  }
+  
+  /* Botón Volver */
+  #back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 5vh;
+      height: 5vh;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: black;
+      font-size: 3vh;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      border: none;
+      outline: none;
+      z-index: 999;
+  }
+  
+  #back-button i {
+      font-size: 5.5vh;
+      color: #000;
+  }
+  
+  #back-button:hover,
+  #back-button:focus {
+      background-color: #9d58cc;
+      transform: scale(1.2);
+  }
+  #logo {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 7vh;
+      z-index: 1001;
+    }
+  
+  /* Contenedor Principal */
+  #content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 12vh;
+      padding-top: calc(var(--movie-content-padding-top) * 1vh);
+      height: 100vh; /* for desktop keep content constrained to viewport */
+      box-sizing: border-box;
+      overflow: hidden; /* prevent external scroll */
+  }
+  
+  /* Movie Content */
+  #movie-content {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--movie-content-gap) * 1px);
+      z-index: 2;
+      width: 50%;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      max-height: calc(100vh - (var(--movie-content-padding-top) * 1vh) - 3vh); /* leave small space bottom */
+      overflow: hidden; /* crucial: don't allow internal scroll */
+      box-sizing: border-box;
+      padding-bottom: 1vh;
+  }
+  
+  /* Title image: constrain by CSS var */
+  #movie-title-image img {
+      width: auto;
+      max-width: 45vh; /* keep original width cap */
+      max-height: calc(var(--title-img-maxvh) * 1vh); /* variable height that JS can reduce */
+      height: auto;
+      display: block;
+      transition: max-height .28s ease, width .28s ease;
+      margin-bottom: 0.6vh;
+  }
+  
+  /* Title text */
+  #movie-title-text {
+      font-size: 5vh;
+      font-weight: bold;
+      color: white;
+      margin: 0;
+  }
+  
+  /* details */
+  .movie-details h4 {
+      font-size: 2.8vh;
+      color: #ccc;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+  }
+  .movie-details h4 span:not(#edad):not(#duracion-minutos)::before {
+      content: '\2022';
+      margin-right: 5px;
+      color: #8a2be2;
+  }
+  .movie-details i{
+      background-color: #6e6abd;
+      padding: 5px;
+      border-radius: 5px;
+  }
+  /* Genres */
+  .genre {
+      display: inline-block;
+      border: 2px solid #8a2be2;
+      border-radius: 15px;
+      color: white;
+      padding: 5px 10px;
+      margin: 5px;
+      font-size: 2vh;
+  }
+  
+  /* Description */
+  .movie-description {
+      font-size: calc(var(--desc-font-size) * 1vh); /* responsive VF */
+      color: #ddd;
+      line-height: 1.5;
+      transition: font-size .28s ease, line-height .28s ease;
+  }
+  .movie-description p{
+      font-size: inherit;
+      text-align: justify;
+      line-height: calc(1.6 * var(--desc-font-size) * 1vh / (var(--desc-font-size) * 1vh)); /* keep readable */
+      margin: 0;
+  }
+  
+  /* Movie Details and Buttons */
+  .movie-details {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  
+  /* Rating */
+  .movie-rating {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: #ccc;
+  }
+  .movie-rating .stars ion-icon {
+      color: white;
+      font-size: 2.5vh;
+  }
+  .movie-rating .stars {
+      display: flex;
+      gap: 5px;
+      font-size: 20px;
+      color: gold;
+  }
+  .button-movie-and-donation {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  /* Buttons */
+  .movie-buttons i, .donar-button i{
+      font-size: 4vh;
+  }
+  .movie-buttons a{
+      width: 6vh;
+      height: 6vh;
+      justify-content: center;
+      background-color: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 50%;
+      font-size: 2vh;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .movie-buttons a span {
+      display: none;
+  }
+  .donar-button a {
+      padding: 6px 14px;
+      background-color: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      font-size: 2vh;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .movie-buttons a:hover,
+  .movie-buttons a:focus, 
+  .donar-button a:hover, 
+  .donar-button a:focus {
+  background-color: #2c0a46;
+  transform: scale(1.12);
+  }
+  
+  /* Button-aditional (restaurado) */
+  .button-aditional {
+  display: none;
+  }
+  .button-aditional .add-button a, .button-aditional button, .button-aditional .canal a {
+  display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:linear-gradient(45deg,#892be210,#6d23a686);color:white;text-decoration:none;font-size:22px;border:none;
+  }
+  
+  /* Carrusel */
+  #carrusel-container{
+  display: none;
+  }
+  
+  /* Resume bar */
+  #resume-container {
+  display: none; /* el script lo mostrará */
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #fff;
+  font-family: "Ubuntu", sans-serif;
+  }
+      
+  #resume-inner { display:flex; gap:8px; align-items:center; }
+      
+  #resume-progress { width:180px; height:8px; background: rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
+      
+  #resume-progress-inner { display:block; height:100%; width:0%; background: linear-gradient(90deg,#8a58c2,#6fb3ff); }
+      
+  #resume-text { font-size:0.92rem; opacity:0.95; }
+      
+  #resume-continue { display:none; color:#fff; text-decoration:none; padding:6px 10px; background:rgba(0,0,0,0.3); border-radius:8px; }
+      
+  .donar-and-actions { display:flex; gap:12px; align-items:center; }
+  .favorito-button a, .reportar-button a {
+      width: 6vh;
+  height: 6vh;
+  justify-content: center;
+  background-color: #8a2be2;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 2vh;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+  .favorito-button a i, .reportar-button a i { font-size:4vh; }
+  .reportar-button a { width: 6vh;
+      height: 6vh;
+      justify-content: center;
+      background-color: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 50%;
+      font-size: 2vh;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background-color 0.3s ease, transform 0.3s ease; }
+  
+  .favorito-button a:hover, .favorito-button a:focus,
+  .reportar-button a:hover, .reportar-button a:focus {
+      background-color:#2c0a46;
+      transform:scale(1.12);
+  }
+  
+  /* ADAPTIVE: ensure layout keeps spacing proportionally (desktop) */
+  @media screen and (min-width: 721px) {
+    /* ensure elements can shrink but not overflow viewport */
+    #movie-title-text { margin-top: .6vh; margin-bottom: .4vh; }
+    #movie-content { gap: calc(var(--movie-content-gap) * 1px); }
+    .movie-description { margin-bottom: .6vh; }
 }
 /* Mobile */
 @media screen and (max-width: 720px) {

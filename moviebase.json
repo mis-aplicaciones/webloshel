@@ -650,5 +650,29 @@
     "videourl": "https://archive.org/download/20250804_20250804_1049/Venom%20El%20%C3%BAltimo%20baile%20%282024%29.ia.mp4",
     "tipo": 1,
     "link": "peliculas/28-venom-el-ultimo-baile.html"
+  },
+  {
+    "id": "29",
+    "titulo": "El retorno del Jedi",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/bOB6lRH8Y0j1Z1g3bDqbGHKBobS.png",
+    "año": "1983",
+    "hora": "2 h",
+    "min": "13 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/oglqzBsY0XhLpsQioo4P0CqiOLp.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/4unbx5RMcmN98ZLC0ppU74BGU0Z.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/7AiYdxzuwb4qvprqw1CP8ORvpFb.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/rKMmXzdm7eRgmlwYo7iq3klT7wJ.jpg",
+    "sinopsis": "El Retorno del Jedi sigue las aventuras de Luke Skywalker y sus amigos en la batalla final contra el Imperio y Darth Vader, incluyendo el rescate de Han Solo y el ataque a una nueva Estrella de la Muerte",
+    "genero": [
+      "Aventura",
+      "Acción",
+      "Ciencia ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/star-wars-el-regreso-del-jedi-espanol-latino/star-wars-el-regreso-del-jedi-espa%C3%B1ol-latino.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/29-el-retorno-del-jedi.html"
   }
 ]

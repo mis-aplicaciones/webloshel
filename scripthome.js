@@ -1,15 +1,22 @@
-// scripthome.js (versión que intenta leer carouselDefs.json desde la raíz, luego REMOTE url y luego localStorage)
+// scripthome.js (versión mejorada para películas + series + remote defs + shuffle diario)
+// Parte del comportamiento original se ha mantenido fielmente (focos, restauración, animaciones).
 
-let data = null;
-let defs = null;
+/* estado global */
+let movieData = null;    // array de películas (moviebase.json)
+let seriesData = null;   // array de series  (seriebase.json)
+let defs = null;         // definiciones de columnas (desde carouselDefs.json o localStorage)
 let lastFocus = { row: 0, card: 0 };
 let isAnimating = false;
+// al tope de scripthome.js (global)
+let bgLoadId = 0;                 // para evitar condiciones de carrera en precarga de fondo
+const bgImageCache = new Map();   // cache simple: url -> loaded Image object
 
-// Si quieres apuntar a una URL pública (raw.githubusercontent o pages) ponla aquí.
-// Ejemplo: "https://raw.githubusercontent.com/miusuario/mirepo/main/carouselDefs.json"
-const REMOTE_DEFS_URL = "https://raw.githubusercontent.com/mis-aplicaciones/webloshel/main/carouselDefs.json"; // pon aquí la URL RAW si la tienes
 
-// Helper estrellas
+/* CONFIG */
+const REMOTE_DEFS_URL = null; // si quieres forzar una URL remota, ponla aquí (opcional)
+const LOCAL_DEFS_FILENAME = "./carouselDefs.json"; // archivo en la raíz que el admin puede subir
+
+/* ---- helper: estrellas ---- */
 function calcularEstrellas(p) {
   const MAX = 5;
   const r = Math.round((p || 0) * 2) / 2;
@@ -17,17 +24,18 @@ function calcularEstrellas(p) {
   let html = "";
   for (let i = 0; i < full; i++) html += '<ion-icon name="star"></ion-icon>';
   if (half) html += '<ion-icon name="star-half"></ion-icon>';
-  for (let i = 0; i < MAX - full - (half ? 1 : 0); i++) html += '<ion-icon name="star-outline"></ion-icon>';
+  for (let i = 0; i < MAX - full - (half ? 1 : 0); i++)
+    html += '<ion-icon name="star-outline"></ion-icon>';
   return html;
 }
 
-// updateDetails, focusCard, shuffle helpers (idénticos a tu versión robusta)
+/* ---- actualizar detalle (sin animación) ---- */
 function updateDetails(item) {
   if (!item) return;
-  const bg = document.getElementById("background");
-  const img = document.getElementById("detail-img");
+  const bg    = document.getElementById("background");
+  const img   = document.getElementById("detail-img");
   const title = document.getElementById("detail-title");
-  const meta = document.getElementById("detail-meta");
+  const meta  = document.getElementById("detail-meta");
   const genEl = document.getElementById("detail-genero");
 
   if (bg) bg.style.backgroundImage = `url('${item.backgroundUrl || ""}')`;
@@ -52,8 +60,10 @@ function updateDetails(item) {
   }
 }
 
+/* ---- animación detalle ---- */
 function focusCard(item) {
   if (!item) return;
+  // si ya está en animación, actualizamos solo los detalles textuales
   if (isAnimating) {
     updateDetails(item);
     return;
@@ -67,29 +77,91 @@ function focusCard(item) {
   const meta  = document.getElementById("detail-meta");
   const genEl = document.getElementById("detail-genero");
 
+  // fade-out visual en todos los elementos (si existen)
   [bg, detail, img, title, meta, genEl].forEach(el => {
-    if (el) { el.classList.remove("fade-in"); el.classList.add("fade-out"); }
+    if (el) {
+      el.classList.remove("fade-in");
+      el.classList.add("fade-out");
+    }
   });
 
-  const onEnd = (e) => {
-    if (e && e.propertyName && e.propertyName !== "opacity") return;
-    if (bg) bg.removeEventListener("transitionend", onEnd);
-    updateDetails(item);
+  // id de carga actual (se incrementa para invalidar cargas anteriores)
+  const myLoadId = ++bgLoadId;
+  const bgUrl = item.backgroundUrl || "";
+
+  // función que aplica la imagen ya "segura" (cuando esté precargada o fallback)
+  const applyBackgroundAndDetails = () => {
+    // ignora si ya vino una carga posterior
+    if (myLoadId !== bgLoadId) return;
+
+    // aplicar background, detalles y fade-in
+    if (bg) bg.style.backgroundImage = `url('${bgUrl}')`;
+    if (img) img.src = item.titleimgUrl || "";
+    if (title) title.textContent = item.title || "";
+
+    if (meta) {
+      meta.innerHTML =
+        `<span>${item.edad || ""}</span> • ` +
+        `<span>${item.hora || ""}h ${item.min || ""}min</span> • ` +
+        `<span>${item.año || ""}</span> • ` +
+        `<span>${calcularEstrellas(item.rating || 0)}</span>`;
+    }
+
+    if (genEl) {
+      genEl.innerHTML = "";
+      (item.genero || []).forEach(g => {
+        const s = document.createElement("span");
+        s.textContent = g;
+        genEl.appendChild(s);
+      });
+    }
+
     [bg, detail, img, title, meta, genEl].forEach(el => {
-      if (el) { el.classList.remove("fade-out"); el.classList.add("fade-in"); }
+      if (el) {
+        el.classList.remove("fade-out");
+        el.classList.add("fade-in");
+      }
     });
-    setTimeout(() => { isAnimating = false; }, 300);
+
+    // dejar un pequeño debounce antes de liberar la bandera
+    setTimeout(() => { if (myLoadId === bgLoadId) isAnimating = false; }, 300);
   };
 
-  if (bg) {
-    bg.addEventListener("transitionend", onEnd, { once: true });
-    setTimeout(onEnd, 800); // fallback
-  } else {
-    onEnd();
+  // Si ya tenemos la imagen en cache y cargada -> aplicar inmediatamente
+  if (bgUrl && bgImageCache.has(bgUrl) && bgImageCache.get(bgUrl).complete) {
+    applyBackgroundAndDetails();
+    return;
   }
+
+  // Si no hay URL, aplicar detalles sin background
+  if (!bgUrl) {
+    applyBackgroundAndDetails();
+    return;
+  }
+
+  // precargar imagen (nuevo Image)
+  const imgLoader = new Image();
+  imgLoader.src = bgUrl;
+
+  // cuando cargue, si es la carga vigente, guardamos en cache y aplicamos
+  imgLoader.onload = () => {
+    bgImageCache.set(bgUrl, imgLoader);
+    if (myLoadId === bgLoadId) applyBackgroundAndDetails();
+  };
+
+  imgLoader.onerror = () => {
+    // en caso de error simplemente aplicamos detalles sin cambiar background
+    if (myLoadId === bgLoadId) applyBackgroundAndDetails();
+  };
+
+  // fallback: si el load tarda demasiado, forzamos aplicar después de 800ms
+  setTimeout(() => {
+    if (myLoadId === bgLoadId) applyBackgroundAndDetails();
+  }, 800);
 }
 
-// RNG + shuffle
+
+/* ---- PRNG (mulberry32) + shuffle con RNG -- mantiene mezcla diaria por fila ---- */
 function mulberry32(seed) {
   return function() {
     let t = seed += 0x6D2B79F5;
@@ -107,45 +179,95 @@ function shuffleWithRng(array, rng) {
   return a;
 }
 
-// initCarousel (mezcla por fila usando seed diario)
+/* ---- util: cargar JSON (fetch con fallback) ---- */
+function fetchJsonSafe(path) {
+  return fetch(path).then(r => {
+    if (!r.ok) throw new Error(`status ${r.status}`);
+    return r.json();
+  });
+}
+
+/* ---- determinar source para una definición ----
+   si def.field === 'tipo' y def.values incluye '2' => usar seriesData
+   en caso contrario usar movieData
+   (esto permite filas mixtas: unas filas usan movieData y otras seriesData)
+*/
+function itemsForDef(def) {
+  // Si def explicitamente contiene source property, respetarla:
+  // def.source === "series" | "movies"
+  let source = movieData;
+  if (def.source === "series") source = seriesData;
+  else if (def.source === "movies") source = movieData;
+  else if (def.field === "tipo") {
+    // field 'tipo' puede tener values like ["2"] or [2] or ["1","2"]
+    const vals = (def.values || []).map(v => String(v));
+    if (vals.includes("2")) source = seriesData;
+    else source = movieData;
+  } else {
+    // Por defecto movies (si en el admin el usuario quiere series debe usar field 'tipo' o source)
+    source = movieData;
+  }
+
+  if (!source) return [];
+
+  let items = [];
+  try {
+    if (def.type === "field") {
+      items = source.filter(item => {
+        const v = item[def.field];
+        if (v === undefined) return false;
+        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
+      });
+    } else if (def.type === "rating") {
+      items = source.filter(item => Number(item.rating || 0) >= Number(def.minRating || 0));
+    } else if (def.type === "collection") {
+      // def.ids puede mezclar ids de series y películas; comparar laxamente (string/number)
+      const idset = new Set((def.ids || []).map(x => String(x)));
+      items = source.filter(item => idset.has(String(item.id)));
+    } else if (def.type === "search") {
+      // podemos usar def.term o def.ids
+      if (def.ids && def.ids.length) {
+        const idset = new Set(def.ids.map(x => String(x)));
+        items = source.filter(item => idset.has(String(item.id)));
+      } else if (def.term) {
+        const q = String(def.term).toLowerCase();
+        items = source.filter(item => {
+          const t = (item.title || "").toLowerCase();
+          const s = (item.sinopsis || "").toLowerCase();
+          return t.includes(q) || s.includes(q);
+        });
+      }
+    }
+  } catch (err) {
+    console.warn("itemsForDef error", def, err);
+    items = [];
+  }
+
+  return items || [];
+}
+
+/* ---- initCarousel: construye filas (mezcla diaria por fila) ---- */
 function initCarousel() {
   const carousel = document.getElementById("carousel");
   if (!carousel) return null;
   carousel.innerHTML = "";
   let firstCard = null;
 
+  // seed diario UTC (cambia cada 24h)
   const daySeed = Math.floor(Date.now() / 86400000);
 
   if (!Array.isArray(defs)) defs = [];
 
   defs.forEach((def, rowIdx) => {
-    let items = [];
-    try {
-      if (def.type === "field") {
-        items = data.filter(item => {
-          const v = item[def.field];
-          if (v === undefined) return false;
-          return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
-        });
-      } else if (def.type === "rating") {
-        items = data.filter(item => Number(item.rating || 0) >= Number(def.minRating || 0));
-      } else if (def.type === "collection") {
-        items = data.filter(item => (def.ids || []).includes(item.id));
-      } else if (def.type === "search") {
-        const term = (def.term || "").toLowerCase();
-        items = data.filter(item => (item.title||"").toLowerCase().includes(term) || (item.sinopsis||"").toLowerCase().includes(term));
-      }
-    } catch (err) {
-      console.warn("initCarousel: error filtrando def", def, err);
-      items = [];
-    }
+    const itemsRaw = itemsForDef(def);
+    if (!itemsRaw || !itemsRaw.length) return;
 
-    if (!items || !items.length) return;
-
+    // Shuffle con semilla única por fila
     const seed = (daySeed + rowIdx + 1) >>> 0;
     const rng = mulberry32(seed);
-    const shuffled = shuffleWithRng(items, rng);
+    const shuffled = shuffleWithRng(itemsRaw, rng);
 
+    // Construir DOM
     const row = document.createElement("div");
     row.className = "row";
 
@@ -158,7 +280,7 @@ function initCarousel() {
     cont.style.overflowX = "auto";
     cont.style.overflowY = "hidden";
 
-    // almacenar scrollLeft por fila
+    // guardar scrollLeft por fila
     cont.addEventListener("scroll", () => {
       row.dataset.scrollLeft = cont.scrollLeft;
     });
@@ -169,10 +291,13 @@ function initCarousel() {
       card.tabIndex = 0;
       card.style.backgroundImage = `url('${item.cardimgUrl || ""}')`;
       card.dataset.link = item.link || "";
+      // en caso de series, podrías poner dataset.tipo = 2 (si lo necesitas)
+      card.dataset.itemId = String(item.id);
 
       card.addEventListener("focus", () => {
         lastFocus = { row: rowIdx, card: idx };
         focusCard(item);
+        // centrar el card en su contenedor horizontal
         const contEl = card.closest(".cards-container");
         if (contEl) {
           const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
@@ -181,8 +306,13 @@ function initCarousel() {
         }
       });
 
-      card.addEventListener("click", () => { if (item.link) window.location.href = item.link; });
-      card.addEventListener("keydown", (e) => { if (e.key === "Enter" && item.link) window.location.href = item.link; });
+      card.addEventListener("click", () => {
+        if (item.link) window.location.href = item.link;
+      });
+
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && item.link) window.location.href = item.link;
+      });
 
       cont.appendChild(card);
       if (!firstCard) firstCard = card;
@@ -196,7 +326,7 @@ function initCarousel() {
   return firstCard;
 }
 
-// restoreFocus (restaura scrollLeft y foco)
+/* ---- restoreFocus: restablece fila, scrollLeft y card enfocado ---- */
 function restoreFocus() {
   const rows = document.querySelectorAll("#carousel .row");
   const rowEl = rows[lastFocus.row];
@@ -213,30 +343,16 @@ function restoreFocus() {
   const card = rowEl.querySelectorAll(".card")[lastFocus.card];
   if (card) {
     card.focus();
-    // reconstruir items del def y actualizar detalles
+    // reconstruir items para esa def y actualizar detalles
     const def = defs[lastFocus.row];
     if (!def) return;
-    let items = [];
-    if (def.type === "field") {
-      items = data.filter(i => {
-        const v = i[def.field];
-        if (v === undefined) return false;
-        return Array.isArray(v) ? v.some(x => def.values.includes(x)) : def.values.includes(v);
-      });
-    } else if (def.type === "rating") {
-      items = data.filter(i => i.rating >= def.minRating);
-    } else if (def.type === "collection") {
-      items = data.filter(i => def.ids.includes(i.id));
-    } else if (def.type === "search") {
-      const term = (def.term || "").toLowerCase();
-      items = data.filter(i => (i.title||"").toLowerCase().includes(term) || (i.sinopsis||"").toLowerCase().includes(term));
-    }
+    const items = itemsForDef(def);
     const item = items[Math.min(lastFocus.card, items.length - 1)];
     if (item) updateDetails(item);
   }
 }
 
-// teclado (tu bloque funcional)
+/* ---- teclado: mantengo tu bloque original con la mejora "izquierda en primer card va al sidebar" ---- */
 document.body.addEventListener("keydown", (e) => {
   const active = document.activeElement;
   if (["Backspace", "Escape"].includes(e.key)) {
@@ -263,6 +379,7 @@ document.body.addEventListener("keydown", (e) => {
 
     case "ArrowLeft":
       if (idx === 0) {
+        // Primer card: volvemos al sidebar (solicitud tuya)
         window.dispatchEvent(new Event("return-to-sidebar"));
         e.preventDefault();
         return;
@@ -278,7 +395,10 @@ document.body.addEventListener("keydown", (e) => {
       const nr = row.nextElementSibling;
       if (nr) {
         target = nr.querySelector(".card");
-        if (target) { target.focus(); nr.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        if (target) {
+          target.focus();
+          nr.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
       break;
     }
@@ -287,91 +407,131 @@ document.body.addEventListener("keydown", (e) => {
       const pr = row.previousElementSibling;
       if (pr) {
         target = pr.querySelector(".card");
-        if (target) { target.focus(); pr.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        if (target) {
+          target.focus();
+          pr.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
       break;
     }
   }
 
-  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) e.preventDefault();
+  if (["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) {
+    e.preventDefault();
+  }
 });
 
-// ---------------------- CARGA DE DEFS ----------------------
-// Intenta en orden: 1) /carouselDefs.json (root del paquete), 2) REMOTE_DEFS_URL (si está), 3) localStorage
-function tryFetchWithTimeout(url, timeout = 4000) {
-  return new Promise((resolve, reject) => {
-    const controller = new AbortController();
-    const id = setTimeout(() => { controller.abort(); }, timeout);
-    fetch(url, { signal: controller.signal, mode: 'cors' })
-      .then(r => { clearTimeout(id); if (!r.ok) throw new Error('Not OK'); return r.json(); })
-      .then(json => resolve(json))
-      .catch(err => { clearTimeout(id); reject(err); });
+/* ---- cargar defs: intenta ./carouselDefs.json -> localStorage -> remote (raw) ---- */
+function loadDefsFromRemoteIfNeeded() {
+  return new Promise((resolve) => {
+    // 1) intentar archivo local en la raíz (./carouselDefs.json)
+    fetch(LOCAL_DEFS_FILENAME)
+      .then(r => {
+        if (!r.ok) throw new Error("no local file");
+        return r.json();
+      })
+      .then(json => {
+        if (Array.isArray(json)) defs = json;
+        else defs = [];
+      })
+      .catch(() => {
+        // 2) fallback a localStorage
+        try {
+          const ls = JSON.parse(localStorage.getItem("carouselDefs") || "[]");
+          defs = Array.isArray(ls) ? ls : [];
+        } catch {
+          defs = [];
+        }
+      })
+      .finally(() => {
+        // 3) si tenemos una URL remota guardada en localStorage intentar actualizar (opcional)
+        const remote = localStorage.getItem("carouselDefsRemoteUrl") || REMOTE_DEFS_URL;
+        if (!remote) {
+          resolve();
+          return;
+        }
+
+        // intentar fetch remoto (con timeout)
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 5000);
+
+        fetch(remote, { signal: controller.signal })
+          .then(r => {
+            clearTimeout(id);
+            if (!r.ok) throw new Error("remote not ok");
+            return r.json();
+          })
+          .then(json => {
+            if (Array.isArray(json)) {
+              defs = json;
+              // opcional: guardar copia local para debugging
+              try { localStorage.setItem("carouselDefs", JSON.stringify(json)); } catch {}
+            }
+          })
+          .catch(() => {
+            // si falla, mantener lo que ya tenemos (archivo local o localStorage)
+          })
+          .finally(() => resolve());
+      });
   });
 }
 
-function loadDefsPriority() {
-  return new Promise(async (resolve) => {
-    // 1) intentar archivo en la raíz del mismo origen (útil si lo incluyes en la APK o en la raíz del hosting)
-    try {
-      const json = await tryFetchWithTimeout('./carouselDefs.json', 3000);
-      if (Array.isArray(json)) { defs = json; resolve(); return; }
-    } catch (e) {
-      // continúa al siguiente intento
-    }
-
-    // 2) si REMOTE_DEFS_URL está configurada, intentar
-    if (REMOTE_DEFS_URL) {
-      try {
-        const json = await tryFetchWithTimeout(REMOTE_DEFS_URL, 4000);
-        if (Array.isArray(json)) { defs = json; resolve(); return; }
-      } catch (e) {
-        // continúa
-      }
-    }
-
-    // 3) fallback: localStorage
-    try {
-      const ls = JSON.parse(localStorage.getItem('carouselDefs') || '[]');
-      defs = Array.isArray(ls) ? ls : [];
-    } catch {
-      defs = [];
-    }
-    resolve();
+/* ---- cargar datos bases (películas y series) ---- */
+function loadBasesIfNeeded() {
+  return new Promise((resolve) => {
+    const promises = [];
+    if (!movieData) promises.push(fetchJsonSafe("moviebase.json").then(j => movieData = Array.isArray(j) ? j : [] ).catch(()=> movieData = []));
+    if (!seriesData) promises.push(fetchJsonSafe("seriebase.json").then(j => seriesData = Array.isArray(j) ? j : [] ).catch(()=> seriesData = []));
+    Promise.all(promises).finally(() => resolve());
   });
 }
 
-// inicializador
+/* ---- initializeHome (entry point) ---- */
 function initializeHome() {
   const car = document.getElementById("carousel");
-  if (!car) { console.error("initializeHome: no encontré #carousel"); return; }
+  if (!car) {
+    console.error("initializeHome: no encontré #carousel");
+    return;
+  }
 
-  loadDefsPriority().then(() => {
-    if (!defs || !defs.length) {
-      // Si quieres cambiar el fallback por defecto edítalo aquí
+  // Cargar defs y bases en paralelo
+  loadDefsFromRemoteIfNeeded().then(() => {
+    // fallback por defecto si no hay defs
+    if (!Array.isArray(defs) || !defs.length) {
       defs = [
         { name:"Estrenos 2025", type:"field", field:"año", values:["2025"] },
-        { name:"Acción", type:"field", field:"genero", values:["Acción"] },
+        { name:"Acción",        type:"field", field:"genero", values:["Acción"] },
         { name:"Top Valoradas", type:"rating", minRating:3.5 }
       ];
     }
 
-    if (!data) {
-      fetch("moviebase.json")
-        .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(json => {
-          data = json || [];
-          const first = initCarousel();
-          if (first) { first.focus(); lastFocus = { row:0, card:0 }; const firstItem = data.find(it=>it.id===1) || data[0]; if(firstItem) focusCard(firstItem); }
-        })
-        .catch(err => {
-          console.error("initializeHome: error al cargar moviebase.json", err);
-          car.innerHTML = '<div style="color:red;padding:2rem;">Error al cargar los datos.</div>';
-        });
-    } else {
-      if (!car.children.length) initCarousel();
-      restoreFocus();
-    }
+    // ahora cargar las bases (movie + serie) y construir
+    loadBasesIfNeeded().then(() => {
+      // construir carrusel
+      const first = initCarousel();
+      if (first) {
+        first.focus();
+        lastFocus = { row:0, card:0 };
+        // elegir primer item para mostrar en detalle (intentar id 1 o el primero disponible)
+        const firstItem = (movieData && movieData.find(it => String(it.id) === "1")) || (movieData && movieData[0]) || (seriesData && seriesData[0]);
+        if (firstItem) focusCard(firstItem);
+      } else {
+        // sin filas => mostrar mensaje
+        car.innerHTML = '<div style="color:#ccc;padding:2rem;">No hay filas definidas (revisa carouselDefs.json o localStorage).</div>';
+      }
+    });
   });
 }
 
 window.initializeHome = initializeHome;
+
+/* ---- Nota al administrador / deploy:
+   - Si deseas que el home cargue las definiciones desde la nube:
+     1) Genera el archivo carouselDefs.json desde admin (exportar).
+     2) Súbelo a la raíz de tu repo / hosting y asegúrate que la URL RAW sea accesible.
+     3) En el admin puedes guardar esa RAW URL en localStorage con la clave 'carouselDefsRemoteUrl'.
+        Ejemplo pequeño (añadir en admin.js):
+          localStorage.setItem('carouselDefsRemoteUrl', 'https://raw.githubusercontent.com/USER/REPO/BRANCH/carouselDefs.json');
+     4) El home intentará primero ./carouselDefs.json (archivo local en la raíz del proyecto),
+        luego localStorage, luego la URL remota si existe.
+*/

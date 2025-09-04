@@ -8,14 +8,6 @@
     ]
   },
   {
-    "name": "Héroes de Guerra",
-    "type": "field",
-    "field": "genero",
-    "values": [
-      "Bélico"
-    ]
-  },
-  {
     "name": "Acción",
     "type": "field",
     "field": "genero",
@@ -45,6 +37,15 @@
     "field": "genero",
     "values": [
       "Terror"
+    ]
+  },
+  {
+    "name": "Maratón de Acción",
+    "type": "field",
+    "source": "series",
+    "field": "genero",
+    "values": [
+      "Acción"
     ]
   }
 ]

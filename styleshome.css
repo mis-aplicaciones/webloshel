@@ -114,8 +114,9 @@ html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; b
    - hide scrollbars via vendor rules (Webkit, Firefox, IE) -> scroll funcional pero invisible
 */
 
+/* CONTENEDOR DE FILAS: mantiene el scroll horizontal, oculta scrollbars */
 .cards-container {
-  display:flex;
+  display: flex;
   gap: 0;
   align-items: center;
   overflow-x: auto;      /* permite scroll horizontal por fila */
@@ -125,11 +126,11 @@ html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; b
 }
 
 /* Ocultar scrollbars en .cards-container (Webkit) */
-.cards-container::-webkit-scrollbar {  display: none; }
-/* Firefox */
+.cards-container::-webkit-scrollbar { display: none; }
+/* Firefox y IE/Edge */
 .cards-container { scrollbar-width: none; -ms-overflow-style: none; }
 
-/* Asegura que items no se rompan de línea (cuando se use inline behavior) y mantenga layout flex */
+/* Asegura que items no se rompan de línea y mantengan layout flex */
 .cards-container .card { flex: 0 0 auto; }
 
 /* Card */
@@ -141,13 +142,30 @@ html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; b
   background-position: center;
   border-radius: 1vh;
   margin: 1vh;
-  transition: transform 0.3s ease;
-  z-index:3;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  z-index: 3;
+  outline: none;        /* quitamos outline nativo */
+  box-sizing: border-box;
 }
-.card:focus, .card:hover { outline:none; transform: scale(1.05); }
 
-/* Mantener el scrollbar vertical del carousel transparente en todos los navegadores */
+/* Elimina el zoom: NO usar transform scale.
+   En su lugar mostramos un marco blanco de 2px cuando está enfocado/hover.
+   usamos outline para no romper el layout al mostrar borde. */
+.card:focus,
+.card:hover {
+  transform: none !important;
+  /* outline usa px fijo (2px) — si prefieres usar vh cambia a 0.2vh */
+  outline: 2px solid #ffffff;
+  outline-offset: -2px; /* hace que el borde quede pegado al card */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+/* Evitar que el outline amarillo nativo de Android TV aparezca aparte */
+*:focus { outline: none; }
+
+/* Mantener scrollbar vertical del carousel principal transparente */
 #carousel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0); }
+
 
 /* Opciones responsive mínimas */
 @media (max-width: 800px) {

@@ -674,5 +674,29 @@
     "videourl": "https://archive.org/download/star-wars-el-regreso-del-jedi-espanol-latino/star-wars-el-regreso-del-jedi-espa%C3%B1ol-latino.ia.mp4",
     "tipo": 1,
     "link": "peliculas/29-el-retorno-del-jedi.html"
+  },
+  {
+    "id": "30",
+    "titulo": "Expediente Warren: Obligado por el demonio",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/aqi0pRKE7YdFNtfoHl5XHYPlFYg.png",
+    "año": "2021",
+    "hora": "1 h",
+    "min": "52 min",
+    "edad": "18+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/qBNVyDtR3KTE7K6BPljlNUoSlqD.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/lQlICfeF6h2oTa0OZxypU6N7apz.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/uwXXxPup5aKaS5iZDJNNExTSQui.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/k8HN29t4VxiOagq9jaVVwZJ6wIB.jpg",
+    "sinopsis": "Los investigadores paranormales Ed y Lorraine Warren se encuentran con lo que se convertiría en uno de los casos más sensacionales de sus archivos. La lucha por el alma de un niño los lleva más allá de todo lo que habían visto antes, para marcar la primera vez en la historia de los Estados Unidos que un sospechoso de asesinato reclamaría posesión demoníaca como defensa.",
+    "genero": [
+      "Terror",
+      "Misterio",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/el-conjuro-3-el-diablo-me-obligo-a-hacerlo-2021-1080p/El%20conjuro%203-%20El%20diablo%20me%20oblig%C3%B3%20a%20hacerlo%20%282021%29%201080p%20WEB-DL%20Latino%20LIGERO%20-%20Descargatepelis.COM.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/30-expediente-warren-obligado-por-el-demonio.html"
   }
 ]

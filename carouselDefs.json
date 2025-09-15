@@ -47,5 +47,13 @@
     "values": [
       "Acción"
     ]
+  },
+  {
+    "name": "Perdidos y atrapados",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Drama"
+    ]
   }
 ]

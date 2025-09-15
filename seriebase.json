@@ -1,39 +1,55 @@
 [
-    {
-      "id": "S1",
-      "title": "X men 97",
-      "genero": [
-        "Acción",
-        "Crimen",
-        "Suspenso"
-      ],
-      "backgroundUrl": "https://image.tmdb.org/t/p/original/n3AaJXdWbkGtdRwfVGw5FNrloUQ.jpg",
-      "rating": 3.5,
-      "temporadas": "2",
-      "link": "serie/S1-x-men97.html",
-      "cardimgUrl": "https://image.tmdb.org/t/p/original/q40cm0yiEgsTZNYZpsUULOKzHk5.jpg",
-      "titleimgUrl": "https://image.tmdb.org/t/p/original/yaHDtFlvLt0QaYu0xn8m1R41KUz.png",
-      "cardimgUrl2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "backgroundmovil": "https://image.tmdb.org/t/p/original/pgohqJBW5VMgS0wlClZYxlpcMEt.jpg",
-      "edad": "18+",
-      "año": "2025",
-      "hora": "2",
-      "min": "5",
-      "sinopsis": "Taking place during the events of John Wick: Chapter 3 – Parabellum, Eve Macarro begins her training in the assassin traditions of the Ruska Roma.",
-      "Season": "2",
-      "video_type": "mp4",
-      "tipo": 2,
-      "imgsea1epi1": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea1epi1": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
-      "imgsea1epi2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea1epi2": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
-      "imgsea1epi3": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea1epi3": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
-      "imgsea2epi1": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea2epi1": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
-      "imgsea2epi2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea2epi2": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
-      "imgsea2epi3": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-      "urlsea2epi3": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4"
-    }
+  {
+    "id": "S1",
+    "title": "CHUCKY",
+    "genero": ["Acción","Crimen","Suspenso"],
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/6FWVMERvL89XWsfQoaZiD96Kgdh.jpg",
+    "backgroundHero": "https://image.tmdb.org/t/p/original/5kkw5RT1OjTAMh3POhjo5LdaACZ.jpg",
+    "rating": 3.5,
+    "temporadas": 3,
+    "link": "series/S1-chucky.html",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/seLkgDBIdGTSdo3Kl3QeFYjQOvw.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/AgYN1OiH9DS8NMyteuQGTik0nyd.png",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/zYTFuxqY0adgdswrVAFjMXtBsaR.jpg",
+    "edad": "18+",
+    "año": "2021",
+    "sinopsis": "Tras la aparición de un muñeco Chucky antiguo en una venta de garaje suburbana, un idílico pueblo estadounidense se ve sumido en el caos mientras una serie de horribles asesinatos revelan la hipocresía y los secretos del pueblo. Mientras tanto, la llegada de enemigos —y aliados— del pasado de Chucky amenaza con revelar la verdad tras los asesinatos, así como el origen inexplorado del muñeco demonio.",
+    "video_type": "mp4",
+    "tipo": 2,
+    "seasons": [
+      {
+        "title": "Season 1",
+        "seasonDescription": "Después de que el adolescente solitario Jake Wheeler descubre un muñeco antiguo (Good Guy) en una venta de garaje suburbana, una tranquila ciudad estadounidense pronto estalla en el caos cuando una ola de asesinatos escalofriantes comienza a revelar los secretos más profundos y oscuros de todos.",
+        "seasonBackground": "https://image.tmdb.org/t/p/original/iF8ai2QLNiHV4anwY1TuSGZXqfN.jpg",
+        "episodes": [
+          { "epi": "E1", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%201.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/hBRb6VZBbGD4Faz1VK2HH9ihqX8.jpg", "credits_start": 2760 },
+          { "epi": "E2", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%202.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/jx3G2ApN8YNIVQm4jg6fll754iU.jpg", "credits_start": 2472 },
+          { "epi": "E3", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%203.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/r9v0ltyntLjr79vh1sCqTj5cuGJ.jpg", "credits_start": 2490 },
+          { "epi": "E4", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%204.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/mKoMTuXFFqAa8YIJIPMKjq9NwMo.jpg", "credits_start": 2490 },
+          { "epi": "E5", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%205.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/zajMvMCFkimagQE0ZiA91EnTcAS.jpg", "credits_start": 2490 },
+          { "epi": "E6", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%206.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/hAeB4P2BLFFloX12gr8JgOtMugT.jpg", "credits_start": 2490 },
+          { "epi": "E7", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%207.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/ioz0T0mzMrVqJ7patjFN6N00aSg.jpg", "credits_start": 2490 },
+          { "epi": "E8", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%208.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/sj53EfFTsBds1OvsPlaPADrT9xm.jpg", "credits_start": 2490 }
+        ]
+      },
+      {
+        "title": "Season 2",
+        "seasonDescription": "Mientras Jake y Devon enfrentan problemas como pareja en su nueva escuela católica, Chucky se embarca en una nueva ola de asesinatos, cruzándose con caras conocidas en el camino.",
+        "seasonBackground": "https://image.tmdb.org/t/p/original/kY0BogCM8SkNJ0MNiHB3VTM86Tz.jpg",
+        "episodes": [
+          { "epi": "E1", "url": "https://archive.org/.../s2e1.m3u8", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "m3u8" },
+          { "epi": "E2", "url": "https://ok.ru/video/123456789", "img": "https://image.tmdb.org/t/p/original/s2ep2.jpg" }
+        ]
+      },
+      {
+        "title": "Season 3",
+        "seasonDescription": "Mientras Jake y Devon enfrentan problemas como pareja en su nueva escuela católica, Chucky se embarca en una nueva ola de asesinatos, cruzándose con caras conocidas en el camino.",
+        "seasonBackground": "https://image.tmdb.org/t/p/original/kY0BogCM8SkNJ0MNiHB3VTM86Tz.jpg",
+        "episodes": [
+          { "epi": "E1", "url": "https://archive.org/.../s2e1.m3u8", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "m3u8" },
+          { "epi": "E2", "url": "https://ok.ru/video/123456789", "img": "https://image.tmdb.org/t/p/original/s2ep2.jpg" }
+        ]
+      }
+    ]
+  }
 ]

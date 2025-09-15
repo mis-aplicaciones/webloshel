@@ -698,5 +698,29 @@
     "videourl": "https://archive.org/download/el-conjuro-3-el-diablo-me-obligo-a-hacerlo-2021-1080p/El%20conjuro%203-%20El%20diablo%20me%20oblig%C3%B3%20a%20hacerlo%20%282021%29%201080p%20WEB-DL%20Latino%20LIGERO%20-%20Descargatepelis.COM.ia.mp4",
     "tipo": 1,
     "link": "peliculas/30-expediente-warren-obligado-por-el-demonio.html"
+  },
+  {
+    "id": "31",
+    "titulo": "¡Viven!",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/dAlsCkBXqUCvOVgVJoEt4DiEwh6.png",
+    "año": "1993",
+    "hora": "2 h",
+    "min": "3 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/e23ip5v7Iw43Fv5HcyGDBrRHApt.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/rLMf76EMfsXbMxtPvKdH7m83JNL.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/mL5CWt3Yd4mKqhN0ldnibRNYOIb.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/w57ardZddxlNL2WtGoko4l6ddPU.jpg",
+    "sinopsis": "Basada en una historia real, \"Alive\" narra la terrible experiencia de un grupo de jugadores del equipo nacional de rugby de Uruguay cuyo avión se estrelló en medio de los Andes en octubre de 1972.",
+    "genero": [
+      "Aventura",
+      "Drama",
+      "Historia"
+    ],
+    "video_type": "ok",
+    "videourl": "//ok.ru/videoembed/8178755635946?nochat=1&autoplay=1",
+    "tipo": 1,
+    "link": "peliculas/31-viven.html"
   }
 ]

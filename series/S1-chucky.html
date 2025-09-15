@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Series - UI TV</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styleserie.css" />
+  </head>
+  <body>
+    <!-- Botón Volver -->
+    <a id="back-button" href="../index.html" aria-label="Volver">
+      <i class="bi bi-arrow-left-short"></i>
+    </a>
+
+    <!-- Logo -->
+    <img id="logo" src="logo001.png" alt="Logo" />
+
+    <!-- Contenedor principal -->
+    <div id="content">
+      <!-- Hidden: series id must be injected BEFORE series.js -->
+      <input type="hidden" id="ID_Series" value="" />
+
+      <!-- Background -->
+      <div id="background-section"></div>
+      <img id="imagen-1" src="" alt="background" />
+      <img id="imagen-2" src="" alt="background-mobile" />
+
+      <!-- LEFT column (REORDENADA como solicitaste) -->
+      <div id="left-column">
+        <div id="movie-content" class="movie-content">
+          <!-- 1 - TV Series label -->
+          <div id="tv-series-label"><strong>Tv</strong> Series</div>
+
+          <!-- 2 - title texto -->
+          <h2 id="movie-title-text"></h2>
+
+          <!-- 3 - Rating (stars + number 1-10) -->
+          <div class="rating-year">
+            <div id="puntuacion" class="movie-rating" data-puntuacion="0">
+              <span class="stars" aria-hidden="true"></span>
+              <span id="rating-number" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <!-- 4 - géneros -->
+          <div id="genero" class="genre-section"></div>
+
+          <!-- 5 - Edad - año - temporadas existentes -->
+          <div class="emdetails-meta">
+            <div id="edad" class="edad-badge"></div>
+            <div class="dot-sep">•</div>
+            <div id="year-inline" class="year-text"></div>
+            <div class="dot-sep">•</div>
+            <div id="seasons-count" class="seasons-count"></div>
+          </div>
+
+          <!-- 6 - sinopsis -->
+          <div id="descripcion" class="movie-description"><p></p></div>
+
+          <!-- 7 - Botones (horizontal) -->
+          <div class="button-movie-and-donation">
+            <div class="movie-buttons">
+              <a id="video1" href="#" role="button" aria-label="Play">
+                <span class="pill-icon"><i class="bi bi-play-fill"></i></span>
+                <span id="play-pill-text">Ver Ahora</span>
+              </a>
+            </div>
+
+            <div class="donar-and-actions">
+              <div class="donar-button">
+                <a href="../donar.html" id="donar-button" aria-label="Donar">
+                  <i class="bi bi-piggy-bank"></i> Donar
+                </a>
+              </div>
+
+              <div class="favorito-button">
+                <a
+                  href="#"
+                  id="favorito"
+                  aria-label="Añadir a favoritos"
+                  title="Añadir a favoritos"
+                >
+                  <i class="bi bi-plus"></i>
+                </a>
+              </div>
+
+              <div class="reportar-button">
+                <a
+                  href="#"
+                  id="reportar-video"
+                  aria-label="Reportar"
+                  title="Reportar"
+                >
+                  <i class="bi bi-flag-fill"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8 - Temporada actual -->
+          <div class="emdetails-meta">
+            <span id="temporada-num">Temporada 1</span>
+          </div>
+
+          <!-- 9 - Seasons horizontal (posters vertical) -->
+          <div id="seasons-wrap">
+            <div
+              id="seasons-buttons"
+              class="seasons-scroll"
+              role="tablist"
+              aria-label="Temporadas"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT column: Episodios vertical -->
+      <div id="right-column">
+        <div id="episodes-header">
+          <h3 id="episodes-for">Episodios</h3>
+        </div>
+        <div
+          id="episodes-list"
+          tabindex="0"
+          aria-label="Lista de episodios"
+        ></div>
+      </div>
+
+      <!-- RESUME container (script lo mostrará si hay progreso) -->
+      <div id="resume-container" aria-hidden="true" style="display: none">
+        <div id="resume-inner">
+          <div id="resume-progress" aria-hidden="true">
+            <i id="resume-progress-inner"></i>
+          </div>
+          <div id="resume-text" aria-hidden="true"></div>
+        </div>
+        <a
+          id="resume-continue"
+          href="#"
+          role="button"
+          aria-hidden="true"
+          style="display: none"
+        >
+          <i class="bi bi-pause-fill"></i> Continuar
+        </a>
+      </div>
+    </div>
+
+    <!-- INYECTAR (server-side) -->
+    <!-- Ejemplo: <script>window.__series_id = 'S1';</script> -->
+    <script>
+      // inject here your real id, example:
+      window.__series_id = "S1";
+    </script>
+
+    <script src="series.js" type="module"></script>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

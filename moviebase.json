@@ -746,7 +746,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-4.mkv_202011/Rambo%201.mp4",
     "tipo": 1,
-    "link": "peliculas/31-acorralado.html"
+    "link": "peliculas/32-acorralado.html"
   },
   {
     "id": "33",
@@ -770,7 +770,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-v-2019/RAMBO%20V%20%282019%29.ia.mp4",
     "tipo": 1,
-    "link": "peliculas/32-rambo-last-blood.html"
+    "link": "peliculas/33-rambo-last-blood.html"
   },
   {
     "id": "34",
@@ -794,6 +794,6 @@
     "video_type": "ok",
     "videourl": "//ok.ru/videoembed/8815725578896?nochat=1&autoplay=1",
     "tipo": 1,
-    "link": "peliculas/33-john-rambo.html"
+    "link": "peliculas/34-john-rambo.html"
   }
 ]

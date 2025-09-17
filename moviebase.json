@@ -722,5 +722,78 @@
     "videourl": "//ok.ru/videoembed/8178755635946?nochat=1&autoplay=1",
     "tipo": 1,
     "link": "peliculas/31-viven.html"
+  },
+  {
+    "id": "32",
+    "titulo": "Acorralado",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/6TtEi8Jt0dqlEsFofnImnWug1tW.png",
+    "año": "1982",
+    "hora": "1 h",
+    "min": "33 min",
+    "edad": "18+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/6ChQayYQBcetlE6N7gSZCkAfMbh.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/2kIGq8dhp51liCj4A0K5ozT0a99.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/277Ct5pdW4WAbaBjYLwX2BEeZqk.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/fVamGe8rfEQUrMbzumL1t0DslCA.jpg",
+    "sinopsis": "El veterano de Vietnam, John Rambo, envuelve a la policía en una cacería en el bosque tras escapar de un vil comisario.",
+    "genero": [
+      "Acción",
+      "Suspense",
+      "Bélica",
+      "Aventura"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/rambo-4.mkv_202011/Rambo%201.mp4",
+    "tipo": 1,
+    "link": "peliculas/31-acorralado.html"
+  },
+  {
+    "id": "33",
+    "titulo": "Rambo: Last Blood",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/8MCLB86dA7uJU67OLqbDENlmIxF.png",
+    "año": "2019",
+    "hora": "1 h",
+    "min": "41 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/oV6hweFSXOGuobS7Ro3x9G0G4Ln.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/fFEREXUoWVLzuFA4hUDrMsy9KQg.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/5ivHs6giRx3Wt9K9MkQfMe4g7jx.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/bUnPxr3M6xTwFSKv9CbzSxhvyJV.jpg",
+    "sinopsis": "John Rambo vive tranquilo en un rancho en Arizona, pero cuando recibe la noticia de que una adolescente ha desaparecido tras haber cruzado la frontera a México para ir a una fiesta, decide ir en su búsqueda.",
+    "genero": [
+      "Acción",
+      "Suspense",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/rambo-v-2019/RAMBO%20V%20%282019%29.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/32-rambo-last-blood.html"
+  },
+  {
+    "id": "34",
+    "titulo": "John Rambo",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/3oQZflDiFqv4t7wNh33ztrdwSRz.png",
+    "año": "2008",
+    "hora": "1 h",
+    "min": "33 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/eIDhmgup0dxhUyqVLFfhX78N5Gq.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/qKsABq01yMWzlLymdtEYkTbhbtu.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/p9lG7VhDwfwB8N77UtWEu5NkeXX.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/3mInub5c8o00H7EJ1TrjAqOzIuc.jpg",
+    "sinopsis": "El ex boina verde John Rambo lleva una solitaria y apacible vida en la selva. Todo cambia cuando un grupo de misioneros católicos le pide que les sirva de guía hasta la frontera con Birmania para suministrar medicinas y alimentos a los refugiados.",
+    "genero": [
+      "Acción",
+      "Suspense",
+      "Bélica"
+    ],
+    "video_type": "ok",
+    "videourl": "//ok.ru/videoembed/8815725578896?nochat=1&autoplay=1",
+    "tipo": 1,
+    "link": "peliculas/33-john-rambo.html"
   }
 ]

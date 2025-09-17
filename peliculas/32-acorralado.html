@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generado por Loshelsistem 1.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Botón Volver -->
+    <a href="../index.html" id="back-button"><i class="bi bi-arrow-left-short"></i></a>
+    <!-- Logo -->
+    <img id="logo" src="logo001.png" alt="Logo">
+    <!-- Contenido principal -->
+    <div id="content">
+      <!-- Elementos Ocultos -->
+      <input type="hidden" id="ID_pelicula" value="31">
+      <input type="hidden" id="cover-url" value="">
+      <input type="hidden" id="cover-url-2" value="">
+      <input type="hidden" id="pagina-nombre" value="31-acorralado.html">
+
+      <!-- Fondo Dinámico -->
+      <div id="background-section"><div class="background-gradient"></div></div>
+      <!-- Imagen 1 para el backbroud -->
+      <img id="imagen-1" src="" alt="img1">
+      <!-- Imagen 2 para el backbroud smartphone -->
+      <img id="imagen-2" src="" alt="img2">
+
+      <!-- Sección de Contenido de Película -->
+      <div id="movie-content" class="hidden">
+        <!-- Título de la Película (Imagen) -->
+        <div id="movie-title-image">
+          <img src="" alt="Título de la Película">
+        </div>
+
+        <!-- Título de la Película (Texto) -->
+        <h2 id="movie-title-text" class="movie-title-text"></h2>
+
+        <!-- Detalles de la Película -->
+        <div class="movie-details">
+          <div id="puntuacion" class="movie-rating" data-puntuacion="0">
+            <span class="stars"></span>
+          </div>
+          <div class="movie-details">
+            <h4>
+              <span id="edad"></span>
+              <span id="año"></span>
+              <span id="duracion-horas"></span>
+              <span id="duracion-minutos"></span>
+            </h4>
+          </div>
+        </div>
+
+        <!-- Género de la Película -->
+        <div id="genero" class="genre-section" data-genre-ids=""></div>
+
+        <!-- Descripción de la Película -->
+        <div id="descripcion" class="movie-description"><p></p></div>
+
+        <!-- Boton de play y donacion -->
+        <div class="button-movie-and-donation">
+          <div class="movie-buttons">
+            <!-- NOTE: el anchor #video1 es manejado por script.js -->
+            <a id="video1" href="#" tabindex="0" data-video-url="" data-video-type=""><i class="bi bi-play-fill"></i><span> Ver Ahora</span></a>
+          </div>
+
+          <!-- Botones secundarios: Donar, Favorito y Reportar (mismo estilo visual) -->
+          <div class="donar-and-actions">
+            <div class="donar-button">
+              <a href="../donar.html" id="donar-button"><i class="bi bi-piggy-bank"></i> Donar</a>
+            </div>
+
+            <!-- Favorito: icono corazón + símbolo + (solo UI por ahora) -->
+            <div class="favorito-button">
+              <a href="#" id="favorito" role="button" aria-label="Añadir a favorito" title="Agregar a favoritos">
+                <i class="bi bi-plus-circle"></i>
+              </a>
+            </div>
+
+            <!-- Reportar video: solo UI por ahora -->
+            <div class="reportar-button">
+              <a href="#" id="reportar-video" role="button" aria-label="Reportar video" title="Reportar video">
+                <i class="bi bi-exclamation-circle"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUME: contenedor fijo en la plantilla, script lo activará si hay progreso -->
+        <div id="resume-container" aria-hidden="true" style="display: none">
+          <div id="resume-inner">
+            <div id="resume-progress" aria-hidden="true">
+              <i id="resume-progress-inner"></i>
+            </div>
+            <div id="resume-text" aria-hidden="true"></div>
+          </div>
+          <!-- el anchor #video1 controlará la reanudación (no duplicamos lógica) -->
+          <a id="resume-continue" href="#" role="button" aria-hidden="true" style="display: none">
+            <i class="bi bi-pause-fill"></i> Continuar
+          </a>
+        </div>
+      </div>
+
+      <!-- Botones Adicionales (recuperados) -->
+      <div class="button-aditional">
+        <div class="add-button">
+          <a href="#"><i class="bi bi-plus-circle"></i></a>
+        </div>
+        <button id="botonCompartir"><i class="bi bi-share"></i></button>
+        <div class="canal">
+          <a href="https://whatsapp.com/channel/0029VaFwj295kg6xQ8thvM2s"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        <div class="canal">
+          <a href="../donar.html" id="donar-button2"><i class="bi bi-piggy-bank"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+    <div id="carrusel-container">
+      <div id="carrusel-title">También puedes ver</div>
+    </div>
+
+    <!-- El sistema inyectará aquí:
+         <script>window.__movie_id='19'; window.__video_type='mp4';</script>
+         justo antes del script.js
+    -->
+    <script type="text/javascript">window.__movie_id='31'; window.__video_type='mp4';</script><script src="script.js" type="module"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
+
+</body></html>

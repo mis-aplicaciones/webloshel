@@ -746,7 +746,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-4.mkv_202011/Rambo%201.mp4",
     "tipo": 1,
-    "link": "peliculas/32-acorralado.html"
+    "link": "peliculas/31-acorralado.html"
   },
   {
     "id": "33",
@@ -770,7 +770,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-v-2019/RAMBO%20V%20%282019%29.ia.mp4",
     "tipo": 1,
-    "link": "peliculas/33-rambo-last-blood.html"
+    "link": "peliculas/32-rambo-last-blood.html"
   },
   {
     "id": "34",
@@ -794,6 +794,146 @@
     "video_type": "ok",
     "videourl": "//ok.ru/videoembed/8815725578896?nochat=1&autoplay=1",
     "tipo": 1,
-    "link": "peliculas/34-john-rambo.html"
+    "link": "peliculas/33-john-rambo.html"
+  },
+  {
+    "id": "35",
+    "titulo": "Terminator 2: El juicio final",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/95LRyOU9xUR5NrA3Bf5NY3PRb0A.png",
+    "año": "1991",
+    "hora": "2 h",
+    "min": "17 min",
+    "edad": "18+",
+    "rating": "4",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/wJSf9miZqgmFWHf55HJdLwMMjfS.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/t20pHpueiHXXv7a9ct0tJ3HcejH.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/AdGf9iVmwI8QLGOk7SxNVu0Bqb5.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/bfdPTjdP2JGRAajIoi25Gh2Elmz.jpg",
+    "sinopsis": "Dos exterminadores llegan del futuro para rastrear al hijo de Sarah Connor, John. Uno de los cíborgs está programado para eliminarlo; y el otro, para protegerlo.",
+    "genero": [
+      "Acción",
+      "Suspense",
+      "Ciencia ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/terminator-2_202409/Terminator%202.mp4",
+    "tipo": 1,
+    "link": "peliculas/35-terminator-2-el-juicio-final.html"
+  },
+  {
+    "id": "36",
+    "titulo": "It: Capítulo 2",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/jup42EiBBxKHODyFo0S4FhZDyb6.png",
+    "año": "2019",
+    "hora": "2 h",
+    "min": "49 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/smPeh0708Vx03w6TRlCfEpZ0TIL.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/8IA4kmS4fWgFao907zRbrDV6iH2.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/1BELG1iL0iawugSFsmYy2xOtXk3.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/pxw6j2AwlUsw5iS4fCxPoCP0jPh.jpg",
+    "sinopsis": "En el misterioso pueblo de Derry, un payaso llamado Pennywise vuelve 27 años después para atormentar a los ahora adultos miembros del Club de los Perdedores, que se encuentran alejados unos de otros.",
+    "genero": [
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "",
+    "videourl": "",
+    "tipo": 1,
+    "link": "peliculas/36-it-capitulo-2.html"
+  },
+  {
+    "id": "37",
+    "titulo": "It: Capítulo 2",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/jup42EiBBxKHODyFo0S4FhZDyb6.png",
+    "año": "2019",
+    "hora": "2 h",
+    "min": "49 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/smPeh0708Vx03w6TRlCfEpZ0TIL.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/8IA4kmS4fWgFao907zRbrDV6iH2.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/1BELG1iL0iawugSFsmYy2xOtXk3.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/pxw6j2AwlUsw5iS4fCxPoCP0jPh.jpg",
+    "sinopsis": "En el misterioso pueblo de Derry, un payaso llamado Pennywise vuelve 27 años después para atormentar a los ahora adultos miembros del Club de los Perdedores, que se encuentran alejados unos de otros.",
+    "genero": [
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/it.-capitulo.-2.-2019-hd.-720p.-brrip.-latino/It.Cap%C3%ADtulo.2.%282019%29HD.720p.BRRip.Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/37-it-capitulo-2.html"
+  },
+  {
+    "id": "38",
+    "titulo": "Bad Boys for Life",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/mDt7AJV9NsaO6UxZgzdt4JEcMEN.png",
+    "año": "2020",
+    "hora": "2 h",
+    "min": "3 min",
+    "edad": "18+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/ofJ50nkDnrE4sxazMTZfy1zE6Rf.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/mKbAl3Cf2SRwUYgyRQQkCF1US03.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/k1aqpJu2fonLJkwyIMb9esWdDzC.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/5XR7Pbo8qdwdpOIsFtWJOEiOJD6.jpg",
+    "sinopsis": "El Departamento de Policía de Miami y su equipo de élite AMMO intentan derribar a Armando Armas, jefe de un cartel de la droga. Armando es un asesino de sangre fría con una naturaleza viciosa y contaminante. Él está comprometido con el trabajo del cartel y es enviado por su madre Isabel, para matar a Mike.",
+    "genero": [
+      "Suspense",
+      "Acción",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/B.b.f.life/B.b.f.life.mp4",
+    "tipo": 1,
+    "link": "peliculas/38-bad-boys-for-life.html"
+  },
+  {
+    "id": "39",
+    "titulo": "F*llar Casar Matar",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/7go8cGMfRwQ7d1eMUHuw96ugMCI.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "37 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/yU9Q8md40GsvPyNvBPN8zKbYFFa.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/sI3TuDdgCi5i4Gloh3zafoZRDrl.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/jJOVb2Ikhce1RgU0nYG4fJm7i3E.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ouSqCU275wmXHsnFuQSywb3tnSb.jpg",
+    "sinopsis": "Una fanática del crimen investiga a sus pretendientes para saber con quién solo tener relaciones, con quien podría casarse y quién quiere matarla.",
+    "genero": [
+      "Terror",
+      "Comedia",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/f-marry-kill-latino/F---%20Marry%20Kill%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/39-fllar-casar-matar.html"
+  },
+  {
+    "id": "40",
+    "titulo": "Expediente Warren: El último rito",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/mPUWGBTAvOFntOQlChwAN5NEew.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "15 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/fq8gLtrz1ByW3KQ2IM3RMZEIjsQ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/ybuYoEAnWEQ0YdLDxIR2sHZT3jV.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xhOgS7cfUfIijcIJsQyZ9RaHTyq.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/dyW5mX4wwDoZWgTYObx6pg9V0i9.jpg",
+    "sinopsis": "Los investigadores de lo paranormal Ed y Lorraine Warren se enfrentan a un último caso aterrador en el que están implicadas entidades misteriosas a las que deben enfrentarse.",
+    "genero": [
+      "Terror"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/nobody-2-2025_20250918/el%20conjuro%204%20ritos%20ocultos.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/40-expediente-warren-el-ultimo-rito.html"
   }
 ]

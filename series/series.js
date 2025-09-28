@@ -1,5 +1,4 @@
-// series.js - Versión con "scrub mode" (adelantar/retroceder) activado con ArrowRight desde Play/Pause
-// Requiere: window.__series_id inyectado antes de cargar este script
+// series.js - Versión corregida (topes navegación, skip no pausa, enter en scrub no pausa, CTA hide 2s, fixes)
 const JSON_PATHS = ["./seriebase.json", "../seriebase.json", "/seriebase.json"];
 const HLS_CDN = "https://cdn.jsdelivr.net/npm/hls.js@latest";
 
@@ -8,15 +7,17 @@ const CLEANUP_DAYS = 7;
 const CLEANUP_MS = CLEANUP_DAYS * 24 * 60 * 60 * 1000;
 const AUTO_SAVE_MS = 5000;
 const PROGRESS_MIN_SECONDS = 5;
+const DEFAULT_CREDITS_SECONDS = 90;
+const DEFAULT_CREDITS_PCT = 0.12;
 const NEXT_EP_COUNTDOWN_SECS = 8;
-const CONTROLS_HIDE_MS = 5000; // 5s inactive
-const PROGRESS_STEP_SECONDS = 5; // segundos que avanza/retrocede con flechas en scrub mode
+const PROGRESS_STEP_SECONDS = 10;
+const CONTROLS_HIDE_MS = 5000;
 
 /* Helpers */
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-/* ---------------- IndexedDB helpers ---------------- */
+/* ---------------- IndexedDB helpers (sin cambios) ---------------- */
 function idbOpen() {
   return new Promise((res, rej) => {
     const req = indexedDB.open("series_progress_db_v1", 1);
@@ -145,74 +146,74 @@ function injectOverlayHtmlAndStyles() {
     /* video */
     #player-video{ width:100%; height:100%; max-height:100vh; object-fit:contain; background:#000; outline:none; }
 
-    /* Top-left controls: pause/reveal then home */
-    #ctrl-pause-reveal{ position:absolute; left:18px; top:14px; z-index:100035; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.04); color:#fff; border:none; cursor:pointer; box-shadow: 0 8px 18px rgba(0,0,0,0.6); transition: opacity .18s ease, transform .12s; }
-    #ctrl-home{ position:absolute; left:82px; top:14px; z-index:100034; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.04); color:#fff; border:none; cursor:pointer; box-shadow: 0 8px 18px rgba(0,0,0,0.6); transition: opacity .18s ease, transform .12s; }
-    #ctrl-pause-reveal:focus, #ctrl-home:focus { outline:none; background:#fff; color:#000; box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 0 8px rgba(255,255,255,0.12); }
+    /* gaussian circular pause/mostrar UI */
+    #ctrl-pause-reveal{ position:absolute; left:18px; top:18px; z-index:100020;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 2px solid rgba(255,255,255,0.04);
+      color:#fff; padding:0; border-radius:50%; width:56px; height:56px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; }
 
-    #ctrl-pause-reveal.hidden, #ctrl-home.hidden { opacity:0; pointer-events:none; transform: translateY(-6px); }
+    /* gaussian home button */
+    #ctrl-home{ position:absolute; left:86px; top:18px; z-index:100020;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 2px solid rgba(255,255,255,0.04);
+      color:#fff; padding:0; border-radius:50%; width:56px; height:56px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; }
 
-    /* Player meta: moved lower, above controls */
-    #player-meta-wrap{ position:absolute; left:18px; bottom:160px; z-index:100020; color:#fff; text-align:left; display:flex; flex-direction:column; gap:6px; align-items:flex-start; pointer-events:none; transition: opacity .18s ease; max-width:44%; }
-    #player-tv-label{ font-size:0.95rem; opacity:0.95; color:#dcdcdc; font-weight:600; }
-    #player-title{ font-size:1.6rem; font-weight:700; margin:0; }
+    /* meta relocated just above controls */
+    #player-meta-wrap{ position:absolute; left:18px; top:calc(100% - 210px); z-index:100020; color:#fff; text-align:left; transform: translateY(-8px); }
+    #player-tv-label{ font-size:1rem; opacity:0.95; margin-bottom:6px; color:#dcdcdc; font-weight:600; }
+    #player-title{ font-size:1.6rem; font-weight:700; margin-bottom:6px; font-family: var(--title-font, 'LEMONMILK'), sans-serif; }
     #player-season-epi{ font-size:1.0rem; opacity:0.95; color:#dcdcdc; }
 
-    #player-legend{ position:absolute; left:18px; bottom:18px; z-index:100020; color:#fff; background: rgba(0,0,0,0.2); padding:8px 12px; border-radius:10px; font-size:1rem; display:flex; gap:8px; align-items:center; transition: opacity .18s ease; }
+    /* controls area - progress wide - background removed */
+    #player-controls{ position:absolute; bottom:64px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center; padding:8px 14px; backdrop-filter: none; background: transparent; border-radius: 999px; z-index:100010; width:calc(100% - 400px); justify-content:center; }
+    #player-controls button{ background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: none; color: #fff; padding:0; font-size:1.2rem; cursor:pointer; border-radius:50%; display:flex; align-items:center; justify-content:center; width:56px; height:56px; min-width:56px; transition: transform .12s ease, background .12s; }
+    #player-controls button.focused{ background:#fff !important; color:#000 !important; }
+    #player-controls .play-btn { width:64px; height:64px; }
 
-    /* controls container (play + large progress + time) - background removed (transparent) */
-    #player-controls{ position:absolute; bottom:64px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center; padding:8px 14px; background: transparent; border-radius: 999px; z-index:100010; transition: opacity .18s ease, transform .18s ease; }
-    #player-controls.hidden { opacity:0; pointer-events:none; transform: translateY(6px) translateX(-50%); }
+    #progress-wrap{ display:flex; align-items:center; gap:12px; width:100%; max-width:1200px; height:48px; }
+    #progress-wrap > div.progress-area{ position:relative; flex:1; height:10px; display:flex; align-items:center; }
+    #ctrl-progress{ -webkit-appearance:none; appearance:none; width:100%; height:10px; border-radius:999px; background:transparent; position:relative; z-index:100011; margin:0; }
+    #ctrl-progress::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: rgba(255,255,255,0.12); }
+    #ctrl-progress::-moz-range-track{ height:10px; border-radius:999px; background: rgba(255,255,255,0.12); }
+    #ctrl-progress::-webkit-slider-thumb{ -webkit-appearance:none; margin-top:-2px; width:14px; height:14px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.5); position:relative; z-index:100013; }
+    #ctrl-progress::-moz-range-thumb{ width:14px; height:14px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.5); position:relative; z-index:100013; }
 
-    /* play circular */
-    #ctrl-play{ width:72px; height:72px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border:none; color:#fff; cursor:pointer; box-shadow: 0 10px 26px rgba(0,0,0,0.55); }
-    #ctrl-play:focus { background:#fff !important; color:#000 !important; outline:none; box-shadow:0 12px 30px rgba(0,0,0,0.6), 0 0 0 10px rgba(255,255,255,0.12); }
+    /* red filled bar aligned exactly with track (behind thumb) */
+    #progress-filled{ position:absolute; height:10px; border-radius:999px; left:0; top:0; pointer-events:none; background:#ff2e2e; width:0%; z-index:1; }
 
-    /* progress: largo casi todo el ancho */
-    #ctrl-progress{ -webkit-appearance:none; appearance:none; height:8px; border-radius:999px; background:rgba(255,255,255,0.12); width:calc(100vw - 520px); max-width:1200px; transition: box-shadow .12s ease; }
-    #ctrl-progress::-webkit-slider-runnable-track{ height:8px; border-radius:999px; background:rgba(255,255,255,0.12); }
-    #ctrl-progress::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; margin-top:-5px; box-shadow:0 2px 6px rgba(0,0,0,0.5); }
-    #ctrl-progress:focus{ outline:none; box-shadow: 0 0 0 8px rgba(255,255,255,0.08); }
+    /* preview (canvas only) - hidden by default */
+    #progress-preview{ position:absolute; bottom:130px; left:50%; transform:translateX(-50%); z-index:100040; display:none; align-items:center; gap:12px; background: rgba(0,0,0,0.6); padding:10px; border-radius:6px; color:#fff; min-width:160px; max-width:420px; }
+    #progress-preview canvas{ width:320px; height:180px; object-fit:cover; border-radius:4px; background:#111; }
 
-    #progress-filled { position:absolute; height:8px; border-radius:999px; left:0; top:0; pointer-events:none; background: #ff2e2e; transform-origin:left center; width:0%; }
+    /* legend below preview */
+    #progress-legend{ position:absolute; bottom:100px; left:50%; transform:translateX(-50%); z-index:100041; display:none; color:#fff; font-size:0.95rem; background: rgba(0,0,0,0.45); padding:8px 12px; border-radius:6px; display:flex; gap:8px; align-items:center; animation: pulse-legend 1.2s ease-in-out infinite; }
+    @keyframes pulse-legend { 0% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-6px); } 100% { transform: translateX(-50%) translateY(0); } }
 
-    #progress-wrap{ position:relative; display:flex; align-items:center; gap:12px; width:calc(100vw - 520px); max-width:1200px; }
-
-    #ctrl-time{ color:#ddd; min-width:110px; text-align:right; font-size:.95rem; }
-
-    /* progress preview */
-    #progress-preview{ position:absolute; bottom:106px; left:50%; transform:translateX(-50%); z-index:100040; display:none; align-items:center; gap:12px; background: rgba(0,0,0,0.6); padding:10px; border-radius:6px; color:#fff; min-width:160px; max-width:380px; }
-    #progress-preview img{ width:140px; height:78px; object-fit:cover; border-radius:4px; background:#111; }
-    #progress-preview .meta{ display:flex; flex-direction:column; gap:6px; font-size:0.95rem; }
-    #progress-preview .meta .time{ font-weight:700; }
-
-    /* caption when progress focused (icon + text) with oscillation */
-    @keyframes oscillate { 0%{ transform: translateY(0px);} 50%{ transform: translateY(-6px);} 100%{ transform: translateY(0px);} }
-    #progress-legend{ position:absolute; bottom:88px; left:50%; transform:translateX(-50%); z-index:100041; display:none; color:#fff; font-size:0.95rem; background: rgba(0,0,0,0.45); padding:8px 12px; border-radius:6px; display:flex; gap:8px; align-items:center; }
-    #progress-legend i { margin-right:6px; vertical-align:middle; font-size:1.1rem; animation: oscillate 1.4s ease-in-out infinite; }
-
-    /* Next episode stacked (right middle) */
+    /* next ep stack - default gaussian */
     #next-ep-wrap{ position:absolute; right:48px; top:50%; transform:translateY(-50%); z-index:100025; display:flex; flex-direction:column; gap:8px; align-items:stretch; }
-    #next-ep-wrap.hidden { display:none; }
-    #next-ep-cta, #skip-ep-btn {
-      border-radius:10px; padding:12px 16px; font-size:1rem; cursor:pointer; border:none; display:flex; align-items:center; justify-content:space-between;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
-    #next-ep-cta{ background: linear-gradient(90deg,#8a2be2,#6fb3ff); color:#fff; }
-    #skip-ep-btn{ background: rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.04); }
-    #next-ep-cta:focus, #skip-ep-btn:focus { outline:none; box-shadow: 0 12px 30px rgba(138,43,226,0.14); background:#fff; color:#000; }
+    #next-ep-wrap.hidden{ display:none; }
+    #next-ep-cta, #skip-ep-btn{ border-radius:10px; padding:12px 16px; font-size:1rem; cursor:pointer; border:none; display:flex; justify-content:space-between; align-items:center; }
+    #next-ep-cta{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); color:#fff; border: 2px solid rgba(255,255,255,0.04); box-shadow: 0 10px 30px rgba(138,43,226,0.06); }
+    #skip-ep-btn{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); color:#fff; border:1px solid rgba(255,255,255,0.04); }
+    #next-ep-cta:focus, #skip-ep-btn:focus { background:#fff; color:#000; outline:none; }
 
-    button:focus, .episode-btn:focus, .season-btn:focus, a:focus { outline: none !important; }
-    * { -webkit-tap-highlight-color: transparent; }
+    /* player legend moved to bottom-left */
+    #player-legend{ position:absolute; left:18px; bottom:18px; z-index:100030; color:#fff; display:flex; gap:8px; align-items:center; background: rgba(0,0,0,0.28); padding:8px 10px; border-radius:8px; font-size:0.95rem; }
+    #player-legend i { font-size:1.05rem; }
+
+    /* focus visible for buttons (global) */
+    button:focus, .season-btn:focus, .episode-btn:focus, a:focus { outline: none !important; box-shadow: none !important; }
+    button:focus { background:#fff !important; color:#000 !important; }
+
     @media screen and (max-width:720px) {
-      #ctrl-pause-reveal{ left:12px; top:12px; }
-      #ctrl-home{ left:66px; top:12px; }
-      #player-meta-wrap { left:12px; bottom:120px; max-width:unset; }
-      #next-ep-wrap { right:18px; font-size:.95rem; }
       #player-controls{ left:16px; transform:none; width:calc(100% - 32px); justify-content:space-between; bottom:18px; }
-      #ctrl-progress{ width:calc(100vw - 180px); max-width:none; }
-      #progress-wrap{ width:calc(100vw - 180px); }
-      #progress-preview img{ width:96px; height:56px; }
+      #ctrl-pause-reveal{ left:12px; top:12px; width:48px; height:48px; }
+      #ctrl-home{ left:68px; top:12px; width:48px; height:48px; }
+      #progress-preview canvas{ width:220px; height:124px; }
     }
   `;
   document.head.appendChild(style);
@@ -224,57 +225,58 @@ function injectOverlayHtmlAndStyles() {
     <div class="player-wrap">
       <video id="player-video" playsinline webkit-playsinline></video>
 
-      <!-- pause/reveal first, then home (restart) -->
-      <button id="ctrl-pause-reveal" aria-label="Pausar y mostrar" title="Pausar y mostrar">
-        <i class="bi bi-pause-fill" style="font-size:1.1rem"></i>
+      <!-- pause/mostrar UI (gaussian background) -->
+      <button id="ctrl-pause-reveal" tabindex="0" title="Pausar y mostrar UI" aria-label="Pausar y mostrar UI">
+        <i class="bi bi-eye" style="font-size:1.2rem"></i>
       </button>
 
-      <button id="ctrl-home" aria-label="Volver al inicio" title="Volver al inicio">
+      <!-- volver al inicio (gaussian) -->
+      <button id="ctrl-home" tabindex="0" title="Volver al inicio" aria-label="Volver al inicio">
         <i class="bi bi-arrow-counterclockwise" style="font-size:1.1rem"></i>
       </button>
 
-      <div id="player-meta-wrap" aria-hidden="true">
+      <div id="player-meta-wrap">
         <div id="player-tv-label"><strong>Tv</strong> Series</div>
         <div id="player-title"></div>
         <div id="player-season-epi"></div>
       </div>
 
-      <div id="player-legend">
-        <span>◀ ▶ moverse</span>
+      <!-- legend of basic controls (left/right/enter + up/down icon) -->
+      <div id="player-legend" aria-hidden="true">
+        <span><i class="bi bi-arrow-left"></i> <i class="bi bi-arrow-right"></i> : <strong>Adelantar / Retroceder</strong></span>
         <span style="opacity:.6">|</span>
-        <span>Enter: seleccionar</span>
+        <span><i class="bi bi-keyboard-fill"></i> Enter : <strong>Seleccionar / Salir</strong></span>
       </div>
 
       <div id="player-controls" role="toolbar" aria-label="Controles">
-        <button id="ctrl-play" tabindex="0" title="Play/Pausa"><i class="bi bi-play-fill" style="font-size:1.4rem"></i></button>
         <div id="progress-wrap">
-          <div id="progress-container" style="position:relative;">
-            <div id="progress-filled" aria-hidden="true"></div>
+          <button id="btn-play" tabindex="0" aria-label="Play/Pause" title="Play/Pause" class="play-btn">
+            <i class="bi bi-play-fill" style="font-size:1.4rem"></i>
+          </button>
+          <div class="progress-area" style="position:relative;">
             <input id="ctrl-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Progreso" />
+            <div id="progress-filled"></div>
           </div>
+          <div id="ctrl-time">00:00 / 00:00</div>
         </div>
-        <div id="ctrl-time">00:00 / 00:00</div>
       </div>
 
       <div id="progress-preview" aria-hidden="true">
-        <img id="progress-preview-img" src="" alt="preview" />
-        <div class="meta"><div class="time">00:00</div><div class="pct">0%</div></div>
+        <canvas id="progress-preview-canvas" width="320" height="180" style="display:block"></canvas>
       </div>
-      <div id="progress-legend"><i class="bi bi-caret-down-fill"></i> Pulsa para volver</div>
+
+      <div id="progress-legend" aria-hidden="true"><i class="bi bi-caret-down-fill"></i><span style="margin-left:6px">PULSA PARA VOLVER</span></div>
 
       <div id="next-ep-wrap" class="hidden" aria-hidden="true">
-        <button id="next-ep-cta" tabindex="0" aria-label="Próximo episodio">
-          <span class="label">Próximo episodio</span>
-          <span class="countdown">${NEXT_EP_COUNTDOWN_SECS}</span>
-        </button>
-        <button id="skip-ep-btn" tabindex="0" aria-label="Omitir conteo">Omitir</button>
+        <button id="next-ep-cta" aria-hidden="true"><span class="label">Próximo episodio</span><span class="countdown">${NEXT_EP_COUNTDOWN_SECS}</span></button>
+        <button id="skip-ep-btn" aria-hidden="true">Omitir</button>
       </div>
     </div>
   `;
   document.body.appendChild(overlay);
 }
 
-/* ---------------- Player core + Next Episode + robust scrub (scrub = modo adelantar/retroceder) ---------------- */
+/* ---------------- Player core + fixes ---------------- */
 let _autosaveInterval = null;
 const _player_state = { src: "", type: "" };
 
@@ -285,108 +287,35 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
 
   const overlay = document.getElementById("player-overlay");
   const video = document.getElementById("player-video");
-  const btnPlay = document.getElementById("ctrl-play");
+  const btnPlay = document.getElementById("btn-play");
+  const progress = document.getElementById("ctrl-progress");
+  const timeDiv = document.getElementById("ctrl-time");
   const btnPauseReveal = document.getElementById("ctrl-pause-reveal");
   const btnHome = document.getElementById("ctrl-home");
-  const progress = document.getElementById("ctrl-progress");
-  const progressFilled = document.getElementById("progress-filled");
+  const playerMetaWrap = document.getElementById("player-meta-wrap");
   const progressPreview = document.getElementById("progress-preview");
-  const previewImg = document.getElementById("progress-preview-img");
-  const previewTime = progressPreview.querySelector(".meta .time");
-  const previewPct = progressPreview.querySelector(".meta .pct");
+  const previewCanvas = document.getElementById("progress-preview-canvas");
   const progressLegend = document.getElementById("progress-legend");
-  const timeDiv = document.getElementById("ctrl-time");
-  const playerTitle = document.getElementById("player-title");
-  const tvLabel = document.getElementById("player-tv-label");
-  const seasonEpi = document.getElementById("player-season-epi");
+  const progressFilled = document.getElementById("progress-filled");
   const nextWrap = document.getElementById("next-ep-wrap");
   const nextBtn = document.getElementById("next-ep-cta");
   const skipBtn = document.getElementById("skip-ep-btn");
   const playerControls = document.getElementById("player-controls");
-  const playerMetaWrap = document.getElementById("player-meta-wrap");
   const playerLegend = document.getElementById("player-legend");
 
-  // next episode state
-  let nextShown = false;
-  let nextCountdown = NEXT_EP_COUNTDOWN_SECS;
-  let nextIntervalId = null;
-  let nextAutoDisabled = false;
-  let creditsStartSec = null;
-  let nextExecuted = false;
-
-  // hide controls timer
-  let hideControlsTimer = null;
-
-  // scrub (progress) mode flag and storage for children display states
-  let scrubMode = false;
-  const childrenPrevDisplay = new Map();
-
-  // Funciones para activar/desactivar scrub mode (petición exacta del usuario)
-  function enterScrubMode() {
-    if (!playerControls || scrubMode) return;
-    scrubMode = true;
-    // Ocultar todos los elementos "arriba" y "laterales" excepto la barra de progreso y preview/legend
-    try {
-      // Guardamos display previo y ocultamos todos los hijos de playerControls excepto el progress-wrap
-      Array.from(playerControls.children).forEach(child => {
-        childrenPrevDisplay.set(child, child.style.display || "");
-        if (child.id && child.id.includes("progress")) {
-          child.style.display = "flex"; // mantener visible la progress area
-        } else {
-          child.style.display = "none";
-        }
-      });
-      // ocultar pause/home/meta/legend/nextWrap para que solo quede la barra + preview + leyenda
-      [btnPauseReveal, btnHome, playerMetaWrap, playerLegend, playerLegend, nextWrap].forEach(el => {
-        if (!el) return;
-        childrenPrevDisplay.set(el, el.style.display || "");
-        el.style.display = "none";
-      });
-      // Mostrar preview y leyenda justo debajo y centrar barra (el CSS ya posiciona preview)
-      progressPreview.style.display = "flex";
-      progressPreview.setAttribute("aria-hidden", "false");
-      progressLegend.style.display = "flex";
-      // Llevar foco a input progress para que las flechas (izq/der) actúen
-      try { progress.focus(); } catch (e) {}
-      resetHideControlsTimer();
-    } catch (e) { console.warn("enterScrubMode err", e); }
-  }
-
-  function exitScrubMode() {
-    if (!playerControls || !scrubMode) return;
-    scrubMode = false;
-    try {
-      // Restauramos displays guardados
-      Array.from(playerControls.children).forEach(child => {
-        if (childrenPrevDisplay.has(child)) child.style.display = childrenPrevDisplay.get(child) || "";
-        else child.style.display = "";
-      });
-      [btnPauseReveal, btnHome, playerMetaWrap, playerLegend, nextWrap].forEach(el => {
-        if (!el) return;
-        if (childrenPrevDisplay.has(el)) el.style.display = childrenPrevDisplay.get(el) || "";
-        else el.style.display = "";
-      });
-      childrenPrevDisplay.clear();
-      // ocultar preview y legend
-      progressPreview.style.display = "none";
-      progressPreview.setAttribute("aria-hidden", "true");
-      progressLegend.style.display = "none";
-      // regresar foco al play/pause
-      try { btnPlay.focus(); } catch (e) {}
-      resetHideControlsTimer();
-    } catch (e) { console.warn("exitScrubMode err", e); }
-  }
+  if (progressPreview) progressPreview.style.display = "none";
+  if (progressLegend) progressLegend.style.display = "none";
+  if (playerLegend) playerLegend.style.display = "flex";
 
   // Fill meta
   try {
     const ageText = (document.getElementById("edad")?.textContent || "").trim() || "N/A";
-    const titleText = (document.getElementById("movie-title-text")?.textContent || "").trim() || "";
-    playerTitle.textContent = titleText;
+    document.getElementById("player-tv-label") && (document.getElementById("player-tv-label").textContent = "Tv Series");
+    document.getElementById("player-title") && (document.getElementById("player-title").textContent = (document.getElementById("movie-title-text")?.textContent || "").trim());
     let sLabel = cardEl?.getAttribute("data-season") || document.getElementById("video1")?.dataset.lastSeason || "";
     let eLabel = cardEl?.getAttribute("data-episode") || document.getElementById("video1")?.dataset.lastEpisode || "";
-    if (sLabel && eLabel) seasonEpi.textContent = `${ageText} - S${sLabel} E${eLabel}`;
-    else seasonEpi.textContent = ageText ? `${ageText}` : "";
-    if (tvLabel) tvLabel.innerHTML = `<strong>Tv</strong> Series`;
+    const seText = (sLabel && eLabel) ? `${(document.getElementById("edad")?.textContent || "").trim()} • S${sLabel} E${eLabel}` : (document.getElementById("edad")?.textContent || "").trim();
+    document.getElementById("player-season-epi") && (document.getElementById("player-season-epi").textContent = seText);
   } catch (e) {}
 
   // set source if changed
@@ -404,65 +333,82 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
 
   try { progress.tabIndex = 0; } catch (e) {}
 
-  // initial focus on play
-  setTimeout(()=>{ try { btnPlay.focus(); } catch(e) {} }, 120);
+  // STATE
+  let scrubMode = false;
+  let wasPlaying = false;
+  let hideControlsTimer = null;
+  let creditsStartSec = null;
+  let nextShown = false;
+  let nextIntervalId = null;
+  let nextCountdown = NEXT_EP_COUNTDOWN_SECS;
+  let nextAutoDisabled = false;
+  let nextExecuted = false;
+  let skipHideTimeout = null;
+  let savedDisplay = new Map();
+  let pendingSeekCallback = null;
 
-  function updatePlayIcon() {
+  /***** UI Update helpers *****/
+  function setPlayFocusedStyle(on) {
     if (!btnPlay) return;
-    btnPlay.innerHTML = video.paused ? `<i class="bi bi-play-fill" style="font-size:1.4rem"></i>` : `<i class="bi bi-pause-fill" style="font-size:1.4rem"></i>`;
+    if (on) btnPlay.classList.add('focused');
+    else btnPlay.classList.remove('focused');
   }
-
+  function updatePlayIcon() {
+    btnPlay.innerHTML = video.paused ? `<i class="bi bi-play-fill" style="font-size:1.4rem"></i>` : `<i class="bi bi-pause-fill" style="font-size:1.4rem"></i>`;
+    setPlayFocusedStyle(document.activeElement === btnPlay);
+  }
+  function updatePauseRevealIcon() {
+    if (!btnPauseReveal) return;
+    const iconName = video && !video.paused ? 'bi-eye-slash' : 'bi-eye';
+    btnPauseReveal.innerHTML = `<i class="${iconName}" style="font-size:1.2rem"></i>`;
+  }
   function updateProgressUI() {
     const dur = video.duration || 0;
-    const cur = video.currentTime || 0;
-    const pct = (dur && dur > 0) ? Math.min(100, (cur / dur) * 100) : 0;
-    try {
-      progress.max = isFinite(dur) && dur > 0 ? Math.floor(dur) : 0;
-      progress.value = Math.floor(cur || 0);
-    } catch (e) {}
-    if (progressFilled) progressFilled.style.width = pct + "%";
-    if (timeDiv) timeDiv.textContent = `${formatTime(cur || 0)} / ${formatTime(dur || 0)}`;
-    if (progressPreview && progressPreview.style.display === "flex") {
-      previewTime.textContent = formatTime(Math.floor(cur || 0));
-      previewPct.textContent = `${Math.round(pct)}%`;
+    const cur = Math.floor(video.currentTime || 0);
+    if (isFinite(dur) && dur > 0) {
+      progress.max = Math.floor(dur);
+      progress.value = Math.floor(video.currentTime || 0);
+      const pct = Math.round((cur / dur) * 100);
+      if (progressFilled) progressFilled.style.width = pct + "%";
+    } else {
+      progress.max = 0; progress.value = 0;
+      if (progressFilled) progressFilled.style.width = "0%";
     }
+    timeDiv.textContent = `${formatTime(video.currentTime || 0)} / ${formatTime(video.duration || 0)}`;
+    updatePauseRevealIcon();
   }
 
-  function tick() {
-    if (!video) return;
-    updateProgressUI();
-    try {
-      if (!creditsStartSec) creditsStartSec = computeCreditsStart();
-      if (creditsStartSec && !nextShown && video.currentTime >= creditsStartSec) {
-        showNextCta();
-      }
-      if (nextShown && creditsStartSec && video.currentTime < (creditsStartSec - 3)) {
-        hideNextCta();
-      }
-    } catch (e) {}
+  /***** Ensure play button loses focused class when other top buttons get focus *****/
+  function attachFocusBlurHandlers() {
+    if (!btnPlay || !btnPauseReveal || !btnHome) return;
+    btnPlay.addEventListener('focus', () => { setPlayFocusedStyle(true); });
+    btnPlay.addEventListener('blur',  () => { setPlayFocusedStyle(false); });
+    btnPauseReveal.addEventListener('focus', () => { setPlayFocusedStyle(false); });
+    btnHome.addEventListener('focus', () => { setPlayFocusedStyle(false); });
+    document.addEventListener('focusin', () => { setPlayFocusedStyle(document.activeElement === btnPlay); });
   }
+  attachFocusBlurHandlers();
 
+  /***** Next episode logic (improved skip) *****/
   function computeCreditsStart() {
     try {
       if (cardEl && cardEl.dataset && cardEl.dataset.creditsStart) {
         const val = Number(cardEl.dataset.creditsStart || 0);
-        if (isFinite(val) && val > 0 && video.duration && val < video.duration) {
-          return val;
-        }
+        if (isFinite(val) && val > 0 && video.duration && val < video.duration) return val;
       }
       if (video.duration && isFinite(video.duration)) {
-        const bySec = Math.max(0, video.duration - 90);
-        const byPct = Math.max(0, Math.floor(video.duration * (1 - 0.12)));
+        const bySec = Math.max(0, video.duration - DEFAULT_CREDITS_SECONDS);
+        const byPct = Math.max(0, Math.floor(video.duration * (1 - DEFAULT_CREDITS_PCT)));
         return Math.min(bySec, byPct);
       }
       return null;
     } catch (e) { return null; }
   }
-
-  /* NEXT EP logic (sin tocar demasiado) */
-  function startNextCountdown() {
+  function pauseNextCountdown() { if (nextIntervalId) { clearInterval(nextIntervalId); nextIntervalId = null; } }
+  function startNextCountdownIfAppropriate() {
     if (!nextShown || nextAutoDisabled || nextExecuted) return;
     if (nextIntervalId) return;
+    if (video.paused) return;
     nextIntervalId = setInterval(() => {
       try {
         if (video.paused) return;
@@ -476,28 +422,54 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
       } catch (e) { clearInterval(nextIntervalId); nextIntervalId = null; }
     }, 1000);
   }
-  function pauseNextCountdown() { if (nextIntervalId) { clearInterval(nextIntervalId); nextIntervalId = null; } }
-
   function showNextCta() {
+    if (cardEl && cardEl._nextDisabled) return;
     const nextEpisodeEl = findNextEpisodeElement(cardEl);
     if (!nextEpisodeEl) return;
     nextShown = true; nextExecuted = false; nextAutoDisabled = false; nextCountdown = NEXT_EP_COUNTDOWN_SECS;
     if (nextBtn) nextBtn.querySelector(".countdown").textContent = String(nextCountdown);
     if (nextWrap) { nextWrap.classList.remove("hidden"); nextWrap.setAttribute("aria-hidden", "false"); }
-    if (!video.paused) startNextCountdown();
-    setTimeout(()=>{ try { nextBtn.tabIndex = 0; nextBtn.focus(); } catch(e){} }, 90);
-
+    if (!video.paused) startNextCountdownIfAppropriate();
     nextBtn.onclick = (ev) => { ev && ev.preventDefault(); const nEl = findNextEpisodeElement(cardEl); if (nEl) doPlayNextEpisode(nEl); };
-    skipBtn.onclick = (ev) => { ev && ev.preventDefault(); nextAutoDisabled = true; pauseNextCountdown(); try { skipBtn.focus(); } catch(e){} };
+    nextBtn.onkeydown = (ev) => { if (ev.key === "Enter") { ev.preventDefault(); nextBtn.click(); } };
+
+    // SKIP handler: must NOT pause the video. Hide CTAs after 2s permanently.
+    skipBtn.onclick = (ev) => {
+      ev && ev.preventDefault();
+      nextAutoDisabled = true;
+      pauseNextCountdown();
+      if (cardEl) cardEl._nextDisabled = true;
+      // hide CTAs immediately and permanently after 2s
+      hideNextCta(true);
+      if (skipHideTimeout) clearTimeout(skipHideTimeout);
+      skipHideTimeout = setTimeout(() => {
+        if (nextWrap) { nextWrap.classList.add('hidden'); nextWrap.setAttribute('aria-hidden','true'); }
+        if (nextIntervalId) { clearInterval(nextIntervalId); nextIntervalId = null; }
+      }, 2000); // 2 seconds as requested
+      // do NOT pause the video; maintain playback state
+      try { btnPlay && btnPlay.focus(); } catch(e) {}
+    };
+    skipBtn.onkeydown = (ev) => { if (ev.key === "Enter") { ev.preventDefault(); skipBtn.click(); } };
+    setTimeout(()=>{ try { nextBtn.focus(); } catch(e){} }, 90);
   }
-  function hideNextCta() {
+  function hideNextCta(removeHandlers=false) {
     nextShown = false; nextAutoDisabled = false; nextExecuted = false;
     pauseNextCountdown();
     if (nextWrap) { nextWrap.classList.add("hidden"); nextWrap.setAttribute("aria-hidden", "true"); }
-    if (nextBtn) { nextBtn.onclick = null; nextBtn.onkeydown = null; }
-    if (skipBtn) { skipBtn.onclick = null; skipBtn.onkeydown = null; }
+    if (nextBtn && removeHandlers) { nextBtn.onclick = null; nextBtn.onkeydown = null; nextBtn.tabIndex = -1; }
+    if (skipBtn && removeHandlers) { skipBtn.onclick = null; skipBtn.onkeydown = null; skipBtn.tabIndex = -1; }
+    if (skipHideTimeout) { clearTimeout(skipHideTimeout); skipHideTimeout = null; }
   }
-
+  async function doPlayNextEpisode(nextEl) {
+    try {
+      hideNextCta(true);
+      if (!nextEl) { if (overlay && overlay._cleanup) overlay._cleanup(); return; }
+      try { if (storageId) await idbDelete(storageId); } catch (e) {}
+      try { if (cardEl) { const innerPrev = cardEl.querySelector(".card-progress-inner"); if (innerPrev) innerPrev.style.width = "0%"; cardEl.classList.remove("playing"); } } catch (e) {}
+      if (overlay && overlay._cleanup) overlay._cleanup();
+      setTimeout(() => { try { nextEl.click(); } catch (e) {} }, 180);
+    } catch (e) { console.warn(e); }
+  }
   function findNextEpisodeElement(currentCard) {
     try {
       if (!currentCard) return document.querySelector(".episode-btn");
@@ -515,21 +487,143 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     } catch (err) { return null; }
   }
 
-  async function doPlayNextEpisode(nextEl) {
-    try {
-      hideNextCta();
-      if (!nextEl) { if (overlay && overlay._cleanup) overlay._cleanup(); return; }
-      try { if (storageId) await idbDelete(storageId); } catch (e) {}
-      try { if (cardEl) { const innerPrev = cardEl.querySelector(".card-progress-inner"); if (innerPrev) innerPrev.style.width = "0%"; cardEl.classList.remove("playing"); } } catch (e) {}
-      if (overlay && overlay._cleanup) overlay._cleanup();
-      setTimeout(() => { try { nextEl.click(); } catch (e) { console.warn("Could not trigger next episode click", e); } }, 180);
-    } catch (e) { console.warn(e); }
+  /***** SCRUB MODE (enter/exit + preview update) *****/
+  function enterScrubMode(initialTime=null) {
+    if (scrubMode) return;
+    scrubMode = true;
+    wasPlaying = !video.paused;
+    try { video.pause(); } catch (e) {}
+    // hide meta & control-buttons except progress bar
+    const toHide = [btnPauseReveal, btnHome, playerMetaWrap, nextWrap];
+    toHide.forEach(el => { if (!el) return; savedDisplay.set(el, el.style.display || ""); el.style.display = "none"; });
+    // hide player legend when scrub is active
+    if (playerLegend) { savedDisplay.set(playerLegend, playerLegend.style.display || ""); playerLegend.style.display = "none"; }
+
+    // hide other children of playerControls except progress area
+    Array.from(playerControls.children).forEach(child => {
+      savedDisplay.set(child, child.style.display || "");
+      child.style.display = "none";
+    });
+    // show only progress-wrap
+    const progressWrap = document.getElementById("progress-wrap");
+    if (progressWrap) { progressWrap.style.display = "flex"; }
+
+    // show preview & legend (progressLegend)
+    showProgressPreview(typeof initialTime === "number" ? initialTime : (video.currentTime || 0));
+    if (progressLegend) progressLegend.style.display = "flex";
+    try { progress.focus(); } catch (e) {}
+    resetHideControlsTimer();
   }
 
-  /* Controls behavior */
+  async function exitScrubMode() {
+    if (!scrubMode) return;
+    scrubMode = false;
+    // restore saved displays
+    for (const [el, display] of savedDisplay.entries()) {
+      try { el.style.display = display || ""; } catch (e) {}
+    }
+    savedDisplay = new Map();
+    // restore player legend
+    if (playerLegend) playerLegend.style.display = "flex";
+    hideProgressPreview();
+    if (progressLegend) progressLegend.style.display = "none";
+    try { btnPlay.focus(); } catch (e) {}
+    try { if (wasPlaying) { video.play().catch(()=>{}); startNextCountdownIfAppropriate(); } } catch (e) {}
+    resetHideControlsTimer();
+  }
+
+  /* preview drawing - try drawImage(video) */
+  function drawPreviewFromVideo() {
+    try {
+      const ctx = previewCanvas.getContext('2d');
+      const w = previewCanvas.width;
+      const h = previewCanvas.height;
+      ctx.clearRect(0,0,w,h);
+      ctx.drawImage(video, 0, 0, w, h);
+    } catch (e) {
+      const ctx = previewCanvas.getContext('2d');
+      ctx.fillStyle = "#000"; ctx.fillRect(0,0,previewCanvas.width, previewCanvas.height);
+      const imgSrc = cardEl?.querySelector("img")?.src || document.getElementById("imagen-1")?.src || "";
+      if (!imgSrc) return;
+      const im = new Image();
+      im.crossOrigin = "anonymous";
+      im.onload = () => { try { ctx.drawImage(im,0,0,previewCanvas.width, previewCanvas.height); } catch(e){} };
+      im.src = imgSrc;
+    }
+  }
+  function showProgressPreview(timeSec) {
+    if (!progressPreview) return;
+    try {
+      if (pendingSeekCallback) { video.removeEventListener('seeked', pendingSeekCallback); pendingSeekCallback = null; }
+      pendingSeekCallback = function() {
+        drawPreviewFromVideo();
+        if (pendingSeekCallback) { video.removeEventListener('seeked', pendingSeekCallback); pendingSeekCallback = null; }
+      };
+      video.addEventListener('seeked', pendingSeekCallback);
+      try { video.currentTime = Math.max(0, Math.min(timeSec || 0, video.duration || timeSec)); } catch (e) { drawPreviewFromVideo(); }
+      setTimeout(() => {
+        if (pendingSeekCallback) { try { drawPreviewFromVideo(); video.removeEventListener('seeked', pendingSeekCallback); pendingSeekCallback = null; } catch(e){} }
+      }, 300);
+    } catch (e) { drawPreviewFromVideo(); }
+
+    progressPreview.style.display = "flex";
+    progressPreview.setAttribute("aria-hidden","false");
+  }
+  function hideProgressPreview() {
+    if (!progressPreview) return;
+    progressPreview.style.display = "none";
+    progressPreview.setAttribute("aria-hidden","true");
+  }
+
+  /***** Progress input events *****/
+  progress.addEventListener("input", (ev) => {
+    const v = Number(ev.target.value || 0);
+    timeDiv.textContent = `${formatTime(v)} / ${formatTime(video.duration || 0)}`;
+    const dur = video.duration || 0;
+    const pct = (dur && dur > 0) ? Math.min(100, Math.round((v / dur) * 100)) : 0;
+    if (progressFilled) progressFilled.style.width = pct + "%";
+    showProgressPreview(v);
+    resetHideControlsTimer();
+  });
+  progress.addEventListener("change", (ev) => {
+    try { video.currentTime = Number(ev.target.value || 0); updateProgressUI(); saveImmediate(storageId); } catch (e) {}
+    resetHideControlsTimer();
+  });
+
+  // keyboard on progress: left/right seek, down/enter -> exit scrub and resume if wasPlaying
+  progress.addEventListener("keydown", (e) => {
+    const key = e.key || "";
+    const code = e.keyCode || 0;
+    if (key === "ArrowDown" || key === "Down" || code === 40) {
+      e.preventDefault();
+      exitScrubMode();
+      return;
+    }
+    if (key === "Enter") {
+      e.preventDefault();
+      // same behavior as ArrowDown: exit scrub and resume if wasPlaying — do not pause
+      exitScrubMode();
+      return;
+    }
+    if (key === "ArrowLeft" || code === 37 || key === "ArrowRight" || code === 39) {
+      e.preventDefault();
+      try {
+        if (key === "ArrowLeft" || code === 37) video.currentTime = Math.max(0, (video.currentTime || 0) - PROGRESS_STEP_SECONDS);
+        else video.currentTime = Math.min(video.duration || Infinity, (video.currentTime || 0) + PROGRESS_STEP_SECONDS);
+        updateProgressUI();
+        saveImmediate(storageId);
+        showProgressPreview(video.currentTime || 0);
+      } catch(e){}
+      resetHideControlsTimer();
+      return;
+    }
+  });
+
+  /* Play / Home / PauseReveal behavior */
   btnPlay.onclick = () => {
     if (video.paused) { video.play().catch(()=>{}); startAutoSave(storageId); startNextCountdownIfAppropriate(); } else { try { video.pause(); } catch (e) {} saveImmediate(storageId); pauseNextCountdown(); }
     updatePlayIcon();
+    updatePauseRevealIcon();
     resetHideControlsTimer();
   };
   btnHome.onclick = () => {
@@ -554,254 +648,168 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     }
   };
 
-  // progress interactions (mouse/keyboard)
-  progress.addEventListener("focus", () => {
-    // si el usuario navega con TAB o realmente focus al input, entramos a scrub mode también
-    enterScrubMode();
-    resetHideControlsTimer();
-  });
-  progress.addEventListener("blur", () => {
-    // no cerramos automáticamente: el usuario debe pulsar ArrowDown para salir (según requisito).
-  });
-
-  progress.addEventListener("input", (ev) => {
+  /* Video events */
+  video.addEventListener("play", () => { updatePlayIcon(); startAutoSave(storageId); startNextCountdownIfAppropriate(); updatePauseRevealIcon(); });
+  video.addEventListener("pause", () => { updatePlayIcon(); saveImmediate(storageId); pauseNextCountdown(); updatePauseRevealIcon(); });
+  video.addEventListener("timeupdate", () => {
+    updateProgressUI();
     try {
-      const v = Number(ev.target.value || 0);
-      timeDiv.textContent = `${formatTime(v)} / ${formatTime(video.duration || 0)}`;
-      const dur = video.duration || 0;
-      const pct = (dur && dur > 0) ? Math.min(100, Math.round((v / dur) * 100)) : 0;
-      if (progressFilled) progressFilled.style.width = pct + "%";
-      showProgressPreview(v);
-    } catch(e){}
-    resetHideControlsTimer();
-  });
-  progress.addEventListener("change", (ev) => {
-    try { video.currentTime = Number(ev.target.value || 0); updateProgressUI(); saveImmediate(storageId); } catch (e) {}
-    resetHideControlsTimer();
-  });
-
-  // Key handling when progress has focus (input events)
-  progress.addEventListener("keydown", (e) => {
-    // Flecha arriba: no hace nada
-    if (e.key === "ArrowUp") { e.preventDefault(); return; }
-
-    // Flecha abajo: sale del scrub mode y vuelve al play/pause
-    if (e.key === "ArrowDown") { e.preventDefault(); exitScrubMode(); return; }
-
-    // Izquierda / Derecha en modo scrub: seek
-    if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && scrubMode === true) {
-      e.preventDefault();
-      try {
-        if (e.key === "ArrowLeft") video.currentTime = Math.max(0, (video.currentTime || 0) - PROGRESS_STEP_SECONDS);
-        else video.currentTime = Math.min(video.duration || Infinity, (video.currentTime || 0) + PROGRESS_STEP_SECONDS);
-        updateProgressUI();
-        saveImmediate(storageId);
-        showProgressPreview(video.currentTime || 0);
-      } catch (err) {}
-      resetHideControlsTimer();
-      return;
-    }
-
-    // Enter toggles play
-    if (e.key === "Enter") {
-      e.preventDefault();
-      try { btnPlay.click(); } catch (err) {}
-      resetHideControlsTimer();
-      return;
-    }
-  });
-
-  // Document-level: prioriza scrubbing cuando scrubMode = true (cubre remotes que no enfocan el input)
-  function documentScrubHandler(e) {
-    if (!overlay || !overlay.classList.contains("show")) return;
-    // solo actuamos si estamos en scrubMode
-    if (!scrubMode) return;
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      exitScrubMode();
-      return;
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      // explicitamente NO hacer nada
-      return;
-    }
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-      e.preventDefault();
-      try {
-        if (e.key === "ArrowLeft") video.currentTime = Math.max(0, (video.currentTime || 0) - PROGRESS_STEP_SECONDS);
-        else video.currentTime = Math.min(video.duration || Infinity, (video.currentTime || 0) + PROGRESS_STEP_SECONDS);
-        updateProgressUI();
-        saveImmediate(storageId);
-        showProgressPreview(video.currentTime || 0);
-      } catch (err) {}
-      resetHideControlsTimer();
-      return;
-    }
-  }
-  document.addEventListener("keydown", documentScrubHandler);
-
-  // helper preview show/hide
-  function showProgressPreview(timeSec) {
-    if (!progressPreview) return;
-    const dur = video.duration || 0;
-    const pct = (dur && dur > 0) ? Math.round((timeSec / dur) * 100) : 0;
-    previewTime.textContent = formatTime(Math.floor(timeSec || 0));
-    previewPct.textContent = `${pct}%`;
-    try {
-      let imgSrc = "";
-      if (cardEl) imgSrc = cardEl.querySelector("img")?.src || "";
-      if (!imgSrc) imgSrc = document.getElementById("imagen-1")?.src || "";
-      if (imgSrc) previewImg.src = imgSrc;
+      if (!creditsStartSec) creditsStartSec = computeCreditsStart();
+      if (creditsStartSec && !nextShown && video.currentTime >= creditsStartSec) showNextCta();
+      if (nextShown && creditsStartSec && video.currentTime < (creditsStartSec - 3)) hideNextCta();
     } catch (e) {}
-    progressPreview.style.display = "flex";
-    progressPreview.setAttribute("aria-hidden","false");
-    progressLegend.style.display = "flex";
-  }
-  function hideProgressPreview() {
-    if (!progressPreview) return;
-    progressPreview.style.display = "none";
-    progressPreview.setAttribute("aria-hidden","true");
-    progressLegend.style.display = "none";
-  }
-
-  // video listeners
-  video.addEventListener("play", () => { updatePlayIcon(); startAutoSave(storageId); startNextCountdownIfAppropriate(); });
-  video.addEventListener("pause", () => { updatePlayIcon(); saveImmediate(storageId); pauseNextCountdown(); });
-  video.addEventListener("timeupdate", () => { tick(); });
+  });
   video.addEventListener("loadedmetadata", () => {
     try {
       if (startAt && startAt > 1 && isFinite(video.duration) && startAt < video.duration) video.currentTime = startAt;
       creditsStartSec = computeCreditsStart();
     } catch (e) {}
-    tick();
+    updateProgressUI();
   });
   video.addEventListener("ended", async () => {
     updatePlayIcon();
     try { if (storageId) await idbDelete(storageId); } catch (e) {}
-    if (cardEl) { cardEl.classList.remove("playing"); const inner = card.querySelector(".card-progress-inner"); if (inner) inner.style.width = "0%"; }
+    if (cardEl) { cardEl.classList.remove("playing"); const inner = cardEl.querySelector(".card-progress-inner"); if (inner) inner.style.width = "0%"; }
     stopAutoSave();
     const nextEl = findNextEpisodeElement(cardEl);
-    if (nextEl) { setTimeout(() => { try { nextEl.click(); } catch (e) {} }, 480); } else { setTimeout(() => { if (overlay && overlay._cleanup) overlay._cleanup(); }, 400); }
+    if (nextEl) {
+      setTimeout(() => { try { nextEl.click(); } catch (e) {} }, 480);
+    } else {
+      setTimeout(() => { if (overlay && overlay._cleanup) overlay._cleanup(); }, 400);
+    }
   });
 
   try { await video.play(); } catch (err) { try { video.muted = true; await video.play(); } catch (e) { console.warn("Autoplay failed", e); } }
-  updatePlayIcon(); tick();
+  updatePlayIcon(); updateProgressUI();
 
-  // Auto-hide controls logic
-  function showControlsImmediateVisuals() {
-    if (playerControls) playerControls.classList.remove("hidden");
+  /***** Controls auto-hide & pointer activity (show again on any pointer/keyboard) *****/
+  function showControlsImmediate() {
+    if (playerControls) playerControls.style.opacity = "1";
     if (playerMetaWrap) playerMetaWrap.style.opacity = "1";
+    if (btnPauseReveal) btnPauseReveal.style.opacity = "1";
+    if (btnHome) btnHome.style.opacity = "1";
+    if (btnPlay) btnPlay.style.opacity = "1";
     if (playerLegend) playerLegend.style.opacity = "1";
-    if (btnPauseReveal) btnPauseReveal.classList.remove("hidden");
-    if (btnHome) btnHome.classList.remove("hidden");
   }
   function hideControls() {
-    if (playerControls) playerControls.classList.add("hidden");
+    if (scrubMode) return;
+    if (playerControls) playerControls.style.opacity = "0";
     if (playerMetaWrap) playerMetaWrap.style.opacity = "0";
+    if (btnPauseReveal) btnPauseReveal.style.opacity = "0";
+    if (btnHome) btnHome.style.opacity = "0";
+    if (btnPlay) btnPlay.style.opacity = "0";
     if (playerLegend) playerLegend.style.opacity = "0";
-    if (btnPauseReveal) btnPauseReveal.classList.add("hidden");
-    if (btnHome) btnHome.classList.add("hidden");
     hideProgressPreview();
   }
   function resetHideControlsTimer() {
-    showControlsImmediateVisuals();
+    showControlsImmediate();
     if (hideControlsTimer) clearTimeout(hideControlsTimer);
     hideControlsTimer = setTimeout(() => { hideControls(); }, CONTROLS_HIDE_MS);
   }
   resetHideControlsTimer();
+  function onPointerActivity() { resetHideControlsTimer(); }
+  overlay.addEventListener("mousemove", onPointerActivity);
+  overlay.addEventListener("pointermove", onPointerActivity);
+  overlay.addEventListener("touchstart", onPointerActivity);
 
-  // overlay pointer handlers (re-show on mouse/touch)
-  function onOverlayPointerActivity() { resetHideControlsTimer(); }
-  function onOverlayTouchStart() { resetHideControlsTimer(); }
-  overlay.addEventListener("mousemove", onOverlayPointerActivity);
-  overlay.addEventListener("pointermove", onOverlayPointerActivity);
-  overlay.addEventListener("touchstart", onOverlayTouchStart);
-
-  // Overlay keyboard navigation (D-pad)
+  /***** Key navigation (overlayKeyHandler) - robust rules implemented with topes *****/
   function overlayKeyHandler(e) {
     const overlayEl = document.getElementById("player-overlay");
     if (!overlayEl || !overlayEl.classList.contains("show")) return;
-    const tag = document.activeElement && document.activeElement.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA") return;
-
-    // Si estamos en scrubMode delegamos a documentScrubHandler (ya registrado) => ignoramos aquí
-    if (scrubMode) return;
-
-    // build candidates: pauseReveal, home, play, progress, next/skip if visible
-    const candidatesBase = [btnPauseReveal, btnHome, btnPlay, progress].filter(Boolean);
-    const nextVisible = nextWrap && !nextWrap.classList.contains("hidden");
-    let candidates = candidatesBase.slice();
-    if (nextVisible) {
-      if (nextBtn) candidates.push(nextBtn);
-      if (skipBtn) candidates.push(skipBtn);
-    }
-
     const active = document.activeElement;
-    const idx = candidates.indexOf(active);
+    const key = e.key || "";
+    const code = e.keyCode || 0;
 
-    // If nothing focused among candidates, set defaults
-    if (idx === -1) {
-      if (e.key === "ArrowLeft") { e.preventDefault(); candidates[candidates.length - 1]?.focus(); return; }
-      if (e.key === "ArrowRight") { e.preventDefault(); candidates[0]?.focus(); return; }
-      if (e.key === "Enter") { e.preventDefault(); btnPlay && btnPlay.click(); return; }
+    // TOPES (límites) según tu requerimiento:
+    // Play: ArrowDown, ArrowLeft -> tope (no hacer nada)
+    if (active === btnPlay && (key === "ArrowDown" || key === "Down" || code === 40 || key === "ArrowLeft" || code === 37)) {
+      // If press ArrowLeft or ArrowDown when on Play -> do nothing (topes)
+      // but if ArrowLeft we already want to block (user asked that left should be a tope on Play)
+      e.preventDefault();
+      return;
+    }
+    // Pause/Mostrar UI: ArrowUp, ArrowLeft -> tope
+    if (active === btnPauseReveal && (key === "ArrowUp" || key === "Up" || code === 38 || key === "ArrowLeft" || code === 37)) {
+      e.preventDefault();
+      return;
+    }
+    // Home (reiniciar): ArrowUp, ArrowRight -> tope
+    if (active === btnHome && (key === "ArrowUp" || key === "Up" || code === 38 || key === "ArrowRight" || code === 39)) {
+      e.preventDefault();
       return;
     }
 
-    // Navigation among candidates with left/right
-    if (e.key === "ArrowRight") {
+    // If scrubMode active, handle exit keys specially (do not mix with other nav)
+    if (scrubMode) {
+      if (key === "ArrowDown" || key === "Down" || code === 40) {
+        e.preventDefault(); exitScrubMode(); return;
+      }
+      if (key === "Enter") { e.preventDefault(); exitScrubMode(); return; }
+      // left/right handled by progress element handlers
+      return;
+    }
+
+    // Build navigation candidates for normal mode
+    const baseCandidates = [btnPauseReveal, btnHome, btnPlay, progress].filter(Boolean);
+    const nextVisible = nextWrap && !nextWrap.classList.contains("hidden");
+    const candidates = baseCandidates.slice();
+    if (nextVisible) { if (nextBtn) candidates.push(nextBtn); if (skipBtn) candidates.push(skipBtn); }
+
+    const idx = candidates.indexOf(active);
+
+    if (idx === -1) {
+      if (key === "ArrowRight") { e.preventDefault(); candidates[0]?.focus(); return; }
+      if (key === "ArrowLeft") { e.preventDefault(); candidates[candidates.length - 1]?.focus(); return; }
+      if (key === "Enter") { e.preventDefault(); btnPlay && btnPlay.click(); return; }
+      return;
+    }
+
+    // Right: if active is Play => special: enter scrub mode (user requested)
+    if (key === "ArrowRight") {
       e.preventDefault();
-      // Si focus está en el Play/Pause, la especificación pide que ArrowRight active el modo de adelantar/retroceder
       if (active === btnPlay) { enterScrubMode(); return; }
       const next = candidates[(idx + 1) % candidates.length];
       if (next) { next.focus(); resetHideControlsTimer(); }
       return;
-    } else if (e.key === "ArrowLeft") {
+    }
+    if (key === "ArrowLeft") {
       e.preventDefault();
       const prev = candidates[(idx - 1 + candidates.length) % candidates.length];
       if (prev) { prev.focus(); resetHideControlsTimer(); }
       return;
     }
 
-    // Vertical navigation rules
-    if (e.key === "ArrowDown") {
+    if (key === "ArrowDown") {
       e.preventDefault();
       if (active === btnPauseReveal || active === btnHome) { try { btnPlay.focus(); } catch(e){} resetHideControlsTimer(); return; }
-      if (active === btnPlay) { try { progress.focus(); } catch(e){} resetHideControlsTimer(); return; }
-      if (active === progress) {
-        // Si estamos en el input, ArrowDown saldrá del modo scrub (por requerimiento), pero aquí no estamos en scrub,
-        // así que al pulsar ArrowDown hacemos foco en play/pause.
-        try { btnPlay.focus(); } catch(e){} resetHideControlsTimer(); return;
-      }
+      if (active === btnPlay) { /* tope: nothing */ return; }
+      if (active === progress) { /* ignore - handled on progress element */ return; }
       if (active === nextBtn && nextVisible) { try { skipBtn.focus(); } catch(e){} resetHideControlsTimer(); return; }
-      if (active === skipBtn && nextVisible) { /* bottom already */ return; }
+      if (active === skipBtn && nextVisible) { try { btnPlay.focus(); } catch(e){} resetHideControlsTimer(); return; }
       return;
     }
 
-    if (e.key === "ArrowUp") {
+    if (key === "ArrowUp") {
       e.preventDefault();
       if (active === btnPlay) { try { btnPauseReveal.focus(); } catch(e){} resetHideControlsTimer(); return; }
-      if (active === progress) { /* do nothing as requested */ return; }
+      if (active === progress) { /* topes: do nothing when pressing up from progress */ return; }
       if (active === skipBtn && nextVisible) { try { nextBtn.focus(); } catch(e){} resetHideControlsTimer(); return; }
       if (active === nextBtn && nextVisible) { try { btnPlay.focus(); } catch(e){} resetHideControlsTimer(); return; }
       return;
     }
 
-    // Enter activates focused control
-    if (e.key === "Enter") {
+    if (key === "Enter") {
       e.preventDefault();
       if (active === btnPlay) { btnPlay.click(); return; }
       if (active === btnPauseReveal) { btnPauseReveal.click(); return; }
       if (active === btnHome) { btnHome.click(); return; }
-      if (active === progress) { btnPlay.click(); return; }
+      if (active === progress) { enterScrubMode(); return; }
       if (active === nextBtn) { nextBtn.click(); return; }
       if (active === skipBtn) { skipBtn.click(); return; }
       return;
     }
 
-    // Escape / Backspace closes player
-    if (e.key === "Escape" || e.key === "Backspace") {
+    if (key === "Escape" || key === "Backspace") {
       e.preventDefault();
       cleanup();
       return;
@@ -809,7 +817,20 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   }
   document.addEventListener("keydown", overlayKeyHandler);
 
-  // close handlers
+  // Additional handler to ensure ArrowDown / Enter exit scrub on PC keyboard
+  function globalScrubExitHandler(e) {
+    const overlayEl = document.getElementById("player-overlay");
+    if (!overlayEl || !overlayEl.classList.contains("show")) return;
+    const key = e.key || "";
+    const code = e.keyCode || 0;
+    if (scrubMode && (key === "ArrowDown" || key === "Down" || code === 40 || key === "Enter")) {
+      e.preventDefault();
+      exitScrubMode();
+    }
+  }
+  document.addEventListener("keydown", globalScrubExitHandler);
+
+  /* cleanup & bindings removal */
   const onKey = (e) => { if (e.key === "Escape" || e.key === "Backspace") { e.preventDefault(); cleanup(); } };
   document.addEventListener("keydown", onKey);
 
@@ -820,16 +841,17 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     _hlsInstance = null;
     stopAutoSave();
     pauseNextCountdown();
-    hideNextCta();
+    hideNextCta(true);
     document.body.classList.remove("player-active");
     overlay.classList.remove("show"); overlay.style.pointerEvents = "none";
-    document.removeEventListener("keydown", onKey);
     document.removeEventListener("keydown", overlayKeyHandler);
-    document.removeEventListener("keydown", documentScrubHandler);
-    overlay.removeEventListener("mousemove", onOverlayPointerActivity);
-    overlay.removeEventListener("pointermove", onOverlayPointerActivity);
-    overlay.removeEventListener("touchstart", onOverlayTouchStart);
+    document.removeEventListener("keydown", globalScrubExitHandler);
+    document.removeEventListener("keydown", onKey);
+    overlay.removeEventListener("mousemove", onPointerActivity);
+    overlay.removeEventListener("pointermove", onPointerActivity);
+    overlay.removeEventListener("touchstart", onPointerActivity);
     if (hideControlsTimer) clearTimeout(hideControlsTimer);
+    if (skipHideTimeout) clearTimeout(skipHideTimeout);
     if (cardEl) {
       setTimeout(() => {
         try {
@@ -845,10 +867,21 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   overlay._cleanup = cleanup;
   overlay._getVideo = () => video;
 
+  // initial focus: Play (ensure pauseReveal does not steal focus)
+  setTimeout(() => {
+    try {
+      btnPlay.focus();
+      updatePlayIcon();
+      if (btnPauseReveal) try { btnPauseReveal.blur(); } catch(e) {}
+      if (btnHome) try { btnHome.blur(); } catch(e) {}
+      updatePauseRevealIcon();
+    } catch(e) {}
+  }, 120);
+
   return cleanup;
 }
 
-/* helpers autopersistencia */
+/* auto-save helpers */
 function startAutoSave(storageId) {
   if (_autosaveInterval) return;
   _autosaveInterval = setInterval(() => { saveImmediate(storageId); }, AUTO_SAVE_MS);
@@ -868,8 +901,12 @@ async function saveImmediate(storageId) {
 }
 
 /* ---------------- D-pad & Hydrate UI (seasons/episodes) ---------------- */
-/* (mantengo tu lógica anterior casi intacta; agregué que Enter en season salte al primer episodio) */
-function focusElement(el) { if (!el) return false; try { el.focus(); return true; } catch (e) { return false; } }
+/* Mantengo la lógica que ya tenías (no la toco salvo donde era necesario para el foco en Enter sobre season -> first episode) */
+function focusElement(el) {
+  if (!el) return false;
+  try { el.focus(); return true; } catch (e) { return false; }
+}
+
 function getTopControlsOrdered() {
   const arr = [];
   const back = document.getElementById("back-button");
@@ -884,8 +921,16 @@ function getTopControlsOrdered() {
   if (report) arr.push(report);
   return arr;
 }
-function getSelectedSeasonButton() { return document.querySelector(".season-btn.selected") || document.querySelector(".season-btn"); }
-function getEpisodesForSeasonIdx(sIdx) { if (!sIdx) return []; return Array.from(document.querySelectorAll(`.episode-btn[data-season="${String(sIdx)}"]`)); }
+
+function getSelectedSeasonButton() {
+  return document.querySelector(".season-btn.selected") || document.querySelector(".season-btn");
+}
+
+function getEpisodesForSeasonIdx(sIdx) {
+  if (!sIdx) return [];
+  return Array.from(document.querySelectorAll(`.episode-btn[data-season="${String(sIdx)}"]`));
+}
+
 function focusFirstEpisodeOfSelectedSeason() {
   const sel = getSelectedSeasonButton();
   if (!sel) return false;
@@ -894,6 +939,7 @@ function focusFirstEpisodeOfSelectedSeason() {
   if (eps && eps.length) { focusElement(eps[0]); return true; }
   return false;
 }
+
 function storeLastSelection(seriesId, sIdx, eIdx) {
   try {
     const data = { seriesId, sIdx: String(sIdx), eIdx: String(eIdx), ts: Date.now() };
@@ -904,6 +950,7 @@ function storeLastSelection(seriesId, sIdx, eIdx) {
     if (playBtn) { playBtn.dataset.lastSeason = String(sIdx); playBtn.dataset.lastEpisode = String(eIdx); }
   } catch (e) {}
 }
+
 async function handlePlayButtonAction() {
   const seriesId = window.__series_id;
   try {
@@ -938,7 +985,6 @@ async function handlePlayButtonAction() {
 }
 
 /* ---------------- Hydrate UI & logic (seasons/episodes) ---------------- */
-/* Mantengo tu lógica de render y populación, con la parte importante: Enter en season salta al primer episodio */
 async function hydrateFromJSON() {
   const seriesId = window.__series_id || null;
   if (!seriesId) { console.warn("No series id in window.__series_id"); return; }
@@ -949,7 +995,7 @@ async function hydrateFromJSON() {
   const entry = base.find(x => String(x.id) === String(seriesId));
   if (!entry) { console.warn("series id not found in JSON:", seriesId); return; }
 
-  // Background
+  // BackgroundHero preferred
   const bgHero = entry.backgroundHero || entry.backgroundUrl || "";
   const bgSection = document.getElementById("background-section");
   const img1 = document.getElementById("imagen-1");
@@ -962,7 +1008,7 @@ async function hydrateFromJSON() {
   }
   if (entry.backgroundmovil && document.getElementById("imagen-2")) document.getElementById("imagen-2").src = entry.backgroundmovil;
 
-  // Title
+  // Title text (no title image)
   const titleEl = $("#movie-title-text");
   if (titleEl) titleEl.textContent = entry.title || entry.titulo || "";
 
@@ -977,11 +1023,10 @@ async function hydrateFromJSON() {
     });
   }
 
-  // year & age
+  // year & age & rating
   if ($("#edad")) $("#edad").textContent = entry.edad || "";
   if ($("#year-inline")) $("#year-inline").textContent = entry.año || "";
 
-  /* rating helper */
   function renderStarsWithNumber(containerStars, containerNumber, val) {
     if (!containerStars || !containerNumber) return;
     containerStars.innerHTML = "";
@@ -1000,7 +1045,7 @@ async function hydrateFromJSON() {
   const ratingNumberEl = document.getElementById("rating-number");
   renderStarsWithNumber(starsContainer, ratingNumberEl, entry.rating || entry.valor || 0);
 
-  // Build seasons
+  // Build seasons (same logic)
   let seasons = [];
   if (Array.isArray(entry.seasons) && entry.seasons.length) {
     seasons = entry.seasons.map((s, idx) => ( {
@@ -1039,7 +1084,7 @@ async function hydrateFromJSON() {
     }
   }
 
-  // populate #seasons-count using entry.temporadas
+  // seasons-count from entry.temporadas
   try {
     const seasonsCountEl = document.getElementById("seasons-count");
     let seasonsCountValue = null;
@@ -1058,7 +1103,7 @@ async function hydrateFromJSON() {
   const descP = document.querySelector("#descripcion p");
   if (descP) descP.textContent = entry.sinopsis || "";
 
-  // seasons UI
+  /* --- Resto del rendering de seasons/episodes (idéntico a la versión que funcionaba) --- */
   const seasonsButtons = $("#seasons-buttons");
   const seasonsWrap = $("#seasons-wrap");
   if (!seasonsButtons) { console.warn("No #seasons-buttons container in DOM"); return; }
@@ -1071,7 +1116,6 @@ async function hydrateFromJSON() {
     const cardW = btn ? btn.offsetWidth : (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--season-width')) || 120);
     return { gap, cardW };
   }
-
   function ensureSeasonInViewByIndex(idx1Based, smooth = true) {
     try {
       const total = seasons.length;
@@ -1098,10 +1142,9 @@ async function hydrateFromJSON() {
       }
       if (smooth && seasonsButtons.scrollTo) seasonsButtons.scrollTo({ left: target, behavior: 'smooth' });
       else seasonsButtons.scrollLeft = target;
-    } catch (e) {}
+    } catch (e) { /* swallow */ }
   }
 
-  // create season buttons
   seasons.forEach((s, idx) => {
     const btn = document.createElement("button");
     btn.className = "season-btn";
@@ -1113,7 +1156,9 @@ async function hydrateFromJSON() {
     if (idx === 0) btn.classList.add("selected");
     seasonsButtons.appendChild(btn);
 
-    btn.addEventListener("focus", () => { try { ensureSeasonInViewByIndex(s.index, true); } catch(e) {} });
+    btn.addEventListener("focus", (ev) => {
+      try { ensureSeasonInViewByIndex(s.index, true); } catch(e) {}
+    });
 
     btn.addEventListener("keydown", (e) => {
       const arr = Array.from(document.querySelectorAll(".season-btn"));
@@ -1124,31 +1169,19 @@ async function hydrateFromJSON() {
       else if (e.key === "ArrowUp") { e.preventDefault(); focusElement(document.getElementById("video1")); }
       else if (e.key === "Enter") {
         e.preventDefault();
-        // Seleccionar temporada y saltar foco al primer episodio (robusto)
-        try {
-          Array.from(document.querySelectorAll(".season-btn")).forEach(x => x.classList.remove("selected"));
-          btn.classList.add("selected");
-          ensureSeasonInViewByIndex(s.index, true);
-
-          const episodesListEl = document.getElementById("episodes-list");
-          if (episodesListEl) episodesListEl.classList.add("updating");
-
-          setTimeout(() => {
-            renderEpisodesForSeason(btn.getAttribute("data-season"));
-            setTimeout(() => {
-              const firstEp = document.querySelector(`.episode-btn[data-season="${btn.getAttribute('data-season')}"]`);
-              if (firstEp) { try { firstEp.focus(); } catch(e) {} }
-              if (episodesListEl) episodesListEl.classList.remove("updating");
-            }, 220);
-          }, 90);
-        } catch (er) {
-          btn.click();
+        Array.from(document.querySelectorAll(".season-btn")).forEach(x => x.classList.remove("selected"));
+        btn.classList.add("selected");
+        ensureSeasonInViewByIndex(s.index, true);
+        const episodesListEl = document.getElementById("episodes-list");
+        if (episodesListEl) episodesListEl.classList.add("updating");
+        setTimeout(() => {
+          renderEpisodesForSeason(btn.getAttribute("data-season"));
           setTimeout(() => {
             const firstEp = document.querySelector(`.episode-btn[data-season="${btn.getAttribute('data-season')}"]`);
-            if (firstEp) try { firstEp.focus(); } catch(e) {}
-          }, 300);
-        }
-        setTimeout(() => ensureSeasonInViewByIndex(s.index, true), 180);
+            if (firstEp) { try { firstEp.focus(); } catch(e) {} }
+            if (episodesListEl) episodesListEl.classList.remove("updating");
+          }, 180);
+        }, 60);
       }
     });
 
@@ -1161,11 +1194,7 @@ async function hydrateFromJSON() {
       setTimeout(() => {
         renderEpisodesForSeason(btn.getAttribute("data-season"));
         setTimeout(() => { if (episodesListEl) episodesListEl.classList.remove("updating"); }, 300);
-        // IMPORTANTE: tras click también enfocar primer episodio
-        setTimeout(() => {
-          const firstEp = document.querySelector(`.episode-btn[data-season="${btn.getAttribute('data-season')}"]`);
-          if (firstEp) try { firstEp.focus(); } catch(e) {}
-        }, 280);
+        setTimeout(() => { const firstEp = document.querySelector(`.episode-btn[data-season="${btn.getAttribute('data-season')}"]`); if (firstEp) try { firstEp.focus(); } catch(e) {} }, 280);
       }, 110);
     });
   });
@@ -1278,7 +1307,7 @@ async function hydrateFromJSON() {
     }, 40);
   }
 
-  // initial progress cleanup & selection logic
+  // initial season selection logic & focus (unchanged)
   const allProgress = await idbGetAll();
   for (const r of allProgress) {
     if (r.updated && (Date.now() - r.updated) > CLEANUP_MS) {
@@ -1310,7 +1339,7 @@ async function hydrateFromJSON() {
 
   renderEpisodesForSeason(initialSeasonIdx);
 
-  // focus last selection or first episode
+  // after render, focus logic from last selection (keeps behavior)
   setTimeout(() => {
     try {
       const last = localStorage.getItem("series_lastSelection");
@@ -1354,68 +1383,26 @@ async function hydrateFromJSON() {
 
   if (relevant.length) {
     const m = String(relevant[0].id).match(/::S(\d+)::E(\d+)/);
-    if (m) { const sIdx = m[1], eIdx = m[2]; storeLastSelection(seriesId, sIdx, eIdx); }
+    if (m) {
+      const sIdx = m[1], eIdx = m[2];
+      storeLastSelection(seriesId, sIdx, eIdx);
+    }
   } else {
     const first = document.querySelector(".episode-btn");
     if (first) storeLastSelection(seriesId, first.getAttribute("data-season"), first.getAttribute("data-episode"));
   }
 
-  // initial top play focus
+  // initial focus to Play button in left column
   setTimeout(() => {
     const playBtn = document.getElementById("video1");
     if (playBtn) focusElement(playBtn);
   }, 120);
 
-  // Install global D-pad handler (non-player overlay)
-  document.addEventListener("keydown", (ev) => {
-    const tag = document.activeElement && document.activeElement.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA") return;
-    const overlayEl = document.getElementById("player-overlay");
-    if (overlayEl && overlayEl.classList.contains("show")) return;
+  // Top play handler
+  const playBtn = document.getElementById("video1");
+  if (playBtn) playBtn.addEventListener("click", (e) => { e && e.preventDefault(); handlePlayButtonAction(); });
 
-    const topControls = getTopControlsOrdered();
-    const active = document.activeElement;
-    if (topControls.includes(active)) {
-      const idx = topControls.indexOf(active);
-      if (ev.key === "ArrowLeft") {
-        ev.preventDefault();
-        const pv = Math.max(0, idx - 1);
-        focusElement(topControls[pv]);
-        return;
-      } else if (ev.key === "ArrowRight") {
-        ev.preventDefault();
-        const nx = idx + 1;
-        if (nx < topControls.length) { focusElement(topControls[nx]); return; }
-        const firstEp = (function(){ const sel = getSelectedSeasonButton(); return sel ? document.querySelector(`.episode-btn[data-season="${sel.getAttribute('data-season')}"]`) : document.querySelector(".episode-btn"); })();
-        if (firstEp) { focusElement(firstEp); return; }
-      } else if (ev.key === "ArrowDown") {
-        ev.preventDefault();
-        const selSeason = getSelectedSeasonButton();
-        if (selSeason) { focusElement(selSeason); return; }
-        const firstSeason = document.querySelector(".season-btn");
-        if (firstSeason) { focusElement(firstSeason); return; }
-      } else if (ev.key === "Enter") {
-        ev.preventDefault();
-        if (active && active.id === "video1") { handlePlayButtonAction(); return; }
-        try { active.click(); } catch (e) {}
-      }
-      return;
-    }
-
-    if (active && active.classList && active.classList.contains("season-btn")) {
-      return;
-    }
-    if (active && active.classList && active.classList.contains("episode-btn")) {
-      return;
-    }
-    if (ev.key === "ArrowRight") {
-      ev.preventDefault();
-      const firstSeason = document.querySelector(".season-btn");
-      if (firstSeason) { focusElement(firstSeason); return; }
-    }
-  });
-
-  // UI actions
+  // Favorito / Report / Donar UI actions
   const fav = document.getElementById("favorito"); if (fav) fav.addEventListener("click", (e) => { e.preventDefault(); alert("Añadido a favoritos (UI)"); });
   const rep = document.getElementById("reportar-video"); if (rep) rep.addEventListener("click", (e) => { e.preventDefault(); alert("Reportado (UI)"); });
   const shareBtn = document.getElementById("botonCompartir"); if (shareBtn) shareBtn.addEventListener("click", () => {

@@ -935,5 +935,76 @@
     "videourl": "https://archive.org/download/nobody-2-2025_20250918/el%20conjuro%204%20ritos%20ocultos.ia.mp4",
     "tipo": 1,
     "link": "peliculas/40-expediente-warren-el-ultimo-rito.html"
+  },
+  {
+    "id": "41",
+    "titulo": "Weapons",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/2KMPlvfVDQcvzQdzUahdEXz2M2u.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "9 min",
+    "edad": "18+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/2KMPlvfVDQcvzQdzUahdEXz2M2u.png",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/kyqM6padQzZ1eYxv84i9smNvZAG.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xlDv0K9VtDcHBkYX4rxbvrTrAnv.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/6Gw2eH2SkANYXC7mDjtYMppOXiL.jpg",
+    "sinopsis": "Cuando todos los alumnos de una misma clase, salvo uno, desaparecen misteriosamente la misma noche y exactamente a la misma hora, la pequeña ciudad donde viven se pregunta quién o qué está detrás de su desaparición.",
+    "genero": [
+      "Terror",
+      "Misterio"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/weapons-2025-2castellano/Ver%20Weapons%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull.mp4",
+    "tipo": 1,
+    "link": "peliculas/41-weapons.html"
+  },
+  {
+    "id": "42",
+    "titulo": "Zoe, mi amiga muerta",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/c1YIJSf8ea842X05nvWNU2LdGJj.png",
+    "año": "2024",
+    "hora": "1 h",
+    "min": "43 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9CHKDdfAbZ8SbuHeX9SsjW4irAI.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/nDNVj5zNbf2jPoBvp7EkkB68vK8.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/enpfjj1SAsim85RbFJPr7YgOVdE.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/c7MRukxxhoEnX7SPGVxfUmQoWBc.jpg",
+    "sinopsis": "Una veterana de Afganistán mantiene una misteriosa relación con su mejor amiga del ejército, ya fallecida, y se enfrenta a su abuelo, veterano de Vietnam, en la ancestral casa familiar del lago.",
+    "genero": [
+      "Comedia",
+      "Bélica",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/la-casa-al-final-de-la-curva-latino/La%20casa%20al%20final%20de%20la%20curva%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/42-zoe-mi-amiga-muerta.html"
+  },
+  {
+    "id": "43",
+    "titulo": "Agárralo como puedas",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/5VH1ZaxT2nZm3JO62IdFYKI7RBb.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "25 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/kzeBfhXMRWiykBsqoL3UbfaM0S.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/cjbFjrvLdDKe0PJ2LXEOQvzlteA.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/pUuMSzDBBXK6OBXlmhxJnHnrcej.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/5RM9cbIQfrtYYSbb6KEL4bo8JYj.jpg",
+    "sinopsis": "Siguiendo los pasos de su torpe padre, el detective Frank Drebin Jr. debe resolver un caso de asesinato para evitar que el departamento de policía sea cerrado.",
+    "genero": [
+      "Comedia",
+      "Acción",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/agarralo-como-puedas-latino/Ag%C3%A1rralo%20como%20puedas%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/43-agarralo-como-puedas.html"
   }
 ]

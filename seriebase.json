@@ -22,8 +22,8 @@
         "seasonDescription": "Después de que el adolescente solitario Jake Wheeler descubre un muñeco antiguo (Good Guy) en una venta de garaje suburbana, una tranquila ciudad estadounidense pronto estalla en el caos cuando una ola de asesinatos escalofriantes comienza a revelar los secretos más profundos y oscuros de todos.",
         "seasonBackground": "https://image.tmdb.org/t/p/original/iF8ai2QLNiHV4anwY1TuSGZXqfN.jpg",
         "episodes": [
-          { "epi": "E1", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%201.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/hBRb6VZBbGD4Faz1VK2HH9ihqX8.jpg", "credits_start": 2760 },
-          { "epi": "E2", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%202.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/jx3G2ApN8YNIVQm4jg6fll754iU.jpg", "credits_start": 2472 },
+          { "epi": "E1", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%201.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/hBRb6VZBbGD4Faz1VK2HH9ihqX8.jpg","type": "mp4", "credits_start": 2760 },
+          { "epi": "E2", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%202.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/jx3G2ApN8YNIVQm4jg6fll754iU.jpg", "credits_start": 2468 },
           { "epi": "E3", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%203.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/r9v0ltyntLjr79vh1sCqTj5cuGJ.jpg", "credits_start": 2490 },
           { "epi": "E4", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%204.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/mKoMTuXFFqAa8YIJIPMKjq9NwMo.jpg", "credits_start": 2490 },
           { "epi": "E5", "url": "https://archive.org/download/t-2-capitulo-7/T1-Capitulo%205.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/zajMvMCFkimagQE0ZiA91EnTcAS.jpg", "credits_start": 2490 },
@@ -37,8 +37,14 @@
         "seasonDescription": "Mientras Jake y Devon enfrentan problemas como pareja en su nueva escuela católica, Chucky se embarca en una nueva ola de asesinatos, cruzándose con caras conocidas en el camino.",
         "seasonBackground": "https://image.tmdb.org/t/p/original/kY0BogCM8SkNJ0MNiHB3VTM86Tz.jpg",
         "episodes": [
-          { "epi": "E1", "url": "https://archive.org/.../s2e1.m3u8", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "m3u8" },
-          { "epi": "E2", "url": "https://ok.ru/video/123456789", "img": "https://image.tmdb.org/t/p/original/s2ep2.jpg" }
+          { "epi": "E1", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%201.mp4", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "mp4", "credits_start": 2490 },
+          { "epi": "E2", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%202.mp4", "img": "https://image.tmdb.org/t/p/original/s2ep2.jpg" },
+          { "epi": "E3", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%203.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/r9v0ltyntLjr79vh1sCqTj5cuGJ.jpg", "credits_start": 2490 },
+          { "epi": "E4", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%204.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/mKoMTuXFFqAa8YIJIPMKjq9NwMo.jpg", "credits_start": 2490 },
+          { "epi": "E5", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%205.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/zajMvMCFkimagQE0ZiA91EnTcAS.jpg", "credits_start": 2490 },
+          { "epi": "E6", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%206.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/hAeB4P2BLFFloX12gr8JgOtMugT.jpg", "credits_start": 2490 },
+          { "epi": "E7", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%207.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/ioz0T0mzMrVqJ7patjFN6N00aSg.jpg", "credits_start": 2490 },
+          { "epi": "E8", "url": "https://archive.org/download/t-2-capitulo-7/T2-Capitulo%208.mp4", "img": "https://media.themoviedb.org/t/p/w227_and_h127_bestv2/sj53EfFTsBds1OvsPlaPADrT9xm.jpg", "credits_start": 2490 }
         ]
       },
       {
@@ -46,7 +52,7 @@
         "seasonDescription": "Mientras Jake y Devon enfrentan problemas como pareja en su nueva escuela católica, Chucky se embarca en una nueva ola de asesinatos, cruzándose con caras conocidas en el camino.",
         "seasonBackground": "https://image.tmdb.org/t/p/original/kY0BogCM8SkNJ0MNiHB3VTM86Tz.jpg",
         "episodes": [
-          { "epi": "E1", "url": "https://archive.org/.../s2e1.m3u8", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "m3u8" },
+          { "epi": "E1", "url": "https://fastream.to/embed-r46tcr51urdn.html", "img": "https://image.tmdb.org/t/p/original/s2ep1.jpg", "type": "fastream" },
           { "epi": "E2", "url": "https://ok.ru/video/123456789", "img": "https://image.tmdb.org/t/p/original/s2ep2.jpg" }
         ]
       }

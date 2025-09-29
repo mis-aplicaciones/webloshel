@@ -1,4 +1,6 @@
-// series.js - Versión corregida (topes navegación, skip no pausa, enter en scrub no pausa, CTA hide 2s, fixes)
+// series.js - Versión corregida (controles wake-on-key, scrub oculta play, preview más pequeño)
+// Requiere: window.__series_id inyectado antes de cargar este script
+
 const JSON_PATHS = ["./seriebase.json", "../seriebase.json", "/seriebase.json"];
 const HLS_CDN = "https://cdn.jsdelivr.net/npm/hls.js@latest";
 
@@ -94,7 +96,37 @@ function okToEmbed(url) {
     return url.startsWith("//") ? url : url.replace(/^https?:/, "");
   } catch (e) { return url; }
 }
-
+/* ---------------- NUEVO: fastream -> embed helper ----------------
+   Detecta URLs fastream tipo:
+     - https://fastream.to/embed-r46tcr51urdn.html
+     - https://fastream.to/r46tcr51urdn
+   y devuelve la forma embed con protocolo https y autoplay=1 cuando se use en iframe.
+*/
+function fastreamToEmbed(url) {
+  if (!url || typeof url !== "string") return url;
+  try {
+    // normalize
+    let u = url.trim();
+    // if already embed form, ensure https
+    if (u.includes("fastream.to") && u.includes("/embed-")) {
+      if (!u.startsWith("http")) u = "https:" + u;
+      return u;
+    }
+    // short form /r<id>
+    const m = u.match(/fastream\.to\/r([-_A-Za-z0-9]+)/i);
+    if (m && m[1]) {
+      return `https://fastream.to/embed-r${m[1]}.html`;
+    }
+    // fallback: if host present but not r/ or embed- try to return as-is (with https)
+    if (u.includes("fastream.to")) {
+      if (!u.startsWith("http")) u = "https:" + u;
+      return u;
+    }
+    return url;
+  } catch (e) {
+    return url;
+  }
+}
 /* ---------------- fetch seriebase ---------------- */
 async function fetchSerieBase() {
   for (const p of JSON_PATHS) {
@@ -163,7 +195,7 @@ function injectOverlayHtmlAndStyles() {
       color:#fff; padding:0; border-radius:50%; width:56px; height:56px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; }
 
     /* meta relocated just above controls */
-    #player-meta-wrap{ position:absolute; left:18px; top:calc(100% - 210px); z-index:100020; color:#fff; text-align:left; transform: translateY(-8px); }
+    #player-meta-wrap{ position:absolute; left:5%; top:calc(100% - 210px); z-index:100020; color:#fff; text-align:left; transform: translateY(-8px); }
     #player-tv-label{ font-size:1rem; opacity:0.95; margin-bottom:6px; color:#dcdcdc; font-weight:600; }
     #player-title{ font-size:1.6rem; font-weight:700; margin-bottom:6px; font-family: var(--title-font, 'LEMONMILK'), sans-serif; }
     #player-season-epi{ font-size:1.0rem; opacity:0.95; color:#dcdcdc; }
@@ -185,12 +217,12 @@ function injectOverlayHtmlAndStyles() {
     /* red filled bar aligned exactly with track (behind thumb) */
     #progress-filled{ position:absolute; height:10px; border-radius:999px; left:0; top:0; pointer-events:none; background:#ff2e2e; width:0%; z-index:1; }
 
-    /* preview (canvas only) - hidden by default */
-    #progress-preview{ position:absolute; bottom:130px; left:50%; transform:translateX(-50%); z-index:100040; display:none; align-items:center; gap:12px; background: rgba(0,0,0,0.6); padding:10px; border-radius:6px; color:#fff; min-width:160px; max-width:420px; }
-    #progress-preview canvas{ width:320px; height:180px; object-fit:cover; border-radius:4px; background:#111; }
+    /* preview (canvas only) - hidden by default - ahora más pequeño */
+    #progress-preview{ position:absolute; bottom:120px; left:50%; transform:translateX(-50%); z-index:100040; display:none; align-items:center; gap:12px; background: rgba(0,0,0,0.6); padding:10px; border-radius:6px; color:#fff; min-width:120px; max-width:320px; }
+    #progress-preview canvas{ width:200px; height:112px; object-fit:cover; border-radius:4px; background:#111; }
 
     /* legend below preview */
-    #progress-legend{ position:absolute; bottom:100px; left:50%; transform:translateX(-50%); z-index:100041; display:none; color:#fff; font-size:0.95rem; background: rgba(0,0,0,0.45); padding:8px 12px; border-radius:6px; display:flex; gap:8px; align-items:center; animation: pulse-legend 1.2s ease-in-out infinite; }
+    #progress-legend{ position:absolute; bottom:50px; left:50%; transform:translateX(-50%); z-index:100041; display:none; color:#fff; font-size:0.95rem; background: rgba(0,0,0,0.45); padding:8px 12px; border-radius:6px; display:flex; gap:8px; align-items:center; animation: pulse-legend 1.2s ease-in-out infinite; }
     @keyframes pulse-legend { 0% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-6px); } 100% { transform: translateX(-50%) translateY(0); } }
 
     /* next ep stack - default gaussian */
@@ -213,7 +245,7 @@ function injectOverlayHtmlAndStyles() {
       #player-controls{ left:16px; transform:none; width:calc(100% - 32px); justify-content:space-between; bottom:18px; }
       #ctrl-pause-reveal{ left:12px; top:12px; width:48px; height:48px; }
       #ctrl-home{ left:68px; top:12px; width:48px; height:48px; }
-      #progress-preview canvas{ width:220px; height:124px; }
+      #progress-preview canvas{ width:160px; height:90px; }
     }
   `;
   document.head.appendChild(style);
@@ -227,12 +259,12 @@ function injectOverlayHtmlAndStyles() {
 
       <!-- pause/mostrar UI (gaussian background) -->
       <button id="ctrl-pause-reveal" tabindex="0" title="Pausar y mostrar UI" aria-label="Pausar y mostrar UI">
-        <i class="bi bi-eye" style="font-size:1.2rem"></i>
+        <i class="bi bi-x" style="font-size:1.2rem"></i>
       </button>
 
       <!-- volver al inicio (gaussian) -->
       <button id="ctrl-home" tabindex="0" title="Volver al inicio" aria-label="Volver al inicio">
-        <i class="bi bi-arrow-counterclockwise" style="font-size:1.1rem"></i>
+        <i class="bi bi-arrow-repeat" style="font-size:1.1rem"></i>
       </button>
 
       <div id="player-meta-wrap">
@@ -243,9 +275,9 @@ function injectOverlayHtmlAndStyles() {
 
       <!-- legend of basic controls (left/right/enter + up/down icon) -->
       <div id="player-legend" aria-hidden="true">
-        <span><i class="bi bi-arrow-left"></i> <i class="bi bi-arrow-right"></i> : <strong>Adelantar / Retroceder</strong></span>
+        <span><i class="bi bi-caret-left-fill"></i> <i class="bi bi-caret-right-fill"></i> <i class="bi bi-caret-up-fill"></i> <i class="bi bi-caret-down-fill"></i> : <strong>Navegar</strong></span>
         <span style="opacity:.6">|</span>
-        <span><i class="bi bi-keyboard-fill"></i> Enter : <strong>Seleccionar / Salir</strong></span>
+        <span><i class="bi bi-record2-fill"></i> Enter : <strong>Seleccionar / Ejecutar</strong></span>
       </div>
 
       <div id="player-controls" role="toolbar" aria-label="Controles">
@@ -262,7 +294,7 @@ function injectOverlayHtmlAndStyles() {
       </div>
 
       <div id="progress-preview" aria-hidden="true">
-        <canvas id="progress-preview-canvas" width="320" height="180" style="display:block"></canvas>
+        <canvas id="progress-preview-canvas" width="200" height="112" style="display:block"></canvas>
       </div>
 
       <div id="progress-legend" aria-hidden="true"><i class="bi bi-caret-down-fill"></i><span style="margin-left:6px">PULSA PARA VOLVER</span></div>
@@ -346,6 +378,7 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   let skipHideTimeout = null;
   let savedDisplay = new Map();
   let pendingSeekCallback = null;
+  let controlsHidden = false; // <-- FLAG para saber si los controles están ocultos por inactividad
 
   /***** UI Update helpers *****/
   function setPlayFocusedStyle(on) {
@@ -359,8 +392,8 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   }
   function updatePauseRevealIcon() {
     if (!btnPauseReveal) return;
-    const iconName = video && !video.paused ? 'bi-eye-slash' : 'bi-eye';
-    btnPauseReveal.innerHTML = `<i class="${iconName}" style="font-size:1.2rem"></i>`;
+    const iconName = video && !video.paused ? 'bi bi-x' : 'bi-x';
+    btnPauseReveal.innerHTML = `<i class="${iconName}" style="font-size:1.6rem"></i>`;
   }
   function updateProgressUI() {
     const dur = video.duration || 0;
@@ -439,7 +472,6 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
       nextAutoDisabled = true;
       pauseNextCountdown();
       if (cardEl) cardEl._nextDisabled = true;
-      // hide CTAs immediately and permanently after 2s
       hideNextCta(true);
       if (skipHideTimeout) clearTimeout(skipHideTimeout);
       skipHideTimeout = setTimeout(() => {
@@ -490,16 +522,21 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   /***** SCRUB MODE (enter/exit + preview update) *****/
   function enterScrubMode(initialTime=null) {
     if (scrubMode) return;
+    // if controls are hidden (controlsHidden true), first call should wake UI only (handled elsewhere)
+    if (controlsHidden) return;
+
     scrubMode = true;
     wasPlaying = !video.paused;
     try { video.pause(); } catch (e) {}
-    // hide meta & control-buttons except progress bar
+
+    // hide meta & control-buttons including Play (we want progress only)
     const toHide = [btnPauseReveal, btnHome, playerMetaWrap, nextWrap];
     toHide.forEach(el => { if (!el) return; savedDisplay.set(el, el.style.display || ""); el.style.display = "none"; });
-    // hide player legend when scrub is active
-    if (playerLegend) { savedDisplay.set(playerLegend, playerLegend.style.display || ""); playerLegend.style.display = "none"; }
 
-    // hide other children of playerControls except progress area
+    // Also hide play button specifically
+    if (btnPlay) { savedDisplay.set(btnPlay, btnPlay.style.display || ""); btnPlay.style.display = "none"; }
+
+    // hide other children of playerControls (we'll show only progress area)
     Array.from(playerControls.children).forEach(child => {
       savedDisplay.set(child, child.style.display || "");
       child.style.display = "none";
@@ -507,6 +544,9 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     // show only progress-wrap
     const progressWrap = document.getElementById("progress-wrap");
     if (progressWrap) { progressWrap.style.display = "flex"; }
+
+    // hide player legend when scrub is active
+    if (playerLegend) { savedDisplay.set(playerLegend, playerLegend.style.display || ""); playerLegend.style.display = "none"; }
 
     // show preview & legend (progressLegend)
     showProgressPreview(typeof initialTime === "number" ? initialTime : (video.currentTime || 0));
@@ -601,7 +641,6 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     }
     if (key === "Enter") {
       e.preventDefault();
-      // same behavior as ArrowDown: exit scrub and resume if wasPlaying — do not pause
       exitScrubMode();
       return;
     }
@@ -684,6 +723,7 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
 
   /***** Controls auto-hide & pointer activity (show again on any pointer/keyboard) *****/
   function showControlsImmediate() {
+    controlsHidden = false;
     if (playerControls) playerControls.style.opacity = "1";
     if (playerMetaWrap) playerMetaWrap.style.opacity = "1";
     if (btnPauseReveal) btnPauseReveal.style.opacity = "1";
@@ -693,6 +733,7 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   }
   function hideControls() {
     if (scrubMode) return;
+    controlsHidden = true;
     if (playerControls) playerControls.style.opacity = "0";
     if (playerMetaWrap) playerMetaWrap.style.opacity = "0";
     if (btnPauseReveal) btnPauseReveal.style.opacity = "0";
@@ -720,20 +761,24 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
     const key = e.key || "";
     const code = e.keyCode || 0;
 
-    // TOPES (límites) según tu requerimiento:
-    // Play: ArrowDown, ArrowLeft -> tope (no hacer nada)
+    // If controls were hidden due to inactivity, first keypress should wake them and focus Play (no other action).
+    if (controlsHidden && (key.startsWith("Arrow") || code === 37 || code === 38 || code === 39 || code === 40)) {
+      e.preventDefault();
+      showControlsImmediate();
+      try { btnPlay.focus(); } catch (err) {}
+      resetHideControlsTimer();
+      return;
+    }
+
+    // TOPES (límites):
     if (active === btnPlay && (key === "ArrowDown" || key === "Down" || code === 40 || key === "ArrowLeft" || code === 37)) {
-      // If press ArrowLeft or ArrowDown when on Play -> do nothing (topes)
-      // but if ArrowLeft we already want to block (user asked that left should be a tope on Play)
       e.preventDefault();
       return;
     }
-    // Pause/Mostrar UI: ArrowUp, ArrowLeft -> tope
     if (active === btnPauseReveal && (key === "ArrowUp" || key === "Up" || code === 38 || key === "ArrowLeft" || code === 37)) {
       e.preventDefault();
       return;
     }
-    // Home (reiniciar): ArrowUp, ArrowRight -> tope
     if (active === btnHome && (key === "ArrowUp" || key === "Up" || code === 38 || key === "ArrowRight" || code === 39)) {
       e.preventDefault();
       return;
@@ -901,7 +946,8 @@ async function saveImmediate(storageId) {
 }
 
 /* ---------------- D-pad & Hydrate UI (seasons/episodes) ---------------- */
-/* Mantengo la lógica que ya tenías (no la toco salvo donde era necesario para el foco en Enter sobre season -> first episode) */
+/* NOTE: mantuve tu lógica; retoqué solo el Enter sobre season para saltar al primer episodio (ya implementado) */
+
 function focusElement(el) {
   if (!el) return false;
   try { el.focus(); return true; } catch (e) { return false; }
@@ -925,12 +971,7 @@ function getTopControlsOrdered() {
 function getSelectedSeasonButton() {
   return document.querySelector(".season-btn.selected") || document.querySelector(".season-btn");
 }
-
-function getEpisodesForSeasonIdx(sIdx) {
-  if (!sIdx) return [];
-  return Array.from(document.querySelectorAll(`.episode-btn[data-season="${String(sIdx)}"]`));
-}
-
+function getEpisodesForSeasonIdx(sIdx) { if (!sIdx) return []; return Array.from(document.querySelectorAll(`.episode-btn[data-season="${String(sIdx)}"]`)); }
 function focusFirstEpisodeOfSelectedSeason() {
   const sel = getSelectedSeasonButton();
   if (!sel) return false;
@@ -939,7 +980,6 @@ function focusFirstEpisodeOfSelectedSeason() {
   if (eps && eps.length) { focusElement(eps[0]); return true; }
   return false;
 }
-
 function storeLastSelection(seriesId, sIdx, eIdx) {
   try {
     const data = { seriesId, sIdx: String(sIdx), eIdx: String(eIdx), ts: Date.now() };
@@ -950,7 +990,6 @@ function storeLastSelection(seriesId, sIdx, eIdx) {
     if (playBtn) { playBtn.dataset.lastSeason = String(sIdx); playBtn.dataset.lastEpisode = String(eIdx); }
   } catch (e) {}
 }
-
 async function handlePlayButtonAction() {
   const seriesId = window.__series_id;
   try {
@@ -1045,7 +1084,7 @@ async function hydrateFromJSON() {
   const ratingNumberEl = document.getElementById("rating-number");
   renderStarsWithNumber(starsContainer, ratingNumberEl, entry.rating || entry.valor || 0);
 
-  // Build seasons (same logic)
+  // Build seasons
   let seasons = [];
   if (Array.isArray(entry.seasons) && entry.seasons.length) {
     seasons = entry.seasons.map((s, idx) => ( {
@@ -1103,7 +1142,7 @@ async function hydrateFromJSON() {
   const descP = document.querySelector("#descripcion p");
   if (descP) descP.textContent = entry.sinopsis || "";
 
-  /* --- Resto del rendering de seasons/episodes (idéntico a la versión que funcionaba) --- */
+  /* --- Resto del rendering de seasons/episodes (idéntico) --- */
   const seasonsButtons = $("#seasons-buttons");
   const seasonsWrap = $("#seasons-wrap");
   if (!seasonsButtons) { console.warn("No #seasons-buttons container in DOM"); return; }

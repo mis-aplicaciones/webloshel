@@ -324,43 +324,215 @@ class PlayerJS {
     this.playbackIndex     = this.currentIndex;
     this.hasUncommittedNav = false;
 
-    if (this.hls) { this.hls.destroy(); this.hls = null; }
-    if (this.shakaPlayer) { this.shakaPlayer.destroy(); this.shakaPlayer = null; }
+    // Destruir instancias previas
+    if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
+    if (this.shakaPlayer) { try { this.shakaPlayer.destroy(); } catch(e){} this.shakaPlayer = null; }
 
     const url = (f.file || "").trim();
     // Detectar robustamente .m3u8 (http, parámetros, mayúsculas/minúsculas)
     const isM3U8 = /\.m3u8($|\?)/i.test(url);
 
-    if (isM3U8 && window.Hls && Hls.isSupported()) {
-      this.hls = new Hls({
-        maxBufferLength: 30,
-        liveSyncDurationCount: 3,
-        enableWorker: true
-      });
-      this.hls.loadSource(url);
-      this.hls.attachMedia(this.videoEl);
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => this.videoEl.play());
-    }
-    else if (window.shaka && shaka.Player.isBrowserSupported()) {
-      this.shakaPlayer = new shaka.Player(this.videoEl);
-      this.shakaPlayer.load(url)
-        .then(() => this.videoEl.play())
-        .catch(() => {
+    // Mostrar spinner mientras cargamos
+    this.spinnerEl.classList.remove("hidden");
+
+    if (isM3U8) {
+      // --- Primero: Si Hls.js está disponible y soportado, usarlo con manejadores robustos ---
+      if (window.Hls && Hls.isSupported()) {
+        // Crear Hls con configuración que ayuda en dispositivos TV
+        try {
+          this.hls = new Hls({
+            maxBufferLength: 30,
+            liveSyncDurationCount: 3,
+            enableWorker: true,
+            // xhrSetup nos permite controlar XHR (por ejemplo withCredentials)
+            xhrSetup: (xhr, resource, url) => {
+              try {
+                // No forzamos withCredentials por defecto, pero dejamos la opción
+                xhr.withCredentials = false;
+                // Nota: no todos los headers/Referer pueden ser establecidos por seguridad del navegador
+              } catch (e) {}
+            }
+          });
+        } catch (err) {
+          console.warn("Hls init failed, fallbacking to native:", err);
+          this.hls = null;
+        }
+
+        if (this.hls) {
+          // Contador de intentos de recuperación antes de fallback final
+          let recoverAttempts = 0;
+          const maxRecoverAttempts = 3;
+          const self = this;
+
+          // Manejar eventos de errores de Hls.js
+          this.hls.on(Hls.Events.ERROR, function(event, data) {
+            console.warn("Hls error event:", data);
+            // Si el error es fatal, intentar recuperar según tipo
+            if (data && data.fatal) {
+              if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                // Intento de reanudar descarga
+                try {
+                  console.warn("Hls: network error -> startLoad()");
+                  self.hls.startLoad();
+                } catch (e) {
+                  console.error("Hls startLoad failed", e);
+                }
+              } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                try {
+                  console.warn("Hls: media error -> recoverMediaError()");
+                  self.hls.recoverMediaError();
+                } catch (e) {
+                  console.error("Hls recover failed", e);
+                }
+              } else {
+                // Otros errores: intentar reiniciar la carga algunas veces
+                if (recoverAttempts < maxRecoverAttempts) {
+                  recoverAttempts++;
+                  console.warn(`Hls: unrecoverable error, retry ${recoverAttempts}/${maxRecoverAttempts}`);
+                  try {
+                    self.hls.stopLoad();
+                    // Espera breve antes de reiniciar
+                    setTimeout(() => {
+                      try { self.hls.startLoad(); } catch(e) { console.error(e); }
+                    }, 800);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                } else {
+                  // Si se alcanzaron múltiples intentos, fallback a reproducción nativa
+                  console.warn("Hls: multiple failures, fallback to native video src");
+                  try {
+                    self.hls.destroy();
+                  } catch (e) {}
+                  self.hls = null;
+                  // Fallback: asignar directamente al <video> (algunos motores nativos pueden reproducir)
+                  try {
+                    self.videoEl.src = url;
+                    // Asegurar que el video intente reproducir
+                    self.videoEl.play().catch(err => {
+                      console.error("Fallback native play failed", err);
+                    });
+                  } finally {
+                    self.spinnerEl.classList.add("hidden");
+                  }
+                }
+              }
+            }
+          });
+
+          // Cuando el manifiesto esté parseado, reproducir
+          this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            // Ocultar spinner y reproducir
+            try { this.videoEl.play().catch(()=>{}); } catch(e){}
+            this.spinnerEl.classList.add("hidden");
+          });
+
+          // Intento de carga
+          try {
+            this.hls.loadSource(url);
+            this.hls.attachMedia(this.videoEl);
+          } catch (err) {
+            console.warn("Hls load/attach threw:", err);
+            try {
+              this.hls.destroy();
+            } catch (e) {}
+            this.hls = null;
+            // Intentar reproducción nativa como último recurso
+            try {
+              this.videoEl.src = url;
+              this.videoEl.play().catch(()=>{});
+            } finally {
+              this.spinnerEl.classList.add("hidden");
+            }
+          }
+
+          // Devolver (hemos delegado la reproducción a Hls.js)
+          this.videoEl.title = f.title || "";
+          this.iconLive.style.color = "red";
+          this.stopDvrInterval();
+          return;
+        }
+      }
+
+      // --- Si Hls.js no está disponible o no fue posible inicializarlo ---
+      // Verificar soporte nativo HLS (Safari y algunos motores que exponen MIME)
+      if (this.videoEl.canPlayType && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+        try {
           this.videoEl.src = url;
-          this.videoEl.play();
-        });
+          this.videoEl.addEventListener('loadedmetadata', () => {
+            try { this.videoEl.play().catch(()=>{}); } catch(e){}
+            this.spinnerEl.classList.add("hidden");
+          }, { once: true });
+        } catch (e) {
+          console.warn("Native HLS attempt failed:", e);
+          // último recurso: asignar y call play
+          try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
+          this.spinnerEl.classList.add("hidden");
+        }
+
+        this.videoEl.title = f.title || "";
+        this.iconLive.style.color = "red";
+        this.stopDvrInterval();
+        return;
+      }
+
+      // --- Fallback final: si no hay Hls.js ni soporte nativo, usar shaka o asignar src directo ---
+      if (window.shaka && shaka.Player.isBrowserSupported()) {
+        try {
+          this.shakaPlayer = new shaka.Player(this.videoEl);
+          this.shakaPlayer.load(url)
+            .then(() => { this.videoEl.play().catch(()=>{}); this.spinnerEl.classList.add("hidden"); })
+            .catch(err => {
+              console.warn("Shaka load failed, fallback to direct src", err);
+              try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
+              this.spinnerEl.classList.add("hidden");
+            });
+          this.videoEl.title = f.title || "";
+          this.iconLive.style.color = "red";
+          this.stopDvrInterval();
+          return;
+        } catch (e) {
+          console.warn("Shaka initialization failed:", e);
+          this.shakaPlayer = null;
+        }
+      }
+
+      // Último recurso: asignar al src del <video> (funciona en algunos entornos/Chrome)
+      try {
+        this.videoEl.src = url;
+        this.videoEl.play().catch(()=>{});
+      } catch (e) {
+        console.error("Final fallback assignment failed:", e);
+      } finally {
+        this.videoEl.title = f.title || "";
+        this.iconLive.style.color = "red";
+        this.stopDvrInterval();
+        this.spinnerEl.classList.add("hidden");
+      }
     }
     else {
-      // Fallback HTML5 <video> para MP4 o .m3u8 no soportados
-      this.videoEl.src = url;
-      this.videoEl.play();
+      // No es .m3u8 → usar Shaka si está o fallback directo
+      if (window.shaka && shaka.Player.isBrowserSupported()) {
+        this.shakaPlayer = new shaka.Player(this.videoEl);
+        this.shakaPlayer.load(url)
+          .then(() => this.videoEl.play())
+          .catch(() => {
+            this.videoEl.src = url;
+            this.videoEl.play();
+          });
+      }
+      else {
+        // Fallback HTML5 <video> para MP4 o .m3u8 no soportados
+        this.videoEl.src = url;
+        this.videoEl.play();
+      }
+      this.videoEl.title = f.title || "";
+
+      // Cuando cambia de canal, el botón "En Vivo" vuelve a rojo y se detiene DVR
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.spinnerEl.classList.add("hidden");
     }
-
-    this.videoEl.title = f.title || "";
-
-    // Cuando cambia de canal, el botón "En Vivo" vuelve a rojo y se detiene DVR
-    this.iconLive.style.color = "red";
-    this.stopDvrInterval();
   }
 
   play() {
@@ -788,10 +960,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ,
     {
       number: "131",
-      image: "img/CANAL-SONYCHANNEL.png",
-      title: "SONY CHANNEL",
+      image: "img/CANAL-SOLTVTRUJILLO.png",
+      title: "SOL TV",
       file:
-        "https://s39.fastream.to/hls2/18/00074/0n6sc8wqnuzf_n/index-v1-a1.m3u8?t=iwAc5-VJpFTCQNAfQfEL-cqXC_3HTmHvu2NeKKZAqJw&s=1752040401&e=43200&v=12323057&i=0.3&sp=0"
+        "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
     }
   ]);
 });

@@ -955,7 +955,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CANAL-SONYCHANNEL.png",
       title: "SONY CHANNEL",
       file:
-        "https://fl3.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
+        "https://fl25.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
     }
     ,
     {
@@ -967,3 +967,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ]);
 });
+

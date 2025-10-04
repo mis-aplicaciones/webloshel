@@ -1,532 +1,969 @@
-/* player2.js — Versión robusta (corrige audio, stalls, scroll mobile)
-   - Safe HLS lifecycle (detachMedia / stopLoad / destroy)
-   - playSessionId para evitar races
-   - Auto-unmute + control manual confiable
-   - Touch handlers NO intrusivos en mobile (scroll nativo)
-   - Mínimos intentos y rápido fallback
-*/
+class PlayerJS {
+  constructor() {
+    // Elementos básicos del reproductor
+    this.videoEl      = document.getElementById("player-video");
+    this.playlistEl   = document.getElementById("carouselList");
+    this.containerEl  = document.getElementById("playlist-container");
+    this.spinnerEl    = document.getElementById("video-loading-spinner");
 
-(function () {
-  // ---------- DOM ----------
-  const videoEl = document.getElementById('player-video');
-  const playlistEl = document.getElementById('carouselList');
-  const playlistContainer = document.getElementById('playlist-container');
-  const spinnerEl = document.getElementById('video-loading-spinner');
-  const statusEl = document.getElementById('player-status') || (() => {
-    const d = document.createElement('div'); d.id = 'player-status'; d.className='player-status hidden'; document.body.appendChild(d); return d;
-  })();
+    // Elementos del Menú TV
+    this.menuEl      = document.getElementById("tv-menu");
+    this.imgEl       = document.getElementById("tv-menu-img");
+    this.chanNumEl   = document.getElementById("tv-menu-channel-number");
+    this.qualityEl   = document.getElementById("tv-menu-quality");
+    this.timeEl      = document.getElementById("tv-menu-time");
+    this.btnReturn   = document.getElementById("btn-return");
+    this.btnList     = document.getElementById("btn-list");
+    this.btnPause    = document.getElementById("btn-pause");
+    this.iconPause   = document.getElementById("icon-pause");
+    this.btnLive     = document.getElementById("btn-live");
+    this.iconLive    = document.getElementById("icon-live");
+    this.btnClose    = document.getElementById("btn-close");
+    this.tooltipEl   = document.getElementById("tv-menu-tooltip");
 
-  // audio panel (if exists in markup)
-  let audioPanel = document.getElementById('audio-panel');
-  let audioSelect = document.getElementById('audio-select');
-  if (!audioPanel) {
-    // ensure minimal UI so user can toggle audio if not present in HTML
-    audioPanel = document.createElement('div');
-    audioPanel.id = 'audio-panel';
-    audioPanel.className = 'audio-panel hidden';
-    audioPanel.style.position = 'absolute';
-    audioPanel.style.right = '12px';
-    audioPanel.style.top = '56px';
-    audioPanel.style.zIndex = 1200;
-    audioPanel.style.display = 'flex';
-    audioPanel.style.gap = '8px';
-    audioPanel.style.alignItems = 'center';
-    audioPanel.style.background = 'rgba(0,0,0,0.6)';
-    audioPanel.style.padding = '6px 8px';
-    audioPanel.style.borderRadius = '8px';
-    const icon = document.createElement('i'); icon.className = 'bi bi-volume-mute-fill'; icon.style.cursor = 'pointer';
-    audioPanel.appendChild(icon);
-    audioSelect = document.createElement('select'); audioSelect.id = 'audio-select';
-    audioPanel.appendChild(audioSelect);
-    document.body.appendChild(audioPanel);
-    icon.addEventListener('click', () => toggleMute(true));
-  } else {
-    audioSelect = audioSelect || (() => {
-      const s = document.createElement('select'); s.id = 'audio-select'; audioPanel.appendChild(s); return s;
-    })();
-    // if audioPanel exists and has icon, attach click
-    const icon = audioPanel.querySelector('i');
-    if (icon) icon.addEventListener('click', () => toggleMute(true));
+    // Elementos DVR (barra de progreso)
+    this.dvrContainer = document.getElementById("dvr-container");
+    this.dvrProgress  = document.getElementById("dvr-progress");
+    this.dvrKnob      = document.getElementById("dvr-knob");
+
+    this.overlayActive = false;
+    this.menuTimer     = null;
+    this.dvrInterval   = null;  // temporizador para actualizar la barra de progreso
+
+    // Índices y flags para playlist
+    this.currentIndex      = 0;
+    this.playbackIndex     = 0;
+    this.hasUncommittedNav = false;
+
+    // Playlist y reproductores (HLS / Shaka)
+    this.playlist      = [];
+    this.hls           = null;
+    this.shakaPlayer   = null;
+
+    // Auto‐hide playlist
+    this.lastNavTime   = Date.now();
+    this.autoHide      = 5000;
+
+    // Configuración del carrusel
+    this.visibleCount  = 7;
+    this.half          = Math.floor(this.visibleCount / 2);
+
+    // Touch‐drag
+    this._touchStartY  = 0;
+    this._isDragging   = false;
+
+    this.init();
   }
 
-  // ---------- Config ----------
-  const CONFIG = {
-    playlistUrl: 'playlist.json',
-    proxyPrefix: '',       // set this if you have proxy
-    remuxApiPrefix: '',    // set this if using remux server
-    maxLocalHlsRetries: 2,
-    watchdogInterval: 7000
-  };
+  init() {
+    // Reloj del menú (se actualiza cada minuto)
+    this.updateClock();
+    setInterval(() => this.updateClock(), 60000);
 
-  // ---------- State ----------
-  let playlist = [];
-  let currentIndex = 0;
-  let hlsInst = null;
-  let playLock = false;
-  let watchdogTimer = null;
-  let userMuted = false; // user toggled mute
-  let playSessionId = 0; // incremental token for each playCurrent run
+    this.addUIListeners();
+    this.initMenuActions();
+    this.videoEl.autoplay = true;
+    this.monitorPlayback();
 
-  // mobile detection (for scroll / touch behavior)
-  const isMobile = (() => {
-    try {
-      return window.matchMedia && window.matchMedia('(max-width:768px)').matches;
-    } catch(e) {
-      return ('ontouchstart' in window) && window.innerWidth <= 1024;
-    }
-  })();
-
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-  // ---------- UI helpers ----------
-  function showStatus(msg, ms = 2400) {
-    try {
-      statusEl.textContent = msg;
-      statusEl.classList.remove('hidden');
-      if (ms) setTimeout(() => statusEl.classList.add('hidden'), ms);
-    } catch(e) {}
-  }
-  function showPermanent(msg) {
-    try { statusEl.textContent = msg; statusEl.classList.remove('hidden'); } catch(e){}
-  }
-  function hideStatus() { try { statusEl.classList.add('hidden'); } catch(e){} }
-
-  // ---------- Mute / Unmute controls ----------
-  function toggleMute(userGesture = false) {
-    try {
-      // toggle state
-      userMuted = !userMuted;
-      videoEl.muted = userMuted;
-      try { videoEl.volume = userMuted ? 0 : 1; } catch(e){}
-      const icon = audioPanel.querySelector('i');
-      if (icon) icon.className = userMuted ? 'bi bi-volume-mute-fill' : 'bi bi-volume-up-fill';
-      if (!userMuted && userGesture) {
-        // restore audio and attempt to play to activate audio pipeline
-        try { videoEl.play().catch(()=>{}); } catch(e){}
-        showStatus('Audio activado', 1200);
-      } else if (userGesture) {
-        showStatus('Silenciado', 1200);
+    // Auto‐hide SOLO para playlist
+    setInterval(() => {
+      if (!this.overlayActive &&
+          Date.now() - this.lastNavTime > this.autoHide) {
+        this.hideUI();
       }
-    } catch(e) { console.warn('toggleMute err', e); }
+    }, 500);
+
+    this.initTouchDrag();
   }
 
-  // attempt to auto-unmute after real playback begins; returns true if succeeded (audio allowed)
-  async function attemptAutoUnmuteThisSession(sessId) {
-    try {
-      if (userMuted) return false; // respect user explicit mute
-      // Try unmuting and playing — if blocked, browser will keep it (or throw)
-      try {
-        videoEl.muted = false;
-        videoEl.volume = 1;
-        await videoEl.play().catch(()=>{});
-      } catch(e) {
-        // silent catch
+  /**
+   * Actualiza el reloj HH:MM (formato 12h sin AM/PM).
+   */
+  updateClock() {
+    const d = new Date();
+    let h = d.getHours() % 12 || 12;
+    let m = String(d.getMinutes()).padStart(2, "0");
+    this.timeEl.textContent = `${h}:${m}`;
+  }
+
+  /*──────────────────────────────────────────────────────────*/
+  /*                     MENU TV (DVR)                       */
+  /*──────────────────────────────────────────────────────────*/
+  initMenuActions() {
+    // 1) Volver → history.back()
+    this.btnReturn.addEventListener("click", () => history.back());
+
+    // 2) Canales → mostrar playlist
+    this.btnList.addEventListener("click", () => {
+      this.hideMenu();
+      this.showUI();
+    });
+
+    // 3) Pausa / Reanudar, activa modo DVR
+    this.btnPause.addEventListener("click", () => {
+      if (this.videoEl.paused) {
+        // Si estaba pausado, reanuda al vivo
+        this.videoEl.play();
+        this.iconPause.className = "bi bi-pause-circle-fill";
+        this.btnPause.dataset.title = "Pausa";
+
+        // Botón "En Vivo" vuelve al color rojo
+        this.iconLive.style.color = "red";
+
+        // Detener actualización del DVR
+        this.stopDvrInterval();
+      } else {
+        // Si estaba reproduciendo, pausar y entrar en modo DVR
+        this.videoEl.pause();
+        this.iconPause.className = "bi bi-play-circle-fill";
+        this.btnPause.dataset.title = "Reanudar";
+
+        // Botón "En Vivo" se pone gris
+        this.iconLive.style.color = "gray";
+
+        // Iniciar actualización del DVR cada 500ms
+        this.startDvrInterval();
       }
-      // Make sure the session didn't change while we awaited
-      if (sessId !== playSessionId) return false;
-      // If still muted or zero volume, we failed to unmute automatically
-      if (videoEl.muted || (typeof videoEl.volume === 'number' && videoEl.volume === 0)) {
-        audioPanel.classList.remove('hidden'); // show manual control
-        const icon = audioPanel.querySelector('i'); if (icon) icon.className = 'bi bi-volume-mute-fill';
-        showStatus('Pulsa el icono de audio para activar sonido', 3500);
-        return false;
+      this.resetMenuTimer();
+    });
+
+    // 4) En Vivo → saltar al final del buffer y reproducir
+    this.btnLive.addEventListener("click", () => {
+      const buf = this.videoEl.buffered;
+      if (buf.length > 0) {
+        const livePoint = buf.end(buf.length - 1);
+        this.videoEl.currentTime = livePoint;
       }
-      // success
-      audioPanel.classList.remove('hidden');
-      const icon = audioPanel.querySelector('i'); if (icon) icon.className = 'bi bi-volume-up-fill';
-      return true;
-    } catch(e) {
-      console.warn('attemptAutoUnmuteThisSession', e);
-      return false;
-    }
-  }
+      this.videoEl.play();
+      // Asegurar icono Pause y Live en estado "vivo"
+      this.iconPause.className = "bi bi-pause-circle-fill";
+      this.btnPause.dataset.title = "Pausa";
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.resetMenuTimer();
+    });
 
-  function populateAudioTracksFromHls(hlsAudioTracks) {
-    try {
-      if (!audioSelect) return;
-      audioSelect.innerHTML = '';
-      hlsAudioTracks.forEach((t, i) => {
-        const opt = document.createElement('option');
-        opt.value = String(i);
-        opt.textContent = t.lang || t.name || t.label || `Track ${i+1}`;
-        audioSelect.appendChild(opt);
-      });
-      audioSelect.onchange = () => {
-        const idx = parseInt(audioSelect.value);
-        try { if (hlsInst && typeof hlsInst.audioTrack !== 'undefined') hlsInst.audioTrack = idx; } catch(e){}
-        try {
-          if (videoEl && videoEl.audioTracks && videoEl.audioTracks.length) {
-            for (let i=0;i<videoEl.audioTracks.length;i++) videoEl.audioTracks[i].enabled = (i === idx);
-          }
-        } catch(e){}
-        // also ensure audio is unmuted if user tries to select track
-        userMuted = false; videoEl.muted = false; try{videoEl.volume = 1;}catch(e){}
-        try { videoEl.play().catch(()=>{}); } catch(e){}
-      };
-      audioPanel.classList.remove('hidden');
-      const icon = audioPanel.querySelector('i'); if (icon) icon.className = 'bi bi-volume-up-fill';
-    } catch(e) { console.warn('populateAudioTracksFromHls', e); }
-  }
+    // 5) Cerrar overlay
+    this.btnClose.addEventListener("click", () => this.hideMenu());
 
-  // ---------- Playlist loading (json with inline fallback) ----------
-  async function loadPlaylist() {
-    try {
-      const resp = await fetch(CONFIG.playlistUrl, { cache: 'no-store' });
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      const data = await resp.json();
-      if (!Array.isArray(data) || !data.length) throw new Error('playlist.json inválido o vacío');
-      playlist = data;
-      console.info('[player] playlist loaded (json):', playlist.length);
-      return true;
-    } catch(err) {
-      console.warn('[player] playlist.json load failed:', err);
-      // fallback to inline
-      try {
-        const inline = document.getElementById('playlist-inline');
-        if (inline) {
-          const parsed = JSON.parse(inline.textContent || inline.innerText || '[]');
-          if (Array.isArray(parsed) && parsed.length) {
-            playlist = parsed;
-            console.info('[player] playlist loaded (inline fallback)');
-            return true;
-          }
-        }
-      } catch(e) {}
-      return false;
-    }
-  }
-
-  // ---------- Render carousel (minimal, non-blocking) ----------
-  function renderCarousel() {
-    playlistEl.innerHTML = '';
-    if (!playlist.length) return;
-    const visible = 7; const half = Math.floor(visible/2);
-    for (let off = -half; off <= half; off++) {
-      const idx = ((currentIndex + off) % playlist.length + playlist.length) % playlist.length;
-      const it = playlist[idx] || {};
-      const item = document.createElement('div');
-      item.className = 'carousel-item';
-      item.dataset.idx = idx;
-      item.tabIndex = 0;
-      item.innerHTML = `<div class="item-label"><span>${it.number||''}</span></div><img src="${it.image||''}" alt="${it.title||''}"><button class="carousel-button">${it.title||''}</button>`;
-      item.addEventListener('click', () => { currentIndex = idx; playCurrent(); });
-      playlistEl.appendChild(item);
-    }
-    // focus style
-    const kids = playlistEl.children;
-    const mid = Math.floor(kids.length/2);
-    for (let i=0;i<kids.length;i++) kids[i].classList.toggle('focused', i===mid);
-  }
-
-  // ---------- Hls create/load with safe lifecycle ----------
-  function createHls(cfg = {}) {
-    if (!window.Hls || !Hls.isSupported()) return null;
-    const base = Object.assign({
-      enableWorker: cfg.enableWorker !== undefined ? cfg.enableWorker : false,
-      startFragPrefetch: cfg.startFragPrefetch !== undefined ? cfg.startFragPrefetch : false,
-      maxBufferLength: 60,
-      fragLoadingTimeOut: 20000,
-      manifestLoadingTimeOut: 20000,
-      levelLoadingTimeOut: 20000
-    }, cfg);
-    const h = new Hls(base);
-    h.config.xhrSetup = function(xhr) {
-      try { xhr.setRequestHeader && xhr.setRequestHeader('X-Requested-With','XMLHttpRequest'); } catch(e){}
-    };
-    return h;
-  }
-
-  function safeDestroyHls() {
-    try {
-      if (hlsInst) {
-        try { hlsInst.stopLoad && hlsInst.stopLoad(); } catch(e){}
-        try { hlsInst.detachMedia && hlsInst.detachMedia(); } catch(e){}
-        try { hlsInst.destroy && hlsInst.destroy(); } catch(e){}
-      }
-    } catch(e) { console.warn('safeDestroyHls', e); }
-    hlsInst = null;
-  }
-
-  // load with Hls and resolve when fragment or level loaded
-  function loadWithHls(url, options = {}) {
-    return new Promise((resolve, reject) => {
-      const h = createHls(options);
-      if (!h) return reject(new Error('Hls not available'));
-
-      // per-item withCredentials if requested
-      if (options.withCredentials) {
-        h.config.xhrSetup = function(xhr) {
-          try { xhr.withCredentials = true; xhr.setRequestHeader && xhr.setRequestHeader('X-Requested-With','XMLHttpRequest'); } catch(e){}
-        };
-      }
-
-      // cleanup previous
-      safeDestroyHls();
-      hlsInst = h;
-
-      let localRetry = 0;
-      const maxLocal = CONFIG.maxLocalHlsRetries;
-
-      const onError = (ev, data) => {
-        console.warn('[Hls error]', data);
-        showStatus('HLS: ' + (data && data.details ? data.details : data.type), 1600);
-        const details = (data && data.details || '').toLowerCase();
-        if (details.includes('level') || details.includes('frag') || details.includes('manifest') || data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-          localRetry++;
-          if (localRetry <= maxLocal) {
-            try { h.startLoad && h.startLoad(); } catch(e){}
-            return;
-          } else {
-            cleanup();
-            try { h.destroy(); } catch(e){}
-            hlsInst = null;
-            return reject(new Error('Hls failed after local retries: ' + (data.details || data.type)));
-          }
-        }
-        if (data && data.fatal) {
-          cleanup();
-          try { h.destroy(); } catch(e){}
-          hlsInst = null;
-          return reject(new Error('Hls fatal: ' + (data.details || data.type)));
-        }
-      };
-
-      const onManifestParsed = () => { /* wait for level/frag */ };
-      const onLevelLoaded = () => { cleanup(); try { videoEl.play().catch(()=>{}); } catch(e){} resolve(); };
-      const onFragLoaded = () => { cleanup(); try { videoEl.play().catch(()=>{}); } catch(e){} resolve(); };
-
-      const onAudioTracksUpdated = () => {
-        try { if (h.audioTracks && h.audioTracks.length > 1) populateAudioTracksFromHls(h.audioTracks); } catch(e){}
-      };
-
-      const cleanup = () => {
-        try { h.off(Hls.Events.ERROR, onError); } catch(e){}
-        try { h.off(Hls.Events.MANIFEST_PARSED, onManifestParsed); } catch(e){}
-        try { h.off(Hls.Events.LEVEL_LOADED, onLevelLoaded); } catch(e){}
-        try { h.off(Hls.Events.FRAG_LOADED, onFragLoaded); } catch(e){}
-        try { h.off(Hls.Events.AUDIO_TRACKS_UPDATED, onAudioTracksUpdated); } catch(e){}
-      };
-
-      h.on(Hls.Events.ERROR, onError);
-      h.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
-      h.on(Hls.Events.LEVEL_LOADED, onLevelLoaded);
-      h.on(Hls.Events.FRAG_LOADED, onFragLoaded);
-      h.on(Hls.Events.AUDIO_TRACKS_UPDATED, onAudioTracksUpdated);
-
-      try {
-        h.loadSource(url);
-        h.attachMedia(videoEl);
-        try { h.startLoad && h.startLoad(0); } catch(e){}
-      } catch(e) {
-        cleanup();
-        try { h.destroy(); } catch(err){}
-        hlsInst = null;
-        return reject(e);
-      }
+    // Tooltip sobre cada botón cuando reciba foco
+    [
+      this.btnReturn,
+      this.btnList,
+      this.btnPause,
+      this.btnLive,
+      this.btnClose
+    ].forEach(btn => {
+      btn.addEventListener("focus", () => this.showTooltip(btn));
     });
   }
 
-  // ---------- play logic with session token ----------
-  async function playCurrent() {
-    if (playLock) return;
-    playLock = true;
-    const session = ++playSessionId; // current session token
+  /**
+   * Muestra el menú: oculta el playlist, actualiza miniatura,
+   * número de canal, calidad, y coloca el foco en “Volver”.
+   */
+  showMenu() {
+    this.overlayActive = true;
+    // Ocultar playlist
+    this.containerEl.classList.remove("active");
 
-    const item = playlist[currentIndex];
-    if (!item) { playLock = false; return; }
-    const url = (item.file || '').trim();
-    if (!url) { showStatus('URL inválida', 2000); playLock = false; return; }
+    // Update thumbnail, channel number & quality
+    const cur = this.playlist[this.playbackIndex] || {};
+    this.imgEl.src            = cur.image || "";
+    this.chanNumEl.textContent = cur.number || "";
+    this.qualityEl.textContent = `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
 
-    // stop watchdog and safely destroy previous resources
-    stopWatchdog();
-    safeDestroyHls();
+    this.menuEl.classList.remove("hidden");
+    this.btnReturn.focus();
+    this.resetMenuTimer();
+  }
 
-    // clean video element thoroughly
-    try {
-      videoEl.pause();
-    } catch(e) {}
-    try {
-      videoEl.removeAttribute('src');
-      videoEl.load();
-    } catch(e) {}
-    await sleep(160);
+  hideMenu() {
+    this.overlayActive = false;
+    this.menuEl.classList.add("hidden");
+    this.hideTooltip();
+    clearTimeout(this.menuTimer);
+    this.stopDvrInterval();
+  }
 
-    // spinner
-    spinnerEl && spinnerEl.classList.remove('hidden');
-    showStatus('Cargando ' + url, 1400);
+  resetMenuTimer() {
+    clearTimeout(this.menuTimer);
+    this.menuTimer = setTimeout(() => this.hideMenu(), 5000);
+  }
 
-    // quick ordered attempts (fast)
-    const attempts = [
-      { label: 'HLS (worker:false)', fn: () => loadWithHls(url, { enableWorker:false, startFragPrefetch:false, withCredentials: !!item.withCredentials }) },
-      { label: 'HLS (worker:true)', fn: () => loadWithHls(url, { enableWorker:true, startFragPrefetch:false, withCredentials: !!item.withCredentials }) },
-      { label: 'Fallback nativo', fn: async () => { try { videoEl.src = url; videoEl.load(); await videoEl.play().catch(()=>{}); } catch(e){} } }
-    ];
+  showTooltip(btn) {
+    const title = btn.dataset.title || "";
+    this.tooltipEl.textContent = title;
+    this.tooltipEl.classList.remove("hidden");
+    this.tooltipEl.classList.add("visible");
+    const rect = btn.getBoundingClientRect();
+    this.tooltipEl.style.left = `${rect.left + rect.width / 2}px`;
+    this.resetMenuTimer();
+  }
 
-    // optionally proxy/remux if configured (not added by default)
-    if (CONFIG.proxyPrefix) attempts.push({ label: 'Proxy passthrough', fn: () => loadWithHls(CONFIG.proxyPrefix + encodeURIComponent(url), { enableWorker:false }) });
-    if (CONFIG.remuxApiPrefix) attempts.push({ label: 'Remux server', fn: async () => {
-      const api = CONFIG.remuxApiPrefix + encodeURIComponent(url);
-      const resp = await fetch(api, { cache:'no-store' });
-      if (!resp.ok) throw new Error('remux api ' + resp.status);
-      const body = await resp.json();
-      if (!body || !body.playlist) throw new Error('remux invalid');
-      await loadWithHls(body.playlist, { enableWorker:false });
-    }});
+  hideTooltip() {
+    this.tooltipEl.classList.remove("visible");
+    this.tooltipEl.classList.add("hidden");
+  }
 
-    let ok = false;
-    for (const a of attempts) {
-      // if session changed, abort the loop
-      if (session !== playSessionId) break;
+  /*──────────────────────────────────────────────────────────*/
+  /*                   PLAYLIST UI (oculto al inicio)        */
+  /*──────────────────────────────────────────────────────────*/
+  showUI() {
+    if (!this.overlayActive && this.hasUncommittedNav) {
+      this.currentIndex = this.playbackIndex;
+      this.renderCarousel();
+      this.updateCarousel(false);
+      this.hasUncommittedNav = false;
+    }
+    this.containerEl.classList.add("active");
+    this.lastNavTime = Date.now();
+  }
+
+  hideUI() {
+    if (!this.overlayActive) {
+      this.containerEl.classList.remove("active");
+    }
+  }
+
+  loadPlaylist(arr) {
+    this.playlist = arr;
+    this.currentIndex = 0;
+    this.playbackIndex = 0;
+    this.hasUncommittedNav = false;
+    this.renderCarousel();
+    this.updateCarousel(false);
+    // No llamamos a showUI() aquí: playlist permanece oculto al cargar
+    this.playCurrent();
+  }
+
+  /*──────────────────────────────────────────────────────────*/
+  /*                  CARRUSEL LOGIC                         */
+  /*──────────────────────────────────────────────────────────*/
+  createItem(idx) {
+    const data = this.playlist[idx] || {};
+    const item = document.createElement("div");
+    item.className = "carousel-item";
+    item.dataset.idx = idx;
+
+    const lbl = document.createElement("div");
+    lbl.className = "item-label";
+    lbl.innerHTML = `<span>${data.number || ""}</span>`;
+
+    const img = document.createElement("img");
+    img.src = data.image || "";
+    img.alt = data.title || "";
+
+    const btn = document.createElement("button");
+    btn.className = "carousel-button";
+    btn.textContent = data.title || "";
+
+    item.append(lbl, img, btn);
+    item.addEventListener("click", () => {
+      this.currentIndex = idx;
+      this.play();
+    });
+    item.addEventListener("touchend", e => {
+      e.preventDefault();
+      this.currentIndex = idx;
+      this.play();
+    });
+
+    return item;
+  }
+
+  renderCarousel() {
+    const N = this.playlist.length;
+    this.playlistEl.innerHTML = "";
+    for (let off = -this.half; off <= this.half; off++) {
+      const idx = ((this.currentIndex + off) % N + N) % N;
+      this.playlistEl.appendChild(this.createItem(idx));
+    }
+  }
+
+  updateCarousel(animate = true) {
+    const items = this.playlistEl.children;
+    if (!items.length) return;
+    const st = getComputedStyle(items[0]);
+    const itemH = items[0].offsetHeight
+                + parseFloat(st.marginTop)
+                + parseFloat(st.marginBottom);
+    const wrapH = this.containerEl
+                   .querySelector(".carousel-wrapper").clientHeight;
+    const baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
+
+    this.playlistEl.style.transition = animate
+      ? "transform .3s ease"
+      : "none";
+    this.playlistEl.style.transform = `translateY(${baseY}px)`;
+
+    Array.from(items).forEach((el, i) => {
+      el.classList.toggle("focused", i === this.half);
+    });
+
+    if (!animate) {
+      void this.playlistEl.offsetWidth;
+      this.playlistEl.style.transition = "transform .3s ease";
+    }
+  }
+
+  move(dir) {
+    const N = this.playlist.length;
+    this.currentIndex = (this.currentIndex + dir + N) % N;
+    this.hasUncommittedNav = true;
+    this.lastNavTime = Date.now();
+    this.renderCarousel();
+    this.updateCarousel(true);
+  }
+
+  /*──────────────────────────────────────────────────────────*/
+  /*                REPRODUCCIÓN & DVR LOGIC                */
+  /*──────────────────────────────────────────────────────────*/
+  playCurrent() {
+    const f = this.playlist[this.currentIndex] || {};
+    this.playbackIndex     = this.currentIndex;
+    this.hasUncommittedNav = false;
+
+    // Destruir instancias previas
+    if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
+    if (this.shakaPlayer) { try { this.shakaPlayer.destroy(); } catch(e){} this.shakaPlayer = null; }
+
+    const url = (f.file || "").trim();
+    // Detectar robustamente .m3u8 (http, parámetros, mayúsculas/minúsculas)
+    const isM3U8 = /\.m3u8($|\?)/i.test(url);
+
+    // Mostrar spinner mientras cargamos
+    this.spinnerEl.classList.remove("hidden");
+
+    if (isM3U8) {
+      // --- Primero: Si Hls.js está disponible y soportado, usarlo con manejadores robustos ---
+      if (window.Hls && Hls.isSupported()) {
+        // Crear Hls con configuración que ayuda en dispositivos TV
+        try {
+          this.hls = new Hls({
+            maxBufferLength: 30,
+            liveSyncDurationCount: 3,
+            enableWorker: true,
+            // xhrSetup nos permite controlar XHR (por ejemplo withCredentials)
+            xhrSetup: (xhr, resource, url) => {
+              try {
+                // No forzamos withCredentials por defecto, pero dejamos la opción
+                xhr.withCredentials = false;
+                // Nota: no todos los headers/Referer pueden ser establecidos por seguridad del navegador
+              } catch (e) {}
+            }
+          });
+        } catch (err) {
+          console.warn("Hls init failed, fallbacking to native:", err);
+          this.hls = null;
+        }
+
+        if (this.hls) {
+          // Contador de intentos de recuperación antes de fallback final
+          let recoverAttempts = 0;
+          const maxRecoverAttempts = 3;
+          const self = this;
+
+          // Manejar eventos de errores de Hls.js
+          this.hls.on(Hls.Events.ERROR, function(event, data) {
+            console.warn("Hls error event:", data);
+            // Si el error es fatal, intentar recuperar según tipo
+            if (data && data.fatal) {
+              if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                // Intento de reanudar descarga
+                try {
+                  console.warn("Hls: network error -> startLoad()");
+                  self.hls.startLoad();
+                } catch (e) {
+                  console.error("Hls startLoad failed", e);
+                }
+              } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                try {
+                  console.warn("Hls: media error -> recoverMediaError()");
+                  self.hls.recoverMediaError();
+                } catch (e) {
+                  console.error("Hls recover failed", e);
+                }
+              } else {
+                // Otros errores: intentar reiniciar la carga algunas veces
+                if (recoverAttempts < maxRecoverAttempts) {
+                  recoverAttempts++;
+                  console.warn(`Hls: unrecoverable error, retry ${recoverAttempts}/${maxRecoverAttempts}`);
+                  try {
+                    self.hls.stopLoad();
+                    // Espera breve antes de reiniciar
+                    setTimeout(() => {
+                      try { self.hls.startLoad(); } catch(e) { console.error(e); }
+                    }, 800);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                } else {
+                  // Si se alcanzaron múltiples intentos, fallback a reproducción nativa
+                  console.warn("Hls: multiple failures, fallback to native video src");
+                  try {
+                    self.hls.destroy();
+                  } catch (e) {}
+                  self.hls = null;
+                  // Fallback: asignar directamente al <video> (algunos motores nativos pueden reproducir)
+                  try {
+                    self.videoEl.src = url;
+                    // Asegurar que el video intente reproducir
+                    self.videoEl.play().catch(err => {
+                      console.error("Fallback native play failed", err);
+                    });
+                  } finally {
+                    self.spinnerEl.classList.add("hidden");
+                  }
+                }
+              }
+            }
+          });
+
+          // Cuando el manifiesto esté parseado, reproducir
+          this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            // Ocultar spinner y reproducir
+            try { this.videoEl.play().catch(()=>{}); } catch(e){}
+            this.spinnerEl.classList.add("hidden");
+          });
+
+          // Intento de carga
+          try {
+            this.hls.loadSource(url);
+            this.hls.attachMedia(this.videoEl);
+          } catch (err) {
+            console.warn("Hls load/attach threw:", err);
+            try {
+              this.hls.destroy();
+            } catch (e) {}
+            this.hls = null;
+            // Intentar reproducción nativa como último recurso
+            try {
+              this.videoEl.src = url;
+              this.videoEl.play().catch(()=>{});
+            } finally {
+              this.spinnerEl.classList.add("hidden");
+            }
+          }
+
+          // Devolver (hemos delegado la reproducción a Hls.js)
+          this.videoEl.title = f.title || "";
+          this.iconLive.style.color = "red";
+          this.stopDvrInterval();
+          return;
+        }
+      }
+
+      // --- Si Hls.js no está disponible o no fue posible inicializarlo ---
+      // Verificar soporte nativo HLS (Safari y algunos motores que exponen MIME)
+      if (this.videoEl.canPlayType && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+        try {
+          this.videoEl.src = url;
+          this.videoEl.addEventListener('loadedmetadata', () => {
+            try { this.videoEl.play().catch(()=>{}); } catch(e){}
+            this.spinnerEl.classList.add("hidden");
+          }, { once: true });
+        } catch (e) {
+          console.warn("Native HLS attempt failed:", e);
+          // último recurso: asignar y call play
+          try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
+          this.spinnerEl.classList.add("hidden");
+        }
+
+        this.videoEl.title = f.title || "";
+        this.iconLive.style.color = "red";
+        this.stopDvrInterval();
+        return;
+      }
+
+      // --- Fallback final: si no hay Hls.js ni soporte nativo, usar shaka o asignar src directo ---
+      if (window.shaka && shaka.Player.isBrowserSupported()) {
+        try {
+          this.shakaPlayer = new shaka.Player(this.videoEl);
+          this.shakaPlayer.load(url)
+            .then(() => { this.videoEl.play().catch(()=>{}); this.spinnerEl.classList.add("hidden"); })
+            .catch(err => {
+              console.warn("Shaka load failed, fallback to direct src", err);
+              try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
+              this.spinnerEl.classList.add("hidden");
+            });
+          this.videoEl.title = f.title || "";
+          this.iconLive.style.color = "red";
+          this.stopDvrInterval();
+          return;
+        } catch (e) {
+          console.warn("Shaka initialization failed:", e);
+          this.shakaPlayer = null;
+        }
+      }
+
+      // Último recurso: asignar al src del <video> (funciona en algunos entornos/Chrome)
       try {
-        showStatus(a.label, 1200);
-        await a.fn();
-        // ensure session still the same
-        if (session !== playSessionId) break;
-        ok = true;
-        hideStatus();
-        spinnerEl && spinnerEl.classList.add('hidden');
-        // after successful load, try auto-unmute in this session
-        await attemptAutoUnmuteThisSession(session);
-        startWatchdog();
-        break;
-      } catch (err) {
-        console.warn('[player] attempt failed', a.label, err);
-        // small backoff
-        await sleep(240);
+        this.videoEl.src = url;
+        this.videoEl.play().catch(()=>{});
+      } catch (e) {
+        console.error("Final fallback assignment failed:", e);
+      } finally {
+        this.videoEl.title = f.title || "";
+        this.iconLive.style.color = "red";
+        this.stopDvrInterval();
+        this.spinnerEl.classList.add("hidden");
       }
     }
+    else {
+      // No es .m3u8 → usar Shaka si está o fallback directo
+      if (window.shaka && shaka.Player.isBrowserSupported()) {
+        this.shakaPlayer = new shaka.Player(this.videoEl);
+        this.shakaPlayer.load(url)
+          .then(() => this.videoEl.play())
+          .catch(() => {
+            this.videoEl.src = url;
+            this.videoEl.play();
+          });
+      }
+      else {
+        // Fallback HTML5 <video> para MP4 o .m3u8 no soportados
+        this.videoEl.src = url;
+        this.videoEl.play();
+      }
+      this.videoEl.title = f.title || "";
 
-    if (!ok && session === playSessionId) {
-      spinnerEl && spinnerEl.classList.add('hidden');
-      showPermanent('No se pudo reproducir. Prueba proxy/remux si sigue fallando.');
+      // Cuando cambia de canal, el botón "En Vivo" vuelve a rojo y se detiene DVR
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.spinnerEl.classList.add("hidden");
     }
-
-    playLock = false;
   }
 
-  // ---------- watchdog: detect stalls ----------
-  function startWatchdog() {
-    stopWatchdog();
-    let last = videoEl.currentTime;
-    watchdogTimer = setInterval(async () => {
-      try {
-        if (!videoEl.paused && !videoEl.ended) {
-          const now = videoEl.currentTime;
-          if (Math.abs(now - last) < 0.02) {
-            console.warn('[watchdog] stall detected — attempting gentle recovery');
-            // gentle recovery: destroy Hls and try quick reconnect
-            stopWatchdog();
-            const session = ++playSessionId;
-            safeDestroyHls();
-            // wait a bit and attempt quick HLS reload worker=false
-            await sleep(300);
-            try {
-              const item = playlist[currentIndex];
-              if (item && session === playSessionId) {
-                await loadWithHls(item.file, { enableWorker:false });
-                spinnerEl && spinnerEl.classList.add('hidden');
-                startWatchdog();
-                return;
-              }
-            } catch(e) {
-              console.warn('[watchdog] recovery failed', e);
-            }
-            // if recovery fails we let it be; user can change channel
-          } else last = now;
-        } else last = videoEl.currentTime;
-      } catch(e) {}
-    }, CONFIG.watchdogInterval);
+  play() {
+    this.playCurrent();
+    this.renderCarousel();
+    this.updateCarousel(true);
   }
-  function stopWatchdog() { if (watchdogTimer) { clearInterval(watchdogTimer); watchdogTimer = null; } }
 
-  // ---------- Touch handlers: only on non-mobile devices (so mobile uses native scroll) ----------
-  function initTouchHandlers() {
-    const wrapper = playlistContainer.querySelector('.carousel-wrapper');
-    if (!wrapper) return;
-    if (isMobile) {
-      // on mobile allow native scroll
-      playlistContainer.style.overflowY = 'auto';
-      // remove any wheel/touch preventDefault global handlers if present — we won't add any here
-      return;
-    }
-    // For TV / non-mobile attach carousel touch handlers (optional)
-    let startY = 0, dragging = false, itemH = 0, baseY = 0;
-    const listEl = playlistEl;
+  monitorPlayback() {
+    let last = 0;
+    setInterval(() => {
+      if (!this.videoEl.paused && !this.videoEl.ended) {
+        if (this.videoEl.currentTime === last) {
+          // Si se congela, reintenta reproducir
+          this.playCurrent();
+        }
+        last = this.videoEl.currentTime;
+      }
+    }, 5000);
+  }
+
+  /*──────────────────────────────────────────────────────────*/
+  /*            EVENTOS GLOBALES (Teclado / Rueda)            */
+  /*──────────────────────────────────────────────────────────*/
+  addUIListeners() {
+    ["mousemove","click","touchstart"].forEach(ev =>
+      window.addEventListener(ev, () => this.showUI())
+    );
+
+    window.addEventListener("keydown", e => {
+      const key = e.key;
+      const code = e.keyCode;
+
+      // Prevenir scroll nativo
+      if ([
+        "ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
+        "MediaPlayPause","Pause"," " /*Space*/, "ChannelUp","ChannelDown"
+      ].includes(key) || [32,179,33,34].includes(code)) {
+        e.preventDefault();
+      }
+
+      // Mapeo para botón especial de “Pause/Resume” del control remoto:
+      if (key === "MediaPlayPause" || key === "Pause" || code === 179) {
+        // Disparar la misma lógica que btnPause.click()
+        this.btnPause.click();
+        return;
+      }
+
+      // Cambio de canal con ChannelUp (código 33) / ChannelDown (código 34)
+      if (key === "ChannelUp" || code === 33) {
+        this.move(-1);
+        this.playCurrent();
+        return;
+      }
+      if (key === "ChannelDown" || code === 34) {
+        this.move(1);
+        this.playCurrent();
+        return;
+      }
+
+      // Si el overlay está activo, navegación entre sus botones
+      if (this.overlayActive) {
+        if (key === "ArrowLeft") {
+          if (document.activeElement === this.btnList)    this.btnReturn.focus();
+          else if (document.activeElement === this.btnPause) this.btnList.focus();
+          else if (document.activeElement === this.btnLive)  this.btnPause.focus();
+          else if (document.activeElement === this.btnClose) this.btnLive.focus();
+        }
+        else if (key === "ArrowRight") {
+          if (document.activeElement === this.btnReturn) this.btnList.focus();
+          else if (document.activeElement === this.btnList) this.btnPause.focus();
+          else if (document.activeElement === this.btnPause) this.btnLive.focus();
+          else if (document.activeElement === this.btnLive)  this.btnClose.focus();
+        }
+        else if (key === "Enter") {
+          document.activeElement.click();
+        }
+        this.resetMenuTimer();
+        return;
+      }
+
+      // Flecha izquierda fuera del overlay → abre menú
+      if (key === "ArrowLeft") {
+        this.showMenu();
+        return;
+      }
+
+      // Flechas arriba/abajo fuera del overlay → muestra playlist si oculto
+      if (!this.containerEl.classList.contains("active")
+          && (key === "ArrowUp" || key === "ArrowDown")) {
+        this.showUI();
+        return;
+      }
+
+      // Navegación del playlist
+      if (key === "ArrowUp")        this.move(-1);
+      else if (key === "ArrowDown") this.move(1);
+      else if (key === "Enter")     this.playCurrent();
+    });
+
+    // Rueda global para playlist
+    window.addEventListener("wheel", e => {
+      e.preventDefault();
+      if (this.overlayActive) return;
+      if (!this.containerEl.classList.contains("active")) {
+        this.showUI();
+      } else {
+        this.move(e.deltaY > 0 ? 1 : -1);
+      }
+    });
+
+    // Spinner + retry on error
+    this.videoEl.addEventListener("waiting", () =>
+      this.spinnerEl.classList.remove("hidden")
+    );
+    this.videoEl.addEventListener("playing", () =>
+      this.spinnerEl.classList.add("hidden")
+    );
+    this.videoEl.addEventListener("error", () =>
+      this.playCurrent()
+    );
+  }
+
+  /*──────────────────────────────────────────────────────────*/
+  /*               TOUCH‐DRAG EN EL PLAYLIST                  */
+  /*──────────────────────────────────────────────────────────*/
+  initTouchDrag() {
+    const wrapper = this.containerEl.querySelector(".carousel-wrapper");
+    const listEl  = this.playlistEl;
+    let itemH, baseY;
+
     const recalc = () => {
       const first = listEl.children[0];
-      if (!first) return;
       const st = getComputedStyle(first);
-      itemH = first.offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
+      itemH = first.offsetHeight
+            + parseFloat(st.marginTop)
+            + parseFloat(st.marginBottom);
       const wrapH = wrapper.clientHeight;
-      baseY = wrapH/2 - itemH/2 - Math.floor(7/2) * itemH;
+      baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
     };
-    wrapper.addEventListener('touchstart', e => {
+
+    wrapper.addEventListener("touchstart", e => {
       recalc();
-      startY = e.touches[0].clientY;
-      dragging = true;
-      listEl.style.transition = 'none';
-    }, { passive: true });
-    wrapper.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      const delta = e.touches[0].clientY - startY;
-      listEl.style.transform = `translateY(${baseY + delta}px)`;
-    }, { passive: true });
-    wrapper.addEventListener('touchend', e => {
-      if (!dragging) return;
-      dragging = false;
-      const delta = e.changedTouches[0].clientY - startY;
-      const steps = Math.round(-delta / (itemH || 120));
-      currentIndex = ((currentIndex + steps) % playlist.length + playlist.length) % playlist.length;
-      renderCarousel();
-      listEl.style.transition = 'transform .3s ease';
-      listEl.style.transform = '';
-    }, { passive: true });
+      this._touchStartY = e.touches[0].clientY;
+      this._isDragging  = true;
+      listEl.style.transition = "none";
+    });
+
+    wrapper.addEventListener("touchmove", e => {
+      if (!this._isDragging) return;
+      const deltaY = e.touches[0].clientY - this._touchStartY;
+      listEl.style.transform = `translateY(${baseY + deltaY}px)`;
+    });
+
+    wrapper.addEventListener("touchend", e => {
+      if (!this._isDragging) return;
+      this._isDragging = false;
+      const deltaY = e.changedTouches[0].clientY - this._touchStartY;
+      const steps  = Math.round(-deltaY / itemH);
+      this.move(steps);
+      listEl.style.transition = "transform .3s ease";
+      listEl.style.transform = `translateY(${baseY}px)`;
+    });
   }
 
-  // ---------- Event bindings ----------
-  videoEl.addEventListener('playing', () => {
-    try { spinnerEl && spinnerEl.classList.add('hidden'); } catch(e) {}
-    // attempt to auto-unmute under current session (safe)
-    attemptAutoUnmuteThisSession(playSessionId).catch(()=>{});
-  });
-  videoEl.addEventListener('waiting', () => { try { spinnerEl && spinnerEl.classList.remove('hidden'); } catch(e){} });
-  videoEl.addEventListener('error', () => {
-    console.warn('[video] element error — reload current channel');
-    // try to reload current channel (but in a new session)
-    playCurrent().catch(()=>{});
-  });
+  /*──────────────────────────────────────────────────────────────────*/
+  /*                 DVR – Actualizar la Barra de Progreso            */
+  /*──────────────────────────────────────────────────────────────────*/
+  startDvrInterval() {
+    // Actualizar cada 500 ms
+    this.stopDvrInterval();
+    this.dvrInterval = setInterval(() => {
+      const buf = this.videoEl.buffered;
+      if (buf.length > 0) {
+        const start = buf.start(0);
+        const end   = buf.end(buf.length - 1);
+        const current = this.videoEl.currentTime;
+        const totalRange = end - start;
+        if (totalRange > 0) {
+          let ratio = (current - start) / totalRange;
+          if (ratio < 0) ratio = 0;
+          if (ratio > 1) ratio = 1;
+          this.dvrProgress.style.width = `${Math.floor(ratio * 100)}%`;
+          // Mover el knob
+          const containerWidth = this.dvrContainer.clientWidth;
+          const knobX = ratio * containerWidth;
+          this.dvrKnob.style.transform = `translateX(${knobX}px)`;
+        }
+      }
+    }, 500);
+  }
 
-  window.addEventListener('keydown', (e) => {
-    // basic dpad nav
-    if (['ArrowUp','ArrowDown','Enter',' '].includes(e.key)) e.preventDefault();
-    if (e.key === 'ArrowUp') { currentIndex = (currentIndex - 1 + playlist.length) % playlist.length; renderCarousel(); }
-    else if (e.key === 'ArrowDown') { currentIndex = (currentIndex + 1) % playlist.length; renderCarousel(); }
-    else if (e.key === 'Enter' || e.key === ' ') { playCurrent(); }
-  }, false);
-
-  // prevent touch/wheel interception that breaks mobile scrolling: we do NOT add global preventDefault
-
-  // ---------- Bootstrap ----------
-  (async function bootstrap() {
-    const ok = await (async () => { try { return await loadPlaylist(); } catch(e){ return false; } })();
-    if (!ok) {
-      showPermanent('Error al cargar playlist.json. Revisa ruta o usa playlist inline');
-      return;
+  stopDvrInterval() {
+    if (this.dvrInterval) {
+      clearInterval(this.dvrInterval);
+      this.dvrInterval = null;
+      // Reset de la barra (opcional)
+      // this.dvrProgress.style.width = "0%";
+      // this.dvrKnob.style.transform = "translateX(0px)";
     }
-    renderCarousel();
-    initTouchHandlers();
-    // autoplay first after a short tick
-    setTimeout(() => { playCurrent().catch(e=>console.warn('initial play error', e)); }, 300);
-  })();
+  }
+}
 
-  // debug helpers
-  window._player_debug = {
-    playlist,
-    playIndex: i => { currentIndex = i; renderCarousel(); playCurrent(); },
-    setProxy: p => CONFIG.proxyPrefix = p,
-    setRemuxApi: r => CONFIG.remuxApiPrefix = r,
-    toggleMute: () => toggleMute(true),
-    statusEl
-  };
-
-})();
+// Arranque
+document.addEventListener("DOMContentLoaded", () => {
+  const player = new PlayerJS();
+  player.loadPlaylist([
+    {
+      number: "100",
+      image: "img/canallatina.png",
+      title: "LATINA",
+      file:
+        "https://jireh-3-hls-video-pe-isp.dps.live/hls-video/567ffde3fa319fadf3419efda25619456231dfea/latina/latina.smil/latina/livestream2/chunks.m3u8"
+    },
+    {
+      number: "101",
+      image: "img/CANAL-AUTENTICA.png",
+      title: "AUTENTICA",
+      file: "https://live.obslivestream.com/autenticatvmux/index.m3u8"
+    },
+    {
+      number: "102",
+      image: "img/CANAL-COPS.png",
+      title: "COPS",
+      file: "https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8"
+    },
+    {
+      number: "103",
+      image: "img/CANAL-DODO.png",
+      title: "DODO TV",
+      file: "https://cloud5.streaminglivehd.com:3651/hybrid/play.m3u8"
+    },
+    {
+      number: "104",
+      image: "img/canalneotv.png",
+      title: "NEO TV",
+      file: "https://videostream.shockmedia.com.ar:19360/neotvdigital/neotvdigital.m3u8"
+    },
+    {
+      number: "105",
+      image: "img/canalplanetatv.png",
+      title: "PLANETA",
+      file: "https://live.obslivestream.com/planetatv/index.m3u8"
+    },
+    {
+      number: "106",
+      image: "img/CANAL-AMC.png",
+      title: "AMC",
+      file: "https://amc-amcespanol-1-us.lg.wurl.tv/playlist.m3u8"
+    },
+    {
+      number: "107",
+      image: "img/canalwowtv.png",
+      title: "WOW TV",
+      file:
+        "https://cdn.elsalvadordigital.com:1936/wowtv/smil:wowtv.smil/playlist.m3u8"
+    },
+    {
+      number: "108",
+      image: "img/canalcocotv.png",
+      title: "COCO TV",
+      file:
+        "https://cloudflare.streamgato.us:3253/live/canalcocotvlive.m3u8"
+    },
+    {
+      number: "109",
+      image: "img/canalsoltv.png",
+      title: "SOL TV",
+      file:
+        "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8"
+    },
+    {
+      number: "110",
+      image: "img/CANAL-AFV.png",
+      title: "AFV TV",
+      file:
+        "https://linear-46.frequency.stream/dist/plex/46/hls/master/playlist.m3u8"
+    },
+    {
+      number: "111",
+      image: "img/canalsonynovelas.png",
+      title: "SONY NOVELAS",
+      file:
+        "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8"
+    },
+    {
+      number: "112",
+      image: "img/canaldw.png",
+      title: "DW ESPAÑOL",
+      file:
+        "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
+    },
+    {
+      number: "113",
+      image: "img/CANAL-CINECANAL.png",
+      title: "CINECANAL",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/CINECANAL/index.m3u8"
+    },
+    {
+      number: "114",
+      image: "img/CANAL57.png",
+      title: "CANAL 57",
+      file: "https://167790.global.ssl.fastly.net/6189746bccf0424c112f5476/live_50bbca50292011ed8d265962bedee5f9/tracks-v2a1/mono.m3u8"
+    },
+    {
+      number: "115",
+      image: "img/CANAL-ESTRELLAS.png",
+      title: "LAS ESTRELLAS",
+      file:
+        "https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CANAL-INFAST.png",
+      title: "INFAST",
+      file: "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00861-terninternation-lifestylelatam-lges/playlist.m3u8"
+    },
+    {
+      number: "117",
+      image: "img/CANAL-TELEMUNDO.png",
+      title: "TELEMUNDO",
+      file:
+        "https://nbculocallive.akamaized.net/hls/live/2037499/puertorico/stream1/master.m3u8"
+    },
+    {
+      number: "118",
+      image: "img/CANAL-CTV.png",
+      title: "CTV INTERNCIONAL",
+      file:
+        "https://mediacp.us:8081/ctvhn/index.m3u8"
+    },
+    {
+      number: "119",
+      image: "img/CANAL-SONYCOMEDY.png",
+      title: "SONY COMEDIA",
+      file: "https://spt-sonyonecomedias-mx.xiaomi.wurl.tv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "120",
+      image: "img/CANAL-FMCOSMOS.png",
+      title: "COSMOS TV",
+      file:
+        "https://tv.mediacp.eu:19360/cosmos/cosmos.m3u8"
+    },
+    {
+      number: "121",
+      image: "img/CANAL-SONY.png",
+      title: "SONY CINE",
+      file:
+        "https://a-cdn.klowdtv.com/live1/cine_720p/playlist.m3u8"
+    }
+    ,
+    {
+      number: "122",
+      image: "img/CANAL-TELEMUNDOACCION.png",
+      title: "ACCIÓN",
+      file:
+        "https://xumo-drct-ch835-ekq0p.fast.nbcuni.com/live/master.m3u8"
+    }
+    ,
+    {
+      number: "123",
+      image: "img/CANAL-MEGACINE.png",
+      title: "MEGA CINE TV",
+      file:
+        "https://cnn.hostlagarto.com/megacinetv/index.m3u8"
+    }
+    ,
+    {
+      number: "124",
+      image: "img/CANAL-DMJ.png",
+      title: "DMJ",
+      file:
+        "https://stmv1.voxhdnet.com/dmjsurtv/dmjsurtv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "125",
+      image: "img/CANAL-H2.png",
+      title: "HISTORY 2",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
+    }
+    ,
+    {
+      number: "126",
+      image: "img/CANAL-PALMERASTV.png",
+      title: "PALMERAS TV",
+      file:
+        "https://play.agenciastreaming.com:8081/palmerastv/index.m3u8"
+    }
+    ,
+    {
+      number: "127",
+      image: "img/CANAL-MEGATV.png",
+      title: "MEGA TV",
+      file:
+        "https://mc.servidor.stream:19360/megatv/megatv.m3u8"
+    }
+    ,
+    {
+      number: "128",
+      image: "img/CANAL-AMERICATV.png",
+      title: "AMERICA TV",
+      file:
+        "https://live-evg1.tv360.bitel.com.pe/bitel/americatv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "129",
+      image: "img/CANAL ATV.png",
+      title: "ATV",
+      file:
+        "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
+    },
+    {
+      number: "130",
+      image: "img/CANAL-SONYCHANNEL.png",
+      title: "SONY CHANNEL",
+      file:
+        "https://fl23.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
+    }
+    ,
+    {
+      number: "131",
+      image: "img/CANAL-SOLTVTRUJILLO.png",
+      title: "SOL TV",
+      file:
+        "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
+    }
+  ]);
+});

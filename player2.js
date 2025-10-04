@@ -1,16 +1,13 @@
-/* player2.js — versión mejorada: múltiples estrategias HLS, prewarm inicial y watchdog para congelamientos.
-   Reemplaza por completo tu archivo anterior. */
+/* player2.js — Corrección focal: manejo de level/frag/manifest load errors y reducción del freeze inicial.
+   Reemplaza por completo tu player2.js actual. Mantengo el resto de la lógica/UI intacta. */
 
-// ------------------------ clase PlayerJS -------------------------
 class PlayerJS {
   constructor() {
-    // Elementos básicos del reproductor (mantenidos como en tu versión)
     this.videoEl      = document.getElementById("player-video");
     this.playlistEl   = document.getElementById("carouselList");
     this.containerEl  = document.getElementById("playlist-container");
     this.spinnerEl    = document.getElementById("video-loading-spinner");
 
-    // Menú TV
     this.menuEl      = document.getElementById("tv-menu");
     this.imgEl       = document.getElementById("tv-menu-img");
     this.chanNumEl   = document.getElementById("tv-menu-channel-number");
@@ -25,7 +22,6 @@ class PlayerJS {
     this.btnClose    = document.getElementById("btn-close");
     this.tooltipEl   = document.getElementById("tv-menu-tooltip");
 
-    // DVR (barra progreso)
     this.dvrContainer = document.getElementById("dvr-container");
     this.dvrProgress  = document.getElementById("dvr-progress");
     this.dvrKnob      = document.getElementById("dvr-knob");
@@ -34,35 +30,34 @@ class PlayerJS {
     this.menuTimer     = null;
     this.dvrInterval   = null;
 
-    // Indices y playlist
     this.currentIndex      = 0;
     this.playbackIndex     = 0;
     this.hasUncommittedNav = false;
 
-    // Reproductores
     this.playlist      = [];
     this.hls           = null;
     this.shakaPlayer   = null;
 
-    // Auto-hide
     this.lastNavTime   = Date.now();
     this.autoHide      = 5000;
 
-    // Carrusel
     this.visibleCount  = 7;
     this.half          = Math.floor(this.visibleCount / 2);
 
-    // Touch drag
     this._touchStartY  = 0;
     this._isDragging   = false;
 
-    // Config externa
+    // configurables
     this.config = {
-      playlistUrl: '../playlist.json',
-      proxyPrefix: '' // si necesitas proxy, pon aquí el prefijo (ej. 'https://mi-proxy.com/')
+      playlistUrl: 'playlist.json',
+      proxyPrefix: '' // si tienes proxy coloca aquí el prefijo (ej. 'http://mi-proxy:3000/proxy?url=')
     };
 
-    // Audio select
+    // contadores de reintento para evitar loops
+    this._errorRetryCount = 0;
+    this._maxErrorRetries = 4;
+
+    // audio select
     this.audioSelectEl = document.getElementById('audio-select');
     if (!this.audioSelectEl) {
       try {
@@ -78,10 +73,8 @@ class PlayerJS {
       } catch(e){}
     }
 
-    // Watchdog handle
     this._watchdogTimer = null;
 
-    // Iniciar
     this.init();
   }
 
@@ -93,10 +86,9 @@ class PlayerJS {
     this.initMenuActions();
     this.videoEl.autoplay = true;
     this.videoEl.playsInline = true;
-    this.videoEl.muted = true; // chivato para evitar bloqueo de autoplay; se puede desmutear después
+    this.videoEl.muted = true;
     this.monitorPlayback();
 
-    // Auto hide playlist
     setInterval(() => {
       if (!this.overlayActive && Date.now() - this.lastNavTime > this.autoHide) {
         this.hideUI();
@@ -216,7 +208,6 @@ class PlayerJS {
     }
   }
 
-  // --- Cambié loadPlaylist para realizar un "pre-warm" del primer canal para evitar el freeze inicial ---
   loadPlaylist(arr) {
     this.playlist = arr;
     this.currentIndex = 0;
@@ -225,35 +216,24 @@ class PlayerJS {
     this.renderCarousel();
     this.updateCarousel(false);
 
-    // Prewarm del primer item: intentar fetch del manifiesto y primer segmento antes de play
     if (this.playlist.length > 0) {
-      // Pre-warm asíncrono pero iniciamos el play cuando esté listo o tras timeout
       const firstIndex = 0;
-      const timeoutMs = 2500; // si el prewarm tarda más, romper y seguir
+      const timeoutMs = 2500;
       let finished = false;
 
       this.prewarmChannel(firstIndex)
         .then(() => {
           finished = true;
-          // iniciar reproducción solo si aún estamos en el primer elemento
           if (this.currentIndex === firstIndex) this.playCurrent();
         })
-        .catch(() => {
-          // ignorar errores de prewarm
-        });
+        .catch(() => {});
 
-      // fallback: forzamos play si el prewarm tarda demasiado
       setTimeout(() => {
-        if (!finished) {
-          this.playCurrent();
-        }
+        if (!finished) this.playCurrent();
       }, timeoutMs);
-    } else {
-      // si no hay items simplemente no hacemos nada
     }
   }
 
-  // ------------------- CARRUSEL ---------------------
   createItem(idx) {
     const data = this.playlist[idx] || {};
     const item = document.createElement("div");
@@ -312,109 +292,128 @@ class PlayerJS {
     this.updateCarousel(true);
   }
 
-  // ---------------- Reproducción: robusta para m3u8 ---------------
-  playCurrent() {
+  // Helper small sleep
+  _sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  // ---------- reproducción robusta (con mejoras) ----------
+  async playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
     this.playbackIndex = this.currentIndex;
     this.hasUncommittedNav = false;
 
-    // Destruir instancias previas
+    // reset error retry count on manual change
+    this._errorRetryCount = 0;
+
     if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
     if (this.shakaPlayer) { try { this.shakaPlayer.destroy(); } catch(e){} this.shakaPlayer = null; }
 
-    const origUrl = (f.file || "").trim();
-    let url = origUrl;
-    const isM3U8 = /\.m3u8($|\?)/i.test(url);
+    let url = (f.file || "").trim();
+    if (!url) return;
 
     this.spinnerEl.classList.remove("hidden");
 
-    // Atributos útiles
     try { this.videoEl.crossOrigin = 'anonymous'; } catch(e){}
     try { this.videoEl.setAttribute('playsinline', ''); } catch(e){}
     try { this.videoEl.preload = 'metadata'; } catch(e){}
 
-    // Helper: aplicar proxy si configurado
     const maybeWithProxy = (u) => {
       const pref = (this.config && this.config.proxyPrefix) ? this.config.proxyPrefix.trim() : '';
       if (!pref) return u;
-      // evitar duplicar proxy si ya lo contiene
       if (u.indexOf(pref) === 0) return u;
-      return pref + u;
+      return pref + encodeURIComponent(u);
     };
 
-    // Native play attempt
-    const tryNativePlay = (u) => {
-      try {
-        console.info('[player] intent: native src ->', u);
-        this.videoEl.src = u;
-        this.videoEl.load();
-        // try autoplay; autoplay may be blocked if not muted
-        this.videoEl.play().catch(err => { console.warn('native play() rejected', err); });
-      } catch (e) {
-        console.warn('native play error', e);
-      } finally {
-        // spinner será ocultado por event 'playing' o por fallback más abajo
-      }
-    };
+    // ensure video element is clean before creating Hls (fixes certain freeze cases)
+    try {
+      try { this.videoEl.pause(); } catch(e){}
+      try { this.videoEl.removeAttribute('src'); } catch(e){}
+      try { this.videoEl.load(); } catch(e){}
+      // small pause to ensure browser releases any previous media pipelines
+      await this._sleep(200);
+    } catch(e){}
 
-    // Crear Hls con una configuración específica (opción)
+    // HLS factory with sane defaults
     const createHlsInstance = (opts = {}) => {
       if (!window.Hls || !Hls.isSupported()) return null;
       try {
-        return new Hls(Object.assign({
+        const cfg = Object.assign({
           maxBufferLength: 60,
           liveSyncDurationCount: 3,
           enableWorker: true,
           startFragPrefetch: true,
           maxMaxBufferLength: 600,
-          fragLoadingTimeOut: 20000,
-          manifestLoadingTimeOut: 20000,
-          maxBufferHole: 0.5
-        }, opts));
+          fragLoadingTimeOut: 30000,        // más tolerancia
+          manifestLoadingTimeOut: 30000,
+          levelLoadingTimeOut: 20000,
+          loader: undefined,
+          maxBufferHole: 0.7
+        }, opts);
+        const hls = new Hls(cfg);
+
+        // xhrSetup: conCredentials + cabeceras básicas (algunos hosts requieren cookies/session)
+        hls.config.xhrSetup = function(xhr, url) {
+          try {
+            xhr.withCredentials = true;
+            try { xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); } catch(e){}
+            try { xhr.setRequestHeader('Accept', '*/*'); } catch(e){}
+          } catch(e){}
+        };
+
+        return hls;
       } catch (e) {
         console.warn('Hls init threw', e);
         return null;
       }
     };
 
-    // Intento con Hls: devuelve Promise
+    // try loader with promise and richer handling (resolving when level/frag loaded)
     const tryLoadWithHlsConfig = (u, hlsOpts = {}) => {
       return new Promise((resolve, reject) => {
         const hls = createHlsInstance(hlsOpts);
         if (!hls) return reject(new Error('Hls not available'));
 
-        // Si ya existe un hls, destruirlo para evitar conflicts
+        // cleanup previous
         if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
-
         this.hls = hls;
-        let recovered = false;
-        let fatalCount = 0;
-        const maxFatal = 3;
 
+        let fatalCount = 0;
+        const maxFatal = 2;
+
+        // handlers
         const onError = (event, data) => {
           console.warn('[Hls error]', data);
+          // network/level/frag/manifest errors: short-circuit to try next strategy
           if (data && data.fatal) {
             fatalCount++;
+            // if it's network related and we haven't retried too many times, stop and reject to go to next attempt
+            const details = (data.details || '').toLowerCase();
+            if (details.includes('manifest') || details.includes('level') || details.includes('frag') || data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+              cleanup();
+              try { hls.destroy(); } catch(e){}
+              this.hls = null;
+              return reject(new Error('Hls fatal network/manifest/level/frag error: ' + (data.details || data.type)));
+            }
+            // other recoverable media errors
+            if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+              try { hls.recoverMediaError(); } catch(e){}
+              return;
+            }
+            // fallback: if repeated fatal errors, reject
             if (fatalCount > maxFatal) {
               cleanup();
               try { hls.destroy(); } catch(e){}
               this.hls = null;
               return reject(new Error('Hls fatal repeated'));
             }
-            // Intentos específicos
-            if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-              try { hls.recoverMediaError(); recovered = true; } catch(e){}
-            } else if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-              try { hls.startLoad(); } catch(e){}
-            } else {
-              try { hls.stopLoad(); } catch(e){}
-              setTimeout(() => { try { hls.startLoad(); } catch(e){} }, 800);
-            }
           }
         };
 
         const onManifestParsed = () => {
-          // Si hay pistas de audio, poblar select
+          // call startLoad to ensure fragments are requested
+          try {
+            if (hls.startLoad) hls.startLoad();
+          } catch(e){}
+          // populate audio tracks if exist
           try {
             if (hls.audioTracks && hls.audioTracks.length > 1) {
               this.populateAudioTracks(hls.audioTracks);
@@ -422,33 +421,44 @@ class PlayerJS {
               this.audioSelectEl.style.display = 'none';
             }
           } catch(e){}
+          // often manifest parsed means timeline ready; but wait until a level or frag loads
+          // We'll resolve on LEVEL_LOADED or FRAG_LOADED below.
+        };
 
-          // Reproducir
+        const onLevelLoaded = (event, data) => {
+          // level info available -> safe to play
+          cleanup();
           try { this.videoEl.play().catch(()=>{}); } catch(e){}
           resolve();
         };
 
-        const onAudioUpdated = () => {
-          try {
-            if (hls.audioTracks && hls.audioTracks.length > 1) {
-              this.populateAudioTracks(hls.audioTracks);
-            }
-          } catch(e){}
+        const onFragLoaded = (event, data) => {
+          // first fragment loaded -> safe to play
+          cleanup();
+          try { this.videoEl.play().catch(()=>{}); } catch(e){}
+          resolve();
         };
 
         const cleanup = () => {
           try { hls.off(Hls.Events.ERROR, onError); } catch(e){}
           try { hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed); } catch(e){}
-          try { hls.off(Hls.Events.AUDIO_TRACKS_UPDATED, onAudioUpdated); } catch(e){}
+          try { hls.off(Hls.Events.LEVEL_LOADED, onLevelLoaded); } catch(e){}
+          try { hls.off(Hls.Events.FRAG_LOADED, onFragLoaded); } catch(e){}
         };
 
         hls.on(Hls.Events.ERROR, onError);
         hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
-        hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, onAudioUpdated);
+        hls.on(Hls.Events.LEVEL_LOADED, onLevelLoaded);
+        hls.on(Hls.Events.FRAG_LOADED, onFragLoaded);
+        hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
+          try { if (hls.audioTracks && hls.audioTracks.length > 1) this.populateAudioTracks(hls.audioTracks); } catch(e){}
+        });
 
         try {
           hls.loadSource(u);
           hls.attachMedia(this.videoEl);
+          // force startLoad in case some platforms need explicit start
+          try { if (hls.startLoad) hls.startLoad(0); } catch(e){}
         } catch (e) {
           cleanup();
           try { hls.destroy(); } catch(e){}
@@ -458,27 +468,32 @@ class PlayerJS {
       });
     };
 
-    // Intento de convertir manifiesto a blob (para arreglar rutas relativas)
+    // manifest->blob helper (convert relative URIs)
     const fetchManifestToBlobUrl = async (u) => {
-      try {
-        const resp = await fetch(u, { cache: 'no-store' });
-        if (!resp.ok) throw new Error('manifest fetch failed ' + resp.status);
-        const text = await resp.text();
-        const base = u.replace(/\/[^\/]*$/, '/');
-        const lines = text.split(/\r?\n/).map(line => {
-          if (line && line[0] !== '#') {
-            if (!/^https?:\/\//i.test(line)) return base + line;
-          }
-          return line;
-        }).join('\n');
-        const blob = new Blob([lines], { type: 'application/vnd.apple.mpegurl' });
-        return URL.createObjectURL(blob);
-      } catch (e) {
-        throw e;
-      }
+      const resp = await fetch(u, { cache: 'no-store' });
+      if (!resp.ok) throw new Error('manifest fetch failed ' + resp.status);
+      const text = await resp.text();
+      const base = u.replace(/\/[^\/]*$/, '/');
+      const lines = text.split(/\r?\n/).map(line => {
+        if (line && line[0] !== '#') {
+          if (!/^https?:\/\//i.test(line)) return base + line;
+        }
+        return line;
+      }).join('\n');
+      const blob = new Blob([lines], { type: 'application/vnd.apple.mpegurl' });
+      return URL.createObjectURL(blob);
     };
 
-    // Watchdog: si no avanza currentTime tras X ms, intentamos recrear el player
+    // Native fallback
+    const tryNativePlay = (u) => {
+      try {
+        this.videoEl.src = u;
+        this.videoEl.load();
+        this.videoEl.play().catch(()=>{});
+      } catch(e){}
+    };
+
+    // start watchdog to detect stalls
     const startWatchdog = (timeoutMs = 6000) => {
       this.stopWatchdog();
       let lastTime = this.videoEl.currentTime;
@@ -487,9 +502,30 @@ class PlayerJS {
           if (!this.videoEl.paused && !this.videoEl.ended) {
             const now = this.videoEl.currentTime;
             if (Math.abs(now - lastTime) < 0.01) {
-              console.warn('[watchdog] playback stalled, attempting recovery');
-              // Acción de recuperación: reload, reattach Hls con worker toggled
-              this.attemptRecoverySequence(url).catch(e => console.warn('Recovery failed', e));
+              console.warn('[watchdog] stall detected -> recovery');
+              // small backoff and try to recover
+              this._errorRetryCount++;
+              if (this._errorRetryCount <= this._maxErrorRetries) {
+                // destroy HLS and re-run play logic with worker toggled
+                if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
+                (async () => {
+                  await this._sleep(300);
+                  // try worker=false as recovery
+                  try {
+                    await tryLoadWithHlsConfig(url, { enableWorker: false, startFragPrefetch: true });
+                    this.spinnerEl.classList.add("hidden");
+                    this.iconLive.style.color = "red";
+                    this.stopDvrInterval();
+                    startWatchdog(7000);
+                    return;
+                  } catch (e) {
+                    console.warn('[watchdog] recovery attempt failed', e);
+                  }
+                })();
+              } else {
+                // exceeded retries -> stop watchdog
+                this.stopWatchdog();
+              }
             } else {
               lastTime = now;
             }
@@ -503,169 +539,149 @@ class PlayerJS {
     const stopWatchdog = () => {
       if (this._watchdogTimer) { clearInterval(this._watchdogTimer); this._watchdogTimer = null; }
     };
-    this.stopWatchdog = stopWatchdog;
     this.startWatchdog = startWatchdog;
+    this.stopWatchdog = stopWatchdog;
 
-    // Secuencia de intentos (mejorada)
-    const attemptSequence = async () => {
-      try {
-        // 1) Intentar Hls con worker true / startFragPrefetch true
-        await tryLoadWithHlsConfig(url, { enableWorker: true, startFragPrefetch: true });
-        console.info('[player] Hls (worker:true) OK');
-        this.spinnerEl.classList.add("hidden");
-        this.videoEl.muted = false; // desmutear si se desea (puedes hacer condicional)
-        this.iconLive.style.color = "red";
-        this.stopDvrInterval();
-        this.startWatchdog(7000);
-        return;
-      } catch (e1) {
-        console.warn('[player] Hls(worker:true) failed:', e1);
-      }
+    // Attempt sequence (tries several strategies)
+    try {
+      // 1) HLS worker true
+      await tryLoadWithHlsConfig(url, { enableWorker: true, startFragPrefetch: true });
+      this.spinnerEl.classList.add("hidden");
+      this.videoEl.muted = false;
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.startWatchdog(7000);
+      return;
+    } catch (e1) {
+      console.warn('[player] Hls(worker:true) failed:', e1);
+    }
 
+    try {
+      // 2) HLS worker false
+      await tryLoadWithHlsConfig(url, { enableWorker: false, startFragPrefetch: true });
+      this.spinnerEl.classList.add("hidden");
+      this.videoEl.muted = false;
+      this.iconLive.style.color = "red";
+      this.stopDvrInterval();
+      this.startWatchdog(7000);
+      return;
+    } catch (e2) {
+      console.warn('[player] Hls(worker:false) failed:', e2);
+    }
+
+    try {
+      // 3) manifest->blob -> HLS (useful for relative segment URIs)
+      const blobUrl = await fetchManifestToBlobUrl(url);
       try {
-        // 2) Intentar Hls con worker false (algunas WebView fallan con workers)
-        await tryLoadWithHlsConfig(url, { enableWorker: false, startFragPrefetch: true });
-        console.info('[player] Hls (worker:false) OK');
+        await tryLoadWithHlsConfig(blobUrl, { enableWorker: false, startFragPrefetch: true });
+        URL.revokeObjectURL(blobUrl);
         this.spinnerEl.classList.add("hidden");
         this.videoEl.muted = false;
         this.iconLive.style.color = "red";
         this.stopDvrInterval();
         this.startWatchdog(7000);
         return;
-      } catch (e2) {
-        console.warn('[player] Hls(worker:false) failed:', e2);
+      } catch (e3) {
+        try { URL.revokeObjectURL(blobUrl); } catch(e){}
+        console.warn('[player] Hls via blob failed:', e3);
       }
+    } catch(e) {
+      console.warn('[player] fetch manifest->blob failed', e);
+    }
 
-      try {
-        // 3) Usar manifest -> blob -> Hls (ayuda si hay rutas relativas)
-        const blobUrl = await fetchManifestToBlobUrl(url);
-        try {
-          await tryLoadWithHlsConfig(blobUrl, { enableWorker: false, startFragPrefetch: true });
-          console.info('[player] Hls via manifest-blob OK');
-          URL.revokeObjectURL(blobUrl);
-          this.spinnerEl.classList.add("hidden");
-          this.videoEl.muted = false;
-          this.iconLive.style.color = "red";
-          this.stopDvrInterval();
-          this.startWatchdog(7000);
-          return;
-        } catch (e3) {
-          console.warn('[player] Hls via blob failed:', e3);
-          try { URL.revokeObjectURL(blobUrl); } catch(e){}
-        }
-      } catch(e) {
-        console.warn('[player] fetch manifest->blob failed', e);
-      }
-
-      // 4) intentar native (asignar src directo)
-      try {
-        console.info('[player] trying native fallback');
-        tryNativePlay(url);
-        // esperar un poco para ver si arranca
-        await new Promise(res => setTimeout(res, 1400));
-        if (!this.videoEl.paused && !this.videoEl.error) {
-          console.info('[player] native fallback OK');
-          this.spinnerEl.classList.add("hidden");
-          this.videoEl.muted = false;
-          this.iconLive.style.color = "red";
-          this.stopDvrInterval();
-          this.startWatchdog(7000);
-          return;
-        }
-      } catch(e) {
-        console.warn('[player] native fallback error', e);
-      }
-
-      // 5) si hay proxy configurado, intentar con proxy (Hls y native)
-      if (this.config && this.config.proxyPrefix) {
-        const prox = maybeWithProxy(url);
-        try {
-          await tryLoadWithHlsConfig(prox, { enableWorker: false, startFragPrefetch: true });
-          console.info('[player] Hls via proxy OK');
-          this.spinnerEl.classList.add("hidden");
-          this.videoEl.muted = false;
-          this.iconLive.style.color = "red";
-          this.stopDvrInterval();
-          this.startWatchdog(7000);
-          return;
-        } catch (ep) {
-          console.warn('[player] Hls via proxy failed', ep);
-        }
-
-        try {
-          tryNativePlay(prox);
-          await new Promise(res => setTimeout(res, 1200));
-          if (!this.videoEl.paused && !this.videoEl.error) {
-            this.spinnerEl.classList.add("hidden");
-            this.videoEl.muted = false;
-            this.iconLive.style.color = "red";
-            this.stopDvrInterval();
-            this.startWatchdog(7000);
-            return;
-          }
-        } catch(e) {
-          console.warn('[player] native via proxy failed', e);
-        }
-      }
-
-      // 6) último recurso: asignar src directo y dar por perdido
-      try {
-        tryNativePlay(url);
-      } catch(e){
-        console.error('[player] all attempts failed finally', e);
-      } finally {
+    try {
+      // 4) native fallback (assign src)
+      tryNativePlay(url);
+      await this._sleep(1400);
+      if (!this.videoEl.paused && !this.videoEl.error) {
         this.spinnerEl.classList.add("hidden");
+        this.videoEl.muted = false;
         this.iconLive.style.color = "red";
         this.stopDvrInterval();
+        this.startWatchdog(7000);
+        return;
       }
-    };
+    } catch(e) {
+      console.warn('[player] native fallback error', e);
+    }
 
-    // Ejecutar la secuencia
-    attemptSequence().catch(err => {
-      console.error('[player] attemptSequence unhandled error', err);
-      this.spinnerEl.classList.add("hidden");
-      this.stopDvrInterval();
-    });
+    // 5) Proxy attempts (if configured)
+    if (this.config && this.config.proxyPrefix) {
+      const prox = maybeWithProxy(url);
+      try {
+        await tryLoadWithHlsConfig(prox, { enableWorker: false, startFragPrefetch: true });
+        this.spinnerEl.classList.add("hidden");
+        this.videoEl.muted = false;
+        this.iconLive.style.color = "red";
+        this.stopDvrInterval();
+        this.startWatchdog(7000);
+        return;
+      } catch (ep) {
+        console.warn('[player] Hls via proxy failed', ep);
+      }
+
+      try {
+        tryNativePlay(prox);
+        await this._sleep(1200);
+        if (!this.videoEl.paused && !this.videoEl.error) {
+          this.spinnerEl.classList.add("hidden");
+          this.videoEl.muted = false;
+          this.iconLive.style.color = "red";
+          this.stopDvrInterval();
+          this.startWatchdog(7000);
+          return;
+        }
+      } catch(e) {
+        console.warn('[player] native via proxy failed', e);
+      }
+    }
+
+    // last resort
+    try { tryNativePlay(url); } catch(e){ console.error('[player] all attempts failed finally', e); }
+    this.spinnerEl.classList.add("hidden");
+    this.iconLive.style.color = "red";
+    this.stopDvrInterval();
   }
 
-  // --- prewarmChannel: intenta fetch del manifiesto y primer segmento para "calentar" el origen ---
+  // prewarm: intenta descargar manifest y hasta 2 segmentos. Usa no-cors como fallback para redes bloqueantes.
   async prewarmChannel(index) {
     try {
       const item = this.playlist[index];
-      if (!item) return;
+      if (!item) return false;
       let url = item.file;
-      if (!url) return;
+      if (!url) return false;
 
-      // Si hay proxy configurado, usarlo en la prefetcheo (opcional)
       const pref = (this.config && this.config.proxyPrefix) ? this.config.proxyPrefix.trim() : '';
-      const urlToFetch = pref ? pref + url : url;
+      const urlToFetch = pref ? pref + encodeURIComponent(url) : url;
 
-      console.info('[player] prewarm: fetching manifest for', urlToFetch);
       const resp = await fetch(urlToFetch, {cache:'no-store'});
       if (!resp.ok) throw new Error('manifest HTTP ' + resp.status);
       const text = await resp.text();
 
-      // tomar el primer segmento que no sea comentario
       const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-      let candidate = null;
+      let candidates = [];
       for (let i = 0; i < lines.length; i++) {
         const L = lines[i];
         if (L.startsWith('#')) continue;
-        // si es url relativa, transformar
+        let candidate = L;
         if (!/^https?:\/\//i.test(L)) {
           const base = url.replace(/\/[^\/]*$/, '/');
           candidate = base + L;
-        } else candidate = L;
-        if (candidate) break;
+        }
+        if (candidate) candidates.push(candidate);
+        if (candidates.length >= 2) break;
       }
 
-      if (candidate) {
-        const segUrl = pref ? (pref + candidate) : candidate;
-        console.info('[player] prewarm: fetching first segment ->', segUrl);
-        // petición rápida (no-credentials) para cachear en red/proxy
-        await fetch(segUrl, { method: 'GET', mode: 'cors', cache: 'no-store' });
+      for (let c of candidates) {
+        const segUrl = pref ? (pref + encodeURIComponent(c)) : c;
+        try {
+          // try normal CORS first
+          await fetch(segUrl, { method: 'GET', mode: 'cors', cache: 'no-store' });
+        } catch(e) {
+          // try no-cors as last resort (opaque response) so the network still fetches and warms caches
+          try { await fetch(segUrl, { method: 'GET', mode: 'no-cors', cache: 'no-store' }); } catch(_){}
+        }
       }
-      // si todo ok, devuelve true
       return true;
     } catch (e) {
       console.warn('[player] prewarm failed:', e);
@@ -673,7 +689,6 @@ class PlayerJS {
     }
   }
 
-  // populateAudioTracks: mejora para mostrar y cambiar pistas
   populateAudioTracks(tracks) {
     try {
       if (!this.audioSelectEl) return;
@@ -704,22 +719,26 @@ class PlayerJS {
     } catch(e){ console.warn('populateAudioTracks error', e); }
   }
 
-  // Monitor playback simple (congelamientos a largo plazo)
   monitorPlayback() {
     let last = 0;
     setInterval(() => {
       if (!this.videoEl.paused && !this.videoEl.ended) {
         if (this.videoEl.currentTime === last) {
-          // Puede que haya un freeze, intentar recovery leve
-          console.warn('[monitor] detected no-progress, calling playCurrent() to try recover');
-          this.playCurrent();
+          // en caso de no-progreso, intentar un rebind suave (no llamar repetidamente)
+          console.warn('[monitor] detected no-progress, calling lightweight recovery');
+          // sólo si no hay ya muchos intentos
+          if (this._errorRetryCount < this._maxErrorRetries) {
+            this._errorRetryCount++;
+            try { if (this.hls) { this.hls.destroy(); this.hls = null; } } catch(e){}
+            // reintentar reproducir sin bloquear UI
+            this.playCurrent();
+          }
         }
         last = this.videoEl.currentTime;
       }
     }, 8000);
   }
 
-  // ---------------- eventos globales ----------------------
   addUIListeners() {
     ["mousemove","click","touchstart"].forEach(ev => window.addEventListener(ev, () => this.showUI()));
 
@@ -776,7 +795,6 @@ class PlayerJS {
     });
   }
 
-  // touch drag (igual que antes)
   initTouchDrag() {
     const wrapper = this.containerEl.querySelector(".carousel-wrapper");
     const listEl  = this.playlistEl;
@@ -813,7 +831,6 @@ class PlayerJS {
     });
   }
 
-  // DVR
   startDvrInterval() {
     this.stopDvrInterval();
     this.dvrInterval = setInterval(() => {
@@ -839,17 +856,13 @@ class PlayerJS {
     if (this.dvrInterval) { clearInterval(this.dvrInterval); this.dvrInterval = null; }
   }
 
-  // función pública simple para reintentar manualmente (útil para debugging)
   attemptRecoverySequence(url) {
     return new Promise(async (resolve, reject) => {
       try {
-        // destruir hls actual
         if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
-        // pequeña pausa
-        await new Promise(r => setTimeout(r, 500));
-        // intentar recargar con Hls disable worker (segunda opción)
+        await this._sleep(500);
         try {
-          await this.playCurrent(); // playCurrent ya contiene su propia lógica de retries
+          await this.playCurrent();
           resolve();
         } catch(e) {
           reject(e);
@@ -859,7 +872,7 @@ class PlayerJS {
   }
 }
 
-// ------------------ bootstrap: cargar playlist.json -------------------
+// bootstrap: cargar playlist.json (archivo original usado: player2.js version subida por el usuario). 
 document.addEventListener("DOMContentLoaded", () => {
   const player = new PlayerJS();
 

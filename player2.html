@@ -15,7 +15,14 @@
   <body>
     <!-- VIDEO + SPINNER -->
     <div id="player-container">
-      <video id="player-video" autoplay playsinline></video>
+      <!-- agregué crossorigin y muted para mejorar autoplay/cors en WebView -->
+      <video
+        id="player-video"
+        autoplay
+        playsinline
+        crossorigin="anonymous"
+        muted
+      ></video>
       <div id="video-loading-spinner" class="spinner hidden"></div>
     </div>
 
@@ -28,7 +35,6 @@
 
     <!-- MENÚ TV (Android TV) -->
     <div id="tv-menu" class="tv-menu hidden">
-      <!-- Parte superior: miniatura, número de canal, calidad y reloj -->
       <div class="tv-menu-top">
         <div class="tv-menu-img">
           <img id="tv-menu-img" src="" alt="Canal actual" />
@@ -39,10 +45,7 @@
         </div>
         <div id="tv-menu-time" class="tv-menu-time">12:00</div>
       </div>
-
-      <!-- Parte inferior: GRUPOS -->
       <div class="tv-menu-bottom">
-        <!-- Grupo Izquierdo: Volver + Canales -->
         <div class="tv-menu-group-left">
           <button
             id="btn-return"
@@ -61,10 +64,7 @@
             <i class="bi bi-list-ul"></i>
           </button>
         </div>
-
-        <!-- Grupo Central: Pause/Resume + DVR + Live -->
         <div class="tv-menu-group-center">
-          <!-- Botón Pause / Reanudar -->
           <button
             id="btn-pause"
             class="tv-menu-btn"
@@ -73,12 +73,10 @@
           >
             <i id="icon-pause" class="bi bi-pause-fill"></i>
           </button>
-          <!-- Barra de Progreso DVR -->
           <div id="dvr-container">
             <div id="dvr-progress"></div>
             <div id="dvr-knob"></div>
           </div>
-          <!-- Botón En Vivo -->
           <button
             id="btn-live"
             class="tv-menu-btn"
@@ -88,8 +86,6 @@
             <i id="icon-live" class="bi bi-broadcast" style="color: red"></i>
           </button>
         </div>
-
-        <!-- Grupo Derecho: Cerrar -->
         <div class="tv-menu-group-right">
           <button
             id="btn-close"
@@ -101,10 +97,20 @@
           </button>
         </div>
       </div>
-
-      <!-- Tooltip sobre botón enfocado -->
       <div id="tv-menu-tooltip" class="tv-menu-tooltip hidden"></div>
     </div>
+
+    <!-- select para pistas de audio (se muestra sólo si hay >1 pista) -->
+    <select
+      id="audio-select"
+      style="
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        z-index: 9999;
+        display: none;
+      "
+    ></select>
 
     <script src="player2.js"></script>
   </body>

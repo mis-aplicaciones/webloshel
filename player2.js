@@ -40,6 +40,10 @@ class PlayerJS {
     this.hls           = null;
     this.shakaPlayer   = null;
 
+    // Integración audio selector (player2.js -> AudioSelector)
+    // Mantener referencia para no reinicializar múltiples veces
+    this.audioSelectorApi = null;
+
     // Auto‐hide playlist
     this.lastNavTime   = Date.now();
     this.autoHide      = 5000;
@@ -63,6 +67,8 @@ class PlayerJS {
     this.addUIListeners();
     this.initMenuActions();
     this.videoEl.autoplay = true;
+    // Intento de asegurar audio no en mute (si el navegador/TV lo permite)
+    try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
     this.monitorPlayback();
 
     // Auto‐hide SOLO para playlist
@@ -364,6 +370,22 @@ class PlayerJS {
           const maxRecoverAttempts = 3;
           const self = this;
 
+          // --- INTEGRACIÓN: inicializar AudioSelector (si existe) y pasarle la instancia Hls ---
+          try {
+            if (window.AudioSelector) {
+              // Si no lo hemos inicializado aún, lo hacemos (si ya existe, solo adjuntamos)
+              if (!this.audioSelectorApi) {
+                // Si no hay un select en el DOM con id 'audio-select', AudioSelector.init creará uno y lo adjuntará.
+                this.audioSelectorApi = AudioSelector.init({ video: this.videoEl, audioSelect: '#audio-select', hls: this.hls });
+              } else {
+                // adjuntar la instancia hls para que AudioSelector pueda leer pistas y exponer UI
+                try { this.audioSelectorApi.attachHlsInstance(this.hls); } catch(e) { console.warn('attachHlsInstance failed', e); }
+              }
+            }
+          } catch(e) {
+            console.warn('AudioSelector integration failed (non-fatal):', e);
+          }
+
           // Manejar eventos de errores de Hls.js
           this.hls.on(Hls.Events.ERROR, function(event, data) {
             console.warn("Hls error event:", data);
@@ -408,7 +430,8 @@ class PlayerJS {
                   // Fallback: asignar directamente al <video> (algunos motores nativos pueden reproducir)
                   try {
                     self.videoEl.src = url;
-                    // Asegurar que el video intente reproducir
+                    // Asegurar que el video intente reproducir y audio no quede en mute
+                    try { self.videoEl.muted = false; self.videoEl.volume = 1; } catch(e) {}
                     self.videoEl.play().catch(err => {
                       console.error("Fallback native play failed", err);
                     });
@@ -422,9 +445,17 @@ class PlayerJS {
 
           // Cuando el manifiesto esté parseado, reproducir
           this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            // Intentar asegurar audio en caso de políticas de autoplay
+            try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
             // Ocultar spinner y reproducir
             try { this.videoEl.play().catch(()=>{}); } catch(e){}
             this.spinnerEl.classList.add("hidden");
+            // Si AudioSelector está inicializado, dejar que detecte pistas (ya le pasamos this.hls)
+            try {
+              if (this.audioSelectorApi && this.hls) {
+                try { this.audioSelectorApi.attachHlsInstance(this.hls); } catch(e) {}
+              }
+            } catch(e){}
           });
 
           // Intento de carga
@@ -440,6 +471,7 @@ class PlayerJS {
             // Intentar reproducción nativa como último recurso
             try {
               this.videoEl.src = url;
+              try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
               this.videoEl.play().catch(()=>{});
             } finally {
               this.spinnerEl.classList.add("hidden");
@@ -459,8 +491,21 @@ class PlayerJS {
       if (this.videoEl.canPlayType && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
         try {
           this.videoEl.src = url;
+          // Inicializar AudioSelector para HLS nativo (detecta audioTracks)
+          try {
+            if (window.AudioSelector) {
+              if (!this.audioSelectorApi) {
+                this.audioSelectorApi = AudioSelector.init({ video: this.videoEl, audioSelect: '#audio-select' });
+              } else {
+                // no hay instancia hls, pero AudioSelector ya hará polling sobre audioTracks nativos
+              }
+            }
+          } catch(e){ console.warn('AudioSelector native init failed', e); }
+
           this.videoEl.addEventListener('loadedmetadata', () => {
             try { this.videoEl.play().catch(()=>{}); } catch(e){}
+            // asegurar audio
+            try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
             this.spinnerEl.classList.add("hidden");
           }, { once: true });
         } catch (e) {
@@ -480,8 +525,13 @@ class PlayerJS {
       if (window.shaka && shaka.Player.isBrowserSupported()) {
         try {
           this.shakaPlayer = new shaka.Player(this.videoEl);
+          // Integración AudioSelector con Shaka: AudioSelector por defecto hace polling nativo,
+          // si tu Shaka expone API adicional podríamos integrarla aquí.
           this.shakaPlayer.load(url)
-            .then(() => { this.videoEl.play().catch(()=>{}); this.spinnerEl.classList.add("hidden"); })
+            .then(() => {
+              try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
+              this.videoEl.play().catch(()=>{}); this.spinnerEl.classList.add("hidden");
+            })
             .catch(err => {
               console.warn("Shaka load failed, fallback to direct src", err);
               try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
@@ -500,6 +550,7 @@ class PlayerJS {
       // Último recurso: asignar al src del <video> (funciona en algunos entornos/Chrome)
       try {
         this.videoEl.src = url;
+        try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
         this.videoEl.play().catch(()=>{});
       } catch (e) {
         console.error("Final fallback assignment failed:", e);
@@ -737,6 +788,8 @@ class PlayerJS {
 }
 
 // Arranque
+
+// Arranque
 document.addEventListener("DOMContentLoaded", () => {
   const player = new PlayerJS();
   player.loadPlaylist([
@@ -955,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CANAL-SONYCHANNEL.png",
       title: "SONY CHANNEL",
       file:
-        "https://fl23.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
+        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d08395f39465da6fb3ec4/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2a5107-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=919bc5fd-6cce-44a6-bb39-2894dea1c988"
     }
     ,
     {
@@ -964,6 +1017,13 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "SOL TV",
       file:
         "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
+    },
+    {
+      number: "132",
+      image: "img/CANAL-STUDIOUNIVERSAL.png",
+      title: "STUDIO UNIVERSAL",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"
     }
   ]);
 });

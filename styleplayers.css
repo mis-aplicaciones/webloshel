@@ -1,7 +1,7 @@
 /* ─── RESET & PLAYER ───────────────────────────────────────────────── */
 * { outline: none !important; }
 @font-face {
-  font-family: 'MyFont';
+  font-family: 'Dosis-Bold';
   src: url('fonts/Dosis-Bold.woff2') format('woff2'),
        url('fonts/Dosis-Bold.woff')  format('woff');
   font-weight: normal;
@@ -101,7 +101,7 @@ body, html {
   opacity: 0.3; transform: scale(1);
   transition: opacity 0.2s ease, transform 0.3s ease;
   pointer-events: none;
-  font-family: 'MyFont', Arial, sans-serif;
+  font-family: 'Dosis-Bold', Arial, sans-serif;
 }
 .carousel-item.focused {
   opacity: 1;

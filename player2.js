@@ -864,7 +864,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       number: "132",
-      image: "img/CANAL-STUDIOUNIVERSAL.png",
+      image: "img/CANAL-UNIVERSAL.png",
       title: "STUDIO UNIVERSAL",
       file:
         "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"

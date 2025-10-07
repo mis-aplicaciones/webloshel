@@ -1,251 +1,317 @@
+/* player2.js - mejoras solicitadas (focus-behavior, dropdown trap, menu-timer pause) */
+
 class PlayerJS {
   constructor() {
-    // Elementos básicos del reproductor
-    this.videoEl      = document.getElementById("player-video");
-    this.playlistEl   = document.getElementById("carouselList");
-    this.containerEl  = document.getElementById("playlist-container");
-    this.spinnerEl    = document.getElementById("video-loading-spinner");
+    // Elements
+    this.videoEl = document.getElementById("player-video");
+    this.playlistEl = document.getElementById("carouselList");
+    this.containerEl = document.getElementById("playlist-container");
+    this.spinnerEl = document.getElementById("video-loading-spinner");
 
-    // Elementos del Menú TV
-    this.menuEl      = document.getElementById("tv-menu");
-    this.imgEl       = document.getElementById("tv-menu-img");
-    this.chanNumEl   = document.getElementById("tv-menu-channel-number");
-    this.qualityEl   = document.getElementById("tv-menu-quality");
-    this.timeEl      = document.getElementById("tv-menu-time");
-    this.btnReturn   = document.getElementById("btn-return");
-    this.btnList     = document.getElementById("btn-list");
-    this.btnPause    = document.getElementById("btn-pause");
-    this.iconPause   = document.getElementById("icon-pause");
-    this.btnLive     = document.getElementById("btn-live");
-    this.iconLive    = document.getElementById("icon-live");
-    this.btnClose    = document.getElementById("btn-close");
-    this.tooltipEl   = document.getElementById("tv-menu-tooltip");
+    this.menuEl = document.getElementById("tv-menu");
+    this.btnClose = document.getElementById("btn-close");
+    this.timeText = document.getElementById("tv-menu-time-text");
+    this.channelLogo = document.getElementById("channel-logo");
+    this.channelTitleEl = document.getElementById("tv-menu-channel-title");
+    this.channelNumberEl = document.getElementById("tv-menu-channel-number");
 
-    // Elementos DVR (barra de progreso)
+    this.btnPlayPause = document.getElementById("btn-playpause");
+    this.iconPlayPause = document.getElementById("icon-playpause");
+    this.btnAudio = document.getElementById("btn-audio");
+    this.audioLabel = document.getElementById("audio-label");
+    this.btnGuide = document.getElementById("btn-guide");
+    this.btnRes = document.getElementById("btn-res");
+    this.iconRes = document.getElementById("icon-res");
+
+    this.tooltipEl = document.getElementById("tv-menu-tooltip");
+
+    // Audio dropdown outside menu
+    this.audioDropdown = document.getElementById("audio-dropdown");
+    this.audioOptions = Array.from(document.querySelectorAll('#audio-dropdown .audio-opt'));
+
+    // DVR
     this.dvrContainer = document.getElementById("dvr-container");
-    this.dvrProgress  = document.getElementById("dvr-progress");
-    this.dvrKnob      = document.getElementById("dvr-knob");
+    this.dvrProgress = document.getElementById("dvr-progress");
+    this.dvrKnob = document.getElementById("dvr-knob");
 
-    this.overlayActive = false;
-    this.menuTimer     = null;
-    this.dvrInterval   = null;  // temporizador para actualizar la barra de progreso
+    // State
+    this.hls = null;
+    this.shakaPlayer = null;
+    this.playlist = [];
+    this.currentIndex = 0;
+    this.playbackIndex = 0;
 
-    // Índices y flags para playlist
-    this.currentIndex      = 0;
-    this.playbackIndex     = 0;
-    this.hasUncommittedNav = false;
+    // UI timers
+    this.menuTimer = null;
+    this.menuTimeoutMs = 5000;
+    this.playlistTimer = null;
+    this.playlistTimeoutMs = 5000;
 
-    // Playlist y reproductores (HLS / Shaka)
-    this.playlist      = [];
-    this.hls           = null;
-    this.shakaPlayer   = null;
-
-    // Integración audio selector (player2.js -> AudioSelector)
-    // Mantener referencia para no reinicializar múltiples veces
-    this.audioSelectorApi = null;
-
-    // Auto‐hide playlist
-    this.lastNavTime   = Date.now();
-    this.autoHide      = 5000;
-
-    // Configuración del carrusel
-    this.visibleCount  = 7;
-    this.half          = Math.floor(this.visibleCount / 2);
-
-    // Touch‐drag
-    this._touchStartY  = 0;
-    this._isDragging   = false;
+    // Ensure attempt to start with audio enabled (best-effort)
+    try { this.videoEl.muted = false; this.videoEl.volume = 1.0; } catch(e){}
 
     this.init();
   }
 
   init() {
-    // Reloj del menú (se actualiza cada minuto)
     this.updateClock();
-    setInterval(() => this.updateClock(), 60000);
+    setInterval(()=>this.updateClock(), 60000);
 
     this.addUIListeners();
     this.initMenuActions();
-    this.videoEl.autoplay = true;
-    // Intento de asegurar audio no en mute (si el navegador/TV lo permite)
-    try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
+
+    this.renderCarousel();
+    this.updateCarousel(false);
+
+    setTimeout(()=> this.tryAutoplay(), 120);
     this.monitorPlayback();
 
-    // Auto‐hide SOLO para playlist
-    setInterval(() => {
-      if (!this.overlayActive &&
-          Date.now() - this.lastNavTime > this.autoHide) {
-        this.hideUI();
-      }
-    }, 500);
-
-    this.initTouchDrag();
+    // playlist interaction resets autohide
+    this.containerEl.addEventListener('mousemove', ()=> this.resetPlaylistTimer());
+    this.containerEl.addEventListener('click', ()=> this.resetPlaylistTimer());
+    this.containerEl.addEventListener('touchstart', ()=> this.resetPlaylistTimer());
   }
 
-  /**
-   * Actualiza el reloj HH:MM (formato 12h sin AM/PM).
-   */
+  tryAutoplay() {
+    const tryPlay = () => this.videoEl.play().then(()=> true).catch(()=> false);
+    tryPlay().then(ok => {
+      if (!ok) {
+        try { this.videoEl.muted = true; } catch(e){}
+        tryPlay().then(ok2 => {
+          if (ok2) this.iconPlayPause.className = 'bi bi-pause-fill';
+          else this.iconPlayPause.className = 'bi bi-play-fill';
+        });
+      } else {
+        this.iconPlayPause.className = 'bi bi-pause-fill';
+      }
+    });
+  }
+
   updateClock() {
     const d = new Date();
-    let h = d.getHours() % 12 || 12;
-    let m = String(d.getMinutes()).padStart(2, "0");
-    this.timeEl.textContent = `${h}:${m}`;
+    let h = d.getHours() % 12;
+    if (h === 0) h = 12;
+    const m = String(d.getMinutes()).padStart(2,'0');
+    this.timeText.textContent = `${h}:${m}`;
   }
 
-  /*──────────────────────────────────────────────────────────*/
-  /*                     MENU TV (DVR)                       */
-  /*──────────────────────────────────────────────────────────*/
   initMenuActions() {
-    // 1) Volver → history.back()
-    this.btnReturn.addEventListener("click", () => history.back());
-
-    // 2) Canales → mostrar playlist
-    this.btnList.addEventListener("click", () => {
-      this.hideMenu();
-      this.showUI();
+    // Close
+    this.btnClose.addEventListener('click', ()=> {
+      try { history.back(); } catch(e) { this.hideMenu(); }
     });
 
-    // 3) Pausa / Reanudar, activa modo DVR
-    this.btnPause.addEventListener("click", () => {
+    // Play/Pause
+    this.btnPlayPause.addEventListener('click', ()=> {
       if (this.videoEl.paused) {
-        // Si estaba pausado, reanuda al vivo
-        this.videoEl.play();
-        this.iconPause.className = "bi bi-pause-circle-fill";
-        this.btnPause.dataset.title = "Pausa";
-
-        // Botón "En Vivo" vuelve al color rojo
-        this.iconLive.style.color = "red";
-
-        // Detener actualización del DVR
-        this.stopDvrInterval();
+        this.videoEl.play().catch(()=>{});
+        this.iconPlayPause.className = 'bi bi-pause-fill';
       } else {
-        // Si estaba reproduciendo, pausar y entrar en modo DVR
         this.videoEl.pause();
-        this.iconPause.className = "bi bi-play-circle-fill";
-        this.btnPause.dataset.title = "Reanudar";
-
-        // Botón "En Vivo" se pone gris
-        this.iconLive.style.color = "gray";
-
-        // Iniciar actualización del DVR cada 500ms
-        this.startDvrInterval();
+        this.iconPlayPause.className = 'bi bi-play-fill';
       }
       this.resetMenuTimer();
     });
 
-    // 4) En Vivo → saltar al final del buffer y reproducir
-    this.btnLive.addEventListener("click", () => {
-      const buf = this.videoEl.buffered;
-      if (buf.length > 0) {
-        const livePoint = buf.end(buf.length - 1);
-        this.videoEl.currentTime = livePoint;
-      }
-      this.videoEl.play();
-      // Asegurar icono Pause y Live en estado "vivo"
-      this.iconPause.className = "bi bi-pause-circle-fill";
-      this.btnPause.dataset.title = "Pausa";
-      this.iconLive.style.color = "red";
-      this.stopDvrInterval();
+    // Audio: open/close dropdown
+    this.btnAudio.addEventListener('click', ()=> {
+      if (this.audioDropdown.classList.contains('hidden')) this.openAudioDropdown();
+      else this.closeAudioDropdown();
+      // note: resetMenuTimer inside open/close handles timer pause/resume
+    });
+
+    // Guide: hide menu and open playlist
+    this.btnGuide.addEventListener('click', ()=> {
+      this.openPlaylistFromMenu();
+    });
+
+    // Res info
+    this.btnRes.addEventListener('click', ()=> {
+      const isHd = (this.videoEl.videoHeight || 0) >= 720;
+      this.showTempTooltip(isHd ? 'HD' : 'SD', 900);
       this.resetMenuTimer();
     });
 
-    // 5) Cerrar overlay
-    this.btnClose.addEventListener("click", () => this.hideMenu());
-
-    // Tooltip sobre cada botón cuando reciba foco
-    [
-      this.btnReturn,
-      this.btnList,
-      this.btnPause,
-      this.btnLive,
-      this.btnClose
-    ].forEach(btn => {
-      btn.addEventListener("focus", () => this.showTooltip(btn));
+    // show tooltip on focus
+    [this.btnClose, this.btnPlayPause, this.btnAudio, this.btnGuide, this.btnRes].forEach(btn=>{
+      btn.addEventListener('focus', ()=> this.showTooltip(btn));
+      btn.addEventListener('blur', ()=> this.hideTooltip());
     });
+
+    // audio options click
+    this.audioOptions.forEach(opt => opt.addEventListener('click', ()=> {
+      const idx = Number(opt.dataset.val || 0);
+      this.selectAudioOption(idx);
+    }));
   }
 
-  /**
-   * Muestra el menú: oculta el playlist, actualiza miniatura,
-   * número de canal, calidad, y coloca el foco en “Volver”.
-   */
+  showTooltip(btn) {
+    const t = btn.dataset.title || btn.getAttribute('aria-label') || '';
+    if (!t) return;
+    this.tooltipEl.textContent = t;
+    this.tooltipEl.classList.remove('hidden');
+    this.tooltipEl.classList.add('visible');
+    this.resetMenuTimer();
+  }
+  hideTooltip() {
+    this.tooltipEl.classList.add('hidden');
+    this.tooltipEl.classList.remove('visible');
+  }
+
+  /* -------------- MENU auto-hide (pausable when audio dropdown open) -------------- */
+  resetMenuTimer() {
+    clearTimeout(this.menuTimer);
+    // If audio dropdown open, do not start menu hide timer
+    if (this.audioDropdown && !this.audioDropdown.classList.contains('hidden')) {
+      // keep menu visible until dropdown closed
+      return;
+    }
+    this.menuTimer = setTimeout(()=> this.hideMenu(), this.menuTimeoutMs);
+  }
+
+  clearMenuTimer() {
+    clearTimeout(this.menuTimer);
+    this.menuTimer = null;
+  }
+
+  /* ------------------ AUDIO DROPDOWN (focus trap) ------------------ */
+  openAudioDropdown() {
+    // populate labels best-effort
+    let labels = [];
+    try {
+      if (this.hls && this.hls.audioTracks && this.hls.audioTracks.length) labels = this.hls.audioTracks.map(t => (t.lang || t.name || '').toUpperCase());
+      else if (this.videoEl.audioTracks && this.videoEl.audioTracks.length) {
+        const at = this.videoEl.audioTracks;
+        for (let i=0;i<at.length;i++) labels.push((at[i].language || at[i].label || `P${i+1}`).toUpperCase());
+      }
+    } catch(e){}
+    if (!labels.length) labels = ['ENG','SPA'];
+
+    const opts = Array.from(this.audioDropdown.querySelectorAll('.audio-opt'));
+    opts.forEach((opt,i) => {
+      opt.textContent = labels[i] || (`P${i+1}`);
+      opt.dataset.val = i;
+      opt.tabIndex = -1;
+    });
+
+    // show dropdown and blur menu+playlist (not player)
+    this.audioDropdown.classList.remove('hidden');
+    document.body.classList.add('controls-blur');
+    this.audioDropdown.setAttribute('aria-hidden','false');
+
+    // Pause/halt menu auto-hide (so menu doesn't disappear while choosing)
+    this.clearMenuTimer();
+
+    // Focus the option that matches current audio label (if any)
+    const curLabel = (this.audioLabel.textContent || '').toUpperCase();
+    let focusIdx = 0;
+    opts.forEach((opt,i) => { if (opt.textContent && opt.textContent.toUpperCase() === curLabel) focusIdx = i; });
+
+    setTimeout(()=> {
+      opts.forEach(o => o.tabIndex = -1);
+      const toFocus = opts[focusIdx] || opts[0];
+      if (toFocus) { toFocus.tabIndex = 0; toFocus.focus(); }
+    }, 30);
+  }
+
+  closeAudioDropdown() {
+    this.audioDropdown.classList.add('hidden');
+    document.body.classList.remove('controls-blur');
+    this.audioDropdown.setAttribute('aria-hidden','true');
+
+    // Resume menu auto-hide timer
+    this.resetMenuTimer();
+
+    this.safeFocus(this.btnAudio);
+  }
+
+  selectAudioOption(idx) {
+    try {
+      if (this.hls && typeof this.hls.audioTrack === 'number') {
+        this.hls.audioTrack = idx;
+        const t = this.hls.audioTracks && this.hls.audioTracks[idx];
+        this.audioLabel.textContent = (t && (t.lang || t.name)) ? (t.lang || t.name).toUpperCase() : (idx===0?'ENG':'SPA');
+      } else if (this.videoEl.audioTracks && this.videoEl.audioTracks.length) {
+        const at = this.videoEl.audioTracks;
+        for (let i=0;i<at.length;i++) at[i].enabled = (i===idx);
+        this.audioLabel.textContent = (at[idx].language || at[idx].label || (`P${idx+1}`)).toUpperCase();
+      } else {
+        this.audioLabel.textContent = idx===0 ? 'ENG' : 'SPA';
+      }
+    } catch(e) { console.warn('selectAudioOption', e); }
+
+    this.closeAudioDropdown();
+  }
+
+  /* ------------------ MENU show/hide ------------------ */
   showMenu() {
-    this.overlayActive = true;
-    // Ocultar playlist
-    this.containerEl.classList.remove("active");
-
-    // Update thumbnail, channel number & quality
     const cur = this.playlist[this.playbackIndex] || {};
-    this.imgEl.src            = cur.image || "";
-    this.chanNumEl.textContent = cur.number || "";
-    this.qualityEl.textContent = `${this.videoEl.videoWidth}×${this.videoEl.videoHeight}`;
+    this.channelLogo.src = cur.image || '';
+    this.channelTitleEl.textContent = cur.title || '';
+    this.channelNumberEl.textContent = cur.number || '';
+    this.updateResolutionIcon();
 
-    this.menuEl.classList.remove("hidden");
-    this.btnReturn.focus();
+    this.menuEl.classList.remove('hidden');
+    this.menuEl.setAttribute('aria-hidden','false');
+    this.safeFocus(this.btnPlayPause);
+
+    // start timer only if dropdown not open (openAudioDropdown clears it)
     this.resetMenuTimer();
   }
 
   hideMenu() {
-    this.overlayActive = false;
-    this.menuEl.classList.add("hidden");
-    this.hideTooltip();
-    clearTimeout(this.menuTimer);
-    this.stopDvrInterval();
-  }
-
-  resetMenuTimer() {
-    clearTimeout(this.menuTimer);
-    this.menuTimer = setTimeout(() => this.hideMenu(), 5000);
-  }
-
-  showTooltip(btn) {
-    const title = btn.dataset.title || "";
-    this.tooltipEl.textContent = title;
-    this.tooltipEl.classList.remove("hidden");
-    this.tooltipEl.classList.add("visible");
-    const rect = btn.getBoundingClientRect();
-    this.tooltipEl.style.left = `${rect.left + rect.width / 2}px`;
-    this.resetMenuTimer();
-  }
-
-  hideTooltip() {
-    this.tooltipEl.classList.remove("visible");
-    this.tooltipEl.classList.add("hidden");
-  }
-
-  /*──────────────────────────────────────────────────────────*/
-  /*                   PLAYLIST UI (oculto al inicio)        */
-  /*──────────────────────────────────────────────────────────*/
-  showUI() {
-    if (!this.overlayActive && this.hasUncommittedNav) {
-      this.currentIndex = this.playbackIndex;
-      this.renderCarousel();
-      this.updateCarousel(false);
-      this.hasUncommittedNav = false;
+    // if audio dropdown open, don't hide
+    if (this.audioDropdown && !this.audioDropdown.classList.contains('hidden')) {
+      return;
     }
-    this.containerEl.classList.add("active");
-    this.lastNavTime = Date.now();
+    this.menuEl.classList.add('hidden');
+    this.menuEl.setAttribute('aria-hidden','true');
+    this.clearMenuTimer();
   }
 
-  hideUI() {
-    if (!this.overlayActive) {
-      this.containerEl.classList.remove("active");
-    }
+  /* ------------------ PLAYLIST (open from guide) ------------------ */
+  openPlaylistFromMenu() {
+    // hide menu before opening playlist to avoid overlapping
+    this.hideMenu();
+
+    this.containerEl.classList.add('active');
+    this.containerEl.setAttribute('aria-hidden','false');
+
+    // render & focus center
+    this.renderCarousel();
+    this.updateCarousel(false);
+    setTimeout(()=> {
+      const centerIdx = Math.floor(this.playlistEl.children.length / 2);
+      const centerItem = this.playlistEl.children[centerIdx];
+      if (centerItem) {
+        const btn = centerItem.querySelector('.carousel-button');
+        if (btn) { btn.tabIndex = 0; btn.focus(); }
+      }
+    }, 80);
+
+    this.resetPlaylistTimer();
   }
 
+  resetPlaylistTimer() {
+    clearTimeout(this.playlistTimer);
+    this.playlistTimer = setTimeout(()=> this.hidePlaylist(), this.playlistTimeoutMs);
+  }
+  stopPlaylistTimer() { clearTimeout(this.playlistTimer); this.playlistTimer = null; }
+  hidePlaylist() { this.containerEl.classList.remove('active'); this.containerEl.setAttribute('aria-hidden','true'); this.stopPlaylistTimer(); }
+
+  safeFocus(el) { try { if (el && typeof el.focus === 'function') el.focus(); } catch(e){} }
+
+  /* ------------------ PLAYLIST (preserved) ------------------ */
   loadPlaylist(arr) {
     this.playlist = arr;
     this.currentIndex = 0;
     this.playbackIndex = 0;
-    this.hasUncommittedNav = false;
     this.renderCarousel();
     this.updateCarousel(false);
-    // No llamamos a showUI() aquí: playlist permanece oculto al cargar
+    // play first channel
     this.playCurrent();
   }
 
-  /*──────────────────────────────────────────────────────────*/
-  /*                  CARRUSEL LOGIC                         */
-  /*──────────────────────────────────────────────────────────*/
   createItem(idx) {
     const data = this.playlist[idx] || {};
     const item = document.createElement("div");
@@ -266,13 +332,10 @@ class PlayerJS {
 
     item.append(lbl, img, btn);
     item.addEventListener("click", () => {
-      this.currentIndex = idx;
-      this.play();
+      this.currentIndex = idx; this.play(); this.hidePlaylist();
     });
     item.addEventListener("touchend", e => {
-      e.preventDefault();
-      this.currentIndex = idx;
-      this.play();
+      e.preventDefault(); this.currentIndex = idx; this.play(); this.hidePlaylist();
     });
 
     return item;
@@ -281,7 +344,7 @@ class PlayerJS {
   renderCarousel() {
     const N = this.playlist.length;
     this.playlistEl.innerHTML = "";
-    for (let off = -this.half; off <= this.half; off++) {
+    for (let off = -3; off <= 3; off++) {
       const idx = ((this.currentIndex + off) % N + N) % N;
       this.playlistEl.appendChild(this.createItem(idx));
     }
@@ -291,425 +354,245 @@ class PlayerJS {
     const items = this.playlistEl.children;
     if (!items.length) return;
     const st = getComputedStyle(items[0]);
-    const itemH = items[0].offsetHeight
-                + parseFloat(st.marginTop)
-                + parseFloat(st.marginBottom);
-    const wrapH = this.containerEl
-                   .querySelector(".carousel-wrapper").clientHeight;
-    const baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
+    const itemH = items[0].offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
+    const wrapH = this.containerEl.querySelector(".carousel-wrapper").clientHeight;
+    const baseY = wrapH / 2 - itemH / 2 - 3 * itemH;
 
-    this.playlistEl.style.transition = animate
-      ? "transform .3s ease"
-      : "none";
+    this.playlistEl.style.transition = animate ? "transform .3s ease" : "none";
     this.playlistEl.style.transform = `translateY(${baseY}px)`;
 
     Array.from(items).forEach((el, i) => {
-      el.classList.toggle("focused", i === this.half);
+      el.classList.toggle("focused", i === 3);
     });
 
-    if (!animate) {
-      void this.playlistEl.offsetWidth;
-      this.playlistEl.style.transition = "transform .3s ease";
-    }
+    if (!animate) { void this.playlistEl.offsetWidth; this.playlistEl.style.transition = "transform .3s ease"; }
   }
 
   move(dir) {
     const N = this.playlist.length;
     this.currentIndex = (this.currentIndex + dir + N) % N;
-    this.hasUncommittedNav = true;
-    this.lastNavTime = Date.now();
-    this.renderCarousel();
-    this.updateCarousel(true);
+    this.playbackIndex = this.currentIndex;
+    this.renderCarousel(); this.updateCarousel(true);
   }
 
-  /*──────────────────────────────────────────────────────────*/
-  /*                REPRODUCCIÓN & DVR LOGIC                */
-  /*──────────────────────────────────────────────────────────*/
+  /* ------------------ PLAYBACK ------------------ */
   playCurrent() {
     const f = this.playlist[this.currentIndex] || {};
-    this.playbackIndex     = this.currentIndex;
-    this.hasUncommittedNav = false;
+    this.playbackIndex = this.currentIndex;
 
-    // Destruir instancias previas
+    try {
+      this.channelLogo.src = f.image || '';
+      this.channelTitleEl.textContent = f.title || '';
+      this.channelNumberEl.textContent = f.number || '';
+    } catch(e){}
+
     if (this.hls) { try { this.hls.destroy(); } catch(e){} this.hls = null; }
     if (this.shakaPlayer) { try { this.shakaPlayer.destroy(); } catch(e){} this.shakaPlayer = null; }
 
     const url = (f.file || "").trim();
-    // Detectar robustamente .m3u8 (http, parámetros, mayúsculas/minúsculas)
     const isM3U8 = /\.m3u8($|\?)/i.test(url);
+    this.spinnerEl.classList.remove('hidden');
 
-    // Mostrar spinner mientras cargamos
-    this.spinnerEl.classList.remove("hidden");
+    if (isM3U8 && window.Hls && Hls.isSupported()) {
+      try {
+        this.hls = new Hls({ maxBufferLength:30, liveSyncDurationCount:3, enableWorker:true, xhrSetup:(xhr)=>{ try{ xhr.withCredentials=false; }catch(e){} } });
+      } catch(e) { this.hls = null; }
 
-    if (isM3U8) {
-      // --- Primero: Si Hls.js está disponible y soportado, usarlo con manejadores robustos ---
-      if (window.Hls && Hls.isSupported()) {
-        // Crear Hls con configuración que ayuda en dispositivos TV
-        try {
-          this.hls = new Hls({
-            maxBufferLength: 30,
-            liveSyncDurationCount: 3,
-            enableWorker: true,
-            // xhrSetup nos permite controlar XHR (por ejemplo withCredentials)
-            xhrSetup: (xhr, resource, url) => {
-              try {
-                // No forzamos withCredentials por defecto, pero dejamos la opción
-                xhr.withCredentials = false;
-                // Nota: no todos los headers/Referer pueden ser establecidos por seguridad del navegador
-              } catch (e) {}
-            }
-          });
-        } catch (err) {
-          console.warn("Hls init failed, fallbacking to native:", err);
+      if (this.hls) {
+        const self = this;
+        this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          try { this.videoEl.muted = false; this.videoEl.volume = 1.0; } catch(e){}
+          try { this.videoEl.play().catch(()=>{}); } catch(e){}
+          this.spinnerEl.classList.add('hidden'); this.iconPlayPause.className = 'bi bi-pause-fill';
+          setTimeout(()=>{ this.updateResolutionIcon(); this.updateAudioLabel(); }, 300);
+        });
+
+        this.hls.on(Hls.Events.ERROR, function(event,data){
+          if (data && data.fatal) { try { self.hls.recoverMediaError(); } catch(e){} }
+        });
+
+        try { this.hls.loadSource(url); this.hls.attachMedia(this.videoEl); } catch(e){
+          try { this.hls.destroy(); } catch(e){}
           this.hls = null;
-        }
-
-        if (this.hls) {
-          // Contador de intentos de recuperación antes de fallback final
-          let recoverAttempts = 0;
-          const maxRecoverAttempts = 3;
-          const self = this;
-
-          // --- INTEGRACIÓN: inicializar AudioSelector (si existe) y pasarle la instancia Hls ---
-          try {
-            if (window.AudioSelector) {
-              // Si no lo hemos inicializado aún, lo hacemos (si ya existe, solo adjuntamos)
-              if (!this.audioSelectorApi) {
-                // Si no hay un select en el DOM con id 'audio-select', AudioSelector.init creará uno y lo adjuntará.
-                this.audioSelectorApi = AudioSelector.init({ video: this.videoEl, audioSelect: '#audio-select', hls: this.hls });
-              } else {
-                // adjuntar la instancia hls para que AudioSelector pueda leer pistas y exponer UI
-                try { this.audioSelectorApi.attachHlsInstance(this.hls); } catch(e) { console.warn('attachHlsInstance failed', e); }
-              }
-            }
-          } catch(e) {
-            console.warn('AudioSelector integration failed (non-fatal):', e);
-          }
-
-          // Manejar eventos de errores de Hls.js
-          this.hls.on(Hls.Events.ERROR, function(event, data) {
-            console.warn("Hls error event:", data);
-            // Si el error es fatal, intentar recuperar según tipo
-            if (data && data.fatal) {
-              if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                // Intento de reanudar descarga
-                try {
-                  console.warn("Hls: network error -> startLoad()");
-                  self.hls.startLoad();
-                } catch (e) {
-                  console.error("Hls startLoad failed", e);
-                }
-              } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                try {
-                  console.warn("Hls: media error -> recoverMediaError()");
-                  self.hls.recoverMediaError();
-                } catch (e) {
-                  console.error("Hls recover failed", e);
-                }
-              } else {
-                // Otros errores: intentar reiniciar la carga algunas veces
-                if (recoverAttempts < maxRecoverAttempts) {
-                  recoverAttempts++;
-                  console.warn(`Hls: unrecoverable error, retry ${recoverAttempts}/${maxRecoverAttempts}`);
-                  try {
-                    self.hls.stopLoad();
-                    // Espera breve antes de reiniciar
-                    setTimeout(() => {
-                      try { self.hls.startLoad(); } catch(e) { console.error(e); }
-                    }, 800);
-                  } catch (e) {
-                    console.error(e);
-                  }
-                } else {
-                  // Si se alcanzaron múltiples intentos, fallback a reproducción nativa
-                  console.warn("Hls: multiple failures, fallback to native video src");
-                  try {
-                    self.hls.destroy();
-                  } catch (e) {}
-                  self.hls = null;
-                  // Fallback: asignar directamente al <video> (algunos motores nativos pueden reproducir)
-                  try {
-                    self.videoEl.src = url;
-                    // Asegurar que el video intente reproducir y audio no quede en mute
-                    try { self.videoEl.muted = false; self.videoEl.volume = 1; } catch(e) {}
-                    self.videoEl.play().catch(err => {
-                      console.error("Fallback native play failed", err);
-                    });
-                  } finally {
-                    self.spinnerEl.classList.add("hidden");
-                  }
-                }
-              }
-            }
-          });
-
-          // Cuando el manifiesto esté parseado, reproducir
-          this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            // Intentar asegurar audio en caso de políticas de autoplay
-            try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
-            // Ocultar spinner y reproducir
-            try { this.videoEl.play().catch(()=>{}); } catch(e){}
-            this.spinnerEl.classList.add("hidden");
-            // Si AudioSelector está inicializado, dejar que detecte pistas (ya le pasamos this.hls)
-            try {
-              if (this.audioSelectorApi && this.hls) {
-                try { this.audioSelectorApi.attachHlsInstance(this.hls); } catch(e) {}
-              }
-            } catch(e){}
-          });
-
-          // Intento de carga
-          try {
-            this.hls.loadSource(url);
-            this.hls.attachMedia(this.videoEl);
-          } catch (err) {
-            console.warn("Hls load/attach threw:", err);
-            try {
-              this.hls.destroy();
-            } catch (e) {}
-            this.hls = null;
-            // Intentar reproducción nativa como último recurso
-            try {
-              this.videoEl.src = url;
-              try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e) {}
-              this.videoEl.play().catch(()=>{});
-            } finally {
-              this.spinnerEl.classList.add("hidden");
-            }
-          }
-
-          // Devolver (hemos delegado la reproducción a Hls.js)
-          this.videoEl.title = f.title || "";
-          this.iconLive.style.color = "red";
-          this.stopDvrInterval();
-          return;
-        }
-      }
-
-      // --- Si Hls.js no está disponible o no fue posible inicializarlo ---
-      // Verificar soporte nativo HLS (Safari y algunos motores que exponen MIME)
-      if (this.videoEl.canPlayType && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
-        try {
-          this.videoEl.src = url;
-          // Inicializar AudioSelector para HLS nativo (detecta audioTracks)
-          try {
-            if (window.AudioSelector) {
-              if (!this.audioSelectorApi) {
-                this.audioSelectorApi = AudioSelector.init({ video: this.videoEl, audioSelect: '#audio-select' });
-              } else {
-                // no hay instancia hls, pero AudioSelector ya hará polling sobre audioTracks nativos
-              }
-            }
-          } catch(e){ console.warn('AudioSelector native init failed', e); }
-
-          this.videoEl.addEventListener('loadedmetadata', () => {
-            try { this.videoEl.play().catch(()=>{}); } catch(e){}
-            // asegurar audio
-            try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
-            this.spinnerEl.classList.add("hidden");
-          }, { once: true });
-        } catch (e) {
-          console.warn("Native HLS attempt failed:", e);
-          // último recurso: asignar y call play
           try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
-          this.spinnerEl.classList.add("hidden");
+          this.spinnerEl.classList.add('hidden');
         }
-
-        this.videoEl.title = f.title || "";
-        this.iconLive.style.color = "red";
-        this.stopDvrInterval();
         return;
       }
+    }
 
-      // --- Fallback final: si no hay Hls.js ni soporte nativo, usar shaka o asignar src directo ---
-      if (window.shaka && shaka.Player.isBrowserSupported()) {
-        try {
-          this.shakaPlayer = new shaka.Player(this.videoEl);
-          // Integración AudioSelector con Shaka: AudioSelector por defecto hace polling nativo,
-          // si tu Shaka expone API adicional podríamos integrarla aquí.
-          this.shakaPlayer.load(url)
-            .then(() => {
-              try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
-              this.videoEl.play().catch(()=>{}); this.spinnerEl.classList.add("hidden");
-            })
-            .catch(err => {
-              console.warn("Shaka load failed, fallback to direct src", err);
-              try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
-              this.spinnerEl.classList.add("hidden");
-            });
-          this.videoEl.title = f.title || "";
-          this.iconLive.style.color = "red";
-          this.stopDvrInterval();
-          return;
-        } catch (e) {
-          console.warn("Shaka initialization failed:", e);
-          this.shakaPlayer = null;
-        }
-      }
+    if (isM3U8 && this.videoEl.canPlayType && this.videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+      try { this.videoEl.src = url; } catch(e){}
+      this.videoEl.addEventListener('loadedmetadata', ()=> {
+        try { this.videoEl.play().catch(()=>{}); } catch(e){}
+        this.spinnerEl.classList.add('hidden'); this.iconPlayPause.className = 'bi bi-pause-fill';
+        setTimeout(()=>{ this.updateResolutionIcon(); this.updateAudioLabel(); }, 300);
+      }, { once:true });
+      return;
+    }
 
-      // Último recurso: asignar al src del <video> (funciona en algunos entornos/Chrome)
+    if (window.shaka && shaka.Player.isBrowserSupported()) {
       try {
-        this.videoEl.src = url;
-        try { this.videoEl.muted = false; this.videoEl.volume = 1; } catch(e){}
-        this.videoEl.play().catch(()=>{});
-      } catch (e) {
-        console.error("Final fallback assignment failed:", e);
-      } finally {
-        this.videoEl.title = f.title || "";
-        this.iconLive.style.color = "red";
-        this.stopDvrInterval();
-        this.spinnerEl.classList.add("hidden");
-      }
-    }
-    else {
-      // No es .m3u8 → usar Shaka si está o fallback directo
-      if (window.shaka && shaka.Player.isBrowserSupported()) {
         this.shakaPlayer = new shaka.Player(this.videoEl);
-        this.shakaPlayer.load(url)
-          .then(() => this.videoEl.play())
-          .catch(() => {
-            this.videoEl.src = url;
-            this.videoEl.play();
-          });
-      }
-      else {
-        // Fallback HTML5 <video> para MP4 o .m3u8 no soportados
-        this.videoEl.src = url;
-        this.videoEl.play();
-      }
-      this.videoEl.title = f.title || "";
-
-      // Cuando cambia de canal, el botón "En Vivo" vuelve a rojo y se detiene DVR
-      this.iconLive.style.color = "red";
-      this.stopDvrInterval();
-      this.spinnerEl.classList.add("hidden");
+        this.shakaPlayer.load(url).then(()=> {
+          this.videoEl.play().catch(()=>{});
+          this.spinnerEl.classList.add('hidden'); this.iconPlayPause.className = 'bi bi-pause-fill';
+          this.updateResolutionIcon(); this.updateAudioLabel();
+        }).catch(err=>{
+          try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); } catch(e){}
+          this.spinnerEl.classList.add('hidden');
+        });
+        return;
+      } catch(e){}
     }
+
+    try { this.videoEl.src = url; this.videoEl.play().catch(()=>{}); this.iconPlayPause.className='bi bi-pause-fill'; } catch(e){}
+    finally { this.spinnerEl.classList.add('hidden'); this.updateResolutionIcon(); this.updateAudioLabel(); }
   }
 
-  play() {
-    this.playCurrent();
-    this.renderCarousel();
-    this.updateCarousel(true);
+  updateResolutionIcon() {
+    try {
+      const isHd = (this.videoEl.videoHeight || 0) >= 720;
+      if (isHd) this.iconRes.classList.add('hd'); else this.iconRes.classList.remove('hd');
+    } catch(e){}
+  }
+
+  updateAudioLabel() {
+    try {
+      if (this.hls && this.hls.audioTracks && typeof this.hls.audioTrack === 'number') {
+        const idx = this.hls.audioTrack || 0;
+        const t = this.hls.audioTracks[idx];
+        this.audioLabel.textContent = (t && (t.lang || t.name)) ? (t.lang || t.name).toUpperCase() : (idx===0 ? 'ENG' : 'SPA');
+        return;
+      }
+      const at = this.videoEl.audioTracks;
+      if (at && at.length) {
+        for (let i=0;i<at.length;i++) if (at[i].enabled) { this.audioLabel.textContent = (at[i].language||at[i].label||'ENG').toUpperCase(); return; }
+        this.audioLabel.textContent = (at[0].language||at[0].label||'ENG').toUpperCase();
+        return;
+      }
+      this.audioLabel.textContent = 'ENG';
+    } catch(e){}
   }
 
   monitorPlayback() {
-    let last = 0;
-    setInterval(() => {
+    let last = -1;
+    setInterval(()=> {
       if (!this.videoEl.paused && !this.videoEl.ended) {
-        if (this.videoEl.currentTime === last) {
-          // Si se congela, reintenta reproducir
-          this.playCurrent();
-        }
+        if (this.videoEl.currentTime === last) this.playCurrent();
         last = this.videoEl.currentTime;
       }
+      this.updateResolutionIcon();
     }, 5000);
   }
 
-  /*──────────────────────────────────────────────────────────*/
-  /*            EVENTOS GLOBALES (Teclado / Rueda)            */
-  /*──────────────────────────────────────────────────────────*/
+  /* ------------------ UI LISTENERS & NAVIGATION ------------------ */
   addUIListeners() {
-    ["mousemove","click","touchstart"].forEach(ev =>
-      window.addEventListener(ev, () => this.showUI())
-    );
+    ['mousemove','click','touchstart'].forEach(ev => {
+      window.addEventListener(ev, () => {
+        if (this.containerEl.classList.contains('active')) { this.resetPlaylistTimer(); return; }
+        this.showMenu();
+      }, { passive:true });
+    });
 
-    window.addEventListener("keydown", e => {
+    window.addEventListener('keydown', (e) => {
       const key = e.key;
       const code = e.keyCode;
 
-      // Prevenir scroll nativo
-      if ([
-        "ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Enter",
-        "MediaPlayPause","Pause"," " /*Space*/, "ChannelUp","ChannelDown"
-      ].includes(key) || [32,179,33,34].includes(code)) {
-        e.preventDefault();
-      }
+      if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Enter','Escape'].includes(key) || [32].includes(code)) e.preventDefault();
 
-      // Mapeo para botón especial de “Pause/Resume” del control remoto:
-      if (key === "MediaPlayPause" || key === "Pause" || code === 179) {
-        // Disparar la misma lógica que btnPause.click()
-        this.btnPause.click();
+      if (key === 'ChannelUp' || code === 33) { this.move(-1); this.playCurrent(); this.showMenu(); return; }
+      if (key === 'ChannelDown' || code === 34) { this.move(1); this.playCurrent(); this.showMenu(); return; }
+
+      // If audio dropdown open -> trap keys there
+      if (!this.audioDropdown.classList.contains('hidden')) { this.handleAudioDropdownKey(key); return; }
+
+      if (this.menuEl && !this.menuEl.classList.contains('hidden')) { this.handleMenuKey(key); return; }
+
+      if (this.containerEl.classList.contains('active')) {
+        if (key === 'ArrowUp') { this.move(-1); this.resetPlaylistTimer(); }
+        else if (key === 'ArrowDown') { this.move(1); this.resetPlaylistTimer(); }
+        else if (key === 'Enter') { this.playCurrent(); this.hidePlaylist(); }
         return;
       }
 
-      // Cambio de canal con ChannelUp (código 33) / ChannelDown (código 34)
-      if (key === "ChannelUp" || code === 33) {
-        this.move(-1);
-        this.playCurrent();
-        return;
-      }
-      if (key === "ChannelDown" || code === 34) {
-        this.move(1);
-        this.playCurrent();
-        return;
-      }
-
-      // Si el overlay está activo, navegación entre sus botones
-      if (this.overlayActive) {
-        if (key === "ArrowLeft") {
-          if (document.activeElement === this.btnList)    this.btnReturn.focus();
-          else if (document.activeElement === this.btnPause) this.btnList.focus();
-          else if (document.activeElement === this.btnLive)  this.btnPause.focus();
-          else if (document.activeElement === this.btnClose) this.btnLive.focus();
-        }
-        else if (key === "ArrowRight") {
-          if (document.activeElement === this.btnReturn) this.btnList.focus();
-          else if (document.activeElement === this.btnList) this.btnPause.focus();
-          else if (document.activeElement === this.btnPause) this.btnLive.focus();
-          else if (document.activeElement === this.btnLive)  this.btnClose.focus();
-        }
-        else if (key === "Enter") {
-          document.activeElement.click();
-        }
-        this.resetMenuTimer();
-        return;
-      }
-
-      // Flecha izquierda fuera del overlay → abre menú
-      if (key === "ArrowLeft") {
-        this.showMenu();
-        return;
-      }
-
-      // Flechas arriba/abajo fuera del overlay → muestra playlist si oculto
-      if (!this.containerEl.classList.contains("active")
-          && (key === "ArrowUp" || key === "ArrowDown")) {
-        this.showUI();
-        return;
-      }
-
-      // Navegación del playlist
-      if (key === "ArrowUp")        this.move(-1);
-      else if (key === "ArrowDown") this.move(1);
-      else if (key === "Enter")     this.playCurrent();
+      if (key === 'ArrowLeft') { this.showMenu(); return; }
     });
 
-    // Rueda global para playlist
-    window.addEventListener("wheel", e => {
+    window.addEventListener('wheel', (e)=> {
+      if (!this.containerEl.classList.contains('active')) return;
       e.preventDefault();
-      if (this.overlayActive) return;
-      if (!this.containerEl.classList.contains("active")) {
-        this.showUI();
-      } else {
-        this.move(e.deltaY > 0 ? 1 : -1);
-      }
+      this.move(e.deltaY > 0 ? 1 : -1);
+      this.resetPlaylistTimer();
     });
 
-    // Spinner + retry on error
-    this.videoEl.addEventListener("waiting", () =>
-      this.spinnerEl.classList.remove("hidden")
-    );
-    this.videoEl.addEventListener("playing", () =>
-      this.spinnerEl.classList.add("hidden")
-    );
-    this.videoEl.addEventListener("error", () =>
-      this.playCurrent()
-    );
+    this.videoEl.addEventListener('waiting', ()=> this.spinnerEl.classList.remove('hidden'));
+    this.videoEl.addEventListener('playing', ()=> this.spinnerEl.classList.add('hidden'));
+    this.videoEl.addEventListener('error', ()=> this.playCurrent());
   }
 
-  /*──────────────────────────────────────────────────────────*/
-  /*               TOUCH‐DRAG EN EL PLAYLIST                  */
-  /*──────────────────────────────────────────────────────────*/
+  handleMenuKey(key) {
+    const active = document.activeElement;
+
+    if (active === this.btnClose) {
+      if (key === 'ArrowDown') { this.safeFocus(this.btnPlayPause); return; }
+      if (key === 'Enter') { this.btnClose.click(); return; }
+      return;
+    }
+
+    if (active === this.btnPlayPause) {
+      if (key === 'ArrowRight') { this.safeFocus(this.btnAudio); return; }
+      if (key === 'ArrowUp') { this.safeFocus(this.btnClose); return; }
+      if (key === 'Enter') { this.btnPlayPause.click(); return; }
+      return;
+    }
+
+    if (active === this.btnAudio) {
+      if (key === 'ArrowRight') { this.safeFocus(this.btnGuide); return; }
+      if (key === 'ArrowLeft') { this.safeFocus(this.btnPlayPause); return; }
+      if (key === 'ArrowUp') { this.safeFocus(this.btnClose); return; }
+      if (key === 'Enter') { this.btnAudio.click(); return; }
+      return;
+    }
+
+    if (active === this.btnGuide) {
+      if (key === 'ArrowLeft') { this.safeFocus(this.btnAudio); return; }
+      if (key === 'ArrowUp') { this.safeFocus(this.btnClose); return; }
+      if (key === 'Enter') { this.btnGuide.click(); return; }
+      return;
+    }
+
+    if (key === 'Enter' && active && active.click) active.click();
+  }
+
+  handleAudioDropdownKey(key) {
+    const opts = Array.from(this.audioDropdown.querySelectorAll('.audio-opt'));
+    if (!opts.length) return;
+    const focused = document.activeElement;
+    let idx = opts.indexOf(focused);
+    if (idx === -1) idx = 0;
+
+    if (key === 'ArrowDown') {
+      if (idx < opts.length - 1) idx++;
+      opts[idx].focus(); return;
+    }
+    if (key === 'ArrowUp') {
+      if (idx > 0) idx--;
+      opts[idx].focus(); return;
+    }
+    if (key === 'Enter') { opts[idx].click(); return; }
+    if (key === 'Escape') { this.closeAudioDropdown(); return; }
+    // ignore left/right to avoid focus escape
+  }
+
+  showTempTooltip(text, ttl=1000) {
+    this.tooltipEl.textContent = text;
+    this.tooltipEl.classList.remove('hidden');
+    this.tooltipEl.classList.add('visible');
+    setTimeout(()=> { this.tooltipEl.classList.add('hidden'); this.tooltipEl.classList.remove('visible'); }, ttl);
+  }
+
+  /* ---------- Touch drag for playlist preserved ---------- */
   initTouchDrag() {
     const wrapper = this.containerEl.querySelector(".carousel-wrapper");
     const listEl  = this.playlistEl;
@@ -717,12 +600,11 @@ class PlayerJS {
 
     const recalc = () => {
       const first = listEl.children[0];
+      if (!first) return;
       const st = getComputedStyle(first);
-      itemH = first.offsetHeight
-            + parseFloat(st.marginTop)
-            + parseFloat(st.marginBottom);
+      itemH = first.offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
       const wrapH = wrapper.clientHeight;
-      baseY = wrapH / 2 - itemH / 2 - this.half * itemH;
+      baseY = wrapH / 2 - itemH / 2 - 3 * itemH;
     };
 
     wrapper.addEventListener("touchstart", e => {
@@ -742,52 +624,14 @@ class PlayerJS {
       if (!this._isDragging) return;
       this._isDragging = false;
       const deltaY = e.changedTouches[0].clientY - this._touchStartY;
-      const steps  = Math.round(-deltaY / itemH);
-      this.move(steps);
+      const steps  = Math.round(-deltaY / (itemH || 1));
+      if (steps !== 0) this.move(steps);
       listEl.style.transition = "transform .3s ease";
       listEl.style.transform = `translateY(${baseY}px)`;
+      this.resetPlaylistTimer();
     });
   }
-
-  /*──────────────────────────────────────────────────────────────────*/
-  /*                 DVR – Actualizar la Barra de Progreso            */
-  /*──────────────────────────────────────────────────────────────────*/
-  startDvrInterval() {
-    // Actualizar cada 500 ms
-    this.stopDvrInterval();
-    this.dvrInterval = setInterval(() => {
-      const buf = this.videoEl.buffered;
-      if (buf.length > 0) {
-        const start = buf.start(0);
-        const end   = buf.end(buf.length - 1);
-        const current = this.videoEl.currentTime;
-        const totalRange = end - start;
-        if (totalRange > 0) {
-          let ratio = (current - start) / totalRange;
-          if (ratio < 0) ratio = 0;
-          if (ratio > 1) ratio = 1;
-          this.dvrProgress.style.width = `${Math.floor(ratio * 100)}%`;
-          // Mover el knob
-          const containerWidth = this.dvrContainer.clientWidth;
-          const knobX = ratio * containerWidth;
-          this.dvrKnob.style.transform = `translateX(${knobX}px)`;
-        }
-      }
-    }, 500);
-  }
-
-  stopDvrInterval() {
-    if (this.dvrInterval) {
-      clearInterval(this.dvrInterval);
-      this.dvrInterval = null;
-      // Reset de la barra (opcional)
-      // this.dvrProgress.style.width = "0%";
-      // this.dvrKnob.style.transform = "translateX(0px)";
-    }
-  }
 }
-
-// Arranque
 
 // Arranque
 document.addEventListener("DOMContentLoaded", () => {

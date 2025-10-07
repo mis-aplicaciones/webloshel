@@ -47,6 +47,7 @@ body, html {
     rgba(0,0,0,0.7), rgba(0,0,0,0.3));
   box-shadow: 2px 0 5px rgba(0,0,0,0.5);
   transition: left .5s ease;
+  z-index: 1200;
 }
 #playlist-container.active { left: 0; }
 
@@ -67,7 +68,7 @@ body, html {
   align-items: center;
 }
 
-/* ─── ÍTEMS ─────────────────────────────────────────────────────────── */
+/* ─── ÍTEMS (sin cambios) ─────────────────────────────────────────── */
 .carousel-item {
   background: transparent;
   display: flex; align-items: center;
@@ -102,9 +103,6 @@ body, html {
   pointer-events: none;
   font-family: 'MyFont', Arial, sans-serif;
 }
-
-
-/* ─── FOCUS ─────────────────────────────────────────────────────────── */
 .carousel-item.focused {
   opacity: 1;
   z-index: 2;
@@ -115,30 +113,8 @@ body, html {
   0% { transform: scale(0.95); opacity: 0.7; }
   100% { transform: scale(1.1); opacity: 1; }
 }
-.carousel-item.focused .item-label {
-  color: #fff;
-}
-.carousel-item.focused .item-label::before {
-  content: "\f286";
-  font-family: 'bootstrap-icons';
-  position: absolute; top: -1.2em; left: 50%;
-  transform: translateX(-50%);
-  font-size: 1rem; color: #888;
-}
-.carousel-item.focused .item-label::after {
-  content: "\f282";
-  font-family: 'bootstrap-icons';
-  position: absolute; bottom: -1.2em; left: 50%;
-  transform: translateX(-50%);
-  font-size: 1rem; color: #888;
-}
-.carousel-item.focused .carousel-button {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1.05);
-}
-/* … (TU CSS DEL PLAYLIST Y VIDEO SIN CAMBIOS) … */
-
+.carousel-item.focused .item-label { color: #fff; }
+.carousel-item.focused .carousel-button { opacity: 1; pointer-events: auto; transform: scale(1.05); }
 
 /* ─────────────────────────────────────────────────────────────────────────── */
 /*                          MENÚ TV OVERLAY (DVR)                            */
@@ -149,217 +125,156 @@ body, html {
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.8)
+    rgba(0, 0, 0, 0.85)
   );
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2vh; /* usar vh para adaptarse a diferentes tamaños de pantalla */
-  z-index: 1000;
+  padding: 2vh;
+  z-index: 1300;
 }
-.tv-menu.hidden {
-  display: none !important;
-}
+.tv-menu.hidden { display: none !important; }
 
-/* ─── Parte Superior del Menú ──────────────────────────────────────────── */
-.tv-menu-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2vh;
+/* Top row */
+.tv-menu-top { display:flex; justify-content:space-between; align-items:center; }
+.tv-menu-top-left{ display:flex; align-items:center; }
+.tv-menu-top-right{ display:flex; align-items:center; }
+
+/* Botones circulares (play/close) con fondo gaussiano y sin borde */
+.circle-btn {
+  width: 7vh; height: 7vh; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.03), transparent 30%), rgba(255,255,255,0.06);
+  border: none; color: #fff; font-size: 3.6vh;
+  transition: background .18s, color .12s;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.5);
 }
-.tv-menu-img {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.circle-btn:hover, .circle-btn:focus { background: #fff; color: #111; outline:none; }
+
+/* circle-plain: transparent by default, on hover/focus show gaussian bg but KEEP icon color white */
+.circle-plain {
+  width: 7vh; height: 7vh; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: transparent; border: none; color: #fff; font-size: 3.6vh;
+  transition: background .18s, color .12s;
+  box-shadow: none;
 }
-.tv-menu-img img {
-  width: 12vh;  /* ajuste en vh */
-  height: 7vh;  /* ajuste en vh */
-  object-fit: cover;
-  border-radius: 4px;
-}
-.tv-menu-channel-number {
-  margin-top: 1vh;
-  font-size: 2vh;
-  font-weight: bold;
+.circle-plain:hover, .circle-plain:focus {
+  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-radius: 1.2vh;
+  /* KEEP icon color white (no color change) */
   color: #fff;
+  transform: none; /* no lift */
+  outline: none;
 }
-.tv-menu-quality {
-  margin-top: 0.5vh;
-  font-size: 1.6vh;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.5vh 1vh;
-  border-radius: 3px;
+
+/* rect-plain: transparent default; on hover/focus show gaussian bg; icon & label stay white */
+.rect-plain {
+  display:flex; align-items:center; gap:0.8vh;
+  padding: 0.4vh 1.0vh; height: 6.6vh; border-radius: 1.2vh;
+  background: transparent; color: #fff; font-size: 1.9vh;
+  transition: background .18s, color .12s;
+  border: none; box-shadow: none;
 }
-.tv-menu-time {
-  font-size: 2.5vh; /* Ajusta aquí tamaño de fuente del reloj */
+.rect-plain:hover, .rect-plain:focus {
+  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-radius: 1.6vh;
+  color: #fff; /* KEEP white */
+  transform: none;
+  outline: none;
+}
+
+/* small resolution icon */
+.small-btn { width:5.6vh; height:5.6vh; border-radius:1vh; background:transparent; display:flex; align-items:center; justify-content:center; font-size:2.2vh; border: 1px solid rgba(255,255,255,0.04); box-shadow:none; padding:0 8px; color: #fff; }
+.no-focus:focus { outline: none; transform: none; }
+
+/* Clock (12h) */
+.tv-menu-time { font-size: 2.8vh; color: #fff; display:flex; align-items:center; gap:0.6vh; }
+.tv-menu-time .bi { font-size: 2.2vh; opacity: 0.9; }
+
+/* center-left logo */
+.tv-menu-center-left {
+  position: absolute; left: 3.5vw; top: 50%; transform: translateY(-50%);
+  display:flex; flex-direction:column; align-items:center; gap: 1.4vh; z-index: 1310;
+}
+.channel-logo-wrap { width: 22vh; height: 10vh; display:flex; align-items:center; justify-content:center; background: transparent; }
+.channel-logo { max-height:100%; width:auto; object-fit: contain; background: transparent; }
+
+/* floating arrows */
+.float-arrow { font-size:2vh; color: rgba(255,255,255,0.6); }
+.float-arrow .bi { animation: float 1.6s ease-in-out infinite; }
+@keyframes float { 0%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} 100%{ transform:translateY(0);} }
+
+/* bottom row layout */
+.tv-menu-bottom { display:flex; justify-content:space-between; align-items:center; padding-bottom:2vh; }
+
+/* bottom-left info column */
+.tv-menu-bottom-left { margin-left:3.5vw; display:flex; flex-direction:column; gap:0.6vh; align-items:flex-start; z-index:1310; }
+.live-badge { background: #e3342f; color: #fff; padding: 0.4vh 1vh; border-radius: 0.6vh; font-weight: 700; font-size: 1.4vh; }
+
+/* Channel title: más grueso y brillo SOLO en letras + text-shadow para robustez */
+.channel-title {
+  font-size: 2.8vh;
+  font-weight: 900;
   color: #fff;
+  background-image: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.65) 40%, rgba(255,255,255,1) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-text 3s linear infinite;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.45);
 }
+@keyframes shine-text { 0% { background-position: -120% 0; } 50% { background-position: 200% 0; } 100% { background-position: 200% 0; } }
 
-/* ─── Parte Inferior del Menú ──────────────────────────────────────────── */
-.tv-menu-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.channel-number { font-size: 2.1vh; color: rgba(255,255,255,0.95); font-weight:700; }
 
-/* Grupo Izquierdo: Volver + Canales */
-.tv-menu-group-left {
-  display: flex;
-  gap: 1vh;
-}
+/* right area */
+.tv-menu-bottom-right { display:flex; align-items:center; gap:1.2vh; margin-right: 2vw; }
+.audio-label { margin-left:0.6vh; font-size:1.6vh; font-weight:700; color:#fff; }
 
-/* Grupo Central: Pause + DVR + Live */
-.tv-menu-group-center {
-  display: flex;
-  align-items: center;
-  gap: 1vh;
-}
+/* resolution icon states */
+#icon-res { font-size: 2.2vh; opacity: 0.35; transition: opacity .18s, color .18s; color: #fff; }
+#icon-res.hd { color: #e3342f; opacity:1; }
 
-/* Grupo Derecho: Cerrar */
-.tv-menu-group-right {
-  display: flex;
-  align-items: center;
+/* audio dropdown */
+.audio-dropdown {
+  position: absolute; right: 6.5vw; bottom: calc(3.5vh + 8vh);
+  background: rgba(0,0,0,0.98); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 0.6vh; display:flex; flex-direction:column; z-index:3000;
 }
+.audio-dropdown.hidden { display:none; }
+.audio-dropdown .audio-opt { background:transparent; color:#fff; border:none; padding:0.9vh 1.2vh; font-size:1.9vh; text-align:left; cursor:pointer; }
+.audio-dropdown .audio-opt:focus, .audio-dropdown .audio-opt:hover { background:#fff; color:#111; outline:none; }
 
-/* Botones circulares del menú */
-.tv-menu-btn {
-  background: #fff;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.3;
-  transition: opacity 0.2s;
-  width: 7vh;  /* tamaño adaptado en vh */
-  height: 7vh; /* tamaño adaptado en vh */
-  font-size: 4vh;
-}
-.tv-menu-btn:focus {
-  opacity: 1;
-  outline: 2px solid #007AFF;
-}
-
-/* ─── Barra de Progreso DVR ─────────────────────────────────────────────── */
-#dvr-container {
-  position: relative;
-  width: 20vh;    /* ancho en vh */
-  height: 1.5vh;  /* grosor en vh */
-  background: rgba(128, 0, 128, 0.3); /* púrpura semitransparente */
-  border-radius: 0.75vh;
-  overflow: hidden;
-}
-#dvr-progress {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0%;
-  background: rgba(128, 0, 128, 0.8); /* púrpura más opaco */
-}
-#dvr-knob {
-  position: absolute;
-  top: -0.3vh;  /* centrar el knob verticalmente */
-  left: 0;
-  width: 2vh;   /* diámetro del knob */
-  height: 2vh;  /* diámetro del knob */
-  background: yellow; /* color contrastante */
-  border-radius: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-/* ─── Tooltip ───────────────────────────────────────────────────────────── */
+/* tooltip */
 .tv-menu-tooltip {
-  position: absolute;
-  bottom: 10vh;               /* más cerca que antes (antes era 15vh) */
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 1vh 2vh;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-size: 2vh;
-  border-radius: 4px;
-  pointer-events: none;
-  transition: opacity 0.2s;
+  position: absolute; bottom: 10vh; left: 50%; transform: translateX(-50%);
+  padding: 1vh 2vh; background: rgba(0, 0, 0, 0.7); color: #fff; font-size: 2vh; border-radius: 4px;
+  pointer-events: none; transition: opacity 0.2s;
 }
-.tv-menu-tooltip.hidden {
-  opacity: 0;
-}
-.tv-menu-tooltip.visible {
-  opacity: 1;
-}
+.tv-menu-tooltip.hidden { opacity: 0; }
+.tv-menu-tooltip.visible { opacity: 1; }
 
+/* When audio dropdown open, blur only menu & playlist (NOT player) */
+body.controls-blur #tv-menu,
+body.controls-blur #playlist-container {
+  filter: blur(5px) saturate(0.6);
+  opacity: 0.55;
+}
+body.controls-blur #audio-dropdown { filter:none; pointer-events:auto; z-index:4000; }
 
-/*────────────────────────────────────────────────────────────────────────*/
-/*           MEDIA QUERIES PARA SMARTPHONE / TABLET PORTRAIT            */
-/*────────────────────────────────────────────────────────────────────────*/
+/* media queries mobile */
 @media (orientation: portrait), (max-width: 768px) {
-
-  /* 1) Player arriba */
-  #player-container {
-    position: relative;
-    width: 100vw;
-    height: 30vh;
-    overflow: hidden;
-  }
-  #player-video {
-    width:100%; height:100%; object-fit:cover;
-  }
-
-  /* 2) Playlist debajo, scroll vertical nativo */
-  #playlist-container {
-    position: relative;
-    top: 0; left: 0;
-    width: 100vw;
-    height: calc(100vh - 30vh);
-    overflow-y: auto;
-    background: rgba(0,0,0,0.8);
-  }
-
-  /* 3) Lista vertical pura, sin transforms ni carrusel */
-  .carousel-wrapper {
-    height: auto !important;
-    overflow: visible !important;
-  }
-  .carousel-list {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    transform: none !important;
-    scroll-behavior: smooth;
-    padding: 1vh 0;
-  }
-
-  /* 4) Ítems full‑width, simples */
-  .carousel-item {
-    width:100%; box-sizing:border-box;
-    display:flex; align-items:center;
-    margin:1vh 0; padding:1vh 5vw;
-    background:rgba(255,255,255,0.05);
-    border-radius:.5vh;
-    transition:background-color .3s,opacity .3s;
-    opacity:.8;
-  }
-  .carousel-item.focused,
-  .carousel-item:focus {
-    background:rgba(255,255,255,0.15);
-    opacity:1;
-  }
-
-  /* 5) Botón ocupa ancho completo */
-  .carousel-button {
-    flex:1; width:100%; text-align:left;
-    font-size:2.5vh;
-  }
-
-  /* 6) Número alineado a la izquierda */
-  .item-label {
-    margin-right:2vw;
-    font-size:3vh;
-  }
-
-  /* Deshabilitar JS de carrusel/teclas: (opcional, se gestiona en JS) */
+  #player-container { position: relative; width:100vw; height:30vh; overflow:hidden; }
+  #player-video { width:100%; height:100%; object-fit:cover; }
+  #playlist-container { position: relative; top:0; left:0; width:100vw; height: calc(100vh - 30vh); overflow-y:auto; background: rgba(0,0,0,0.8); }
+  .carousel-wrapper { height:auto !important; overflow:visible !important; }
+  .carousel-list { display:flex !important; flex-direction:column !important; align-items:stretch !important; transform:none !important; scroll-behavior:smooth; padding:1vh 0; }
+  .carousel-item { width:100%; box-sizing:border-box; display:flex; align-items:center; margin:1vh 0; padding:1vh 5vw; background:rgba(255,255,255,0.05); border-radius:.5vh; transition:background-color .3s,opacity .3s; opacity:.8; }
+  .carousel-item.focused, .carousel-item:focus { background:rgba(255,255,255,0.15); opacity:1; }
+  .carousel-button { flex:1; width:100%; text-align:left; font-size:2.5vh; }
+  .item-label { margin-right:2vw; font-size:3vh; }
 }
+
+/* focus visible */
+:focus-visible { outline: 3px solid rgba(0,122,255,0.9); outline-offset: 3px; }

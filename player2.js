@@ -667,11 +667,9 @@ class PlayerJS {
   }
 }
 
-/* ------------------ Inicialización ------------------ */
-document.addEventListener('DOMContentLoaded', () => {
+// Arranque
+document.addEventListener("DOMContentLoaded", () => {
   const player = new PlayerJS();
-
-  // Carga completa de playlist (pega aquí tu arreglo original completo)
   player.loadPlaylist([
     {
       number: "100",
@@ -691,7 +689,219 @@ document.addEventListener('DOMContentLoaded', () => {
       image: "img/CANAL-COPS.png",
       title: "COPS",
       file: "https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8"
+    },
+    {
+      number: "103",
+      image: "img/CANAL-DODO.png",
+      title: "DODO TV",
+      file: "https://cloud5.streaminglivehd.com:3651/hybrid/play.m3u8"
+    },
+    {
+      number: "104",
+      image: "img/canalneotv.png",
+      title: "NEO TV",
+      file: "https://videostream.shockmedia.com.ar:19360/neotvdigital/neotvdigital.m3u8"
+    },
+    {
+      number: "105",
+      image: "img/canalplanetatv.png",
+      title: "PLANETA",
+      file: "https://live.obslivestream.com/planetatv/index.m3u8"
+    },
+    {
+      number: "106",
+      image: "img/CANAL-AMC.png",
+      title: "AMC",
+      file: "https://amc-amcespanol-1-us.lg.wurl.tv/playlist.m3u8"
+    },
+    {
+      number: "107",
+      image: "img/canalwowtv.png",
+      title: "WOW TV",
+      file:
+        "https://cdn.elsalvadordigital.com:1936/wowtv/smil:wowtv.smil/playlist.m3u8"
+    },
+    {
+      number: "108",
+      image: "img/canalcocotv.png",
+      title: "COCO TV",
+      file:
+        "https://cloudflare.streamgato.us:3253/live/canalcocotvlive.m3u8"
+    },
+    {
+      number: "109",
+      image: "img/canalsoltv.png",
+      title: "SOL TV",
+      file:
+        "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8"
+    },
+    {
+      number: "110",
+      image: "img/CANAL-AFV.png",
+      title: "AFV TV",
+      file:
+        "https://linear-46.frequency.stream/dist/plex/46/hls/master/playlist.m3u8"
+    },
+    {
+      number: "111",
+      image: "img/canalsonynovelas.png",
+      title: "SONY NOVELAS",
+      file:
+        "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8"
+    },
+    {
+      number: "112",
+      image: "img/canaldw.png",
+      title: "DW ESPAÑOL",
+      file:
+        "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8"
+    },
+    {
+      number: "113",
+      image: "img/CANAL-CINECANAL.png",
+      title: "CINECANAL",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/CINECANAL/index.m3u8"
+    },
+    {
+      number: "114",
+      image: "img/CANAL57.png",
+      title: "CANAL 57",
+      file: "https://167790.global.ssl.fastly.net/6189746bccf0424c112f5476/live_50bbca50292011ed8d265962bedee5f9/tracks-v2a1/mono.m3u8"
+    },
+    {
+      number: "115",
+      image: "img/CANAL-ESTRELLAS.png",
+      title: "LAS ESTRELLAS",
+      file:
+        "https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8"
+    },
+    {
+      number: "116",
+      image: "img/CANAL-INFAST.png",
+      title: "INFAST",
+      file: "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00861-terninternation-lifestylelatam-lges/playlist.m3u8"
+    },
+    {
+      number: "117",
+      image: "img/CANAL-TELEMUNDO.png",
+      title: "TELEMUNDO",
+      file:
+        "https://nbculocallive.akamaized.net/hls/live/2037499/puertorico/stream1/master.m3u8"
+    },
+    {
+      number: "118",
+      image: "img/CANAL-CTV.png",
+      title: "CTV INTERNCIONAL",
+      file:
+        "https://mediacp.us:8081/ctvhn/index.m3u8"
+    },
+    {
+      number: "119",
+      image: "img/CANAL-SONYCOMEDY.png",
+      title: "SONY COMEDIA",
+      file: "https://spt-sonyonecomedias-mx.xiaomi.wurl.tv/playlist.m3u8"
     }
-    // ... pega el resto de tus canales aquí
+    ,
+    {
+      number: "120",
+      image: "img/CANAL-FMCOSMOS.png",
+      title: "COSMOS TV",
+      file:
+        "https://tv.mediacp.eu:19360/cosmos/cosmos.m3u8"
+    },
+    {
+      number: "121",
+      image: "img/CANAL-SONY.png",
+      title: "SONY CINE",
+      file:
+        "https://a-cdn.klowdtv.com/live1/cine_720p/playlist.m3u8"
+    }
+    ,
+    {
+      number: "122",
+      image: "img/CANAL-TELEMUNDOACCION.png",
+      title: "ACCIÓN",
+      file:
+        "https://xumo-drct-ch835-ekq0p.fast.nbcuni.com/live/master.m3u8"
+    }
+    ,
+    {
+      number: "123",
+      image: "img/CANAL-MEGACINE.png",
+      title: "MEGA CINE TV",
+      file:
+        "https://cnn.hostlagarto.com/megacinetv/index.m3u8"
+    }
+    ,
+    {
+      number: "124",
+      image: "img/CANAL-DMJ.png",
+      title: "DMJ",
+      file:
+        "https://stmv1.voxhdnet.com/dmjsurtv/dmjsurtv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "125",
+      image: "img/CANAL-H2.png",
+      title: "HISTORY 2",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
+    }
+    ,
+    {
+      number: "126",
+      image: "img/CANAL-PALMERASTV.png",
+      title: "PALMERAS TV",
+      file:
+        "https://play.agenciastreaming.com:8081/palmerastv/index.m3u8"
+    }
+    ,
+    {
+      number: "127",
+      image: "img/CANAL-MEGATV.png",
+      title: "MEGA TV",
+      file:
+        "https://mc.servidor.stream:19360/megatv/megatv.m3u8"
+    }
+    ,
+    {
+      number: "128",
+      image: "img/CANAL-AMERICATV.png",
+      title: "AMERICA TV",
+      file:
+        "https://live-evg1.tv360.bitel.com.pe/bitel/americatv/playlist.m3u8"
+    }
+    ,
+    {
+      number: "129",
+      image: "img/CANAL ATV.png",
+      title: "ATV",
+      file:
+        "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
+    },
+    {
+      number: "130",
+      image: "img/CANAL-SONYCHANNEL.png",
+      title: "SONY CHANNEL",
+      file:
+        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d08395f39465da6fb3ec4/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2a5107-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=919bc5fd-6cce-44a6-bb39-2894dea1c988"
+    }
+    ,
+    {
+      number: "131",
+      image: "img/CANAL-SOLTVTRUJILLO.png",
+      title: "SOL TV",
+      file:
+        "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
+    },
+    {
+      number: "132",
+      image: "img/CANAL-UNIVERSAL.png",
+      title: "STUDIO UNIVERSAL",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"
+    }
   ]);
 });

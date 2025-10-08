@@ -1,7 +1,7 @@
 /* ─── RESET & PLAYER ───────────────────────────────────────────────── */
 * { outline: none !important; }
 @font-face {
-  font-family: 'Dosis-Bold';
+  font-family: 'MyFont';
   src: url('fonts/Dosis-Bold.woff2') format('woff2'),
        url('fonts/Dosis-Bold.woff')  format('woff');
   font-weight: normal;
@@ -25,6 +25,7 @@ body, html {
 #player-video {
   width: 100%; height: 100%; background: #000;
 }
+
 /* Spinner */
 .spinner {
   position: absolute; top: 50%; left: 50%;
@@ -34,17 +35,14 @@ body, html {
   width: 40px; height: 40px;
   animation: spin 1s linear infinite; z-index: 99;
 }
-@keyframes spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 .hidden { display: none; }
 
 /* ─── PLAYLIST CONTAINER ───────────────────────────────────────────── */
 #playlist-container {
   position: fixed; top: 0; left: -350px;
   width: 350px; height: 100%;
-  background: linear-gradient(to bottom,
-    rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
   box-shadow: 2px 0 5px rgba(0,0,0,0.5);
   transition: left .5s ease;
   z-index: 1200;
@@ -60,15 +58,11 @@ body, html {
 }
 .carousel-list {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  top: 0; left: 0; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
 }
 
-/* ─── ÍTEMS (sin cambios) ─────────────────────────────────────────── */
+/* ─── ÍTEMS ─────────────────────────────────────────────────────────── */
 .carousel-item {
   background: transparent;
   display: flex; align-items: center;
@@ -87,6 +81,21 @@ body, html {
   display: flex; align-items: center; justify-content: center;
   margin-right: 10px;
 }
+/* restore arrows above/below number when focused */
+.carousel-item .item-label::before,
+.carousel-item .item-label::after {
+  font-family: 'bootstrap-icons';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: #888;
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+}
+.carousel-item.focused .item-label::before { content: "\f286"; top: -1.0em; opacity: 1; color: #bbb; transform: translateX(-50%) translateY(-2px); }
+.carousel-item.focused .item-label::after  { content: "\f282"; bottom: -1.0em; opacity: 1; color: #bbb; transform: translateX(-50%) translateY(2px); }
+
 .carousel-item img {
   width: 100px; height: 50px;
   object-fit: cover; border-radius: 5px;
@@ -101,7 +110,7 @@ body, html {
   opacity: 0.3; transform: scale(1);
   transition: opacity 0.2s ease, transform 0.3s ease;
   pointer-events: none;
-  font-family: 'Dosis-Bold', Arial, sans-serif;
+  font-family: 'MyFont', Arial, sans-serif;
 }
 .carousel-item.focused {
   opacity: 1;
@@ -109,10 +118,7 @@ body, html {
   transition: opacity 0.4s ease, transform 0.4s ease;
   animation: focusPulse 0.25s ease-out;
 }
-@keyframes focusPulse {
-  0% { transform: scale(0.95); opacity: 0.7; }
-  100% { transform: scale(1.1); opacity: 1; }
-}
+@keyframes focusPulse { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.1); opacity: 1; } }
 .carousel-item.focused .item-label { color: #fff; }
 .carousel-item.focused .carousel-button { opacity: 1; pointer-events: auto; transform: scale(1.05); }
 
@@ -122,25 +128,19 @@ body, html {
 .tv-menu {
   position: fixed;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.85)
-  );
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.85));
+  display: flex; flex-direction: column; justify-content: space-between;
   padding: 2vh;
   z-index: 1300;
 }
 .tv-menu.hidden { display: none !important; }
 
-/* Top row */
+/* Top */
 .tv-menu-top { display:flex; justify-content:space-between; align-items:center; }
 .tv-menu-top-left{ display:flex; align-items:center; }
 .tv-menu-top-right{ display:flex; align-items:center; }
 
-/* Botones circulares (play/close) con fondo gaussiano y sin borde */
+/* circle buttons (play/close) */
 .circle-btn {
   width: 7vh; height: 7vh; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -151,7 +151,7 @@ body, html {
 }
 .circle-btn:hover, .circle-btn:focus { background: #fff; color: #111; outline:none; }
 
-/* circle-plain: transparent by default, on hover/focus show gaussian bg but KEEP icon color white */
+/* circle-plain: transparent; on focus show a more visible gaussian (lighter) - KEEP icon white */
 .circle-plain {
   width: 7vh; height: 7vh; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -160,15 +160,15 @@ body, html {
   box-shadow: none;
 }
 .circle-plain:hover, .circle-plain:focus {
-  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  /* made gaussian more visible (lighter) */
+  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
   border-radius: 1.2vh;
-  /* KEEP icon color white (no color change) */
   color: #fff;
-  transform: none; /* no lift */
+  transform: none;
   outline: none;
 }
 
-/* rect-plain: transparent default; on hover/focus show gaussian bg; icon & label stay white */
+/* rect-plain: transparent; on focus show Gaussian more visible (lighter) */
 .rect-plain {
   display:flex; align-items:center; gap:0.8vh;
   padding: 0.4vh 1.0vh; height: 6.6vh; border-radius: 1.2vh;
@@ -177,15 +177,19 @@ body, html {
   border: none; box-shadow: none;
 }
 .rect-plain:hover, .rect-plain:focus {
-  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
   border-radius: 1.6vh;
-  color: #fff; /* KEEP white */
+  color: #fff;
   transform: none;
   outline: none;
 }
 
-/* small resolution icon */
-.small-btn { width:5.6vh; height:5.6vh; border-radius:1vh; background:transparent; display:flex; align-items:center; justify-content:center; font-size:2.2vh; border: 1px solid rgba(255,255,255,0.04); box-shadow:none; padding:0 8px; color: #fff; }
+/* resolution icon bigger and no border */
+.small-btn {
+  width:6.6vh; height:6.6vh; border-radius:1vh;
+  background:transparent; display:flex; align-items:center; justify-content:center;
+  font-size:3.2vh; border: none; box-shadow:none; padding:0 8px; color: #fff;
+}
 .no-focus:focus { outline: none; transform: none; }
 
 /* Clock (12h) */
@@ -205,26 +209,27 @@ body, html {
 .float-arrow .bi { animation: float 1.6s ease-in-out infinite; }
 @keyframes float { 0%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} 100%{ transform:translateY(0);} }
 
-/* bottom row layout */
-.tv-menu-bottom { display:flex; justify-content:space-between; align-items:center; padding-bottom:2vh; }
+/* bottom row moved slightly up (translate) */
+.tv-menu-bottom { display:flex; justify-content:space-between; align-items:center; padding-bottom:1vh; transform: translateY(-0.6vh); }
 
 /* bottom-left info column */
 .tv-menu-bottom-left { margin-left:3.5vw; display:flex; flex-direction:column; gap:0.6vh; align-items:flex-start; z-index:1310; }
 .live-badge { background: #e3342f; color: #fff; padding: 0.4vh 1vh; border-radius: 0.6vh; font-weight: 700; font-size: 1.4vh; }
 
-/* Channel title: más grueso y brillo SOLO en letras + text-shadow para robustez */
+/* Channel title: ALWAYS white + stronger glow animation (golden-like) */
 .channel-title {
   font-size: 2.8vh;
   font-weight: 900;
-  color: #fff;
-  background-image: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.65) 40%, rgba(255,255,255,1) 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine-text 3s linear infinite;
+  color: #ffffff;
   text-shadow: 0 1px 0 rgba(0,0,0,0.45);
+  animation: shine-glow 3s ease-in-out infinite;
 }
-@keyframes shine-text { 0% { background-position: -120% 0; } 50% { background-position: 200% 0; } 100% { background-position: 200% 0; } }
+@keyframes shine-glow {
+  0% { text-shadow: 0 0 0 rgba(255,215,0,0); }
+  40% { text-shadow: 0 0 8px rgba(255,215,0,0.65); }
+  70% { text-shadow: 0 0 14px rgba(255,215,0,0.9); }
+  100% { text-shadow: 0 0 0 rgba(255,215,0,0); }
+}
 
 .channel-number { font-size: 2.1vh; color: rgba(255,255,255,0.95); font-weight:700; }
 
@@ -233,7 +238,7 @@ body, html {
 .audio-label { margin-left:0.6vh; font-size:1.6vh; font-weight:700; color:#fff; }
 
 /* resolution icon states */
-#icon-res { font-size: 2.2vh; opacity: 0.35; transition: opacity .18s, color .18s; color: #fff; }
+#icon-res { font-size: 3.2vh; opacity: 0.35; transition: opacity .18s, color .18s; color: #fff; }
 #icon-res.hd { color: #e3342f; opacity:1; }
 
 /* audio dropdown */
@@ -247,20 +252,12 @@ body, html {
 .audio-dropdown .audio-opt:focus, .audio-dropdown .audio-opt:hover { background:#fff; color:#111; outline:none; }
 
 /* tooltip */
-.tv-menu-tooltip {
-  position: absolute; bottom: 10vh; left: 50%; transform: translateX(-50%);
-  padding: 1vh 2vh; background: rgba(0, 0, 0, 0.7); color: #fff; font-size: 2vh; border-radius: 4px;
-  pointer-events: none; transition: opacity 0.2s;
-}
-.tv-menu-tooltip.hidden { opacity: 0; }
-.tv-menu-tooltip.visible { opacity: 1; }
+.tv-menu-tooltip { position: absolute; bottom: 10vh; left: 50%; transform: translateX(-50%); padding: 1vh 2vh; background: rgba(0, 0, 0, 0.7); color: #fff; font-size: 2vh; border-radius: 4px; pointer-events: none; transition: opacity 0.2s; }
+.tv-menu-tooltip.hidden { opacity: 0; } .tv-menu-tooltip.visible { opacity: 1; }
 
-/* When audio dropdown open, blur only menu & playlist (NOT player) */
+/* blur only menu & playlist when audio dropdown open (not player) */
 body.controls-blur #tv-menu,
-body.controls-blur #playlist-container {
-  filter: blur(5px) saturate(0.6);
-  opacity: 0.55;
-}
+body.controls-blur #playlist-container { filter: blur(5px) saturate(0.6); opacity: 0.55; }
 body.controls-blur #audio-dropdown { filter:none; pointer-events:auto; z-index:4000; }
 
 /* media queries mobile */

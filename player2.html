@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Reproductor con DVR</title>
 
     <!-- Bootstrap icons -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Estilos -->
     <link rel="stylesheet" href="styleplayers.css" />
 
-    <!-- Librerías -->
+    <!-- Librerías HLS / Shaka -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.3/shaka-player.compiled.js"></script>
   </head>
-
   <body>
     <!-- VIDEO + SPINNER -->
     <div id="player-container">
-      <video
-        id="player-video"
-        autoplay
-        playsinline
-        crossorigin="anonymous"
-      ></video>
+      <video id="player-video" autoplay playsinline crossorigin="anonymous"></video>
       <div id="video-loading-spinner" class="spinner hidden"></div>
     </div>
 
@@ -40,117 +31,64 @@
 
     <!-- MENÚ TV (Overlay) -->
     <div id="tv-menu" class="tv-menu hidden" aria-hidden="true" role="dialog">
-      <!-- TOP: left -> Close button; right -> Clock (12h) -->
+      <!-- TOP -->
       <div class="tv-menu-top">
         <div class="tv-menu-top-left">
-          <!-- Botón cerrar: circular, SIN borde -->
-          <button
-            id="btn-close"
-            class="circle-btn"
-            aria-label="Cerrar reproductor"
-            tabindex="0"
-            data-title="Cerrar"
-          >
+          <button id="btn-close" class="circle-btn" aria-label="Cerrar reproductor" tabindex="0" data-title="Cerrar">
             <i class="bi bi-x"></i>
           </button>
         </div>
-
         <div class="tv-menu-top-right">
           <div class="tv-menu-time" id="tv-menu-time" aria-live="polite">
-            <i class="bi bi-clock-fill"></i>&nbsp;<span id="tv-menu-time-text"
-              >12:00</span
-            >
+            <i class="bi bi-clock-history"></i>&nbsp;<span id="tv-menu-time-text">12:00</span>
           </div>
         </div>
       </div>
 
-      <!-- CENTER-LEFT: logo (rectangular), arrows arriba/abajo flotantes -->
+      <!-- CENTER-LEFT: logo y flechas -->
       <div class="tv-menu-center-left">
-        <div class="arrow-up float-arrow"><i class="bi bi-chevron-up"></i></div>
+        <div class="arrow-up float-arrow" aria-hidden="true"><i class="bi bi-chevron-up"></i></div>
         <div class="channel-logo-wrap">
           <img id="channel-logo" class="channel-logo" src="" alt="Logo canal" />
         </div>
-        <div class="arrow-down float-arrow">
-          <i class="bi bi-chevron-down"></i>
-        </div>
+        <div class="arrow-down float-arrow" aria-hidden="true"><i class="bi bi-chevron-down"></i></div>
       </div>
 
-      <!-- BOTTOM: left column (live/title/number), center play/pause, right controls (audio, guide, res) -->
+      <!-- BOTTOM -->
       <div class="tv-menu-bottom">
-        <!-- bottom-left column: same left margin as logo -->
         <div class="tv-menu-bottom-left">
           <div class="live-badge">LIVE</div>
           <div id="tv-menu-channel-title" class="channel-title">Canal</div>
           <div id="tv-menu-channel-number" class="channel-number">000</div>
         </div>
 
-        <!-- center: Play/Pause (circular SIN borde) -->
         <div class="tv-menu-bottom-center">
-          <button
-            id="btn-playpause"
-            class="circle-btn"
-            aria-label="Play/Pausa"
-            tabindex="0"
-            data-title="Pausa"
-          >
+          <button id="btn-playpause" class="circle-btn" aria-label="Play/Pausa" tabindex="0" data-title="Pausa">
             <i id="icon-playpause" class="bi bi-pause-fill"></i>
           </button>
         </div>
 
-        <!-- right: audio (rectangular plain), guide (plain circular), resolution (icon no-focus) -->
         <div class="tv-menu-bottom-right">
-          <!-- Botón idioma: rectangular pero PLAIN (sin fondo), focus/hover aplican gaussian -->
-          <button
-            id="btn-audio"
-            class="rect-plain"
-            aria-label="Idioma"
-            tabindex="0"
-            data-title="Idioma"
-          >
+          <button id="btn-audio" class="rect-plain" aria-label="Idioma" tabindex="0" data-title="Idioma">
             <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
             <span id="audio-label" class="audio-label">ENG</span>
           </button>
 
-          <!-- Botón TV-GUIDE: plain circular, no fondo por defecto -->
-          <button
-            id="btn-guide"
-            class="circle-plain"
-            aria-label="Guía TV"
-            tabindex="0"
-            data-title="Guía TV"
-          >
+          <button id="btn-guide" class="circle-plain" aria-label="Guía TV" tabindex="0" data-title="Guía TV">
             <i class="bi bi-view-list"></i>
           </button>
 
-          <!-- Icono resolución: no focus (solo indicador) -->
-          <button
-            id="btn-res"
-            class="small-btn no-focus"
-            aria-label="Resolución"
-            tabindex="-1"
-            aria-hidden="true"
-          >
+          <button id="btn-res" class="small-btn no-focus" aria-label="Resolución" tabindex="-1" aria-hidden="true">
             <i id="icon-res" class="bi bi-badge-hd-fill"></i>
           </button>
         </div>
       </div>
 
-      <!-- Tooltip -->
-      <div
-        id="tv-menu-tooltip"
-        class="tv-menu-tooltip hidden"
-        aria-hidden="true"
-      ></div>
+      <div id="tv-menu-tooltip" class="tv-menu-tooltip hidden" aria-hidden="true"></div>
     </div>
 
-    <!-- Audio dropdown: OUTSIDE tv-menu so it does NOT get blurred when the menu is blurred.
-         This ensures the dropdown remains crisp. -->
-    <div
-      id="audio-dropdown"
-      class="audio-dropdown hidden"
-      role="menu"
-      aria-hidden="true"
-    >
+    <!-- Audio dropdown (fuera del menu para que NO se desenfoque) -->
+    <div id="audio-dropdown" class="audio-dropdown hidden" role="menu" aria-hidden="true">
       <button class="audio-opt" data-val="0" tabindex="-1">ENG</button>
       <button class="audio-opt" data-val="1" tabindex="-1">SPA</button>
     </div>

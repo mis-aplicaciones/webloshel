@@ -926,7 +926,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CANAL-AMERICATV.png",
       title: "AMERICA TV",
       file:
-        "https://live-evg1.tv360.bitel.com.pe/bitel/americatv/playlist.m3u8"
+        "http://181.188.216.5:18000/play/a014/index.m3u8"
     }
     ,
     {
@@ -941,7 +941,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/CANAL-SONYCHANNEL.png",
       title: "SONY CHANNEL",
       file:
-        "http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5d8d08395f39465da6fb3ec4/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2a5107-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=919bc5fd-6cce-44a6-bb39-2894dea1c988"
+        "https://fl25.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
     }
     ,
     {

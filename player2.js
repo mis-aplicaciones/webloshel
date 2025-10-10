@@ -599,7 +599,12 @@ class PlayerJS {
       }
 
       // If hidden & ArrowLeft -> show menu
-      if (key === 'ArrowLeft') { this.showMenu(); return; }
+      // si el menú está oculto, mostrarlo con cualquier flecha del D-pad
+if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(key)) {
+  this.showMenu();
+  return;
+}
+
     });
 
     window.addEventListener('wheel', (e)=> {

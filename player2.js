@@ -998,6 +998,13 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "FX",
       file:
         "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/FX/index.m3u8"
+    },
+    {
+      number: "138",
+      image: "img/CANAL-HBOXTREME.png",
+      title: "HBO XTREME",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HBO_XTREME/index.m3u8"
     }
     
   ]);

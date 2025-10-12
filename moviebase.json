@@ -550,7 +550,7 @@
       "Ciencia ficción"
     ],
     "video_type": "mp4",
-    "videourl": "https://archive.org/download/resident-evil-isla-de-la-muerte-2023-espanol-latino/Resident.Evil.Death.Island.2023.1080P-Dual-Lat.ia.mp4",
+    "videourl": "https://archive.org/download/resient-evil-2023/resient%20evil%202023.mp4",
     "tipo": 1,
     "link": "peliculas/24-resident-evil-death-island.html"
   },
@@ -821,29 +821,6 @@
     "link": "peliculas/35-terminator-2-el-juicio-final.html"
   },
   {
-    "id": "36",
-    "titulo": "It: Capítulo 2",
-    "titleimgUrl": "https://image.tmdb.org/t/p/original/jup42EiBBxKHODyFo0S4FhZDyb6.png",
-    "año": "2019",
-    "hora": "2 h",
-    "min": "49 min",
-    "edad": "18+",
-    "rating": "3",
-    "backgroundUrl": "https://image.tmdb.org/t/p/original/smPeh0708Vx03w6TRlCfEpZ0TIL.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/8IA4kmS4fWgFao907zRbrDV6iH2.jpg",
-    "cardimgUrl": "https://image.tmdb.org/t/p/original/1BELG1iL0iawugSFsmYy2xOtXk3.jpg",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/pxw6j2AwlUsw5iS4fCxPoCP0jPh.jpg",
-    "sinopsis": "En el misterioso pueblo de Derry, un payaso llamado Pennywise vuelve 27 años después para atormentar a los ahora adultos miembros del Club de los Perdedores, que se encuentran alejados unos de otros.",
-    "genero": [
-      "Terror",
-      "Suspense"
-    ],
-    "video_type": "",
-    "videourl": "",
-    "tipo": 1,
-    "link": "peliculas/36-it-capitulo-2.html"
-  },
-  {
     "id": "37",
     "titulo": "It: Capítulo 2",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/jup42EiBBxKHODyFo0S4FhZDyb6.png",
@@ -1006,5 +983,30 @@
     "videourl": "https://archive.org/download/agarralo-como-puedas-latino/Ag%C3%A1rralo%20como%20puedas%20Latino.mp4",
     "tipo": 1,
     "link": "peliculas/43-agarralo-como-puedas.html"
+  },
+  {
+    "id": "44",
+    "titulo": "La trampa",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/2m3ZkLITwm1OA1ScrgKYX4JRQuH.png",
+    "año": "2024",
+    "hora": "1 h",
+    "min": "45 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/5yj3fvMotNN3Fc5NE8KjEkmDEtJ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/fBDoQTrt3LpjFvnH3cGdCzg542H.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/lNw07b1PaCVpQbsgR0ehxJdw4oa.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/r6qhpcbhNE8jkigeSMdEy90q07p.jpg",
+    "sinopsis": "Un padre y su hija adolescente asisten a un concierto de música pop, donde se dan cuenta de que están en el centro de un oscuro y siniestro suceso.",
+    "genero": [
+      "Suspense",
+      "Misterio",
+      "Crimen",
+      "Terror"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://cors-proxy.cooks.fyi/http://208.88.245.85/nuevo/la.trampa.2024.dual.mkv",
+    "tipo": 1,
+    "link": "peliculas/44-la-trampa.html"
   }
 ]

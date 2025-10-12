@@ -904,14 +904,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ,
     {
       number: "125",
-      image: "img/CANAL-H2.png",
-      title: "HISTORY 2",
+      image: "img/CANAL-H.png",
+      title: "HISTORY",
       file:
-        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY/index.m3u8"
     }
     ,
     {
       number: "126",
+      image: "img/CANAL-DISCOVERY.png",
+      title: "DISCOVERY",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/DISCOVERY/index.m3u8"
+    }
+    ,
+    {
+      number: "127",
       image: "img/CANAL-PALMERASTV.png",
       title: "PALMERAS TV",
       file:
@@ -919,7 +927,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "127",
+      number: "128",
       image: "img/CANAL-MEGATV.png",
       title: "MEGA TV",
       file:
@@ -927,7 +935,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "128",
+      number: "129",
       image: "img/CANAL-AMERICATV.png",
       title: "AMERICA TV",
       file:
@@ -935,14 +943,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "129",
+      number: "130",
       image: "img/CANAL ATV.png",
       title: "ATV",
       file:
         "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
     },
     {
-      number: "130",
+      number: "131",
       image: "img/CANAL-SONYCHANNEL.png",
       title: "SONY CHANNEL",
       file:
@@ -950,18 +958,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     ,
     {
-      number: "131",
+      number: "132",
       image: "img/CANAL-SOLTVTRUJILLO.png",
       title: "SOL TV",
       file:
         "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
     },
     {
-      number: "132",
+      number: "133",
       image: "img/CANAL-UNIVERSAL.png",
       title: "STUDIO UNIVERSAL",
       file:
         "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"
+    },
+    {
+      number: "134",
+      image: "img/canal-axn.png",
+      title: "AXN",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/AXN/index.m3u8"
+    },
+    {
+      number: "135",
+      image: "img/canal-ID.png",
+      title: "ID",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/DISCOVERY_ID/index.m3u8"
+    },
+    {
+      number: "136",
+      image: "img/CANAL-NAT-GEO.png",
+      title: "NAT-GEO",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/NAT_GEO/index.m3u8"
+    },
+    {
+      number: "137",
+      image: "img/CANAL-FX.png",
+      title: "FX",
+      file:
+        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/FX/index.m3u8"
     }
+    
   ]);
 });

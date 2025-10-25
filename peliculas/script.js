@@ -575,9 +575,12 @@ async function updateResumeUIIfPresent(id, cur, dur) {
         const titleEl = $id("movie-title-text") || $id("movie-title-image");
         const title = titleEl ? (titleEl.textContent || titleEl.alt || "") : "";
         
+        // Obtener ID de la película para guardar progreso
+        const movieId = readIdFromPage() || "";
+        
         // Llamar a ExoPlayer a través de la interfaz Android
         if (window.Android && typeof window.Android.playVideoWithExoPlayer === 'function') {
-          window.Android.playVideoWithExoPlayer(src, title, Math.floor(startAt || 0));
+          window.Android.playVideoWithExoPlayer(src, title, Math.floor(startAt || 0), movieId);
           return; // Salir aquí, ExoPlayer manejará la reproducción
         }
       }
@@ -1152,7 +1155,27 @@ async function updateResumeUIIfPresent(id, cur, dur) {
     // check saved progress and show resume UI if present
     (async () => {
       try {
-        const saved = await getProgress(id);
+        let saved = await getProgress(id);
+        
+        // Si no hay progreso en IndexedDB, intentar obtenerlo de Android (MKV)
+        if ((!saved || !saved.time) && videoType === "mkv" && window.Android && typeof window.Android.getVideoProgress === 'function') {
+          try {
+            const androidProgress = JSON.parse(window.Android.getVideoProgress(id || ""));
+            if (androidProgress && androidProgress.time && androidProgress.time >= PROGRESS_MIN_SECONDS) {
+              saved = {
+                time: androidProgress.time,
+                duration: androidProgress.duration,
+                updated: Date.now(),
+                resumeAllowed: true
+              };
+              // Guardar también en IndexedDB para consistencia
+              await saveProgress(id, androidProgress.time, androidProgress.duration);
+            }
+          } catch (e) {
+            console.warn("Error getting progress from Android:", e);
+          }
+        }
+        
         if (saved && saved.time && Number(saved.time) >= PROGRESS_MIN_SECONDS) {
           // si el registro es antiguo (> CLEANUP_MS) lo borramos y no mostramos
           if (saved.updated && (Date.now() - Number(saved.updated)) > CLEANUP_MS) {

@@ -96,37 +96,36 @@ function okToEmbed(url) {
     return url.startsWith("//") ? url : url.replace(/^https?:/, "");
   } catch (e) { return url; }
 }
-/* ---------------- NUEVO: fastream -> embed helper ----------------
-   Detecta URLs fastream tipo:
-     - https://fastream.to/embed-r46tcr51urdn.html
-     - https://fastream.to/r46tcr51urdn
-   y devuelve la forma embed con protocolo https y autoplay=1 cuando se use en iframe.
-*/
+// convierte enlaces fastream en la URL embed con autoplay
 function fastreamToEmbed(url) {
-  if (!url || typeof url !== "string") return url;
+  if (!url) return url;
   try {
-    // normalize
-    let u = url.trim();
-    // if already embed form, ensure https
+    // normalizar esquema
+    let u = String(url).trim();
+    // si ya es embed, devolverlo (asegurando https)
     if (u.includes("fastream.to") && u.includes("/embed-")) {
       if (!u.startsWith("http")) u = "https:" + u;
-      return u;
+      // añadir autoplay si no existe
+      return u + (u.includes("?") ? "&autoplay=1" : "?autoplay=1");
     }
-    // short form /r<id>
-    const m = u.match(/fastream\.to\/r([-_A-Za-z0-9]+)/i);
-    if (m && m[1]) {
-      return `https://fastream.to/embed-r${m[1]}.html`;
+    // extraer id final (por ejemplo r46tcr51urdn)
+    const m = u.match(/(?:\/|embed-)([A-Za-z0-9_-]{6,})\.?/);
+    let id = null;
+    if (m && m[1]) id = m[1];
+    else {
+      // fallback: toma texto después del último slash
+      const parts = u.split("/");
+      id = parts[parts.length - 1] || parts[parts.length - 2] || "";
+      id = id.replace(/\.html$/, "").replace(/\?.*$/, "");
     }
-    // fallback: if host present but not r/ or embed- try to return as-is (with https)
-    if (u.includes("fastream.to")) {
-      if (!u.startsWith("http")) u = "https:" + u;
-      return u;
-    }
-    return url;
+    if (!id) return u;
+    const embed = `https://fastream.to/embed-${id}.html`;
+    return embed + "?autoplay=1";
   } catch (e) {
     return url;
   }
 }
+
 /* ---------------- fetch seriebase ---------------- */
 async function fetchSerieBase() {
   for (const p of JSON_PATHS) {
@@ -354,7 +353,16 @@ async function openPlayer(src, type = "mp4", startAt = 0, cardEl = null, storage
   if (_player_state.src !== src || _player_state.type !== type) {
     try { if (_hlsInstance && _hlsInstance.destroy) _hlsInstance.destroy(); } catch (e) {}
     video.removeAttribute("src"); video.muted = false;
-    if (type === "m3u8") { await ensureHlsLoaded(); await attachHls(video, src); } else video.src = src;
+    if (type === "m3u8") { 
+      await ensureHlsLoaded(); 
+      await attachHls(video, src); 
+    } else if (type === "mkv" || src.includes(".mkv")) {
+      // Soporte para MKV - tratarlo como MP4 ya que el navegador puede reproducirlo
+      video.type = 'video/mp4';
+      video.src = src;
+    } else {
+      video.src = src;
+    }
     _player_state.src = src; _player_state.type = type;
   }
 
@@ -1270,9 +1278,12 @@ async function hydrateFromJSON() {
       if (!vtype) {
         if (url.includes(".m3u8")) vtype = "m3u8";
         else if (url.includes("ok.ru")) vtype = "ok";
+        else if (url.includes("fastream.to")) vtype = "fastream";
+        else if (url.includes(".mkv")) vtype = "mkv";
         else if (url.includes(".mp4")) vtype = "mp4";
         else vtype = "mp4";
       }
+      
       btn.setAttribute("data-video-url", url);
       btn.setAttribute("data-video-type", vtype);
       if (ep.credits_start) btn.dataset.creditsStart = String(ep.credits_start);
@@ -1302,13 +1313,31 @@ async function hydrateFromJSON() {
         btn.classList.add("playing");
         storeLastSelection(window.__series_id, sIdx, eIdx);
 
-        if (vType === "ok" || vUrl.includes("ok.ru")) {
-          window.open(okToEmbed(vUrl), "_blank");
-          return;
-        }
-        const saved = await idbGet(sk);
-        const startAt = saved?.time ? Number(saved.time) : 0;
-        openPlayer(vUrl, (vType === "m3u8" ? "m3u8" : "mp4"), startAt, btn, sk);
+        // fastream -> abrir embed en nueva ventana con autoplay
+if (vType === "fastream" || vUrl.includes("fastream.to")) {
+  try {
+    const embed = fastreamToEmbed(vUrl);
+    window.open(embed, "_blank");
+  } catch (e) {
+    // fallback: abrir URL directa
+    window.open(vUrl, "_blank");
+  }
+  return;
+}
+
+// ok.ru -> comportamiento original
+if (vType === "ok" || vUrl.includes("ok.ru")) {
+  window.open(okToEmbed(vUrl), "_blank");
+  return;
+}
+
+                 const saved = await idbGet(sk);
+         const startAt = saved?.time ? Number(saved.time) : 0;
+         // Determinar el tipo de video correcto para openPlayer
+         let playerType = "mp4";
+         if (vType === "m3u8") playerType = "m3u8";
+         else if (vType === "mkv" || vUrl.includes(".mkv")) playerType = "mkv";
+         openPlayer(vUrl, playerType, startAt, btn, sk);
       });
 
       btn.addEventListener("keydown", (e) => {
@@ -1437,9 +1466,42 @@ async function hydrateFromJSON() {
     if (playBtn) focusElement(playBtn);
   }, 120);
 
+  // Back button keyboard navigation
+  const backButton = document.getElementById("back-button");
+  if (backButton) {
+    backButton.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const playBtn = document.getElementById("video1");
+        if (playBtn) {
+          playBtn.focus();
+        }
+      }
+    });
+  }
+
   // Top play handler
   const playBtn = document.getElementById("video1");
-  if (playBtn) playBtn.addEventListener("click", (e) => { e && e.preventDefault(); handlePlayButtonAction(); });
+  if (playBtn) {
+    playBtn.addEventListener("click", (e) => { e && e.preventDefault(); handlePlayButtonAction(); });
+    
+    // Add keyboard navigation for play button
+    playBtn.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const backButton = document.getElementById("back-button");
+        if (backButton) {
+          backButton.focus();
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const firstSeason = document.querySelector(".season-btn");
+        if (firstSeason) {
+          firstSeason.focus();
+        }
+      }
+    });
+  }
 
   // Favorito / Report / Donar UI actions
   const fav = document.getElementById("favorito"); if (fav) fav.addEventListener("click", (e) => { e.preventDefault(); alert("Añadido a favoritos (UI)"); });

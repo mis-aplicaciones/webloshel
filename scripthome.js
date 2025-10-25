@@ -11,6 +11,11 @@ let isAnimating = false;
 let bgLoadId = 0;                 // para evitar condiciones de carrera en precarga de fondo
 const bgImageCache = new Map();   // cache simple: url -> loaded Image object
 
+// Optimizaciones de rendimiento
+const CARD_IMAGE_CACHE = new Map();  // Cache para imágenes de cards
+let focusDebounceTimeout = null;     // Debounce para eventos de focus
+let isScrolling = false;             // Flag para evitar múltiples scrolls
+
 
 /* CONFIG */
 const REMOTE_DEFS_URL = null; // si quieres forzar una URL remota, ponla aquí (opcional)
@@ -60,9 +65,20 @@ function updateDetails(item) {
   }
 }
 
-/* ---- animación detalle ---- */
+/* ---- animación detalle (optimizada con debounce) ---- */
 function focusCard(item) {
   if (!item) return;
+  
+  // Debounce para evitar múltiples llamadas rápidas
+  clearTimeout(focusDebounceTimeout);
+  focusDebounceTimeout = setTimeout(() => {
+    executeFocusCard(item);
+  }, 50); // 50ms de debounce
+}
+
+function executeFocusCard(item) {
+  if (!item) return;
+  
   // si ya está en animación, actualizamos solo los detalles textuales
   if (isAnimating) {
     updateDetails(item);
@@ -297,12 +313,16 @@ function initCarousel() {
       card.addEventListener("focus", () => {
         lastFocus = { row: rowIdx, card: idx };
         focusCard(item);
-        // centrar el card en su contenedor horizontal
+        // centrar el card en su contenedor horizontal (optimizado)
         const contEl = card.closest(".cards-container");
-        if (contEl) {
-          const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
-          contEl.scrollLeft = offset;
-          row.dataset.scrollLeft = offset;
+        if (contEl && !isScrolling) {
+          isScrolling = true;
+          requestAnimationFrame(() => {
+            const offset = Math.max(0, card.offsetLeft - (contEl.clientWidth / 2 - card.clientWidth / 2));
+            contEl.scrollLeft = offset;
+            row.dataset.scrollLeft = offset;
+            isScrolling = false;
+          });
         }
       });
 

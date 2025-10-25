@@ -142,7 +142,10 @@ html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; b
   background-position: center;
   border-radius: 1vh;
   margin: 1vh;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  /* Optimización: usar will-change y transform3d para mejor rendimiento */
+  transition: transform 0.18s ease, box-shadow 0.18s ease, outline 0.1s ease;
+  transform: translateZ(0); /* Force GPU acceleration */
+  will-change: transform, box-shadow;
   z-index: 3;
   outline: none;        /* quitamos outline nativo */
   box-sizing: border-box;
@@ -173,6 +176,6 @@ html,body { height:100%; width:100%; font-family: "MyFont", Arial, sans-serif; b
   #carousel { left: 4%; width: 92%; }
 }
 
-/* helpers para fade classes (coinciden con tu JS) */
-.fade-out { opacity: 0 !important; transition: opacity 0.25s ease; }
-.fade-in  { opacity: 1 !important; transition: opacity 0.25s ease; }
+/* helpers para fade classes (coinciden con tu JS) - Optimizado */
+.fade-out { opacity: 0 !important; transition: opacity 0.25s ease; transform: translateZ(0); }
+.fade-in  { opacity: 1 !important; transition: opacity 0.25s ease; transform: translateZ(0); }

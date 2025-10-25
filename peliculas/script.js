@@ -170,25 +170,73 @@ if (botonCompartir) {
   }
 
   // public/save helpers (SOLO IDB)
-  async function saveProgress(id, timeSec, durationSec) {
-    if (!id) return false;
+  
+// --- Nuevo: comprobar soporte de Range (HEAD best-effort)
+// Devuelve true solo si la respuesta HEAD indica Accept-Ranges: bytes o Content-Range.
+async function checkAcceptRanges(url) {
+  if (!url) return false;
+  try {
+    // Nota: esto es best-effort; si falla por CORS devolvemos false y no permitimos resume.
+    const resp = await fetch(url, { method: 'HEAD', mode: 'cors', cache: 'no-store', redirect: 'follow' });
+    if (!resp || !resp.headers) return false;
+    const acceptRanges = (resp.headers.get('accept-ranges') || '').toLowerCase();
+    const contentRange = (resp.headers.get('content-range') || '').toLowerCase();
+    // also consider some servers might set content-type but not accept-ranges; be strict: require 'bytes'
+    if (acceptRanges && acceptRanges.indexOf('bytes') !== -1) return true;
+    if (contentRange && contentRange.indexOf('bytes') !== -1) return true;
+    return false;
+  } catch (e) {
+    // cualquier fallo (CORS, network) -> no permitir resume automáticamente
+    return false;
+  }
+}
+
+
+
+// Guardar progreso (IndexedDB) — ahora incluye resumeAllowed (best-effort)
+async function saveProgress(id, timeSec, durationSec) {
+  if (!id) return false;
+  try {
+    // determinar si debemos permitir resume: por defecto true para compatibilidad
+    let resumeAllowed = true;
+    try {
+      const anchor = $id("video1");
+      const videoType = anchor && (anchor.dataset.videoType || anchor.getAttribute("data-video-type")) || null;
+      const videoUrl = anchor && (anchor.dataset.videoUrl || anchor.getAttribute("data-video-url")) || null;
+
+      // MKV ahora se trata igual que MP4 - permitir resume por defecto
+      // Los navegadores modernos soportan seek en MKV igual que en MP4
+      if (videoType === 'mkv' || (videoUrl && videoUrl.includes('.mkv'))) {
+        resumeAllowed = true;
+      } else {
+        // Para otros tipos intentamos comprobar Accept-Ranges pero no forzamos bloqueo si falla por CORS.
+        if (videoUrl) {
+          try {
+            const ok = await checkAcceptRanges(videoUrl);
+            if (ok === true) resumeAllowed = true;
+          } catch(e) {}
+        }
+      }
+    } catch (e) {
+      // ignore and keep default resumeAllowed
+    }
+
     const payload = {
       id: String(id),
       time: Number(timeSec) || 0,
       duration: Number(durationSec) || 0,
-      updated: Date.now()
+      updated: Date.now(),
+      resumeAllowed: !!resumeAllowed
     };
-    // Solo IDB: si falla, lanzamos/logueamos
-    try {
-      await idbSet(payload);
-      return true;
-    } catch (e) {
-      console.warn("saveProgress (IndexedDB) error:", e);
-      return false;
-    }
-  }
 
-  async function getProgress(id) {
+    await idbSet(payload);
+    return true;
+  } catch (e) {
+    console.warn("saveProgress (IndexedDB) error:", e);
+    return false;
+  }
+}
+async function getProgress(id) {
     if (!id) return null;
     try {
       const rec = await idbGet(id);
@@ -249,9 +297,7 @@ if (botonCompartir) {
         z-index: 100020;
         width: 40vh;
         max-width: 250px;
-        border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       }
       #player-title-thumb img{ width:100%; height:auto; display:block; }
       #player-legend.controls-hidden, #player-age-badge.controls-hidden, #player-title-thumb.controls-hidden { opacity:0; transform:translateY(6px) scale(.995); transition: opacity .28s ease, transform .28s ease; pointer-events:none; }
@@ -390,71 +436,84 @@ if (botonCompartir) {
   }
 
   // Muestra el UI de resume en el contenedor fijo del HTML
-  function createResumeUI(anchor, saved) {
-    if (!anchor || !saved) return;
-    // si ya está al 96% o más consideramos terminado -> limpiar y no mostrar
-    const pctCheck = (saved.duration && saved.duration > 0) ? Math.round((saved.time / saved.duration) * 100) : 0;
-    if (pctCheck >= FINISHED_PCT) {
-      // borrar registro y salir
-      (async () => { try { await deleteProgress(String(saved.id || readIdFromPage())); } catch (e) {} })();
-      hideResumeUI();
-      return;
-    }
+  
+// Muestra el UI de resume en el contenedor fijo del HTML
+function createResumeUI(anchor, saved) {
+  if (!anchor || !saved) return;
+  // si ya está al 96% o más consideramos terminado -> limpiar y no mostrar
+  const pctCheck = (saved.duration && saved.duration > 0) ? Math.round((saved.time / saved.duration) * 100) : 0;
+  if (pctCheck >= FINISHED_PCT) {
+    // borrar registro y salir
+    (async () => { try { await deleteProgress(String(saved.id || readIdFromPage())); } catch (e) {} })();
+    hideResumeUI();
+    return;
+  }
 
-    const container = $id("resume-container");
-    const inner = $id("resume-progress-inner");
-    const text = $id("resume-text");
-    const continueBtn = $id("resume-continue");
+  const container = $id("resume-container");
+  const inner = $id("resume-progress-inner");
+  const text = $id("resume-text");
+  const continueBtn = $id("resume-continue");
 
-    if (!container) return;
+  if (!container) return;
 
-    const pct = (saved.duration && saved.duration > 0) ? Math.min(100, Math.round((saved.time / saved.duration) * 100)) : 0;
+  const pct = (saved.duration && saved.duration > 0) ? Math.min(100, Math.round((saved.time / saved.duration) * 100)) : 0;
 
-    // actualizar barra y texto
-    if (inner) inner.style.width = pct + "%";
-    if (text) text.textContent = `Continuar ${formatTime(saved.time)} (${pct}%)`;
+  // actualizar barra y texto
+  if (inner) inner.style.width = pct + "%";
+  if (text) text.textContent = `Continuar ${formatTime(saved.time)} (${pct}%)`;
 
-    // marcar anchor como "hay progreso"
-    anchor.dataset.paused = "true";
-    anchor.dataset.savedTime = String(saved.time || 0);
-    anchor.dataset.savedDuration = String(saved.duration || 0);
-    anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>';
+  // marcar anchor como "hay progreso"
+  anchor.dataset.paused = "true";
+  anchor.dataset.savedTime = String(saved.time || 0);
+  anchor.dataset.savedDuration = String(saved.duration || 0);
+  // marcar si resume está permitido (por saveProgress)
+  anchor.dataset.resumeAllowed = String(!!saved.resumeAllowed || false);
+  try { anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>'; } catch (e) {}
 
-    // mostrar el contenedor y el botón continuar
-    container.style.display = "";
-    container.setAttribute("aria-hidden", "false");
-    if (continueBtn) {
-      continueBtn.style.display = "";
-      continueBtn.setAttribute("aria-hidden", "false");
-      continueBtn.onclick = (ev) => {
-        ev && ev.preventDefault();
-        try { anchor && anchor.click(); } catch (e) { /* ignore */ }
-        return false;
-      };
-    }
-
-    // Asegurar que al hacer click en el anchor se reanude desde saved.time
-    anchor.onclick = (ev) => {
+  // mostrar el contenedor y el botón continuar
+  container.style.display = "";
+  container.setAttribute("aria-hidden", "false");
+  if (continueBtn) {
+    continueBtn.style.display = "";
+    continueBtn.setAttribute("aria-hidden", "false");
+    continueBtn.onclick = (ev) => {
       ev && ev.preventDefault();
-      const savedTime = Number(anchor.dataset.savedTime || 0);
-      const videoType = anchor.dataset.videoType || (anchor.getAttribute("data-video-type") || null);
-      const href = anchor.getAttribute("data-video-url") || anchor.getAttribute("href") || "";
-      if (href && (href.includes(".mp4") || href.includes(".m3u8"))) {
-        const type = videoType || (href.includes(".m3u8") ? "m3u8" : "mp4");
-        openPlayer(href, type, savedTime);
-      } else {
-        if (anchor.dataset.origOnclick) {
-          try { eval(anchor.dataset.origOnclick); } catch(e) {}
-        } else {
-          alert("No hay enlace configurado para reanudar.");
-        }
-      }
+      try { anchor && anchor.click(); } catch (e) { /* ignore */ }
       return false;
     };
   }
 
-  // Actualiza la barra si ya está visible
-  async function updateResumeUIIfPresent(id, cur, dur) {
+  // Asegurar que al hacer click en el anchor se reanude desde saved.time solo si resumeAllowed
+  anchor.onclick = (ev) => {
+    ev && ev.preventDefault();
+    const savedTime = Number(anchor.dataset.savedTime || 0);
+    const videoType = anchor.dataset.videoType || (anchor.getAttribute("data-video-type") || null);
+    const href = anchor.getAttribute("data-video-url") || anchor.getAttribute("href") || "";
+    const resumeAllowed = (anchor.dataset.resumeAllowed === "true");
+
+    // permitimos resume para mp4/m3u8 y mkv SOLO si resumeAllowed === true
+    if (href && ( (href.includes(".mp4") || href.includes(".m3u8") || href.includes(".mkv")) && resumeAllowed)) {
+      // Detectar correctamente el tipo de video
+      let type = videoType;
+      if (!type) {
+        if (href.includes(".m3u8")) type = "m3u8";
+        else if (href.includes(".mkv")) type = "mkv";
+        else type = "mp4";
+      }
+      openPlayer(href, type, savedTime);
+    } else {
+      // si existía onclick original, ejecutarlo (fallback)
+      if (anchor.dataset.origOnclick) {
+        try { eval(anchor.dataset.origOnclick); } catch(e) {}
+      } else {
+        // mensaje claro para el usuario si intentó reanudar y no está permitido
+        alert("No hay enlace configurado para reanudar (este enlace no soporta reanudar automáticamente).");
+      }
+    }
+    return false;
+  };
+}
+async function updateResumeUIIfPresent(id, cur, dur) {
     try {
       const container = $id("resume-container");
       if (!container || container.getAttribute("aria-hidden") === "true") return;
@@ -510,6 +569,19 @@ if (botonCompartir) {
     } catch (e) {}
 
     if (_state.src !== src || _state.type !== type) {
+      // Si es MKV, usar ExoPlayer
+      if (type === "mkv" || src.includes(".mkv")) {
+        // Obtener título de la película
+        const titleEl = $id("movie-title-text") || $id("movie-title-image");
+        const title = titleEl ? (titleEl.textContent || titleEl.alt || "") : "";
+        
+        // Llamar a ExoPlayer a través de la interfaz Android
+        if (window.Android && typeof window.Android.playVideoWithExoPlayer === 'function') {
+          window.Android.playVideoWithExoPlayer(src, title, Math.floor(startAt || 0));
+          return; // Salir aquí, ExoPlayer manejará la reproducción
+        }
+      }
+      
       try { if (_hlsInstance && _hlsInstance.destroy) _hlsInstance.destroy(); } catch (e) {}
       video.removeAttribute("src");
       video.muted = false;
@@ -1063,7 +1135,7 @@ if (botonCompartir) {
       anchor.setAttribute("href", okToEmbed(videoUrl));
       anchor.removeAttribute("onclick");
       anchor.setAttribute("target", "_blank");
-    } else if ((videoType === "mp4" || videoType === "m3u8") && videoUrl) {
+    } else if ((videoType === "mp4" || videoType === "m3u8" || videoType === "mkv") && videoUrl) {
       anchor.setAttribute("href", "#");
       anchor.removeAttribute("target");
       anchor.onclick = (ev) => {
@@ -1112,6 +1184,25 @@ if (botonCompartir) {
     document.addEventListener("keydown", (e) => {
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
+      
+      // Navegación vertical del botón volver al botón play
+      if (e.key === "ArrowDown" && document.activeElement === botonVolver) {
+        e.preventDefault();
+        if (botonVerAhora) {
+          botonVerAhora.focus();
+        }
+        return;
+      }
+      
+      // Navegación vertical del botón play al botón volver
+      if (e.key === "ArrowUp" && document.activeElement === botonVerAhora) {
+        e.preventDefault();
+        if (botonVolver) {
+          botonVolver.focus();
+        }
+        return;
+      }
+      
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         const overlay = $id("player-overlay");
         if (overlay && overlay.classList.contains("show")) return;

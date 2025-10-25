@@ -87,11 +87,29 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       case "Enter":
         e.preventDefault();
+        const activeItem = document.activeElement;
+        
+              // Check if exit button
+      if (activeItem.id === "exit-app-btn") {
+        if (confirm("¿Desea salir de la aplicación?")) {
+          // Send message to Android app to close
+          if (window.Android && typeof window.Android.finish === 'function') {
+            window.Android.finish();
+          } else if (window.Android && typeof window.Android.exitApp === 'function') {
+            window.Android.exitApp();
+          } else {
+            // Fallback: just close window
+            window.close();
+          }
+        }
+        return;
+      }
+        
         // Al ejecutar, movemos la franja ::before y cargamos
         menuItems.forEach(mi=>mi.classList.remove("active"));
         footerMenuItems.forEach(fi=>fi.classList.remove("active"));
-        document.activeElement.classList.add("active");
-        loadContent(document.activeElement.dataset.section);
+        activeItem.classList.add("active");
+        loadContent(activeItem.dataset.section);
         return;
       default:
         return;
@@ -102,6 +120,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Click/touch en sidebar items
   menuItems.forEach(mi=>{
     mi.addEventListener("click", ()=>{
+      // Check if exit button
+      if (mi.id === "exit-app-btn") {
+        if (confirm("¿Desea salir de la aplicación?")) {
+          // Send message to Android app to close
+          if (window.Android && typeof window.Android.finish === 'function') {
+            window.Android.finish();
+          } else if (window.Android && typeof window.Android.exitApp === 'function') {
+            window.Android.exitApp();
+          } else {
+            // Fallback: just close window
+            window.close();
+          }
+        }
+        return;
+      }
+      
       menuItems.forEach(x=>x.classList.remove("active"));
       footerMenuItems.forEach(x=>x.classList.remove("active"));
       mi.classList.add("active");

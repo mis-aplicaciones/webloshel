@@ -307,11 +307,20 @@ function initCarousel() {
       });
 
       card.addEventListener("click", () => {
-        if (item.link) window.location.href = item.link;
+        // Sistema universal: usar HTML único por ID
+        const isSeries = item.tipo === 2;
+        const baseUrl = isSeries ? 'series/index.html' : 'peliculas/index.html';
+        const url = `${baseUrl}?id=${item.id}`;
+        window.location.href = url;
       });
 
       card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && item.link) window.location.href = item.link;
+        if (e.key === "Enter") {
+          const isSeries = item.tipo === 2;
+          const baseUrl = isSeries ? 'series/index.html' : 'peliculas/index.html';
+          const url = `${baseUrl}?id=${item.id}`;
+          window.location.href = url;
+        }
       });
 
       cont.appendChild(card);

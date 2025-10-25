@@ -746,7 +746,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-4.mkv_202011/Rambo%201.mp4",
     "tipo": 1,
-    "link": "peliculas/32-acorralado.html"
+    "link": "peliculas/31-acorralado.html"
   },
   {
     "id": "33",
@@ -770,7 +770,7 @@
     "video_type": "mp4",
     "videourl": "https://archive.org/download/rambo-v-2019/RAMBO%20V%20%282019%29.ia.mp4",
     "tipo": 1,
-    "link": "peliculas/33-rambo-last-blood.html"
+    "link": "peliculas/32-rambo-last-blood.html"
   },
   {
     "id": "34",
@@ -794,7 +794,7 @@
     "video_type": "ok",
     "videourl": "//ok.ru/videoembed/8815725578896?nochat=1&autoplay=1",
     "tipo": 1,
-    "link": "peliculas/34-john-rambo.html"
+    "link": "peliculas/33-john-rambo.html"
   },
   {
     "id": "35",
@@ -1004,9 +1004,58 @@
       "Crimen",
       "Terror"
     ],
-    "video_type": "mp4",
-    "videourl": "https://cors-proxy.cooks.fyi/http://208.88.245.85/nuevo/la.trampa.2024.dual.mkv",
+    "video_type": "mkv",
+    "videourl": "http://208.88.245.85/nuevo/la.trampa.2024.dual.mkv",
     "tipo": 1,
     "link": "peliculas/44-la-trampa.html"
+  },
+  {
+    "id": "45",
+    "titulo": "Ninja Turtles: Caos mutante",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/qU2vBhzcGiLCXlFtjHnxyu8VfN7.png",
+    "año": "2023",
+    "hora": "1 h",
+    "min": "40 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/tgFtGRjPJRQVTN1CLePMrkfxuoT.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/2DHg4KRHnBXqgr5Lma4xyCvJEVF.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/1ysLHFm3J08r407a89Bk9ohNwsi.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ueO9MYIOHO7M1PiMUeX74uf8fB9.jpg",
+    "sinopsis": "Después de pasar años apartados del mundo humano, los hermanos Tortuga se proponen ganarse el corazón de los habitantes de Nueva York y que les acepten como quinceañeros normales, llevando a cabo actos heroicos. Su nueva amiga April O'Neil les ayuda a enfrentarse a un misterioso sindicato del crimen, pero pronto se ven superados ante el ataque de un ejército de mutantes que se abalanza sobre ellos.",
+    "genero": [
+      "Animación",
+      "Comedia",
+      "Acción",
+      "Ciencia ficción"
+    ],
+    "video_type": "mkv",
+    "videourl": "http://208.88.245.85/nuevo/tortugasninja.caos.mutante.dual.2023.mkv",
+    "tipo": 1,
+    "link": "peliculas/45-ninja-turtles-caos-mutante.html"
+  },
+  {
+    "id": "46",
+    "titulo": "Vengadores: Infinity War",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/e04vIz1m17rqcWXwbe7DEnzwbBy.png",
+    "año": "2018",
+    "hora": "2 h",
+    "min": "36 min",
+    "edad": "13+",
+    "rating": "4",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/mRXHHFDcqZOjv73mYf8cP6IlTuq.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/bW9Abn6CPiVjnf5YInwInda1Kna.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/icUSGFn22cP2BQ0tXCIsykWVCQ.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    "sinopsis": "El todopoderoso Thanos ha despertado con la promesa de arrasar con todo a su paso, portando el Guantelete del Infinito, que le confiere un poder incalculable.",
+    "genero": [
+      "Aventura",
+      "Acción",
+      "Ciencia ficción"
+    ],
+    "video_type": "mkv",
+    "videourl": "http://208.88.245.85/nuevo/como.matar.a.mama.latino2023.mkv",
+    "tipo": 1,
+    "link": "peliculas/46-vengadores-infinity-war.html"
   }
 ]

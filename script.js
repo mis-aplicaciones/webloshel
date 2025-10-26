@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const loadingScreen   = document.getElementById("loading-screen");
   const menuItems       = Array.from(document.querySelectorAll(".sidebar .menu-item"));
   const footerMenuItems = Array.from(document.querySelectorAll(".footer .menu-item"));
   const content         = document.querySelector(".content");
@@ -7,13 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentFocus  = "menu";      // "menu" o "content"
   let activeSection = "home.html";
   let currentScript = null;
-
-  function hideLoadingScreen() {
-    setTimeout(() => {
-      loadingScreen.style.opacity = "0";
-      setTimeout(() => loadingScreen.style.display = "none", 500);
-    }, 1000);
-  }
 
   function loadContent(section) {
     cleanupSection();
@@ -188,5 +180,4 @@ document.addEventListener("DOMContentLoaded", () => {
   menuItems[0].classList.add("active");
   menuItems[0].focus();
   loadContent("home.html");
-  window.addEventListener("load", hideLoadingScreen);
 });

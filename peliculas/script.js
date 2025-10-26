@@ -69,15 +69,31 @@ if (botonCompartir) {
     }
   }
 
-  // --- MovieBase fetch ---
+  // --- MovieBase fetch optimizado ---
   async function fetchMovieBase() {
-    for (const p of JSON_PATHS) {
-      try {
-        const r = await fetch(p, { cache: "no-store" });
-        if (!r.ok) continue;
-        const j = await r.json();
-        if (Array.isArray(j)) return j;
-      } catch (e) { /* ignore */ }
+    try {
+      // Usar la función optimizada si está disponible
+      if (window.OptimizationUtils && window.OptimizationUtils.loadDatabaseOptimized) {
+        return await window.OptimizationUtils.loadDatabaseOptimized(JSON_PATHS);
+      }
+      
+      // Fallback al método original
+      for (const p of JSON_PATHS) {
+        try {
+          const r = await fetch(p, { 
+            cache: "force-cache",
+            headers: {
+              'Accept': 'application/json',
+              'Cache-Control': 'max-age=3600'
+            }
+          });
+          if (!r.ok) continue;
+          const j = await r.json();
+          if (Array.isArray(j)) return j;
+        } catch (e) { /* ignore */ }
+      }
+    } catch (e) {
+      console.warn("Error optimizado en fetchMovieBase:", e);
     }
     console.warn("moviebase.json no encontrado en rutas probadas:", JSON_PATHS);
     return null;
@@ -1079,6 +1095,10 @@ async function updateResumeUIIfPresent(id, cur, dur) {
   async function hydrateFromJSON() {
     const id = readIdFromPage();
     if (!id) { console.warn("No ID found"); return; }
+    
+    // Usar optimización de DOM si está disponible
+    const domOptimizer = window.OptimizationUtils?.domOptimizer;
+    
     const base = await fetchMovieBase();
     if (!base) { console.warn("moviebase.json missing"); return; }
     const entry = base.find(x => String(x.id) === String(id));
@@ -1096,8 +1116,21 @@ async function updateResumeUIIfPresent(id, cur, dur) {
     const paginaNombre = $id("pagina-nombre");
 
     if (titleTextEl) titleTextEl.textContent = entry.titulo || entry.title || "";
-    if (titleImgEl && entry.titleimgUrl) titleImgEl.src = entry.titleimgUrl;
-    if (fondo1 && entry.backgroundUrl) fondo1.src = entry.backgroundUrl;
+    
+    // Optimizar carga de imágenes
+    if (titleImgEl && entry.titleimgUrl) {
+      if (window.OptimizationUtils?.queueImagePreload) {
+        window.OptimizationUtils.queueImagePreload(entry.titleimgUrl, 'high');
+      }
+      titleImgEl.src = entry.titleimgUrl;
+    }
+    
+    if (fondo1 && entry.backgroundUrl) {
+      if (window.OptimizationUtils?.queueImagePreload) {
+        window.OptimizationUtils.queueImagePreload(entry.backgroundUrl, 'high');
+      }
+      fondo1.src = entry.backgroundUrl;
+    }
 
     if (fondo2) {
       if (entry.backgroundmovil) {
@@ -1287,7 +1320,32 @@ async function updateResumeUIIfPresent(id, cur, dur) {
     resetControlsHideTimer();
   };
 
- 
+ // ---------- Add this near the end of script.js (global scope) ----------
+window.updateVideoProgress = async function(movieId, progress, duration) {
+  try {
+    if (!movieId) return;
+    // Guardar en IndexedDB la versión enviada por Android (mantener coherencia)
+    try {
+      if (typeof saveProgress === 'function') {
+        await saveProgress(String(movieId), Number(progress || 0), Number(duration || 0));
+      }
+    } catch (e) {
+      console.warn("updateVideoProgress -> saveProgress error:", e);
+    }
+
+    // Actualizar la UI de resume si está visible
+    try {
+      if (typeof updateResumeUIIfPresent === 'function') {
+        updateResumeUIIfPresent(String(movieId), Number(progress || 0), Number(duration || 0));
+      }
+    } catch (e) {
+      console.warn("updateVideoProgress -> updateResumeUIIfPresent error:", e);
+    }
+  } catch (e) {
+    console.warn("updateVideoProgress error:", e);
+  }
+};
+
 
 // -----------------------------
   // Pause & Reveal con bloqueo de foco

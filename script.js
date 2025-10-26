@@ -91,7 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
         
               // Check if exit button
       if (activeItem.id === "exit-app-btn") {
-        if (confirm("¿Desea salir de la aplicación?")) {
+        const messages = [
+          "¿Estás seguro de salir de LoShel?",
+          "¿Te perderás de una buena película hoy?",
+          "¿Dejarás de ver tu serie favorita hoy?",
+          "¿Seguro que quieres salir de LoShel?",
+          "¿No quieres seguir viendo contenido increíble?"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        
+        if (confirm(randomMessage)) {
           // Send message to Android app to close
           if (window.Android && typeof window.Android.finish === 'function') {
             window.Android.finish();
@@ -122,7 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
     mi.addEventListener("click", ()=>{
       // Check if exit button
       if (mi.id === "exit-app-btn") {
-        if (confirm("¿Desea salir de la aplicación?")) {
+        const messages = [
+          "¿Estás seguro de salir de LoShel?",
+          "¿Te perderás de una buena película hoy?",
+          "¿Dejarás de ver tu serie favorita hoy?",
+          "¿Seguro que quieres salir de LoShel?",
+          "¿No quieres seguir viendo contenido increíble?"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        
+        if (confirm(randomMessage)) {
           // Send message to Android app to close
           if (window.Android && typeof window.Android.finish === 'function') {
             window.Android.finish();

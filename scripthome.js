@@ -543,7 +543,14 @@ function initializeHome() {
         lastFocus = { row:0, card:0 };
         // elegir primer item para mostrar en detalle (intentar id 1 o el primero disponible)
         const firstItem = (movieData && movieData.find(it => String(it.id) === "1")) || (movieData && movieData[0]) || (seriesData && seriesData[0]);
-        if (firstItem) focusCard(firstItem);
+        if (firstItem) {
+          // Establecer fondo inmediatamente sin animación
+          const bg = document.getElementById("background");
+          if (bg && firstItem.backgroundUrl) {
+            bg.style.backgroundImage = `url('${firstItem.backgroundUrl}')`;
+          }
+          focusCard(firstItem);
+        }
       } else {
         // sin filas => mostrar mensaje
         car.innerHTML = '<div style="color:#ccc;padding:2rem;">No hay filas definidas (revisa carouselDefs.json o localStorage).</div>';

@@ -107,8 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
           } else if (window.Android && typeof window.Android.exitApp === 'function') {
             window.Android.exitApp();
           } else {
-            // Fallback: just close window
-            window.close();
+            // Fallback: prevent default browser behavior
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
           }
         }
         return;
@@ -147,8 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
           } else if (window.Android && typeof window.Android.exitApp === 'function') {
             window.Android.exitApp();
           } else {
-            // Fallback: just close window
-            window.close();
+            // Fallback: prevent default browser behavior
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
           }
         }
         return;

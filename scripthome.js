@@ -43,7 +43,17 @@ function updateDetails(item) {
   const meta  = document.getElementById("detail-meta");
   const genEl = document.getElementById("detail-genero");
 
-  if (bg) bg.style.backgroundImage = `url('${item.backgroundUrl || ""}')`;
+  if (bg) {
+    bg.style.backgroundImage = `url('${item.backgroundUrl || ""}')`;
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center';
+    bg.style.backgroundRepeat = 'no-repeat';
+    
+    // Guardar fondo en localStorage para próxima carga
+    if (item.backgroundUrl) {
+      localStorage.setItem('lastBackground', item.backgroundUrl);
+    }
+  }
   if (img) img.src = item.titleimgUrl || "";
   if (title) title.textContent = item.title || "";
 
@@ -548,7 +558,30 @@ function initializeHome() {
           const bg = document.getElementById("background");
           if (bg && firstItem.backgroundUrl) {
             bg.style.backgroundImage = `url('${firstItem.backgroundUrl}')`;
+            bg.style.backgroundSize = 'cover';
+            bg.style.backgroundPosition = 'center';
+            bg.style.backgroundRepeat = 'no-repeat';
+            console.log('Background set immediately:', firstItem.backgroundUrl);
           }
+          
+          // También establecer detalles inmediatamente
+          const img = document.getElementById("detail-img");
+          const title = document.getElementById("detail-title");
+          const meta = document.getElementById("detail-meta");
+          const genEl = document.getElementById("detail-genero");
+          
+          if (img && firstItem.titleimgUrl) img.src = firstItem.titleimgUrl;
+          if (title && firstItem.title) title.textContent = firstItem.title;
+          if (meta) {
+            meta.innerHTML = `
+              <span class="year">${firstItem.año || ""}</span>
+              <span class="rating">${calcularEstrellas(firstItem.rating)}</span>
+            `;
+          }
+          if (genEl && firstItem.genero) {
+            genEl.textContent = firstItem.genero;
+          }
+          
           focusCard(firstItem);
         }
       } else {
@@ -560,6 +593,25 @@ function initializeHome() {
 }
 
 window.initializeHome = initializeHome;
+
+// Función para establecer fondo inmediatamente
+function setInitialBackground() {
+  // Intentar establecer fondo desde localStorage si existe
+  const savedBackground = localStorage.getItem('lastBackground');
+  if (savedBackground) {
+    const bg = document.getElementById("background");
+    if (bg) {
+      bg.style.backgroundImage = `url('${savedBackground}')`;
+      bg.style.backgroundSize = 'cover';
+      bg.style.backgroundPosition = 'center';
+      bg.style.backgroundRepeat = 'no-repeat';
+      console.log('Background restored from localStorage:', savedBackground);
+    }
+  }
+}
+
+// Establecer fondo inmediatamente cuando se carga la página
+document.addEventListener('DOMContentLoaded', setInitialBackground);
 
 /* ---- Nota al administrador / deploy:
    - Si deseas que el home cargue las definiciones desde la nube:

@@ -5,6 +5,7 @@
 let movieData = null;    // array de películas (moviebase.json)
 let seriesData = null;   // array de series  (seriebase.json)
 let defs = null;         // definiciones de columnas (desde carouselDefs.json o localStorage)
+let carouselRows = [];   // array de filas del carrusel con sus items
 let lastFocus = { row: 0, card: 0 };
 let isAnimating = false;
 // al tope de scripthome.js (global)
@@ -278,6 +279,9 @@ function initCarousel() {
   if (!carousel) return null;
   carousel.innerHTML = "";
   let firstCard = null;
+  
+  // Limpiar carouselRows
+  carouselRows = [];
 
   // seed diario UTC (cambia cada 24h)
   const daySeed = Math.floor(Date.now() / 86400000);
@@ -360,8 +364,15 @@ function initCarousel() {
     row.appendChild(title);
     row.appendChild(cont);
     carousel.appendChild(row);
+    
+    // Agregar fila a carouselRows
+    carouselRows.push({
+      name: def.name || "",
+      items: shuffled
+    });
   });
 
+  console.log('carouselRows built:', carouselRows);
   return firstCard;
 }
 
@@ -551,8 +562,14 @@ function initializeHome() {
       if (first) {
         first.focus();
         lastFocus = { row:0, card:0 };
-        // elegir primer item para mostrar en detalle (intentar id 1 o el primero disponible)
-        const firstItem = (movieData && movieData.find(it => String(it.id) === "1")) || (movieData && movieData[0]) || (seriesData && seriesData[0]);
+        
+        // Obtener el primer elemento de la primera fila (el que está enfocado)
+        const firstRow = carouselRows[0];
+        const firstItem = firstRow && firstRow.items && firstRow.items[0];
+        
+        console.log('First row:', firstRow);
+        console.log('First item:', firstItem);
+        
         if (firstItem) {
           // Establecer fondo inmediatamente sin animación
           const bg = document.getElementById("background");
@@ -606,6 +623,24 @@ function setInitialBackground() {
       bg.style.backgroundPosition = 'center';
       bg.style.backgroundRepeat = 'no-repeat';
       console.log('Background restored from localStorage:', savedBackground);
+    }
+  } else {
+    // Si no hay fondo guardado, intentar usar el primer elemento de la primera fila
+    if (carouselRows && carouselRows.length > 0) {
+      const firstRow = carouselRows[0];
+      const firstItem = firstRow && firstRow.items && firstRow.items[0];
+      console.log('setInitialBackground - First row:', firstRow);
+      console.log('setInitialBackground - First item:', firstItem);
+      if (firstItem && firstItem.backgroundUrl) {
+        const bg = document.getElementById("background");
+        if (bg) {
+          bg.style.backgroundImage = `url('${firstItem.backgroundUrl}')`;
+          bg.style.backgroundSize = 'cover';
+          bg.style.backgroundPosition = 'center';
+          bg.style.backgroundRepeat = 'no-repeat';
+          console.log('Background set from first item:', firstItem.backgroundUrl);
+        }
+      }
     }
   }
 }

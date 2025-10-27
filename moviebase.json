@@ -1005,7 +1005,7 @@
       "Terror"
     ],
     "video_type": "mkv",
-    "videourl": "http://208.88.245.85/nuevo/la.trampa.2024.dual.mkv",
+    "videourl": "https://cors-proxy.cooks.fyi/http://208.88.245.85/nuevo/la.trampa.2024.dual.mkv",
     "tipo": 1,
     "link": "peliculas/44-la-trampa.html"
   },
@@ -1054,8 +1054,32 @@
       "Ciencia ficción"
     ],
     "video_type": "mkv",
-    "videourl": "http://208.88.245.85/nuevo/como.matar.a.mama.latino2023.mkv",
+    "videourl": "http://fina.dyndns.tv/Peliculas/Avengers%20-%20Infinity%20War.mkv",
     "tipo": 1,
     "link": "peliculas/46-vengadores-infinity-war.html"
+  },
+  {
+    "id": "47",
+    "titulo": "Avatar: El sentido del agua",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/izvZm6zHyidvhktODSGjnOFldKu.png",
+    "año": "2022",
+    "hora": "3 h",
+    "min": "12 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/5Aym0qCOh1D7ctZxf5vuYbTQTAa.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/mkq9bJNJS9PPCQKpCMycOyiXXPK.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/di3WUgM8QgrTqmIZ0IkYsRemP3q.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+    "sinopsis": "Más de una década después de los acontecimientos de 'Avatar', los Na'vi Jake Sully, Neytiri y sus hijos viven en paz en los bosques de Pandora hasta que regresan los hombres del cielo. Entonces comienzan los problemas que persiguen sin descanso a la familia Sully, que decide hacer un gran sacrificio para mantener a su pueblo a salvo y seguir ellos con vida.",
+    "genero": [
+      "Acción",
+      "Aventura",
+      "Ciencia ficción"
+    ],
+    "video_type": "mkv",
+    "videourl": "http://208.88.245.85/nuevo/avatar2.dual2022.mkv",
+    "tipo": 1,
+    "link": "peliculas/47-avatar-el-sentido-del-agua.html"
   }
 ]

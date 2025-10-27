@@ -1320,92 +1320,31 @@ async function updateResumeUIIfPresent(id, cur, dur) {
     resetControlsHideTimer();
   };
 
- // ------------------ updateVideoProgress (poner al inicio de script.js) ------------------
- window.updateVideoProgress = async function(movieId, progress, duration) {
-   try {
-     if (!movieId) return;
+ // ---------- Add this near the end of script.js (global scope) ----------
+window.updateVideoProgress = async function(movieId, progress, duration) {
+  try {
+    if (!movieId) return;
+    // Guardar en IndexedDB la versión enviada por Android (mantener coherencia)
+    try {
+      if (typeof saveProgress === 'function') {
+        await saveProgress(String(movieId), Number(progress || 0), Number(duration || 0));
+      }
+    } catch (e) {
+      console.warn("updateVideoProgress -> saveProgress error:", e);
+    }
 
-     // Intentar guardar usando la función saveProgress si existe (IndexedDB/localStorage)
-     try {
-       if (typeof saveProgress === 'function') {
-         // saveProgress espera (movieId, seconds, duration) - adapta si tu saveProgress tiene otra firma
-         await saveProgress(String(movieId), Number(progress || 0), Number(duration || 0));
-       } else {
-         // Si no existe saveProgress, guardar en localStorage como fallback
-         try {
-           const key = `progress_${movieId}`;
-           const keyDur = `duration_${movieId}`;
-           localStorage.setItem(key, String(Number(progress || 0)));
-           localStorage.setItem(keyDur, String(Number(duration || 0)));
-         } catch (e) {
-           console.warn('updateVideoProgress fallback localStorage failed', e);
-         }
-       }
-     } catch (e) {
-       console.warn('updateVideoProgress -> saveProgress error:', e);
-     }
-
-     // Actualizar DOM directamente para que el índice muestre progreso al instante
-     try {
-       // Busca elementos que representen un progress bar con data-movie-id o clase .movie-progress
-       // Ajusta los selectores según la estructura real de tu index.html
-       const selectors = [
-         `[data-movie-id="${movieId}"] .movie-progress`,        // ejemplo: <div data-movie-id="123"><div class="movie-progress"></div></div>
-         `.movie-item[data-movie-id="${movieId}"] .movie-progress`,
-         `#movie-${movieId} .movie-progress`
-       ];
-
-       selectors.forEach(sel => {
-         const el = document.querySelector(sel);
-         if (el) {
-           // Si duration está presente, calculamos porcentaje; si no, mostramos tiempo
-           if (Number(duration) > 0) {
-             const pct = Math.min(100, Math.round((Number(progress) / Number(duration)) * 100));
-             el.style.width = pct + '%';
-             el.setAttribute('data-progress-percent', String(pct));
-             if (el.innerText !== undefined) {
-               el.innerText = pct + '%';
-             }
-           } else {
-             // Mostrar hh:mm:ss o segundos
-             const secs = Number(progress || 0);
-             const h = Math.floor(secs / 3600);
-             const m = Math.floor((secs % 3600) / 60);
-             const s = Math.floor(secs % 60);
-             const timeStr = (h > 0 ? (h + ':') : '') + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-             el.style.width = '100%'; // full bar for unknown duration (or usa otra UI)
-             el.setAttribute('data-progress-time', String(secs));
-             if (el.innerText !== undefined) {
-               el.innerText = timeStr;
-             }
-           }
-         }
-       });
-     } catch (e) {
-       console.warn('updateVideoProgress -> DOM update error:', e);
-     }
-
-     // Emitir un evento que otras partes de la app JS puedan escuchar
-     try {
-       const event = new CustomEvent('videoProgressUpdated', {
-         detail: {
-           movieId: String(movieId),
-           progress: Number(progress || 0),
-           duration: Number(duration || 0)
-         }
-       });
-       window.dispatchEvent(event);
-     } catch (e) {
-       // no crítico
-     }
-
-     return true;
-   } catch (err) {
-     console.warn('updateVideoProgress global error:', err);
-     return false;
-   }
- };
- // ------------------ end updateVideoProgress ------------------
+    // Actualizar la UI de resume si está visible
+    try {
+      if (typeof updateResumeUIIfPresent === 'function') {
+        updateResumeUIIfPresent(String(movieId), Number(progress || 0), Number(duration || 0));
+      }
+    } catch (e) {
+      console.warn("updateVideoProgress -> updateResumeUIIfPresent error:", e);
+    }
+  } catch (e) {
+    console.warn("updateVideoProgress error:", e);
+  }
+};
 
 
 // -----------------------------

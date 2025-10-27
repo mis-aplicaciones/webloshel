@@ -483,8 +483,16 @@ function createResumeUI(anchor, saved) {
   anchor.dataset.savedTime = String(saved.time || 0);
   anchor.dataset.savedDuration = String(saved.duration || 0);
   // marcar si resume está permitido (por saveProgress)
-  anchor.dataset.resumeAllowed = String(!!saved.resumeAllowed || false);
+  const resumeAllowed = !!saved.resumeAllowed || true; // Por defecto true para videos mp4/m3u8/mkv
+  anchor.dataset.resumeAllowed = String(resumeAllowed);
   try { anchor.innerHTML = '<i class="bi bi-pause-fill"></i><span> Pulsa para reanudar</span>'; } catch (e) {}
+  
+  console.log("createResumeUI - Configurado anchor con:", {
+    paused: "true",
+    savedTime: saved.time,
+    savedDuration: saved.duration,
+    resumeAllowed: resumeAllowed
+  });
 
   // mostrar el contenedor y el botón continuar
   container.style.display = "";
@@ -1189,37 +1197,56 @@ async function updateResumeUIIfPresent(id, cur, dur) {
     (async () => {
       try {
         let saved = await getProgress(id);
+        console.log("Progreso obtenido de IndexedDB:", saved, "para ID:", id, "tipo:", videoType);
         
-        // Si no hay progreso en IndexedDB, intentar obtenerlo de Android (MKV)
-        if ((!saved || !saved.time) && videoType === "mkv" && window.Android && typeof window.Android.getVideoProgress === 'function') {
+        // Si no hay progreso en IndexedDB, intentar obtenerlo de Android (para MKV, MP4, M3U8)
+        if ((!saved || !saved.time) && (videoType === "mkv" || videoType === "mp4" || videoType === "m3u8") && window.Android && typeof window.Android.getVideoProgress === 'function') {
           try {
-            const androidProgress = JSON.parse(window.Android.getVideoProgress(id || ""));
-            if (androidProgress && androidProgress.time && androidProgress.time >= PROGRESS_MIN_SECONDS) {
-              saved = {
-                time: androidProgress.time,
-                duration: androidProgress.duration,
-                updated: Date.now(),
-                resumeAllowed: true
-              };
-              // Guardar también en IndexedDB para consistencia
-              await saveProgress(id, androidProgress.time, androidProgress.duration);
-            }
+              const androidProgress = JSON.parse(window.Android.getVideoProgress(id || ""));
+              console.log("Progreso obtenido de Android para", videoType, ":", androidProgress);
+              if (androidProgress && androidProgress.time && androidProgress.time >= PROGRESS_MIN_SECONDS) {
+                saved = {
+                  time: androidProgress.time,
+                  duration: androidProgress.duration,
+                  updated: Date.now(),
+                  resumeAllowed: true,
+                  id: id // Asegurar que el ID esté presente
+                };
+                // Guardar también en IndexedDB para consistencia
+                await saveProgress(id, androidProgress.time, androidProgress.duration);
+                console.log("Progreso de Android guardado en IndexedDB:", saved);
+                
+                // Asegurar que el anchor tenga los atributos correctos
+                if (anchor) {
+                  anchor.setAttribute("data-video-type", videoType);
+                  anchor.setAttribute("data-video-url", videoUrl);
+                }
+              }
           } catch (e) {
             console.warn("Error getting progress from Android:", e);
           }
         }
         
         if (saved && saved.time && Number(saved.time) >= PROGRESS_MIN_SECONDS) {
+          console.log("Progreso válido encontrado, creando UI de resume. Tiempo:", saved.time, "Duración:", saved.duration);
           // si el registro es antiguo (> CLEANUP_MS) lo borramos y no mostramos
           if (saved.updated && (Date.now() - Number(saved.updated)) > CLEANUP_MS) {
+            console.log("Progreso muy antiguo, eliminando");
             try { await deleteProgress(id); } catch(e) {}
             hideResumeUI();
           } else {
+            console.log("Mostrando UI de resume con tiempo:", saved.time, "de", saved.duration);
+            
+            // Asegurar que el anchor tenga los atributos necesarios antes de crear la UI
+            if (videoType) anchor.setAttribute("data-video-type", videoType);
+            if (videoUrl) anchor.setAttribute("data-video-url", videoUrl);
+            
             createResumeUI(anchor, saved);
             anchor.dataset.savedTime = String(saved.time || 0);
             anchor.dataset.savedDuration = String(saved.duration || 0);
           }
         } else {
+          console.log("No hay progreso suficiente para mostrar resume. saved:", saved);
           anchor.dataset.paused = "false";
         }
       } catch (e) {

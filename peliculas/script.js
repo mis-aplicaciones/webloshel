@@ -512,11 +512,23 @@ function createResumeUI(anchor, saved) {
     ev && ev.preventDefault();
     const savedTime = Number(anchor.dataset.savedTime || 0);
     const videoType = anchor.dataset.videoType || (anchor.getAttribute("data-video-type") || null);
-    const href = anchor.getAttribute("data-video-url") || anchor.getAttribute("href") || "";
+    let href = anchor.getAttribute("data-video-url") || anchor.getAttribute("href") || "";
     const resumeAllowed = (anchor.dataset.resumeAllowed === "true");
+
+    console.log("Reanudar video - Tipo:", videoType, "URL:", href, "Resume allowed:", resumeAllowed);
 
     // permitimos resume para mp4/m3u8 y mkv SOLO si resumeAllowed === true
     if (href && ( (href.includes(".mp4") || href.includes(".m3u8") || href.includes(".mkv")) && resumeAllowed)) {
+      // Decodificar URL si es MKV y tiene caracteres codificados
+      if (href.includes(".mkv") && href.includes("%")) {
+        try {
+          href = decodeURIComponent(href);
+          console.log("URL decodificada para reanudar:", href);
+        } catch (e) {
+          console.warn("Error decodificando URL para reanudar:", e);
+        }
+      }
+      
       // Detectar correctamente el tipo de video
       let type = videoType;
       if (!type) {
@@ -524,6 +536,8 @@ function createResumeUI(anchor, saved) {
         else if (href.includes(".mkv")) type = "mkv";
         else type = "mp4";
       }
+      
+      console.log("Abriendo player con tipo:", type, "Tiempo:", savedTime);
       openPlayer(href, type, savedTime);
     } else {
       // si existía onclick original, ejecutarlo (fallback)
@@ -602,9 +616,21 @@ async function updateResumeUIIfPresent(id, cur, dur) {
         // Obtener ID de la película para guardar progreso
         const movieId = readIdFromPage() || "";
         
+        // Decodificar URL si tiene caracteres codificados (como %20 para espacios)
+        let decodedSrc = src;
+        try {
+          // Decodificar la URL completa
+          decodedSrc = decodeURIComponent(src);
+          console.log("URL original:", src);
+          console.log("URL decodificada para ExoPlayer:", decodedSrc);
+        } catch (e) {
+          console.warn("Error decodificando URL, usando original:", e);
+          decodedSrc = src;
+        }
+        
         // Llamar a ExoPlayer a través de la interfaz Android
         if (window.Android && typeof window.Android.playVideoWithExoPlayer === 'function') {
-          window.Android.playVideoWithExoPlayer(src, title, Math.floor(startAt || 0), movieId);
+          window.Android.playVideoWithExoPlayer(decodedSrc, title, Math.floor(startAt || 0), movieId);
           return; // Salir aquí, ExoPlayer manejará la reproducción
         }
       }
@@ -1185,7 +1211,19 @@ async function updateResumeUIIfPresent(id, cur, dur) {
       anchor.onclick = (ev) => {
         ev && ev.preventDefault();
         if (anchor.dataset.paused === "true" && window.resumeFromPause) { window.resumeFromPause(); return false; }
-        openPlayer(videoUrl, videoType);
+        
+        // Decodificar URL si es necesario (para MKV con %20, etc)
+        let urlToPlay = videoUrl;
+        if (videoType === "mkv" && videoUrl.includes("%")) {
+          try {
+            urlToPlay = decodeURIComponent(videoUrl);
+            console.log("URL decodificada desde onclick:", urlToPlay);
+          } catch (e) {
+            console.warn("Error decodificando URL en onclick:", e);
+          }
+        }
+        
+        openPlayer(urlToPlay, videoType);
         return false;
       };
     } else {

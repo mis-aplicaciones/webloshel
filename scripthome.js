@@ -341,19 +341,30 @@ function initCarousel() {
       });
 
       card.addEventListener("click", () => {
-        // Sistema universal: usar HTML único por ID
-        const isSeries = item.tipo === 2;
-        const baseUrl = isSeries ? 'series/index.html' : 'peliculas/index.html';
-        const url = `${baseUrl}?id=${item.id}`;
-        window.location.href = url;
-      });
-
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
+        // Llamar a la Activity nativa de Android
+        if (window.Android && typeof window.Android.openMovieDetail === 'function') {
+          window.Android.openMovieDetail(item.id);
+        } else {
+          // Fallback: usar el sistema HTML anterior
           const isSeries = item.tipo === 2;
           const baseUrl = isSeries ? 'series/index.html' : 'peliculas/index.html';
           const url = `${baseUrl}?id=${item.id}`;
           window.location.href = url;
+        }
+      });
+
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          // Llamar a la Activity nativa de Android
+          if (window.Android && typeof window.Android.openMovieDetail === 'function') {
+            window.Android.openMovieDetail(item.id);
+          } else {
+            // Fallback: usar el sistema HTML anterior
+            const isSeries = item.tipo === 2;
+            const baseUrl = isSeries ? 'series/index.html' : 'peliculas/index.html';
+            const url = `${baseUrl}?id=${item.id}`;
+            window.location.href = url;
+          }
         }
       });
 

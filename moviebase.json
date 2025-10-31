@@ -341,14 +341,16 @@
   },
   {
     "id": "16",
-    "titulo": "Aulas violentas",
+    "titulo": "El sustituto 3: Aulas violentas",
     "genero": [
       "Acción",
       "Suspenso",
-      "Crimen"
+      "Crimen",
+      "Suspense",
+      "Película de TV"
     ],
-    "rating": "2",
-    "videourl": "//ok.ru/videoembed/3484099349132?nochat=1&autoplay=1",
+    "rating": "2.5",
+    "videourl": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/axa4wow3dcia/b/bucket-20201001-1658/o/2022pelicu%2Foctubr%2FVer%20Sin%20novedad%20en%20el%20frente%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull.mp4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/h170P8UJVqgGfo00vmA2vRnT7zj.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/rnpzVN4zQQOfLxtkoQ2jjGLXTyP.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/1mtNoRVzgmOSNJ7ZyiSQ6PoMahC.png",
@@ -358,9 +360,10 @@
     "tipo": 1,
     "año": "1999",
     "hora": "2 h",
-    "min": "0 min",
+    "min": "",
     "edad": "18+",
-    "link": "peliculas/16-aulas-violentas.html"
+    "link": "peliculas/16-aulas-violentas.html",
+    "video_type": "mp4"
   },
   {
     "id": "17",
@@ -915,14 +918,14 @@
   },
   {
     "id": "41",
-    "titulo": "Weapons",
+    "titulo": "Weapons: La hora de la desaparición",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/2KMPlvfVDQcvzQdzUahdEXz2M2u.png",
     "año": "2025",
     "hora": "2 h",
     "min": "9 min",
     "edad": "18+",
     "rating": "3.5",
-    "backgroundUrl": "https://image.tmdb.org/t/p/original/2KMPlvfVDQcvzQdzUahdEXz2M2u.png",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/yKWZIDo4ixcDUeelk2QGVA1EVmC.jpg",
     "backgroundmovil": "https://image.tmdb.org/t/p/original/kyqM6padQzZ1eYxv84i9smNvZAG.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/xlDv0K9VtDcHBkYX4rxbvrTrAnv.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/6Gw2eH2SkANYXC7mDjtYMppOXiL.jpg",
@@ -1081,5 +1084,54 @@
     "videourl": "http://208.88.245.85/nuevo/avatar2.dual2022.mkv",
     "tipo": 1,
     "link": "peliculas/47-avatar-el-sentido-del-agua.html"
+  },
+  {
+    "id": "36",
+    "titulo": "Sin novedad en el frente",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/y49rcN29AFhGhPEyybGdYpYbOqm.png",
+    "año": "2022",
+    "hora": "2 h",
+    "min": "27 min",
+    "edad": "14+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/xBwtP27cx8WfjHJVFkpuV6F1RES.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vhtA4AgIF9OP3rCIOB6JF84yDLF.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/8uD0NJV4VTYktABtH5rmsKBjdsk.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/vTfqiOZ4bZZZpIJp8sXT1UB6QS5.jpg",
+    "sinopsis": "Paul Baumer y sus amigos Albert y Muller, incitados por sueños románticos de heroísmo, se alistan voluntariamente en el ejército alemán. Llenos de emoción y fervor patriótico, los muchachos marchan con entusiasmo hacia una guerra en la que creen. Pero una vez en el frente occidental, descubren el horror destructor del alma de la Primera Guerra Mundial.",
+    "genero": [
+      "Bélica",
+      "Historia",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/axa4wow3dcia/b/bucket-20201001-1658/o/2022pelicu%2Foctubr%2FVer%20Sin%20novedad%20en%20el%20frente%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull.mp4",
+    "tipo": 1,
+    "link": "peliculas/36-sin-novedad-en-el-frente.html"
+  },
+  {
+    "id": "48",
+    "titulo": "El sustituto 3: Aulas violentas",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/1mtNoRVzgmOSNJ7ZyiSQ6PoMahC.png",
+    "año": "1999",
+    "hora": "2 h",
+    "min": "",
+    "edad": "18+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/h170P8UJVqgGfo00vmA2vRnT7zj.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/zQ7rVfLbl72ZGoj3MGszLtMmNL7.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/rnpzVN4zQQOfLxtkoQ2jjGLXTyP.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/zQ7rVfLbl72ZGoj3MGszLtMmNL7.jpg",
+    "sinopsis": "Acaba de escapar de un campo de prisioneros y su prioridad ahora es cumplir la promesa que hizo a un compañero en su lecho de muerte: entregar una medalla a su hija, quien trabaja como profesora en un conflictivo colegio.",
+    "genero": [
+      "Acción",
+      "Suspenso",
+      "Crimen",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/axa4wow3dcia/b/bucket-20201001-1658/o/2022pelicu%2Foctubr%2FVer%20Sin%20novedad%20en%20el%20frente%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull.mp4",
+    "tipo": 1,
+    "link": "peliculas/48-el-sustituto-3-aulas-violentas.html"
   }
 ]

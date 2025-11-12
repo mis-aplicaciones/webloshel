@@ -1,26 +1,29 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "title": "Ballerina",
     "genero": [
       "Acción",
       "Crimen",
-      "Suspenso"
+      "Suspenso",
+      "Suspense"
     ],
     "backgroundUrl": "https://image.tmdb.org/t/p/original/n3AaJXdWbkGtdRwfVGw5FNrloUQ.jpg",
-    "rating": 3.5,
+    "rating": "3.5",
     "link": "peliculas/1-bailarina.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/q40cm0yiEgsTZNYZpsUULOKzHk5.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/yaHDtFlvLt0QaYu0xn8m1R41KUz.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/pgohqJBW5VMgS0wlClZYxlpcMEt.jpg",
-    "edad": "18+",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/1yktYsxkmUtUFTUnCAUaqG6FEiz.jpg",
+    "edad": "14+",
     "año": "2025",
-    "hora": "2",
-    "min": "5",
-    "sinopsis": "Taking place during the events of John Wick: Chapter 3 – Parabellum, Eve Macarro begins her training in the assassin traditions of the Ruska Roma.",
-    "VideoUrl": "//ok.ru/videoembed/9550060587545?nochat=1&autoplay=1",
-    "tipo": 1
+    "hora": "2 h",
+    "min": "5 min",
+    "sinopsis": "Eve Macarro es una asesina entrenada por la Ruska Roma desde su infancia, la misma organización criminal encargada del adiestramiento de John Wick. En esta violenta historia de venganza, Eve intentará por...",
+    "tipo": 1,
+    "titulo": "Ballerina",
+    "video_type": "mp4",
+    "videourl": "https://ia801605.us.archive.org/14/items/ballerina-latino-hd/Ballerina%20Latino%20HD.mp4"
   },
   {
     "id": "2",

@@ -14,7 +14,7 @@
     "cardimgUrl": "https://image.tmdb.org/t/p/original/q40cm0yiEgsTZNYZpsUULOKzHk5.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/yaHDtFlvLt0QaYu0xn8m1R41KUz.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/1yktYsxkmUtUFTUnCAUaqG6FEiz.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/yz8xqmL6KFpaj5C2an1P0Y4Y9ur.jpg",
     "edad": "14+",
     "año": "2025",
     "hora": "2 h",
@@ -32,13 +32,13 @@
     "año": "2025",
     "hora": "2 h",
     "min": "13 min",
-    "edad": "13+",
+    "edad": "7+",
     "rating": "3",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/9PqACqlgxuDnT7lHgO94s0dpKRf.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/vVNlJHA9hvEt1NPvvQ4Z7nVdmOF.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/5Nz0V01nOjy3API03Qpc4vCTTFc.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/skSoZMossoIYvzOf2UnaWqLscJl.jpg",
-    "sinopsis": "Operadores viajan a una instalación de investigación en la isla para asegurar el ADN que salva vidas de los dinosaurios. La misión se vuelve cada vez más peligrosa, y pronto descubren un siniestro e impactante secreto.",
+    "sinopsis": "Cinco años después de los eventos de \"Dominion\", la ecología del planeta ha demostrado ser insoportable para los dinosaurios, donde los pocos que quedan viven aislados en las regiones ecuatoriales.",
     "genero": [
       "Ciencia ficción",
       "Aventura",
@@ -54,22 +54,24 @@
     "titulo": "La guerra de los mundos",
     "genero": [
       "Ciencia Ficción",
-      "Suspenso"
+      "Suspenso",
+      "Suspense"
     ],
     "rating": "2",
-    "videourl": "//ok.ru/videoembed/11597777078855?nochat=1&autoplay=1",
+    "videourl": "//ok.ru/videoembed/9812298435137?nochat=1&autoplay=1",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/wSy4EZlZcbxyoLS5jQk5Vq3Az8.jpg",
     "link": "peliculas/3-laguerradelosmundos.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/f2T5LlY8EPvmgtBVvOra8H2GvlQ.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/4U3NQ3KvqjofySTwoDbffawb00h.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/yvirUYrva23IudARHn3mMGVxWqM.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/mIMDdcLBDI93tbWlJ0Q7WHf174x.jpg",
-    "sinopsis": "Will Radford, un destacado analista de ciberseguridad, pasa sus días rastreando posibles amenazas a la seguridad nacional a través de un programa de vigilancia masiva. Un ataque de una entidad desconocida le lleva a cuestionarse si el gobierno le está ocultando algo a él... y al resto del mundo.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/kqHypb4MdEBUFiphf49bK99T4cn.jpg",
+    "sinopsis": "Will Radford, un destacado analista de ciberseguridad, pasa sus días rastreando posibles amenazas a la seguridad nacional a través de un programa de vigilancia masiva.",
     "tipo": 1,
     "año": "2025",
     "hora": "1 h",
     "min": "30 min",
-    "edad": "13+"
+    "edad": "14+",
+    "video_type": "ok"
   },
   {
     "id": "4",
@@ -77,22 +79,24 @@
     "genero": [
       "Terror",
       "Suspenso",
-      "Ciencia Ficción"
+      "Ciencia Ficción",
+      "Suspense"
     ],
     "rating": "3",
-    "videourl": "//ok.ru/videoembed/11589698980423?nochat=1&autoplay=1",
+    "videourl": "//ok.ru/videoembed/9714885528315?nochat=1&autoplay=1",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/1rOVnONk0Ynu4pwkZN1Ns1NRUcC.jpg",
     "link": "peliculas/4-28anosdespues.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/5hCLgdbNPwQoG4VrnFDbpdBpDWj.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/iZI7ECC3V7w22e15gAHAocxgC7h.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/mIg1qCkVxnAlM2TK3RUF0tdEXlE.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/7PTYb8yXt64gOUvv8HERCOYFPmy.jpg",
-    "sinopsis": "Años transcurridos tras los sucesos de \"28 semanas después\", el virus de la ira ha regresado y un grupo de supervivientes debe sobrevivir en un mundo asolado por hordas de infectados. Realizada con un iPhone 15 Pro Max y con la ayuda de numerosos accesorios especializados.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/EHk7koslTyZ9sHusiqqayNy9v0.jpg",
+    "sinopsis": "Años transcurridos tras los sucesos de \"28 semanas después\", el virus de la ira ha regresado y un grupo de supervivientes debe sobrevivir en un mundo asolado por hordas de infectados.",
     "tipo": 1,
     "año": "2025",
     "hora": "1 h",
     "min": "55 min",
-    "edad": "18+"
+    "edad": "14+",
+    "video_type": "ok"
   },
   {
     "id": "5",
@@ -1111,5 +1115,29 @@
     "videourl": "http://208.88.245.85/nuevo/avatar2.dual2022.mkv",
     "tipo": 1,
     "link": "peliculas/47-avatar-el-sentido-del-agua.html"
+  },
+  {
+    "id": "48",
+    "titulo": "Jurassic World: El renacer",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/A1z92ISvvpoopHpIKn3Cr4TMGt8.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "13 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9PqACqlgxuDnT7lHgO94s0dpKRf.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/5Nz0V01nOjy3API03Qpc4vCTTFc.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/bvZ4vdcVQEIDm5NLCb4ZxIn2WqN.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/skSoZMossoIYvzOf2UnaWqLscJl.jpg",
+    "sinopsis": "Operadores viajan a una instalación de investigación en la isla para asegurar el ADN que salva vidas de los dinosaurios. La misión se vuelve cada vez más peligrosa, y pronto descubren un siniestro e impactante...",
+    "genero": [
+      "Ciencia ficción",
+      "Aventura",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/jurassic-world-el-renacer-online-latino/Jurassic%20World-%20El%20renacer%20Online%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/48-jurassic-world-el-renacer.html"
   }
 ]

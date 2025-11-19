@@ -389,8 +389,8 @@
     "cardimgUrl": "https://image.tmdb.org/t/p/original/ffQJClNiOpoc0ywxBgY6y1vBuxC.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/jpDCjWduAFkJH9Y1g8sZGaso7eD.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/yBdljcPFFaj54aWVgj36MB47Pb6.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/tXsZxHpkSs0A6CvTysVKlDnsQBy.jpg",
-    "sinopsis": "Un grupo de supervillanos poco convencional es reclutado para hacer misiones para el gobierno: Yelena Belova, Bucky Barnes, Red Guardian, Ghost, Taskmaster y John Walker. Después de verse atrapados en una trampa mortal urdida por Valentina Allegra de Fontaine, estos marginados deben embarcarse en una peligrosa misión que les obligará a enfrentarse a los recovecos más oscuros de su pasado.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/db0zu8KWnVNp7d81ej73RUm7KX4.jpg",
+    "sinopsis": "Un grupo de supervillanos poco convencional es reclutado para hacer misiones para el gobierno: Yelena Belova, Bucky Barnes, Red Guardian, Ghost, Taskmaster y John Walker.",
     "tipo": 1,
     "año": "2025",
     "hora": "2 h",
@@ -1187,5 +1187,51 @@
     "videourl": "http://208.88.245.81/nuevo/cementerio.mascotas.elorigen.dual2023.mkv",
     "tipo": 1,
     "link": "peliculas/50-cementerio-de-animales-los-origenes.html"
+  },
+  {
+    "id": "51",
+    "titulo": "Horror Park",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/kaa6Mwomh31ImBMpgCC1n8wqbb5.png",
+    "año": "2023",
+    "hora": "1 h",
+    "min": "33 min",
+    "edad": "15+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/xgNXnED4BkU7CDhVi6o5Q2HXbl9.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/5mDN9RU6ODauDNlfkJWgo1OpPmv.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xETcMklbpCSKwwTyqaLc2yN6BUz.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ehhPVBMRLN0VOMuLokuyIPYzxZr.jpg",
+    "sinopsis": "Fiona recibe a unos antiguos amigos que han ganado una visita exclusiva de Halloween al parque de atracciones en el que ella trabaja, una noche entera para ellos solos.",
+    "genero": [
+      "Terror"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://ia802302.us.archive.org/25/items/horrorland-latino-1080p/Horrorland%20%28Latino%29%201080p.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/51-horror-park.html"
+  },
+  {
+    "id": "52",
+    "titulo": "The Marvels",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/ot4g1rv2bRekAAxzzvrWifrmguO.png",
+    "año": "2023",
+    "hora": "1 h",
+    "min": "45 min",
+    "edad": "13+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/rxhIhVL7PYiOFLsGyv6lfuobFNM.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/w4pRLYYbhHn3sh9kqRgPZM6GjyS.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/gLnJqNjNJTlo36LsSah4gNIGmzw.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/zGd2ZhG3D1webZI0K1ENVuZzZ2j.jpg",
+    "sinopsis": "Cuando sus obligaciones la envían a un agujero de gusano vinculado a un revolucionario kree, los poderes de Carol Danvers, la capitana Marvel, se entremezclan con los de Kamala Khan, también conocida como la...",
+    "genero": [
+      "Ciencia ficción",
+      "Aventura",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://axa4wow3dcia.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axa4wow3dcia/b/bucket-20201001-1658/o/2023pelis%2FVer%20The%20Marvels%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull_3.mp4",
+    "tipo": 1,
+    "link": "peliculas/52-the-marvels.html"
   }
 ]

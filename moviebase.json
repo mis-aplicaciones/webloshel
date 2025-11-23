@@ -127,22 +127,24 @@
     "id": "6",
     "titulo": "Better Man: La Historia de Robbie Williams",
     "genero": [
-      "Drama"
+      "Drama",
+      "Música"
     ],
     "rating": "3.5",
-    "videourl": "//ok.ru/videoembed/11369567095367?nochat=1&autoplay=1",
+    "videourl": "https://dintezuvio.com/stream/Ddo9m2WjbbLegK4VHG2j4w/hjkrhuihghfvu/1763958728/20492929/index-f1-v1-a1.m3u8",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/5UiYxRw2PMCb0BLCJ8M2cJonztS.jpg",
     "link": "peliculas/6-bettermanlahistoriaderobbiewilliams.html",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/5FDkQ9J1vBrLHWEQTHcWXnXfTbi.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/A5MkHfCfOZVRRbVKswxtMEDgtPV.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/fbGCmMp0HlYnAPv28GOENPShezM.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/21SoldO4CibrC6yVK2LwzYGUwSa.jpg",
-    "sinopsis": "Sigue el viaje de Robbie Williams desde la infancia, hasta convertirse en el miembro más joven de la boyband Take That, pasando por sus logros incomparables como artista solista que bate récords, mientras se enfrenta a los desafíos que pueden traer la fama y el éxito estratosféricos.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/6XlI6llzXkPWKlBs6XWu2dMjWMp.jpg",
+    "sinopsis": "Sigue el viaje de Robbie Williams desde la infancia, hasta convertirse en el miembro más joven de la boyband Take That, pasando por sus logros incomparables como artista solista que bate récords, mientras se...",
     "tipo": 1,
     "año": "2024",
     "hora": "2 h",
     "min": "15 min",
-    "edad": "18+"
+    "edad": "14+",
+    "video_type": "m3u8"
   },
   {
     "id": "7",
@@ -195,11 +197,11 @@
     "titleimgUrl": "https://image.tmdb.org/t/p/original/dYLO1k4t1GZXuvreVdGA6Okwkyy.png",
     "año": "2025",
     "hora": "2 h",
-    "min": "0 min",
-    "edad": "13+",
+    "min": "",
+    "edad": "7+",
     "rating": "3.5",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/cEQMqB3ahd4mfeUN6VGC0ouVnZZ.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/ptYJSyb1VpZyKhmD6rsA8r47hbn.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/7Qasw2BSr2dUFbV0TZMugUe6AUb.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/ouKVUyFRJo7ixPAaIjuf1KyUPyj.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/4a63rQqIDTrYNdcnTXdPsQyxVLo.jpg",
     "sinopsis": "Con el futuro de la existencia humana en juego, Gemma se da cuenta de que la única opción es resucitar a M3GAN y darle unas cuantas mejoras, haciéndola más rápida, más fuerte y más letal.",
@@ -208,8 +210,8 @@
       "Ciencia ficción",
       "Suspense"
     ],
-    "video_type": "ok",
-    "videourl": "//ok.ru/videoembed/11549997337159?nochat=1&autoplay=1",
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/6P0p16RP7oZWPPkOwlgd7Q/hjkrhuihghfvu/1763958108/29231980/index-f1-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/9-m3gan-20.html"
   },
@@ -243,7 +245,8 @@
     "genero": [
       "Ciencia Ficción",
       "Aventura",
-      "Acción"
+      "Acción",
+      "Superhéroes"
     ],
     "rating": "3.5",
     "videourl": "https://archive.org/serve/superman-latino/superman%20latino.ia.mp4",
@@ -252,8 +255,8 @@
     "cardimgUrl": "https://image.tmdb.org/t/p/original/GBr1ozQf7WZqSMwNPdb5Xs2eyn.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/9zhG3UxD9o0qdxyfE3dMKZfl01s.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/wPLysNDLffQLOVebZQCbXJEv6E6.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/4kIYA6VbOTHKyI36tqF2XdYHpQt.jpg",
-    "sinopsis": "En un mundo que ha perdido la fe en la bondad, Superman lucha por reconciliar su herencia kryptoniana con los valores humanos que moldearon su carácter. Criado en la Tierra, representa la verdad, la justicia y el estilo americano, pero debe enfrentarse a un mundo cínico que cuestiona sus ideales. Entre el deber de proteger a la humanidad y la búsqueda de su identidad, Superman demuestra que la esperanza y la bondad nunca pasan de moda, incluso en los tiempos más oscuros, inspirando a otros a creer en un futuro mejor.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/fTs812Amz6sDN6gLfCDD24yjMpX.jpg",
+    "sinopsis": "En un mundo que ha perdido la fe en la bondad, Superman lucha por reconciliar su herencia kryptoniana con los valores humanos que moldearon su carácter. Criado en la Tierra, representa la verdad, la justicia y.",
     "tipo": 1,
     "año": "2025",
     "hora": "2 h",
@@ -263,25 +266,26 @@
   },
   {
     "id": "12",
-    "titulo": "Screamboat",
+    "titulo": "Screamboat: El barco del terror",
     "genero": [
       "Terror",
       "Comedia"
     ],
-    "rating": "2",
-    "videourl": "//ok.ru/videoembed/9923888745049?nochat=1&autoplay=1",
+    "rating": "2.5",
+    "videourl": "https://dintezuvio.com/stream/i-e5r5nP1IxJr0FCQlEX0w/hjkrhuihghfvu/1763958035/30227827/index-f1-v1-a1.m3u8",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/r2u7GCYhxtpZbprKJIgdAkGQow3.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/zyMFOTj2oOAlTHaFju766U0GGv0.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/5o0UPWnv6p4QTTSEri9zhKDsVWi.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/Ak6jQfWJ8tAwYLrF8CbJ1C1mAnM.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/69xVmO42I1NoZXYUU85oGH9PxEl.jpg",
-    "sinopsis": "Es una reinterpretación del cortometraje animado de Walt Disney y Ub Iwerks de 1928, Steamboat Willie. La trama sigue a un grupo de neoyorquinos aterrorizados por un ratón monstruoso llamado Steamboat Willie.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/68EiiMHrfUaH97qvgQzMidpamy7.jpg",
+    "sinopsis": "Un viaje en barco a altas horas de la noche se convierte en una lucha desesperada por la supervivencia en la ciudad de Nueva York cuando un ratón travieso se convierte en una monstruosa realidad.",
     "tipo": 1,
     "año": "2025",
     "hora": "1 h",
     "min": "42 min",
     "edad": "18+",
-    "link": "peliculas/12-screamboat.html"
+    "link": "peliculas/12-screamboat.html",
+    "video_type": "m3u8"
   },
   {
     "id": "13",
@@ -290,19 +294,20 @@
       "Terror"
     ],
     "rating": "3",
-    "videourl": "//ok.ru/videoembed/9719636626083?nochat=1&autoplay=1",
+    "videourl": "https://dintezuvio.com/stream/gHJq5bmBhjbn5eR-CoXI3A/hjkrhuihghfvu/1763959018/15351884/index-f1-v1-a1.m3u8",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/o5vasl0xbZWWKQnAlaBTSgntHH2.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/5VjZbfvSxyLEhLCON1NmMJdWTp0.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/x9AySz3k2BkUWl0DWrlR2EUiCH5.png",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/qFPSQLIb922GT0pRsesu3sEwN91.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/jnX2JQIbYwCLhHenhQFBFw6fozR.jpg",
-    "sinopsis": "En los pasillos oscuros de un hospital, deambula el fantasma de una enfermera conocida como \"La planchada\", famosa por su aspecto impecable. Mientras los pacientes creen que ella está ahí para ayudarlos, las enfermeras y doctores conocen la verdad: deben seguir sus reglas al pie de la letra. \"Que nada se te olvide. No te distraigas. No te relaciones con el personal. No te duermas nunca\". Rebeca, una nueva enfermera en periodo de prueba, no solo debe demostrar su valía ante sus superiores, sino también enfrentarse a esta misteriosa y temida entidad.",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/o5vasl0xbZWWKQnAlaBTSgntHH2.jpg",
+    "sinopsis": "En los pasillos oscuros de un hospital, deambula el fantasma de una enfermera conocida como \"La planchada\", famosa por su aspecto impecable. Mientras los pacientes creen que ella está ahí para ayudarlos, las...",
     "tipo": 1,
     "año": "2024",
     "hora": "1 h",
     "min": "47 min",
     "edad": "18+",
-    "link": "peliculas/13-turno-nocturno.html"
+    "link": "peliculas/13-turno-nocturno.html",
+    "video_type": "m3u8"
   },
   {
     "id": "14",
@@ -429,19 +434,19 @@
     "año": "1986",
     "hora": "2 h",
     "min": "10 min",
-    "edad": "18+",
-    "rating": "3.5",
+    "edad": "13+",
+    "rating": "3",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/ydF3hT1fjrM71AbNAYBZKnq6rtL.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/8k5tnL7mUhaonZ9baqiHZgzh97k.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/tSGxBAAM8YkCVOG5xjUmQfofy8d.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/nH2R0JOlWRuVVGL4L9nfssozhY2.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/xOzDIxez06MEoJ7Z8zFhXng03JQ.jpg",
-    "sinopsis": "El sargento Tom Highway, conocido como `Gunny´, es un perdedor en el plano personal, aficionado al alcohol, que sacrificó a su mujer, a su familia, a sus amigos y su reputación, por llegar a lo más alto en la...",
+    "sinopsis": "El sargento Tom Highway, conocido como `Gunny´, es un perdedor en el plano personal, aficionado al alcohol, que sacrificó a su mujer, a su familia, a sus amigos y su reputación, por llegar a lo más alto en la..",
     "genero": [
       "Bélico",
       "Drama"
     ],
     "video_type": "m3u8",
-    "videourl": "https://dintezuvio.com/stream/0UHVQqwrKZTtS7uNAeIEeg/hjkrhuihghfvu/1763947804/34784269/index-f1-v1-a1.m3u8",
+    "videourl": "https://dintezuvio.com/stream/6H0kv_-AR6aGFd9hF1cUpg/hjkrhuihghfvu/1763957747/28002704/index-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/19-el-sargento-de-hierro.html"
   },
@@ -576,7 +581,7 @@
     "edad": "13+",
     "rating": "3.5",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/nuUlSN8VkSdEKEx57i4rIlSft6x.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/g3x9bYAT0rT5kFfocxbdguJqpN1.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vnlvIdKCWUckPYNf7s4Y2u6J0xX.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/dP6aTajnmITTfipJdb1I66WCMlS.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/7BpNtNfxuocYEVREzVMO75hso1l.jpg",
     "sinopsis": "Un guardia de seguridad con problemas comienza a trabajar en Freddy Fazbear's Pizza. Mientras pasa su primera noche en el trabajo, se da cuenta de que el turno de noche en Freddy's no será tan fácil de superar.",
@@ -584,8 +589,8 @@
       "Terror",
       "Suspense"
     ],
-    "video_type": "mp4",
-    "videourl": "https://archive.org/download/fivenightsatfreddys_202506/fivenightsatfreddy%27s%20.mp4",
+    "video_type": "m3u8",
+    "videourl": "https://dinisglows.com/stream/5JuKiADBoGcih8iNgxBe_A/hjkrhuihghfvu/1763959115/5754920/index-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/25-five-nights-at-freddys.html"
   },

@@ -944,8 +944,8 @@
     "genero": [
       "Terror"
     ],
-    "video_type": "mp4",
-    "videourl": "https://archive.org/download/nobody-2-2025_20250918/el%20conjuro%204%20ritos%20ocultos.ia.mp4",
+    "video_type": "m3u8",
+    "videourl": "//emnphkkblegpebimobpbekeedfgemhof/player.html#https%3A%2F%2Fjaime.rpmhub.site%2Fhls%2F9PmWMHO0ejoljY9yN8pZlQ%2Fis3%2Fh9kqslgj%2Fdtqsm3%2Ftt%2Findex-f1-v1-a1.m3u8%3Fv%3D1763544385",
     "tipo": 1,
     "link": "peliculas/40-expediente-warren-el-ultimo-rito.html"
   },
@@ -1233,5 +1233,27 @@
     "videourl": "https://axa4wow3dcia.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axa4wow3dcia/b/bucket-20201001-1658/o/2023pelis%2FVer%20The%20Marvels%20Online%20Castellano%20Latino%20Subtitulada%20HD%20-%20HDFull_3.mp4",
     "tipo": 1,
     "link": "peliculas/52-the-marvels.html"
+  },
+  {
+    "id": "53",
+    "titulo": "Expediente Warren: El último rito",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/mPUWGBTAvOFntOQlChwAN5NEew.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "16 min",
+    "edad": "14+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/fq8gLtrz1ByW3KQ2IM3RMZEIjsQ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/puKNI2laP4bt5QnKcmRZeJv0zyL.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xhOgS7cfUfIijcIJsQyZ9RaHTyq.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/dyW5mX4wwDoZWgTYObx6pg9V0i9.jpg",
+    "sinopsis": "Los investigadores de lo paranormal Ed y Lorraine Warren se enfrentan a un último caso aterrador en el que están implicadas entidades misteriosas a las que deben enfrentarse.",
+    "genero": [
+      "Terror"
+    ],
+    "video_type": "m3u8",
+    "videourl": "//emnphkkblegpebimobpbekeedfgemhof/player.html#https%3A%2F%2Fjaime.rpmhub.site%2Fhls%2F9PmWMHO0ejoljY9yN8pZlQ%2Fis3%2Fh9kqslgj%2Fdtqsm3%2Ftt%2Findex-f1-v1-a1.m3u8%3Fv%3D1763544385",
+    "tipo": 1,
+    "link": "peliculas/53-expediente-warren-el-ultimo-rito.html"
   }
 ]

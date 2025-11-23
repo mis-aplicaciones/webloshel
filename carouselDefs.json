@@ -55,5 +55,14 @@
     "values": [
       "Drama"
     ]
+  },
+  {
+    "name": "Para los Pequeños",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Animación"
+    ]
   }
 ]

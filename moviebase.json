@@ -435,13 +435,13 @@
     "backgroundmovil": "https://image.tmdb.org/t/p/original/8k5tnL7mUhaonZ9baqiHZgzh97k.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/nH2R0JOlWRuVVGL4L9nfssozhY2.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/xOzDIxez06MEoJ7Z8zFhXng03JQ.jpg",
-    "sinopsis": "El sargento Tom Highway, conocido como `Gunny´, es un perdedor en el plano personal, aficionado al alcohol, que sacrificó a su mujer, a su familia, a sus amigos y su reputación, por llegar a lo más alto en la carrera militar. Veterano de guerra en Vietnam y Corea, vuelve a los Estados Unidos para llevar a cabo su última misión: instruir a un grupo de novatos para convertirlos en auténticos marines.",
+    "sinopsis": "El sargento Tom Highway, conocido como `Gunny´, es un perdedor en el plano personal, aficionado al alcohol, que sacrificó a su mujer, a su familia, a sus amigos y su reputación, por llegar a lo más alto en la...",
     "genero": [
       "Bélico",
       "Drama"
     ],
-    "video_type": "ok",
-    "videourl": "//ok.ru/videoembed/286927293062?nochat=1&autoplay=1",
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/0UHVQqwrKZTtS7uNAeIEeg/hjkrhuihghfvu/1763947804/34784269/index-f1-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/19-el-sargento-de-hierro.html"
   },

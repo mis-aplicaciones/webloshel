@@ -1013,17 +1013,17 @@
     "edad": "13+",
     "rating": "3",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/kzeBfhXMRWiykBsqoL3UbfaM0S.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/cjbFjrvLdDKe0PJ2LXEOQvzlteA.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/lVoDZYHcPBcAVr0LbdWqvvEALHT.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/pUuMSzDBBXK6OBXlmhxJnHnrcej.jpg",
     "cardimgUrl2": "https://image.tmdb.org/t/p/original/5RM9cbIQfrtYYSbb6KEL4bo8JYj.jpg",
-    "sinopsis": "Siguiendo los pasos de su torpe padre, el detective Frank Drebin Jr. debe resolver un caso de asesinato para evitar que el departamento de policía sea cerrado.",
+    "sinopsis": "El torpe teniente Frank Drebin Jr. intenta resolver un asesinato vinculado a un magnate tecnológico. Mientras investiga, su unidad policial corre peligro de ser cerrada.",
     "genero": [
       "Comedia",
       "Acción",
       "Crimen"
     ],
-    "video_type": "mp4",
-    "videourl": "https://archive.org/download/agarralo-como-puedas-latino/Ag%C3%A1rralo%20como%20puedas%20Latino.mp4",
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/JDqK3NK1Fgddee3hdho8tA/hjkrhuihghfvu/1764162112/31383580/index-f1-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/43-agarralo-como-puedas.html"
   },
@@ -1262,5 +1262,29 @@
     "videourl": "https://dintezuvio.com/stream/bXE69iPIRBV1cyzxkKSgDw/hjkrhuihghfvu/1763955597/32466540/index-f1-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/53-expediente-warren-el-ultimo-rito.html"
+  },
+  {
+    "id": "54",
+    "titulo": "Dragon Ball Z: El combate definitivo",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/oSbosSNgW76LSp4CjVsRv6dwS7G.png",
+    "año": "1994",
+    "hora": "0 h",
+    "min": "50 min",
+    "edad": "7+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/gcTWQ2r4LpjfY66uofxuChqgCa.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/b3q3CZx1gf5CUWZCPjQm7OJz0B1.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/ci8I8KWu4LRLvgacGw637bsKZAM.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/hisk55cLc4riBfJRbauwooisTK8.jpg",
+    "sinopsis": "Mr. Satán acepta el desafío de un viejo conocido, Vagger Batta, para combatir contra sus bioguerreros. Satán no quiere problemas y prefiere llevarse al androide N°18 para que luche por él.",
+    "genero": [
+      "Animación",
+      "Acción",
+      "Ciencia ficción"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://haxloppd.com/stream/pdiVKW3MKOV9tW-oxpiT0A/kjhhiuahiuhgihdf/1764161678/52364949/index-f1-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/54-dragon-ball-z-el-combate-definitivo.html"
   }
 ]

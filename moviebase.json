@@ -1283,8 +1283,57 @@
       "Ciencia ficción"
     ],
     "video_type": "m3u8",
-    "videourl": "https://dintezuvio.com/stream/pdiVKW3MKOV9tW-oxpiT0A/kjhhiuahiuhgihdf/1764161678/52364949/index-f1-v1-a1.m3u8",
+    "videourl": "https://haxloppd.com/stream/DXY0YbMOzkkWKesk2svUzw/kjhhiuahiuhgihdf/1764862399/52364949/master.m3u8",
     "tipo": 1,
     "link": "peliculas/54-dragon-ball-z-el-combate-definitivo.html"
+  },
+  {
+    "id": "55",
+    "titulo": "Dragon Ball Z: ¡Fusión!",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/dFgLqGCB1tsBQ8KqaIzl87Epboa.png",
+    "año": "1995",
+    "hora": "",
+    "min": "50 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/xeYKMrkcug0A6Igp0UGial69FVU.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/5seSw3hQTFSYzdh6kHOSAmExUA.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/sGG8MIJlTbKu5PL9Lzx5bN7zKhn.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jazByuCSWAZ1H1DRFtxiBKmbzJ0.jpg",
+    "sinopsis": "En el \"Otro mundo\", un pequeño error provoca la aparición de un poderoso monstruo llamado Janemba, que ha sido creado con toda la maldad de los habitantes del Infierno.",
+    "genero": [
+      "Animación",
+      "Acción",
+      "Ciencia ficción"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/gbAFvFJG65klIZJN14tobQ/hjkrhuihghfvu/1764862884/19665965/index-f1-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/55-dragon-ball-z-fusion.html"
+  },
+  {
+    "id": "56",
+    "titulo": "Tortugas Ninja",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/A6cYomEYlT5KVhg5hj4on152gfa.png",
+    "año": "1990",
+    "hora": "1 h",
+    "min": "34 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/ghLHq2wj95kZ0DeTbVOhbfhiZYS.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/nIgl7LfWwzcI5z905gONmfbD3m4.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/lnnoL2yGNRLTkv6DBqRFRVzNzLu.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/4Ow6vmYeTvpFYKtMwm3v2o2iuA5.jpg",
+    "sinopsis": "Después de haber sido contaminadas con una misteriosa sustancia química, llamada Ooze, cuatro tortugas que viven en las alcantarillas de Nueva York se transforman y mutan, de repente, en grandes tortugas.",
+    "genero": [
+      "Ciencia ficción",
+      "Acción",
+      "Aventura",
+      "Comedia"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/CY7gNNEaaLZ-jnT2tQ36UA/hjkrhuihghfvu/1764862963/25713067/index-f1-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/56-tortugas-ninja.html"
   }
 ]

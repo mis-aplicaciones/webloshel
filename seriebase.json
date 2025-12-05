@@ -58,7 +58,6 @@
       }
     ]
   },
-
   {
     "id": "S2",
     "title": "Chespirito: Sin querer queriendo",
@@ -73,7 +72,7 @@
     "backgroundmovil": "https://image.tmdb.org/t/p/original/y8tPZ9P4tYqYiACs6t4mlcWJnSC.jpg",
     "edad": "15+",
     "año": "2025",
-    "sinopsis": "La vida y carrera del actor Roberto Gómez Bolaños, creador de "El Chavo del 8", "El Chapulín Colorado" y "Chespirito".",
+    "sinopsis": "La vida y carrera del actor Roberto Gómez Bolaños, creador de El Chavo del 8, El Chapulín Colorado y Chespirito.",
     "video_type": "m3u8",
     "tipo": 2,
     "seasons": [

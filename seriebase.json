@@ -81,7 +81,7 @@
         "seasonDescription": "La temporada 1 de Chespirito: Sin querer queriendo se estrenó el 5 de junio de 2025.",
         "seasonBackground": "https://image.tmdb.org/t/p/original/Zf4F7BhM09OSl5YrPvAK7AUY5e.jpg",
         "episodes": [
-          { "epi": "E1", "url": "https://dintezuvio.com/stream/6n7CuDzo1ccX-1mlpmWLzQ/hjkrhuihghfvu/1764861844/26395202/index-f1-v1-a1.m3u8", "img": "https://media.themoviedb.org/t/p/w227_and_h127_face/nFleMDcnGdGXLPX2EFla8XyJCiM.jpg","type": "m3u8", "credits_start": 2760 },
+          { "epi": "E1", "url": "https://yuguaab.com/stream/vG-ys33R3s-wgZ2Gqmtepw/kjhhiuahiuhgihdf/1765034707/53807423/index-v1-a1.m3u8", "img": "https://media.themoviedb.org/t/p/w227_and_h127_face/nFleMDcnGdGXLPX2EFla8XyJCiM.jpg","type": "m3u8", "credits_start": 2760 },
           { "epi": "E2", "url": "https://dintezuvio.com/stream/dapBFBHutPEZKVNpBhsSPQ/hjkrhuihghfvu/1764861925/26589945/index-f1-v1-a1.m3u8", "img": "https://media.themoviedb.org/t/p/w227_and_h127_face/hEZiePx0Pe2CgAWLq9E6HoPTajP.jpg","type": "m3u8", "credits_start": 2468 },
           { "epi": "E3", "url": "https://dintezuvio.com/stream/J6DhcqX4mPHXbN3oy26bjQ/hjkrhuihghfvu/1764861956/26769633/index-f1-v1-a1.m3u8", "img": "https://media.themoviedb.org/t/p/w227_and_h127_face/2lZG0H9CPWbygRMbNmmdcsFjqNn.jpg","type": "m3u8", "credits_start": 2490 },
           { "epi": "E4", "url": "https://dintezuvio.com/stream/F7qVJGSNuf0xuqzOxVa6nA/hjkrhuihghfvu/1764861981/27008725/index-f1-v1-a1.m3u8", "img": "https://media.themoviedb.org/t/p/w227_and_h127_face/418GPtJCSL5esGBHS0xlrjy4Psm.jpg","type": "m3u8", "credits_start": 2490 },
@@ -96,3 +96,4 @@
 
 
 ]
+

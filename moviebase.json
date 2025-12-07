@@ -1624,5 +1624,54 @@
     "videourl": "https://archive.org/download/madagascar.-2005.-dvdrip.-latino.-xvi-d/Madagascar.Escape.2.Africa.2008.DVDRip.LATINO.XViD.mp4",
     "tipo": 1,
     "link": "peliculas/68-madagascar-2.html"
+  },
+  {
+    "id": "69",
+    "titulo": "Avatar",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/m2NkNWCDQEwJ1uLieyPXvwY55fA.png",
+    "año": "2009",
+    "hora": "2 h",
+    "min": "41 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/1I6aiIYhfCufLaoAw1Qr9bMFj15.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/o0s4XsEDfDlvit5pDRKjzXR4pp2.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/r7kHLlRXuQ1ng8mp7V83gj4yrNq.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/o0s4XsEDfDlvit5pDRKjzXR4pp2.jpg",
+    "sinopsis": "Año 2154. Jake Sully, un exmarine en silla de ruedas, es enviado al planeta Pandora, donde se ha creado el programa Avatar, gracias al cual los seres humanos pueden controlar de forma remota un cuerpo...",
+    "genero": [
+      "Acción",
+      "Aventura",
+      "Fantasía",
+      "Ciencia ficción"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/gF2DWjmr50fOR7agDCRnRg/hjkrhuihghfvu/1765182721/30191049/index-f1-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/69-avatar.html"
+  },
+  {
+    "id": "70",
+    "titulo": "Red One",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/tCyQjL5E3gmiXpI9yWs2osmrfDH.png",
+    "año": "2024",
+    "hora": "2 h",
+    "min": "4 min",
+    "edad": "14+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/6qhkQUWltkearViCOKjExlD3tO3.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/YxNBG7VKWu7QPK8f1kpiPjGqx7.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/cYLvwSG0jXtSyIGOXL21QSuTwAY.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/YxNBG7VKWu7QPK8f1kpiPjGqx7.jpg",
+    "sinopsis": "Tras el secuestro de Papá Noel, el Jefe de Seguridad del Polo Norte debe formar equipo con el cazarrecompensas más infame del mundo en una misión trotamundos llena de acción para salvar la Navidad.",
+    "genero": [
+      "Acción",
+      "Comedia",
+      "Fantasía"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://dintezuvio.com/stream/TNDbz0z948WbvzyTybvGtg/hjkrhuihghfvu/1765183256/15856491/index-f1-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/70-red-one.html"
   }
 ]

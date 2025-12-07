@@ -1574,5 +1574,55 @@
     "videourl": "https://archive.org/serve/shrek_202407/Shrek%202.mp4",
     "tipo": 1,
     "link": "peliculas/66-shrek-2.html"
+  },
+  {
+    "id": "67",
+    "titulo": "Madagascar",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4WxLPaAiWA2bCEW76XRwt09hmBJ.png",
+    "año": "2005",
+    "hora": "1 h",
+    "min": "20 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/2igcXhXIVUouBPYFZ7kwr3z5qrD.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/cyC9hzqjKN6dpQdjW7fD2PVX315.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/jLpUiyi27AkoeTWJKUzEJ2zxkiT.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/cyC9hzqjKN6dpQdjW7fD2PVX315.jpg",
+    "sinopsis": "Cuenta la historia de cuatro divertidos animales del zoo de Central Park, Nueva York, (Alex el león, Marty la cebra, Gloria la hipopótamo y Melman la jirafa). Llevan toda su vida encerrados en cautividad sin...",
+    "genero": [
+      "Familia",
+      "Animación",
+      "Aventura",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/madagascar.-2005.-dvdrip.-latino.-xvi-d/Madagascar.2005.DVDRip.LATINO.XViD.mp4",
+    "tipo": 1,
+    "link": "peliculas/67-madagascar.html"
+  },
+  {
+    "id": "68",
+    "titulo": "Madagascar 2",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/3yXLkSTrVhG66MIAr3X6C4gjccw.jpg",
+    "año": "2008",
+    "hora": "1 h",
+    "min": "29 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/bwbkzyWTndhxbdOr8SVlsPq1cOg.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/3yXLkSTrVhG66MIAr3X6C4gjccw.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/BwQhyfwuuOsq7mwvRaEX4rJQTV.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/3yXLkSTrVhG66MIAr3X6C4gjccw.jpg",
+    "sinopsis": "Alex, Marty, Melman, Gloria, el rey Julien, Maurice, los pingüinos y los chimpancés se encuentran abandonados en las remotas playas de Madagascar. Para superar este obstáculo, los neoyorquinos han ideado un...",
+    "genero": [
+      "Aventura",
+      "Animación",
+      "Comedia",
+      "Familia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/madagascar.-2005.-dvdrip.-latino.-xvi-d/Madagascar.Escape.2.Africa.2008.DVDRip.LATINO.XViD.mp4",
+    "tipo": 1,
+    "link": "peliculas/68-madagascar-2.html"
   }
 ]

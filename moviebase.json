@@ -1603,7 +1603,7 @@
   {
     "id": "68",
     "titulo": "Madagascar 2",
-    "titleimgUrl": "https://image.tmdb.org/t/p/original/3yXLkSTrVhG66MIAr3X6C4gjccw.jpg",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/o4pcrXqki8XVNFtgn3viME5Yyxc.png",
     "año": "2008",
     "hora": "1 h",
     "min": "29 min",
@@ -1673,5 +1673,53 @@
     "videourl": "https://dintezuvio.com/stream/TNDbz0z948WbvzyTybvGtg/hjkrhuihghfvu/1765183256/15856491/index-f1-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/70-red-one.html"
+  },
+  {
+    "id": "71",
+    "titulo": "Poseidón",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/bZpekbZ3IwnrzOFs0he4TgAsd2T.png",
+    "año": "2006",
+    "hora": "1 h",
+    "min": "39 min",
+    "edad": "13+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/tauNLnPE7pNSPwXa7eBEoACV0VR.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/cmif4raVnSublaj6wEswHHPPL65.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/jOCVXiFCJchSJBezQXhOlpfO5aX.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/cmif4raVnSublaj6wEswHHPPL65.jpg",
+    "sinopsis": "En el Atlántico Norte, a bordo del lujoso trasatlántico Poseidón (veinte pisos, trece cubiertas) comienza la fiesta de Nochevieja. Mientras tanto, una gigantesca ola de treinta metros de altura se dirige hacia.",
+    "genero": [
+      "Aventura",
+      "Acción",
+      "Drama",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/poseidon_202508/Poseidon.mp4",
+    "tipo": 1,
+    "link": "peliculas/71-poseidon.html"
+  },
+  {
+    "id": "72",
+    "titulo": "El regreso de los muertos vivientes",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/aznMYFUDan61wPePG0qaKSLUUr6.png",
+    "año": "1985",
+    "hora": "1 h",
+    "min": "31 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/pd6T9Z1GnXM0pZRTlRron5iARFL.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/h4uQC5IJAGSV83Ophuy87vJI42E.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/a1r0Eqw6qeFH6LNnf3uwWEg8aT1.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/h4uQC5IJAGSV83Ophuy87vJI42E.jpg",
+    "sinopsis": "Frank y su aprendiz Freddy terminan su turno en un almacén de productos sanitarios. Charlando, Frank cuenta al joven que los hechos narrados en lapelícula la Noche de los Muertos Vivientes fueron reales, pero..",
+    "genero": [
+      "Comedia",
+      "Terror"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/TheReturnOfTheLivingDead/The%20Return%20of%20the%20Living%20Dead.mp4",
+    "tipo": 1,
+    "link": "peliculas/72-el-regreso-de-los-muertos-vivientes.html"
   }
 ]

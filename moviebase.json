@@ -1721,5 +1721,30 @@
     "videourl": "https://archive.org/serve/TheReturnOfTheLivingDead/The%20Return%20of%20the%20Living%20Dead.mp4",
     "tipo": 1,
     "link": "peliculas/72-el-regreso-de-los-muertos-vivientes.html"
+  },
+  {
+    "id": "73",
+    "titulo": "Predator: Badlands",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4q32tob1mPwFDXrTxyMbD342pmP.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "47 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/2pC8C6FmLXxCxJuazSLFAtLJCKQ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/k3wtmkySU8pHSCfjNqbp5f81DS0.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg",
+    "sinopsis": "Un joven Predator rechazado por su clan encuentra un aliado inesperado en Thia y emprende un peligroso viaje en busca del adversario definitivo.",
+    "genero": [
+      "Suspense",
+      "Acción",
+      "Ciencia ficción",
+      "Aventura"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://jaime.seekplayer.vip/hls/-CMGmM4ZbSYeLFbg4mdjvQ/jcp/twzg59xv/d5qmbv/tt/index-f1-v1-a1.m3u8?v=1765665666",
+    "tipo": 1,
+    "link": "peliculas/73-predator-badlands.html"
   }
 ]

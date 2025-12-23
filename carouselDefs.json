@@ -1,10 +1,18 @@
 [
   {
-    "name": "2025 Releases",
+    "name": "Estrenos 2025",
     "type": "field",
     "field": "año",
     "values": [
       "2025"
+    ]
+  },
+  {
+    "name": "Futbol del Bueno",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Deporte"
     ]
   },
   {
@@ -46,23 +54,6 @@
     "field": "genero",
     "values": [
       "Acción"
-    ]
-  },
-  {
-    "name": "Perdidos y atrapados",
-    "type": "field",
-    "field": "genero",
-    "values": [
-      "Drama"
-    ]
-  },
-  {
-    "name": "Para los Pequeños",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Animación"
     ]
   }
 ]

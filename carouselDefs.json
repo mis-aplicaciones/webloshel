@@ -55,5 +55,29 @@
     "values": [
       "Acción"
     ]
+  },
+  {
+    "name": "Para los peques",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Infantil"
+    ]
+  },
+  {
+    "name": "Es tiempo de reir",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Comedia"
+    ]
+  },
+  {
+    "name": "Noches de suspenso",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Suspenso"
+    ]
   }
 ]

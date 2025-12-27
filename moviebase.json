@@ -225,19 +225,20 @@
       "Suspenso"
     ],
     "rating": "3",
-    "videourl": "//ok.ru/videoembed/9236058868351?nochat=1&autoplay=1",
+    "videourl": "https://archive.org/serve/el-sustituto-1996/el-sustituto-1996.ia.mp4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/c5AkvHbOJv0Ec1W4ybEtDsh2DvC.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/hSvOq55PWoxPRNqAtmZPeAa5vJk.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/kD1jtm7TIYENVwt1S9fF8so0Yoh.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jlhe2SKWqW3F7BEQl3sOkgXLtkW.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/uFdLjtlgCbEtkQfBiZQPLfVryr5.jpg",
-    "sinopsis": "Tras realizar varios trabajos para la CIA, el ex marine John Shale hace una visita a su antigua novia, profesora de un instituto de Miami. A su llegada, Shale nota ciertos comportamientos extraños en el centro, incluso en su novia, quien le cuenta que el lugar está prácticamente tomado por una banda de criminales que se dedican a aterrorizar no sólo a los alumnos del instituto, sino también a los profesores.",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/kizZINn4IZf3lyWS8t7OBQkeh6f.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/kizZINn4IZf3lyWS8t7OBQkeh6f.jpg",
+    "sinopsis": "Tras realizar varios trabajos para la CIA, el ex marine John Shale hace una visita a su antigua novia, profesora de un instituto de Miami. A su llegada, Shale nota ciertos comportamientos extraños en el...",
     "tipo": 1,
     "año": "1996",
     "hora": "1 h",
     "min": "54 min",
     "edad": "18+",
-    "link": "peliculas/10-el-sustituto.html"
+    "link": "peliculas/10-el-sustituto.html",
+    "video_type": "mp4"
   },
   {
     "id": "11",
@@ -315,22 +316,24 @@
     "genero": [
       "Acción",
       "Suspenso",
-      "Crimen"
+      "Crimen",
+      "Misterio"
     ],
-    "rating": "2.5",
-    "videourl": "//ok.ru/videoembed/9236058802815?nochat=1&autoplay=1",
+    "rating": "3",
+    "videourl": "https://archive.org/serve/el-sustituto-2-1998-videoclub-serie-b-odnoklassniki-1413419633250-hls-782/El_Sustituto_2_-_1998_-_Videoclub_Serie_B-Odnoklassniki-1413419633250-hls-782.mp4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/gWvTNBTRk4My2hZFW61Ljb6SCyT.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/c7cEsSzvtTRqQEaWVH8q8W6C7ag.jpg",
     "titleimgUrl": "https://image.tmdb.org/t/p/original/4H5kD2YzuC75ETk7H8pKwdPXBWy.png",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/kCr4dwR0r6ksfQAGK5YUi9sdkuc.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/vk95MEsk43QMUsyxC3yd6Bz2Ett.jpg",
-    "sinopsis": "Secuela de \"El sustituto\" sobre los conflictos entre profesores y alumnos.\n El mercenario Karl Thomansson se infiltra como profesor en un instituto de Brooklyn con alto índice de violencia para averiguar quien mató a su hermano. A pesar de los intentos de los alumnos por hacerle la vida imposible, Karl conseguirá ganarse su respeto.",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jrTvxi5NgaMLUtje1Vysta8ZQVv.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/jrTvxi5NgaMLUtje1Vysta8ZQVv.jpg",
+    "sinopsis": "Secuela de \"El sustituto\" sobre los conflictos entre profesores y alumnos.\n El mercenario Karl Thomansson se infiltra como profesor en un instituto de Brooklyn con alto índice de violencia para averiguar quien.",
     "tipo": 1,
     "año": "1998",
     "hora": "1 h",
     "min": "30 min",
     "edad": "18+",
-    "link": "peliculas/14-el-sustituto-2.html"
+    "link": "peliculas/14-el-sustituto-2.html",
+    "video_type": "mp4"
   },
   {
     "id": "15",
@@ -1910,5 +1913,52 @@
     "videourl": "https://archive.org/serve/pelicula-el-despertar-del-diablo-2-1987-d.-latino-ok.-ru/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%20Pel%C3%ADcula%20El%20Despertar%20del%20Diablo%202%20%28%201987%20%29%20-%20D.Latino%20OK.RU.ia.mp4",
     "tipo": 1,
     "link": "peliculas/80-el-despertar-del-diablo-2.html"
+  },
+  {
+    "id": "81",
+    "titulo": "Five Nights at Freddy's 2",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/biTLlJRJxVuhvlScyZOmUjpW6WG.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "44 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/mDw3qJ2Ee5enygZIGu2hifPanBH.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/szqt34v4KmyZf1QJNGieYNuTWyB.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/gFVLyx2EX9jrnV2RY8rF9Y3W9aH.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/szqt34v4KmyZf1QJNGieYNuTWyB.jpg",
+    "sinopsis": "Un año después de la pesadilla sobrenatural en Freddy Fazbear's Pizza, las historias sobre lo ocurrido allí se han convertido en una leyenda local extravagante, inspirando el primer Fazfest del pueblo.",
+    "genero": [
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://minochinos.com/stream/5L9yx7FfCI0ThS__w_TXaQ/hjkrhuihghfvu/1766842022/35923165/index-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/81-five-nights-at-freddys-2.html"
+  },
+  {
+    "id": "82",
+    "titulo": "John Carter",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/pFQxZwXQthRQAdFwBaHDMKMyed8.png",
+    "año": "2012",
+    "hora": "2 h",
+    "min": "12 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/5jrZjTpil6P0b8v1ueBhfaC9ogm.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/9fbAlFZjGz8Xkfs93EefMwZiDQM.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/zBzyH8bWF9wFtC8iHGAIGYmFIOq.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/9fbAlFZjGz8Xkfs93EefMwZiDQM.jpg",
+    "sinopsis": "Adaptación de ‘Una princesa de Marte’, la primera novela fantástica de Edgar Rice Burroughs. La película lleva a la gran pantalla una aventura épica que se desarrolla en el devastado planeta Marte, un mundo...",
+    "genero": [
+      "Acción",
+      "Aventura",
+      "Ciencia ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/john-carter-2012-dvdrip-lati-noxvi-d/JohnCarter2012DVDRipLATiNOXviD.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/82-john-carter.html"
   }
 ]

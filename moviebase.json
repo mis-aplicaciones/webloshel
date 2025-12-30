@@ -1960,5 +1960,75 @@
     "videourl": "https://archive.org/serve/john-carter-2012-dvdrip-lati-noxvi-d/JohnCarter2012DVDRipLATiNOXviD.ia.mp4",
     "tipo": 1,
     "link": "peliculas/82-john-carter.html"
+  },
+  {
+    "id": "83",
+    "titulo": "Un buen ladrón",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/dFdqFar3sf8PmRTGHmalnO3UfDU.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "6 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/q7rYSzl7jp4xdvmZqJEMgBOwtsQ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/6kfP6PIxUVqtkJeBxkFGQ8UHZLS.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/9HrlzRiOAFTUmfRe0nnUwI7NgOv.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/6kfP6PIxUVqtkJeBxkFGQ8UHZLS.jpg",
+    "sinopsis": "",
+    "genero": [
+      "Crimen",
+      "Comedia",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/un.-buen.-ladron.-2025.1080p-dual-lat_20251229/Un.Buen.Ladr%C3%B3n.2025.1080p-dual-lat.mp4",
+    "tipo": 1,
+    "link": "peliculas/83-un-buen-ladron.html"
+  },
+  {
+    "id": "84",
+    "titulo": "TRON: Ares",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/9XPoWEEzwEdwfDxgtmp4N04P28v.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "59 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/q26ow6hEuZnmWa1BsjTRpTr9nhS.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/mHNmLdqtDmcTnuROmaKMf9NgAIa.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/ihE2FqjWIucrAYs6vVQyUrw2KAM.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/mHNmLdqtDmcTnuROmaKMf9NgAIa.jpg",
+    "sinopsis": "La historia de Ares, un programa muy sofisticado que se envía desde el mundo digital al mundo real en una misión peligrosa y que va a representar el primer encuentro de la humanidad con seres creados por la IA.",
+    "genero": [
+      "Ciencia ficción",
+      "Aventura",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/tron.-ares.-2025.1080-p-dual-lat_20251227/Tron.Ares.2025.1080P-Dual-Lat.mp4",
+    "tipo": 1,
+    "link": "peliculas/84-tron-ares.html"
+  },
+  {
+    "id": "85",
+    "titulo": "Rocky IV",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/ffhsBuBTeleKH1NvE9n9O06wdQC.png",
+    "año": "1985",
+    "hora": "1 h",
+    "min": "30 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/lw6WvP24w15iRvIGaDD4NeVQW9G.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/zjDaVyUQqtApdRE0LBoZ6lbPlgP.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/hmkukjqTxPpT5MFv64MPA8grsE9.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/zjDaVyUQqtApdRE0LBoZ6lbPlgP.jpg",
+    "sinopsis": "Nuevas aventuras tanto personales como deportivas del boxeador Rocky Balboa, que en esta ocasión debe enfrentarse a un duro y frío boxeador soviético, llamado Ivan Drago.",
+    "genero": [
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/1_20241128_20241128_2139/1.mp4",
+    "tipo": 1,
+    "link": "peliculas/85-rocky-iv.html"
   }
 ]

@@ -2078,5 +2078,29 @@
     "videourl": "https://archive.org/serve/mario_1993_latino/Super%20Mario%20Bros.%20%281993%29%20%28Espa%C3%B1ol%20Latino%29.mp4",
     "tipo": 1,
     "link": "peliculas/87-super-mario-bros.html"
+  },
+  {
+    "id": "88",
+    "titulo": "The Running Man",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/aFdsEpSimUE0Vo9aSlWZ9vKdIVZ.png",
+    "año": "2025",
+    "hora": "2 h",
+    "min": "13 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/bXm0o0rPkM7tMoZG7TBiw4KrURo.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/jj8o4MXdK4pTl6vYxF3z0SFu4tg.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/c5JmwBRLm1Mb2U8m1C1JYbNoOnX.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jj8o4MXdK4pTl6vYxF3z0SFu4tg.jpg",
+    "sinopsis": "En una América distópica en el año 2025, Ben Richards participa en el violento reality show \"The Running Man\" con el fin de ganar suficiente dinero para revivir a su hija gravemente enferma.",
+    "genero": [
+      "Acción",
+      "Suspense",
+      "Ciencia ficción"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://p2.vimeos.zip/hls2/02/00007/qir4zwr4rqbi_h/master.m3u8?t=xEZcjp4jwQhP2GS_DVWiYfr4PkoywyvsfL58vmK_Kfw&s=1767232063&e=43200&v=73927478&srv=s13&i=0.0&sp=0&fr=qir4zwr4rqbi&r=e",
+    "tipo": 1,
+    "link": "peliculas/88-the-running-man.html"
   }
 ]

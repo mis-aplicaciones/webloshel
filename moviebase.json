@@ -633,10 +633,10 @@
     "edad": "18+",
     "rating": "3",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/isHzd6Z2e8ZwHGAyfy7iX7OWeB1.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/lx0gfDUPNklM6o6MNoAWgdE6MKc.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/l5KvxFVOru3Qyf3dl2asNw5g1MD.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/3xl5P6d9efBkjvozdbskdWYlHtl.jpg",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/1UKNef590A0ZaMnxsscIcWuK1Em.jpg",
-    "sinopsis": "En un centro clandestino de investigación genética -con fines militares- de una poderosa multinacional se produce un brote vírico que contamina todo el edificio. Para contener la fuga el ordenador que controla el centro sella toda la instalación y, en un principio se cree que mueren todos los empleados, pero en realidad se han convertido en feroces zombis...",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/l5KvxFVOru3Qyf3dl2asNw5g1MD.jpg",
+    "sinopsis": "En un centro clandestino de investigación genética -con fines militares- de una poderosa multinacional se produce un brote vírico que contamina todo el edificio. Para contener la fuga el ordenador que controla.",
     "genero": [
       "Terror",
       "Acción",
@@ -1088,13 +1088,13 @@
     "año": "2018",
     "hora": "2 h",
     "min": "36 min",
-    "edad": "13+",
+    "edad": "7+",
     "rating": "4",
     "backgroundUrl": "https://image.tmdb.org/t/p/original/mRXHHFDcqZOjv73mYf8cP6IlTuq.jpg",
-    "backgroundmovil": "https://image.tmdb.org/t/p/original/bW9Abn6CPiVjnf5YInwInda1Kna.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
     "cardimgUrl": "https://image.tmdb.org/t/p/original/icUSGFn22cP2BQ0tXCIsykWVCQ.jpg",
-    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-    "sinopsis": "El todopoderoso Thanos ha despertado con la promesa de arrasar con todo a su paso, portando el Guantelete del Infinito, que le confiere un poder incalculable.",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
+    "sinopsis": "El todopoderoso Thanos ha despertado con la promesa de arrasar con todo a su paso, portando el Guantelete del Infinito, que le confiere un poder incalculable. Los únicos capaces de pararle los pies son los...",
     "genero": [
       "Aventura",
       "Acción",
@@ -1815,7 +1815,7 @@
       "Familia"
     ],
     "video_type": "mp4",
-    "videourl": "https://ia601803.us.archive.org/31/items/transformers-one-sin-startalents-audio-limpio/Transformers%20One%20SIN%20STARTALENTS%20AUDIO%20LIMPIO.mp4",
+    "videourl": "https://archive.org/serve/transformers-one-sin-startalents-audio-limpio/Transformers%20One%20SIN%20STARTALENTS%20AUDIO%20LIMPIO.mp4",
     "tipo": 1,
     "link": "peliculas/76-transformers-one.html"
   },
@@ -1886,7 +1886,7 @@
       "Acción"
     ],
     "video_type": "mp4",
-    "videourl": "https://archive.org/serve/godzilla-minus-one-2_202412/GodzillaMinusOne2.ia.mp4",
+    "videourl": "https://archive.org/serve/godzilla-minus-one-espanol-latino_202409/GodzillaMinusOne2.ia.mp4",
     "tipo": 1,
     "link": "peliculas/79-godzilla-minus-one.html"
   },
@@ -2030,5 +2030,53 @@
     "videourl": "https://archive.org/serve/1_20241128_20241128_2139/1.mp4",
     "tipo": 1,
     "link": "peliculas/85-rocky-iv.html"
+  },
+  {
+    "id": "86",
+    "titulo": "Zombieland: Mata y remata",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/e7BquvMfAh8HzwMKx61o8zAVP2d.png",
+    "año": "2019",
+    "hora": "1 h",
+    "min": "39 min",
+    "edad": "14+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/8pVMW5iM1bjDVZ3LdYSDGqnuwdX.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/1xI0rOQ3UKHuwT55kz7iZi5VCNE.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/ixa7L2zEbdm4AEOOR078tYtfHYw.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/1xI0rOQ3UKHuwT55kz7iZi5VCNE.jpg",
+    "sinopsis": "En esta secuela y empleando el característico sentido del humor del que hizo gala \"Zombieland\", el grupo de protagonistas tendrá que viajar desde la Casa Blanca hasta el corazón de los Estados Unidos...",
+    "genero": [
+      "Terror",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/zombielandtirodegracia2019dvdriplatino/Zombieland%20Tiro%20de%20gracia%20%282019%29%20DVDRip%20Latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/86-zombieland-mata-y-remata.html"
+  },
+  {
+    "id": "87",
+    "titulo": "Super Mario Bros",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/2iB4n9y6Psi20n8mgsgpRbsyUDm.png",
+    "año": "1993",
+    "hora": "1 h",
+    "min": "44 min",
+    "edad": "7+",
+    "rating": "2",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/vAOywbiNMP8LuPvM6NM9zNxrsv8.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/u30qU9YnmTtR3MPuay6svXy7rEG.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/6DArt5oen6jMj1c9LBn0LCzQEzG.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/u30qU9YnmTtR3MPuay6svXy7rEG.jpg",
+    "sinopsis": "Basada en el famoso videojuego de la compañía Nintendo. Dos fontaneros de Brooklyn, Mario y Luigi, viajan a otra dimensión para rescatar a una princesa del malvado dictador Rey koopa y evitar que se apodere...",
+    "genero": [
+      "Aventura",
+      "Fantasía",
+      "Comedia",
+      "Familia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/mario_1993_latino/Super%20Mario%20Bros.%20%281993%29%20%28Espa%C3%B1ol%20Latino%29.mp4",
+    "tipo": 1,
+    "link": "peliculas/87-super-mario-bros.html"
   }
 ]

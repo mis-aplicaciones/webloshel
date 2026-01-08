@@ -1745,8 +1745,8 @@
       "Ciencia ficción",
       "Aventura"
     ],
-    "video_type": "m3u8",
-    "videourl": "https://jaime.rpmhub.site/47a25318-6b62-48b9-9aea-207d0291db58",
+    "video_type": "mp4",
+    "videourl": "https://od.lk/s/MjZfODE1MjM0MThf/528528-Predator_-_Badlands_%282025%29_%5B1080p%5D_60FPS__%5BLatino-Castellano-Ingl%C3%A9s%5D_-_528528_CineLatino.NET.mp4",
     "tipo": 1,
     "link": "peliculas/73-predator-badlands.html"
   },
@@ -2151,5 +2151,52 @@
     "videourl": "https://archive.org/serve/los-extranos-capitulo-2/Los%20Extra%C3%B1os%20Cap%C3%ADtulo%202.ia.mp4",
     "tipo": 1,
     "link": "peliculas/90-strangers-capitulo-2.html"
+  },
+  {
+    "id": "91",
+    "titulo": "Plan en familia 2",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/7QpRIAJVEJtxPaOBhHk2kS8cAkM.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "46 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/x9Rrddrah86cc1bPjNjNc6TOi6M.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/7nAVXGHHtaNcdsqvDXmY6R9N0fG.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/5ov2xCVFHOrIlbMc5kqN0bpb4FH.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7nAVXGHHtaNcdsqvDXmY6R9N0fG.jpg",
+    "sinopsis": "Dan ha dejado atrás su pasado como asesino y lo único que quiere esta Navidad es pasar tiempo de calidad con sus hijos. Pero, al ver que su hija tiene otros planes, organiza un viaje familiar a Londres...",
+    "genero": [
+      "Acción",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://od.lk/s/MjZfODE0NTMwNzJf/The.family.plan.2.2025.1080p-dual-lat-cinecalidad.ro.mp4",
+    "tipo": 1,
+    "link": "peliculas/91-plan-en-familia-2.html"
+  },
+  {
+    "id": "92",
+    "titulo": "The Home",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/h48GZN6GdB9NZbmLL3668UITPNo.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "35 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/Lu57GTE24Ja5O61jieY2aIBk8d.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/Lu57GTE24Ja5O61jieY2aIBk8d.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/nnQFa6vr6l7m9uRdaNRHkqWVOF8.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/Lu57GTE24Ja5O61jieY2aIBk8d.jpg",
+    "sinopsis": "Max, que acaba de empezar a trabajar en una residencia de ancianos, se da cuenta de que sus residentes y cuidadores esconden siniestros secretos.",
+    "genero": [
+      "Misterio",
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "m3u8",
+    "videourl": "https://minochinos.com/stream/1nv1LwYuB6OhvhcrTdW1jQ/hjkrhuihghfvu/1767878212/36140015/index-v1-a1.m3u8",
+    "tipo": 1,
+    "link": "peliculas/92-the-home.html"
   }
 ]

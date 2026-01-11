@@ -2198,5 +2198,28 @@
     "videourl": "https://minochinos.com/stream/1nv1LwYuB6OhvhcrTdW1jQ/hjkrhuihghfvu/1767878212/36140015/index-v1-a1.m3u8",
     "tipo": 1,
     "link": "peliculas/92-the-home.html"
+  },
+  {
+    "id": "93",
+    "titulo": "Air Force One (El avión del presidente)",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4RbIcYtOA3SzjhvKbk6hQl6teyg.png",
+    "año": "1997",
+    "hora": "2 h",
+    "min": "4 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/8JIPjSvx1LdtQZTpr3VR2hagU84.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vGEnXeMh8m8G2jARhBHSBZOqgxi.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/AjvxVHa5UUCIaLvrAbqb9vOvGeD.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/vGEnXeMh8m8G2jARhBHSBZOqgxi.jpg",
+    "sinopsis": "Un grupo de terroristas rusos se hacen pasar por periodistas y secuestran el avión donde viaja el presidente de Estados Unidos. La negociación en el aire no es tan sencilla como en tierra y los secuestrados...",
+    "genero": [
+      "Acción",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/2824-avion-presidencial-1997-720p-d-s-spa-eng-v_202404/2824-Avion%20Presidencial%20%281997%29%20720p%20D%20S%20spa%20eng%20v.mp4",
+    "tipo": 1,
+    "link": "peliculas/93-air-force-one-el-avion-del-presidente.html"
   }
 ]

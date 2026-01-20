@@ -48,15 +48,6 @@
     ]
   },
   {
-    "name": "Maratón de Acción",
-    "type": "field",
-    "source": "series",
-    "field": "genero",
-    "values": [
-      "Acción"
-    ]
-  },
-  {
     "name": "Para los peques",
     "type": "field",
     "field": "genero",
@@ -81,19 +72,17 @@
     ]
   },
   {
-    "name": "Es tiempo de reir",
-    "type": "field",
-    "field": "genero",
-    "values": [
-      "Comedia"
-    ]
-  },
-  {
     "name": "Historias que llegan al alma",
     "type": "field",
     "field": "genero",
     "values": [
       "Drama"
     ]
+  },
+{
+    "name": "Mejores puntuación",
+    "type": "rating",
+    "source": "movies",
+    "minRating": 3.5
   }
 ]

@@ -2364,5 +2364,53 @@
     "videourl": "https://archive.org/serve/downloadfile_202405/downloadfile.ia.mp4",
     "tipo": 1,
     "link": "peliculas/99-godzilla-y-kong-el-nuevo-imperio.html"
+  },
+  {
+    "id": "100",
+    "titulo": "Thor: Ragnarok",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/mp1u3U9zdzuxfHhjMcD3tX3LnIA.png",
+    "año": "2017",
+    "hora": "2 h",
+    "min": "11 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/17PJcD8xfGFyPLUNHntyJB32X2H.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vLmHH8jAy8Jq8uBsLucd3592WGh.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/jSqeMS00C2vEkY8GqbKooOLGxHt.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/vLmHH8jAy8Jq8uBsLucd3592WGh.jpg",
+    "sinopsis": "Thor está preso al otro lado del universo sin su poderoso martillo y se enfrenta a una carrera contra el tiempo. Su objetivo es volver a Asgard y parar el Ragnarok porque significaría la destrucción de su...",
+    "genero": [
+      "Acción",
+      "Aventura",
+      "Ciencia ficción",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/peliculas-de-marvel-comics/UMC%202017%203%20Thor%20Ragnarok.mp4",
+    "tipo": 1,
+    "link": "peliculas/100-thor-ragnarok.html"
+  },
+  {
+    "id": "101",
+    "titulo": "¡Este cuerpo no es el mío!",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/8mjQ2tyNyzyJHOf0SaY8Dj8vMHZ.png",
+    "año": "2002",
+    "hora": "1 h",
+    "min": "44 min",
+    "edad": "N/A",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/tcwSzG14hfIKkok0qxoHKpFMUVB.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/vK8uTRjiNkJ7P2VINNLxYWiiw0z.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/m6QNqwhPkLyyPnYiNsKjatvSW5Z.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/vK8uTRjiNkJ7P2VINNLxYWiiw0z.jpg",
+    "sinopsis": "Una joven adolescente, muy popular y atractiva pero mala, se despierta un día dentro del cuerpo de un hombre. Mientras intenta descubrir qué ha pasado y cómo volver a su estado anterior, se da cuenta entonces...",
+    "genero": [
+      "Comedia",
+      "Fantasía"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/peliculas-2001-2010/Este%20Cuerpo%20No%20Es%20M%C3%ADo.mp4",
+    "tipo": 1,
+    "link": "peliculas/101-este-cuerpo-no-es-el-mio.html"
   }
 ]

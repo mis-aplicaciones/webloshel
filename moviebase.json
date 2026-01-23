@@ -2412,5 +2412,77 @@
     "videourl": "https://archive.org/download/peliculas-2001-2010/Este%20Cuerpo%20No%20Es%20M%C3%ADo.mp4",
     "tipo": 1,
     "link": "peliculas/101-este-cuerpo-no-es-el-mio.html"
+  },
+  {
+    "id": "102",
+    "titulo": "El sexto sentido",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/nmV7Q3t0v1fJkkz20xnOswFESiF.png",
+    "año": "1999",
+    "hora": "1 h",
+    "min": "49 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/5kZz6Io4rGlk9rtBVHwSCkTvrSs.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/3HT2d8Lhb5PUlwY9UNCHbPqEutY.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/aRzsmYYG0x2a8F2axq13eEO060C.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/3HT2d8Lhb5PUlwY9UNCHbPqEutY.jpg",
+    "sinopsis": "El Dr. Malcom Crowe es un conocido psicólogo infantil obsesionado con el doloroso recuerdo de un joven paciente desequilibrado al que fue incapaz de ayudar. Cole Sear es un aterrorizado y confuso niño de ocho..",
+    "genero": [
+      "Misterio",
+      "Suspense",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/sexto-sentido_202407/Sexto%20Sentido.mp4",
+    "tipo": 1,
+    "link": "peliculas/102-el-sexto-sentido.html"
+  },
+  {
+    "id": "103",
+    "titulo": "En la oscuridad",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/lSwJ3Sc0NgLdJUaCz4ElsFgB9hJ.png",
+    "año": "2019",
+    "hora": "1 h",
+    "min": "30 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/jlIVJQbxoQBitMfiAa0p2Dlasa5.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/kPjvKnCqIR51Cn6pe1vyWAKO7bW.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/tcIHldmCpstvSpTrVrFa13sovrN.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/kPjvKnCqIR51Cn6pe1vyWAKO7bW.jpg",
+    "sinopsis": "Una mujer regresa a su casa familiar y descubre que está habitada por monstruos.",
+    "genero": [
+      "Terror",
+      "Ciencia ficción",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/rwwgw-5psd-gltby-bwzxjt-zwvy/RW4gbGEgT3NjdXJpZGFk.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/103-en-la-oscuridad.html"
+  },
+  {
+    "id": "104",
+    "titulo": "Viuda Negra",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/5Ul80JS1j42Cry67jTYevnO7OJ7.png",
+    "año": "2021",
+    "hora": "2 h",
+    "min": "14 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/dq18nCTTLpy9PmtzZI6Y2yAgdw5.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/keIxh0wPr2Ymj0Btjh4gW7JJ89e.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/p1QH7fXRYggspYQCCjs9iQ13DRK.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/keIxh0wPr2Ymj0Btjh4gW7JJ89e.jpg",
+    "sinopsis": "Natasha Romanoff, alias Viuda Negra, se enfrenta a las partes más oscuras de su historia cuando surge una peligrosa conspiración con vínculos con su pasado. Perseguida por una fuerza que no se detendrá ante...",
+    "genero": [
+      "Acción",
+      "Aventura",
+      "Ciencia ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/peliculas-de-marvel-comics/UMC%202021%201%20Viuda%20Negra.mp4",
+    "tipo": 1,
+    "link": "peliculas/104-viuda-negra.html"
   }
 ]

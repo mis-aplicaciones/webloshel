@@ -593,8 +593,8 @@
       "Terror",
       "Suspense"
     ],
-    "video_type": "m3u8",
-    "videourl": "https://dinisglows.com/stream/5JuKiADBoGcih8iNgxBe_A/hjkrhuihghfvu/1763959115/5754920/index-v1-a1.m3u8",
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/fnaf-la-pelicula-2023-espanol-latino/FNAF%20La%20Pelicula%202023%20Espa%C3%B1ol%20Latino.mp4",
     "tipo": 1,
     "link": "peliculas/25-five-nights-at-freddys.html"
   },
@@ -2484,5 +2484,99 @@
     "videourl": "https://archive.org/download/peliculas-de-marvel-comics/UMC%202021%201%20Viuda%20Negra.mp4",
     "tipo": 1,
     "link": "peliculas/104-viuda-negra.html"
+  },
+  {
+    "id": "105",
+    "titulo": "Invasión a la Tierra",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/xQwiJb5Io06hBpFjREfb0auTKpA.png",
+    "año": "2011",
+    "hora": "1 h",
+    "min": "56 min",
+    "edad": "7+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9iGSPl6rAAgxeUw2uuqJt6YVOCX.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/buspsNeIGOAznaYQsnGDmQLZakW.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/mK0lp3gbuRmtZRNhQx3Gyhk7F7x.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/buspsNeIGOAznaYQsnGDmQLZakW.jpg",
+    "sinopsis": "Durante años ha habido casos documentados de avistamientos de OVNIS en todo el mundo. Pero en 2011, lo que hasta ese momento eran simples avistamientos resulta una terrible realidad cuando la Tierra es atacada.",
+    "genero": [
+      "Ciencia ficción",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/invasion-del-myndo/Invasion%20del%20Myndo.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/105-invasion-a-la-tierra.html"
+  },
+  {
+    "id": "106",
+    "titulo": "Black Phone",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/9dYlNXETyp2UdPGyWzSICz5n2wi.png",
+    "año": "2022",
+    "hora": "1 h",
+    "min": "42 min",
+    "edad": "14+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/wXpAvb1e6TiQ1PBj9lHPzhaczmv.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/jqVyOIz8jxH0NUlc0QUHmV0uOcn.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/vyQDTHpviu7mok7d4rwtBLMpLEM.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jqVyOIz8jxH0NUlc0QUHmV0uOcn.jpg",
+    "sinopsis": "En una ciudad de Colorado, en los años 70, un enmascarado secuestra a Finney Shaw, un chico tímido e inteligente de 13 años, y le encierra en un sótano insonorizado donde de nada sirven sus gritos.",
+    "genero": [
+      "Terror",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/the.-black.-phone/The.Black.Phone.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/106-black-phone.html"
+  },
+  {
+    "id": "107",
+    "titulo": "El mejor",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/cqlSK0XRS3ViU24psgQhpdIXrg2.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "36 min",
+    "edad": "18+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9r4ifKX7Q3yQ8LtSs3vk7K3mNgC.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/jzzpCJWkVZZwAxzzLmtYN0MBWFd.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/olkn8WOJO5OVXAIsFsaYcIgKB9F.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/jzzpCJWkVZZwAxzzLmtYN0MBWFd.jpg",
+    "sinopsis": "Cameron Cade es un quarterback en ciernes que ha dedicado su vida y su identidad al fútbol americano. En vísperas del campeonato anual de fútbol americano profesional, Cam es atacado por un hincha desquiciado..",
+    "genero": [
+      "Drama",
+      "Romance",
+      "Terror",
+      "Misterio"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/him.-2025-lat/Him.2025-Lat.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/107-el-mejor.html"
+  },
+  {
+    "id": "108",
+    "titulo": "Culpa nuestra",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/nXmtmMkkRkdAoNQJCwSrXf7Cemn.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "52 min",
+    "edad": "14+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/7QirCB1o80NEFpQGlQRZerZbQEp.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/srk5NlOnpEsd0hxVFiHfhtQtfDe.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/8WhlNrtQdyUBnKrw5WBJnsDn1HE.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/srk5NlOnpEsd0hxVFiHfhtQtfDe.jpg",
+    "sinopsis": "La boda de Jenna y Lion propicia el tan deseado reencuentro entre Noah y Nick tiempo después de su ruptura. La incapacidad de Nick para perdonar a Noah se alza como una barrera insalvable.",
+    "genero": [
+      "Romance",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/culpa.-nuestra.-2025.1080-p-dual-lat/Culpa.NUESTRA.2025.1080P-DUAL-LAT.mp4",
+    "tipo": 1,
+    "link": "peliculas/108-culpa-nuestra.html"
   }
 ]

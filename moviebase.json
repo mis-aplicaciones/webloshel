@@ -2578,5 +2578,76 @@
     "videourl": "https://archive.org/serve/culpa.-nuestra.-2025.1080-p-dual-lat/Culpa.NUESTRA.2025.1080P-DUAL-LAT.mp4",
     "tipo": 1,
     "link": "peliculas/108-culpa-nuestra.html"
+  },
+  {
+    "id": "109",
+    "titulo": "El protector (Homefront)",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/4XPxRIkSbHgbyENQb6U8YV7XhnS.png",
+    "año": "2013",
+    "hora": "1 h",
+    "min": "40 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/kT8orKwz2bmRdHBLnG44yucYtFy.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/ix8czAxFiKysd8dST8v12pI1LkI.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xtKTawJFuMlwxgURA3SdEQl63QA.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ix8czAxFiKysd8dST8v12pI1LkI.jpg",
+    "sinopsis": "Un exagente de la DEA (Agencia Antidroga) que está viudo se retira a un pequeño pueblo para empezar una nueva vida con su hija de diez años. El único problema es que ha elegido el pueblo equivocado.",
+    "genero": [
+      "Acción",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/linea-de-fuego-convert/Linea%20de%20Fuego%20%28convert.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/109-el-protector-homefront.html"
+  },
+  {
+    "id": "110",
+    "titulo": "Cherry",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/lq5uhRB1mXYm7C2nKUtvjdtSD5A.png",
+    "año": "2021",
+    "hora": "2 h",
+    "min": "22 min",
+    "edad": "14+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/9fZAlygLWo5KwKGqobbCv9JfOpk.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/uQtqiAu2bBlokqjlURVLEha6zoi.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/k5S3AO0HHDXvpTDtdU1Z67BE2h1.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/uQtqiAu2bBlokqjlURVLEha6zoi.jpg",
+    "sinopsis": "Cuando Cherry deja los estudios para unirse al ejército, su novia Emily se convierte en su único apoyo. Al volver de la guerra, su estrés postraumático le llevará a una espiral de drogas y crimen que amenaza...",
+    "genero": [
+      "Drama",
+      "Comedia",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/qmlh-lsbvbi-btd-w-5kby-bhb-cby-zxb-dq-xm/Q2hlcnJ5IA%3D%3D.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/110-cherry.html"
+  },
+  {
+    "id": "111",
+    "titulo": "Asesino de modelos",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/zFJqMvo4adL36oUdss2nvbJIvms.png",
+    "año": "2019",
+    "hora": "1 h",
+    "min": "20 min",
+    "edad": "14+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/n2xujc1kUp8THgHu37PtRJ9w5Yr.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/b2BYSIqSKxNgd2cUy2YJYBRohkQ.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/48Omcw25S3edq4XY2RgYaykUtqv.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/b2BYSIqSKxNgd2cUy2YJYBRohkQ.jpg",
+    "sinopsis": "Grace, una aspirante a modelo, está encantada de que el fotógrafo de moda Hunter Kelly la ayude a lanzar su carrera. Pero poco después, se revela la verdadera intención de Hunter de usarla como su próxima...",
+    "genero": [
+      "Suspense",
+      "Película de TV",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://dn710004.ca.archive.org/0/items/qmlh-lsbvbi-btd-w-5kby-bhb-cby-zxb-dq-xm/QXNlc2lubyBkZSBNb2RlbG9z.ia.mp4",
+    "tipo": 1,
+    "link": "peliculas/111-asesino-de-modelos.html"
   }
 ]

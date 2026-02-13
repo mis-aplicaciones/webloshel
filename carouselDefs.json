@@ -1,19 +1,9 @@
 [
   {
-    "name": "Estrenos 2025",
-    "type": "field",
-    "field": "año",
-    "values": [
-      "2025"
-    ]
-  },
-  {
-    "name": "Futbol del Bueno",
-    "type": "field",
-    "field": "genero",
-    "values": [
-      "Deporte"
-    ]
+    "name": "Mejores puntuación",
+    "type": "rating",
+    "source": "movies",
+    "minRating": 3.5
   },
   {
     "name": "Acción",
@@ -79,10 +69,22 @@
       "Drama"
     ]
   },
-{
-    "name": "Mejores puntuación",
-    "type": "rating",
+  {
+    "name": "Marvel Colección",
+    "type": "search",
     "source": "movies",
-    "minRating": 3.5
+    "term": "los 4 fantasticos",
+    "ids": [
+      "100",
+      "78"
+    ]
+  },
+  {
+    "name": "Futbol del Bueno",
+    "type": "field",
+    "field": "genero",
+    "values": [
+      "Deporte"
+    ]
   }
 ]

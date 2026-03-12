@@ -73,10 +73,14 @@
     "name": "Marvel Colección",
     "type": "search",
     "source": "movies",
-    "term": "los 4 fantasticos",
+    "term": "hulk",
     "ids": [
       "100",
-      "78"
+      "52",
+      "46",
+      "28",
+      "104",
+      "88"
     ]
   },
   {

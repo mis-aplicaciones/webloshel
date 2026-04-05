@@ -3169,5 +3169,52 @@
     "videourl": "https://archive.org/serve/dbz-broly-latino-hd/DBZ%20Broly%20Latino%20HD.ia.mp4",
     "tipo": 1,
     "link": "peliculas/133-dragon-ball-z-el-poder-invencible.html"
+  },
+  {
+    "id": "134",
+    "titulo": "Ben-Hur",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/jjz5fKrvO49WBcCyYS4pJli6mgU.png",
+    "año": "1959",
+    "hora": "3 h",
+    "min": "32 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/noBLpUnaH7xwphEwbMRloAGnfFd.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/l4JLj2qa4u4g98LtP0ipkPLu0Gv.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/eoNvpCpp67ibPVhItZNxtGZ8LTD.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/l4JLj2qa4u4g98LtP0ipkPLu0Gv.jpg",
+    "sinopsis": "Antigua Roma, bajo el reinado de los emperadores Augusto y Tiberio (s. I d.C.). Judá Ben-Hur, hijo de una familia noble de Jerusalén, y Mesala, tribuno romano que dirige los ejércitos de ocupación, son dos...",
+    "genero": [
+      "Historia",
+      "Drama",
+      "Aventura"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/ben-hur-1959-x-264-bdrip-1080p-es-lat-es-es-en-subt-es-en/Ben-Hur%20%281959%29%20x264%20BDRip%201080p%20es-lat%20es-es%20en%20subt%20es%20en.mp4",
+    "tipo": 1,
+    "link": "peliculas/134-ben-hur.html"
+  },
+  {
+    "id": "135",
+    "titulo": "Los Diez Mandamientos",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/uqSldgssjlJx4kkdvPhTx0V4FoN.png",
+    "año": "1956",
+    "hora": "3 h",
+    "min": "40 min",
+    "edad": "7+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/3e3dVaVrla2GH6CWKbNRjTvk3s8.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/3e3dVaVrla2GH6CWKbNRjTvk3s8.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/gsVn5RV5jqmLul7ouwcr9Pb3Zut.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/3e3dVaVrla2GH6CWKbNRjTvk3s8.jpg",
+    "sinopsis": "Drama bíblico ambientado en el Antiguo Egipto que narra la historia de Moisés (Charlton Heston), favorito de la familia del faraón, que decide renunciar a su vida de privilegios para conducir a su pueblo, los..",
+    "genero": [
+      "Drama",
+      "Historia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/moises-y-los-10-mandamientos/MOISES%20Y%20LOS%2010%20MANDAMIENTOS.mp4",
+    "tipo": 1,
+    "link": "peliculas/135-los-diez-mandamientos.html"
   }
 ]

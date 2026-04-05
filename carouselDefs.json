@@ -1,5 +1,18 @@
 [
   {
+    "name": "Semana Santa",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "134",
+      "122",
+      "135",
+      "37",
+      "58",
+      "40"
+    ]
+  },
+  {
     "name": "Mejores puntuación",
     "type": "rating",
     "source": "movies",

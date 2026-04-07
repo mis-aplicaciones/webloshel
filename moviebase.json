@@ -1741,7 +1741,7 @@
       "Aventura"
     ],
     "video_type": "mp4",
-    "videourl": "https://od.lk/s/MjZfODE1MjM0MThf/528528-Predator_-_Badlands_%282025%29_%5B1080p%5D_60FPS__%5BLatino-Castellano-Ingl%C3%A9s%5D_-_528528_CineLatino.NET.mp4",
+    "videourl": "https://archive.org/serve/ver-depredador-tierras-salvajes-2025-online-gratis-en-espanol-ver-peliculas-ultra-f/Ver_Depredador__Tierras_Salvajes_%282025%29_Online_Gratis_en_Espa%C3%B1ol_-_VerPeliculasUltra_f_.ia.mp4",
     "tipo": 1,
     "link": "peliculas/73-predator-badlands.html"
   },
@@ -3216,5 +3216,76 @@
     "videourl": "https://archive.org/serve/moises-y-los-10-mandamientos/MOISES%20Y%20LOS%2010%20MANDAMIENTOS.mp4",
     "tipo": 1,
     "link": "peliculas/135-los-diez-mandamientos.html"
+  },
+  {
+    "id": "136",
+    "titulo": "Predator: Asesino de asesinos",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/ak2WG6YlxSyD6sVlBqEYpDa0m5I.png",
+    "año": "2025",
+    "hora": "1 h",
+    "min": "25 min",
+    "edad": "18+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/5l9l1OVfCpog1FGVhMWeyOq7Mhl.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/p7WdfOgUnoWYbhWUKDJyKKgVeYw.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/d8n0LzHaeP5aETdaKgSInwHSSlO.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/p7WdfOgUnoWYbhWUKDJyKKgVeYw.jpg",
+    "sinopsis": "Esta antología original de animación narra las aventuras de tres de los guerreros más fieros de la historia de la humanidad: una saqueadora vikinga que guía a su hijo en su sangrienta búsqueda de la venganza...",
+    "genero": [
+      "Animación",
+      "Acción",
+      "Ciencia ficción",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/depredador.-cazador.de.-asesino/Depredador.Cazador.de.Asesino.mp4",
+    "tipo": 1,
+    "link": "peliculas/136-predator-asesino-de-asesinos.html"
+  },
+  {
+    "id": "137",
+    "titulo": "Lamborghini: El hombre detrás de la leyenda",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/hDfeQZnEPIaoAFmiPApHv2nYD3J.png",
+    "año": "2022",
+    "hora": "1 h",
+    "min": "36 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/lfNmISjJ948AU4MzvDYivZcYBkT.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/lUPz9zW0uf0bHfYsRRID8RtBHEU.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/6wRgIFT4gyGDYycuSJSHdBGlGnW.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/lUPz9zW0uf0bHfYsRRID8RtBHEU.jpg",
+    "sinopsis": "Sigue el lanzamiento de la carrera de Lamborghini como fabricante de tractores, creador de vehículos militares durante la Segunda Guerra Mundial y diseñador de automóviles Lamborghini, que lanzó en 1963 como...",
+    "genero": [
+      "Drama",
+      "Historia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/lamborghini-el-hombre-detras-de-la-leyenda/Lamborghini_%20El%20Hombre%20detr%C3%A1s%20de%20la%20Leyenda.mp4",
+    "tipo": 1,
+    "link": "peliculas/137-lamborghini-el-hombre-detras-de-la-leyenda.html"
+  },
+  {
+    "id": "138",
+    "titulo": "Blade",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/slHb4PLxPecUa2Sq3fAKW06ifbD.png",
+    "año": "1998",
+    "hora": "2 h",
+    "min": "0 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/m97SlTo5sRgXnWw7DpNaOUVvgPZ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/uZ2qOaNcnocDHKkREAiBg7ffT3P.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/n1eZEmgY69dFba0mZazrRHsgPv7.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/uZ2qOaNcnocDHKkREAiBg7ffT3P.jpg",
+    "sinopsis": "En un mundo cohabitado en guerra por hombres y vampiros Blade es un vampiro que, al contrario que el resto, no se alimenta de humanos, y que pretende acabar con la raza de \"seres superiores\" que mordieron a su.",
+    "genero": [
+      "Terror",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/blade-1-cazador-de-vampiros-1998-espanol-latino-full-screen/Blade%201%20Cazador%20de%20Vampiros%20%281998%29%20Espa%C3%B1ol%20Latino%20Full%20Screen.mp4",
+    "tipo": 1,
+    "link": "peliculas/138-blade.html"
   }
 ]

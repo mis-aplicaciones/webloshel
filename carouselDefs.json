@@ -1,107 +1,188 @@
 [
   {
-    "name": "Semana Santa",
-    "type": "collection",
-    "source": "movies",
-    "ids": [
-      "134",
-      "122",
-      "135",
-      "37",
-      "58",
-      "40"
-    ]
-  },
-  {
-    "name": "Mejores puntuación",
+    "name": "Mejor puntuadas (3.5+ )",
     "type": "rating",
     "source": "movies",
-    "minRating": 3.5
+    "minRating": 3.5,
+    "meta": {
+      "sourceText": "top por rating"
+    }
   },
   {
     "name": "Acción",
     "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
       "Acción"
-    ]
+    ],
+    "meta": {
+      "sourceText": "género detectado (60 ítems)"
+    }
   },
   {
-    "name": "Noches de Crimen",
+    "name": "Terror",
     "type": "field",
-    "field": "genero",
-    "values": [
-      "Crimen"
-    ]
-  },
-  {
-    "name": "Cuando la Ciencia Desafía",
-    "type": "field",
-    "field": "genero",
-    "values": [
-      "Ciencia Ficción"
-    ]
-  },
-  {
-    "name": "Más Allá del Miedo",
-    "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
       "Terror"
-    ]
+    ],
+    "meta": {
+      "sourceText": "género detectado (43 ítems)"
+    }
   },
   {
-    "name": "Para los peques",
+    "name": "Suspense",
     "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
-      "Infantil"
-    ]
+      "Suspense"
+    ],
+    "meta": {
+      "sourceText": "género detectado (38 ítems)"
+    }
   },
   {
-    "name": "Es tiempo de reir",
+    "name": "Ciencia ficción",
     "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Ciencia ficción"
+    ],
+    "meta": {
+      "sourceText": "género detectado (38 ítems)"
+    }
+  },
+  {
+    "name": "Aventura",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Aventura"
+    ],
+    "meta": {
+      "sourceText": "género detectado (36 ítems)"
+    }
+  },
+  {
+    "name": "Comedia",
+    "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
       "Comedia"
-    ]
+    ],
+    "meta": {
+      "sourceText": "género detectado (36 ítems)"
+    }
   },
   {
-    "name": "Noches de suspenso",
+    "name": "Drama",
     "type": "field",
-    "field": "genero",
-    "values": [
-      "Suspenso"
-    ]
-  },
-  {
-    "name": "Historias que llegan al alma",
-    "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
       "Drama"
-    ]
+    ],
+    "meta": {
+      "sourceText": "género detectado (32 ítems)"
+    }
   },
   {
-    "name": "Marvel Colección",
-    "type": "search",
-    "source": "movies",
-    "term": "hulk",
-    "ids": [
-      "100",
-      "52",
-      "46",
-      "28",
-      "104",
-      "88"
-    ]
-  },
-  {
-    "name": "Futbol del Bueno",
+    "name": "Crimen",
     "type": "field",
+    "source": "movies",
     "field": "genero",
     "values": [
-      "Deporte"
-    ]
+      "Crimen"
+    ],
+    "meta": {
+      "sourceText": "género detectado (17 ítems)"
+    }
+  },
+  {
+    "name": "Estrenos 2025",
+    "type": "field",
+    "source": "movies",
+    "field": "año",
+    "values": [
+      "2025"
+    ],
+    "meta": {
+      "sourceText": "año detectado (26 ítems)"
+    }
+  },
+  {
+    "name": "Top 12 películas",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "35",
+      "40",
+      "46",
+      "76",
+      "92",
+      "117",
+      "125",
+      "126",
+      "1",
+      "6",
+      "9",
+      "11"
+    ],
+    "meta": {
+      "sourceText": "colección de mejores puntuadas"
+    }
+  },
+  {
+    "name": "Recientes 2025 / 2024",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "76",
+      "1",
+      "6",
+      "9",
+      "11",
+      "17",
+      "18",
+      "41",
+      "56",
+      "70",
+      "73",
+      "83"
+    ],
+    "meta": {
+      "sourceText": "colección de estrenos recientes"
+    }
+  },
+  {
+    "name": "Similares a Marvel Studios' 2021 Disney+ Day Special",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "117",
+      "23",
+      "30",
+      "36",
+      "38",
+      "47",
+      "95",
+      "104",
+      "106",
+      "110",
+      "123",
+      "128",
+      "21",
+      "137"
+    ],
+    "meta": {
+      "sourceText": "TMDB movie/877188 · géneros: Documental",
+      "reason": "title-tmdb"
+    }
   }
 ]

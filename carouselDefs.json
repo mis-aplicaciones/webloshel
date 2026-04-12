@@ -1,197 +1,485 @@
 [
   {
     "name": "Pulso de adrenalina",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Acción"
+    "ids": [
+      "1",
+      "8",
+      "9",
+      "10",
+      "14",
+      "16",
+      "17",
+      "28",
+      "32",
+      "33",
+      "35",
+      "40",
+      "47",
+      "58",
+      "69",
+      "70",
+      "82",
+      "88",
+      "91",
+      "93",
+      "98",
+      "99",
+      "100",
+      "104",
+      "109",
+      "112",
+      "119",
+      "123",
+      "128",
+      "131",
+      "133"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Acción",
+      "primaryOnly": true,
       "count": 31,
-      "note": "Detectado en 31 títulos"
+      "titles": [
+        "Ballerina",
+        "Jefes de Estado",
+        "M3GAN 2.0",
+        "El sustituto",
+        "El sustituto 2",
+        "El sustituto 3: Aulas violentas",
+        "Thunderbolts*",
+        "Venom: El último baile",
+        "Acorralado",
+        "Rambo: Last Blood",
+        "Terminator 2: El juicio final",
+        "Gladiator",
+        "Avatar: El sentido del agua",
+        "Troya",
+        "Avatar",
+        "Red One",
+        "John Carter",
+        "El increíble Hulk",
+        "Plan en familia 2",
+        "Air Force One (El avión del presidente)",
+        "El Implacable (El extranjero)",
+        "Godzilla y Kong: El nuevo imperio",
+        "Thor: Ragnarok",
+        "Viuda Negra",
+        "El protector (Homefront)",
+        "Sonic 3: La película",
+        "Transporter 2",
+        "Tyler Rake",
+        "El hombre del norte",
+        "El precio del mañana",
+        "Dragon Ball Z: El Poder Invencible"
+      ],
+      "note": "Género principal Acción en 31 títulos"
     }
   },
   {
     "name": "Más allá del miedo",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Terror"
+    "ids": [
+      "4",
+      "12",
+      "13",
+      "25",
+      "27",
+      "30",
+      "37",
+      "39",
+      "41",
+      "48",
+      "49",
+      "50",
+      "51",
+      "53",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "80",
+      "81",
+      "86",
+      "89",
+      "90",
+      "103",
+      "106",
+      "115",
+      "120",
+      "121",
+      "132",
+      "138"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Terror",
+      "primaryOnly": true,
       "count": 31,
-      "note": "Detectado en 31 títulos"
+      "titles": [
+        "28 años después",
+        "Screamboat: El barco del terror",
+        "Turno nocturno",
+        "Five Nights at Freddy's",
+        "Resident Evil",
+        "Expediente Warren: Obligado por el demonio",
+        "La pasión de Cristo",
+        "F*llar Casar Matar",
+        "Weapons: La hora de la desaparición",
+        "Freddy contra Jason",
+        "La monja II",
+        "Cementerio de animales: Los orígenes",
+        "Horror Park",
+        "Expediente Warren: El último rito",
+        "Destino final",
+        "Destino final 2",
+        "Destino final 3",
+        "Destino final 4",
+        "Destino final 5",
+        "El despertar del diablo 2",
+        "Five Nights at Freddy's 2",
+        "Zombieland: Mata y remata",
+        "Drácula",
+        "Strangers: Capítulo 2",
+        "En la oscuridad",
+        "Black Phone",
+        "It (Eso)",
+        "Resident Evil 2: Apocalipsis",
+        "Polaroid",
+        "The Quest: En busca de la ciudad perdida",
+        "Blade"
+      ],
+      "note": "Género principal Terror en 31 títulos"
     }
   },
   {
     "name": "Risas sin pausa",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Comedia"
+    "ids": [
+      "34",
+      "42",
+      "43",
+      "66",
+      "72",
+      "77",
+      "84",
+      "94",
+      "96",
+      "101",
+      "114",
+      "127",
+      "130"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Comedia",
+      "primaryOnly": true,
       "count": 13,
-      "note": "Detectado en 13 títulos"
+      "titles": [
+        "Scary Movie 2",
+        "Zoe, mi amiga muerta",
+        "Agárralo como puedas",
+        "Shrek 2",
+        "El regreso de los muertos vivientes",
+        "Un perdedor con suerte",
+        "Scary Movie",
+        "No respires",
+        "Elephant",
+        "¡Este cuerpo no es el mío!",
+        "ALF (La película)",
+        "Paranormal Movie",
+        "17 otra vez"
+      ],
+      "note": "Género principal Comedia en 13 títulos"
     }
   },
   {
     "name": "Historias que dejan huella",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Drama"
+    "ids": [
+      "6",
+      "59",
+      "85",
+      "92",
+      "97",
+      "107",
+      "110",
+      "116",
+      "125",
+      "135",
+      "137"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Drama",
+      "primaryOnly": true,
       "count": 11,
-      "note": "Detectado en 11 títulos"
+      "titles": [
+        "Better Man: La Historia de Robbie Williams",
+        "My Way",
+        "Rocky IV",
+        "Figuras ocultas",
+        "Prueba de fuego",
+        "El mejor",
+        "Cherry",
+        "Atrapados en el abismo",
+        "El club de los poetas muertos",
+        "Los Diez Mandamientos",
+        "Lamborghini: El hombre detrás de la leyenda"
+      ],
+      "note": "Género principal Drama en 11 títulos"
     }
   },
   {
     "name": "Rutas sin fronteras",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Aventura"
+    "ids": [
+      "21",
+      "22",
+      "29",
+      "31",
+      "46",
+      "68",
+      "71",
+      "74",
+      "87",
+      "122"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Aventura",
+      "primaryOnly": true,
       "count": 10,
-      "note": "Detectado en 10 títulos"
+      "titles": [
+        "Uncharted",
+        "Jumanji: Bienvenidos a la jungla",
+        "El retorno del Jedi",
+        "¡Viven!",
+        "Vengadores: Infinity War",
+        "Madagascar 2",
+        "Poseidón",
+        "Anaconda",
+        "Super Mario Bros",
+        "Exodus: Dioses y reyes"
+      ],
+      "note": "Género principal Aventura en 10 títulos"
     }
   },
   {
     "name": "Sueños en movimiento",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Animación"
+    "ids": [
+      "5",
+      "24",
+      "45",
+      "54",
+      "55",
+      "65",
+      "76",
+      "118",
+      "136"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Animación",
+      "primaryOnly": true,
       "count": 9,
-      "note": "Detectado en 9 títulos"
+      "titles": [
+        "Hotel Transilvania",
+        "Resident Evil: Death Island",
+        "Ninja Turtles: Caos mutante",
+        "Dragon Ball Z: El combate definitivo",
+        "Dragon Ball Z: ¡Fusión!",
+        "Shrek",
+        "Transformers One",
+        "Monstruos University",
+        "Predator: Asesino de asesinos"
+      ],
+      "note": "Género principal Animación en 9 títulos"
     }
   },
   {
     "name": "Universos por descubrir",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Ciencia ficción"
+    "ids": [
+      "2",
+      "18",
+      "20",
+      "52",
+      "79",
+      "105",
+      "129"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Ciencia ficción",
+      "primaryOnly": true,
       "count": 7,
-      "note": "Detectado en 7 títulos"
+      "titles": [
+        "Jurassic World: El renacer",
+        "Los Cuatro Fantásticos: Primeros pasos",
+        "Han Solo: Una historia de Star Wars",
+        "The Marvels",
+        "Godzilla Minus One",
+        "Invasión a la Tierra",
+        "Juez Dredd"
+      ],
+      "note": "Género principal Ciencia ficción en 7 títulos"
     }
   },
   {
     "name": "Bajo presión",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Suspense"
+    "ids": [
+      "23",
+      "38",
+      "44",
+      "73",
+      "78",
+      "95",
+      "111"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Suspense",
+      "primaryOnly": true,
       "count": 7,
-      "note": "Detectado en 7 títulos"
+      "titles": [
+        "Una joven prometedora",
+        "Bad Boys for Life",
+        "La trampa",
+        "Predator: Tierras Salvajes",
+        "Silent Hill 2: Revelación",
+        "No respires 2",
+        "Asesino de modelos"
+      ],
+      "note": "Género principal Suspense en 7 títulos"
     }
   },
   {
     "name": "Universos por descubrir",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Ciencia Ficción"
+    "ids": [
+      "3",
+      "11",
+      "56"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Ciencia Ficción",
+      "primaryOnly": true,
       "count": 3,
-      "note": "Detectado en 3 títulos"
+      "titles": [
+        "La guerra de los mundos",
+        "Superman",
+        "La sustancia"
+      ],
+      "note": "Género principal Ciencia Ficción en 3 títulos"
     }
   },
   {
     "name": "Para ver en familia",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Familia"
+    "ids": [
+      "57",
+      "67",
+      "124"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Familia",
+      "primaryOnly": true,
       "count": 3,
-      "note": "Detectado en 3 títulos"
+      "titles": [
+        "Stuart Little",
+        "Madagascar",
+        "Super Mario Bros: La película"
+      ],
+      "note": "Género principal Familia en 3 títulos"
     }
   },
   {
     "name": "Sombras del delito",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Crimen"
+    "ids": [
+      "83",
+      "126"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Crimen",
+      "primaryOnly": true,
       "count": 2,
-      "note": "Detectado en 2 títulos"
+      "titles": [
+        "Un buen ladrón",
+        "Taxi Driver"
+      ],
+      "note": "Género principal Crimen en 2 títulos"
     }
   },
   {
     "name": "Corazones en escena",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Romance"
+    "ids": [
+      "108",
+      "113"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Romance",
+      "primaryOnly": true,
       "count": 2,
-      "note": "Detectado en 2 títulos"
+      "titles": [
+        "Culpa nuestra",
+        "Separados"
+      ],
+      "note": "Género principal Romance en 2 títulos"
     }
   },
   {
     "name": "Bajo presión",
-    "type": "field",
+    "type": "collection",
     "source": "movies",
-    "field": "genero",
-    "values": [
-      "Suspenso"
+    "ids": [
+      "7",
+      "15"
     ],
     "meta": {
       "auto": true,
       "kind": "genre",
+      "genre": "Suspenso",
+      "primaryOnly": true,
       "count": 2,
-      "note": "Detectado en 2 títulos"
+      "titles": [
+        "Drop: Amenaza Anónima",
+        "Enemy"
+      ],
+      "note": "Género principal Suspenso en 2 títulos"
     }
   },
   {
@@ -203,7 +491,72 @@
       "auto": true,
       "kind": "rating",
       "count": 63,
-      "note": "Puntuación mínima 3.5"
+      "note": "Puntuación mínima 3.5",
+      "titles": [
+        "El club de los poetas muertos",
+        "El precio del poder",
+        "Figuras ocultas",
+        "Gladiator",
+        "Taxi Driver",
+        "Terminator 2: El juicio final",
+        "Transformers One",
+        "Vengadores: Infinity War",
+        "Acorralado",
+        "Avatar",
+        "Avatar: El sentido del agua",
+        "Bad Boys for Life",
+        "Ballerina",
+        "Ben-Hur",
+        "Better Man: La Historia de Robbie Williams",
+        "Black Phone",
+        "Cherry",
+        "Culpa nuestra",
+        "Drácula",
+        "Dragon Ball Z: El Poder Invencible",
+        "Dragon Ball Z: ¡Fusión!",
+        "El despertar del diablo 2",
+        "El hombre del norte",
+        "El Implacable (El extranjero)",
+        "El regreso de los muertos vivientes",
+        "El retorno del Jedi",
+        "El sexto sentido",
+        "Elephant",
+        "Expediente Warren: Obligado por el demonio",
+        "Five Nights at Freddy's",
+        "Godzilla Minus One",
+        "Godzilla y Kong: El nuevo imperio",
+        "It (Eso)",
+        "La pasión de Cristo",
+        "La sustancia",
+        "Los Cuatro Fantásticos: Primeros pasos",
+        "Los Diez Mandamientos",
+        "M3GAN 2.0",
+        "Monstruos University",
+        "My Way",
+        "Ninja Turtles: Caos mutante",
+        "No respires",
+        "No respires 2",
+        "Predator: Asesino de asesinos",
+        "Predator: Tierras Salvajes",
+        "Prueba de fuego",
+        "Red One",
+        "Resident Evil: Death Island",
+        "Rocky IV",
+        "Shrek",
+        "Shrek 2",
+        "Sin novedad en el frente",
+        "Sonic 3: La película",
+        "Super Mario Bros: La película",
+        "Superman",
+        "Thor: Ragnarok",
+        "Thunderbolts*",
+        "Troya",
+        "Tyler Rake",
+        "Un buen ladrón",
+        "Una joven prometedora",
+        "Viuda Negra",
+        "Weapons: La hora de la desaparición"
+      ]
     }
   },
   {
@@ -290,7 +643,11 @@
       "auto": true,
       "kind": "rating",
       "count": 2,
-      "note": "Puntuación mínima 3.5"
+      "note": "Puntuación mínima 3.5",
+      "titles": [
+        "¿Qué pasaría si...?",
+        "CHUCKY"
+      ]
     }
   },
   {

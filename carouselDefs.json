@@ -1,42 +1,6 @@
 [
   {
-    "name": "Colección de Marvel Studios",
-    "type": "collection",
-    "source": "both",
-    "ids": [
-      "17",
-      "46",
-      "52",
-      "88",
-      "100",
-      "28",
-      "104",
-      "138"
-    ],
-    "meta": {
-      "query": "Marvel Studios",
-      "mode": "company",
-      "tmdb": {
-        "type": "company",
-        "id": 420,
-        "name": "Marvel Studios"
-      },
-      "titles": [
-        "Thunderbolts*",
-        "Vengadores: Infinity War",
-        "The Marvels",
-        "El increíble Hulk",
-        "Thor: Ragnarok",
-        "Venom: El último baile",
-        "Viuda Negra",
-        "Blade"
-      ],
-      "createdAt": "2026-04-12T03:15:41.858Z",
-      "note": "Generada con TMDB + catálogo local"
-    }
-  },
-  {
-    "name": "Películas de Acción",
+    "name": "Pulso de adrenalina",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -46,12 +10,192 @@
     "meta": {
       "auto": true,
       "kind": "genre",
-      "count": 60,
-      "note": "Género detectado en 60 títulos"
+      "count": 31,
+      "note": "Detectado en 31 títulos"
     }
   },
   {
-    "name": "Películas mejor puntuadas",
+    "name": "Más allá del miedo",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Terror"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 31,
+      "note": "Detectado en 31 títulos"
+    }
+  },
+  {
+    "name": "Risas sin pausa",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Comedia"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 13,
+      "note": "Detectado en 13 títulos"
+    }
+  },
+  {
+    "name": "Historias que dejan huella",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Drama"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 11,
+      "note": "Detectado en 11 títulos"
+    }
+  },
+  {
+    "name": "Rutas sin fronteras",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Aventura"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 10,
+      "note": "Detectado en 10 títulos"
+    }
+  },
+  {
+    "name": "Sueños en movimiento",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Animación"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 9,
+      "note": "Detectado en 9 títulos"
+    }
+  },
+  {
+    "name": "Universos por descubrir",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Ciencia ficción"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 7,
+      "note": "Detectado en 7 títulos"
+    }
+  },
+  {
+    "name": "Bajo presión",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Suspense"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 7,
+      "note": "Detectado en 7 títulos"
+    }
+  },
+  {
+    "name": "Universos por descubrir",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Ciencia Ficción"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 3,
+      "note": "Detectado en 3 títulos"
+    }
+  },
+  {
+    "name": "Para ver en familia",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Familia"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 3,
+      "note": "Detectado en 3 títulos"
+    }
+  },
+  {
+    "name": "Sombras del delito",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Crimen"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 2,
+      "note": "Detectado en 2 títulos"
+    }
+  },
+  {
+    "name": "Corazones en escena",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Romance"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 2,
+      "note": "Detectado en 2 títulos"
+    }
+  },
+  {
+    "name": "Bajo presión",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Suspenso"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 2,
+      "note": "Detectado en 2 títulos"
+    }
+  },
+  {
+    "name": "Lo mejor valorado",
     "type": "rating",
     "source": "movies",
     "minRating": 3.5,
@@ -63,247 +207,7 @@
     }
   },
   {
-    "name": "Películas de Terror",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Terror"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 43,
-      "note": "Género detectado en 43 títulos"
-    }
-  },
-  {
-    "name": "Películas de Suspense",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Suspense"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 38,
-      "note": "Género detectado en 38 títulos"
-    }
-  },
-  {
-    "name": "Películas de Aventura",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Aventura"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 36,
-      "note": "Género detectado en 36 títulos"
-    }
-  },
-  {
-    "name": "Películas de Comedia",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Comedia"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 36,
-      "note": "Género detectado en 36 títulos"
-    }
-  },
-  {
-    "name": "Películas de Ciencia ficción",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Ciencia ficción"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 33,
-      "note": "Género detectado en 33 títulos"
-    }
-  },
-  {
-    "name": "Películas de Drama",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Drama"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 32,
-      "note": "Género detectado en 32 títulos"
-    }
-  },
-  {
-    "name": "Películas de Crimen",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Crimen"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 17,
-      "note": "Género detectado en 17 títulos"
-    }
-  },
-  {
-    "name": "Películas de Animación",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Animación"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 14,
-      "note": "Género detectado en 14 títulos"
-    }
-  },
-  {
-    "name": "Películas de Fantasía",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Fantasía"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 13,
-      "note": "Género detectado en 13 títulos"
-    }
-  },
-  {
-    "name": "Películas de Familia",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Familia"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 12,
-      "note": "Género detectado en 12 títulos"
-    }
-  },
-  {
-    "name": "Películas de Misterio",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Misterio"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 12,
-      "note": "Género detectado en 12 títulos"
-    }
-  },
-  {
-    "name": "Películas de Suspenso",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Suspenso"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 12,
-      "note": "Género detectado en 12 títulos"
-    }
-  },
-  {
-    "name": "Películas de Historia",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Historia"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 8,
-      "note": "Género detectado en 8 títulos"
-    }
-  },
-  {
-    "name": "Películas de Romance",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Romance"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 7,
-      "note": "Género detectado en 7 títulos"
-    }
-  },
-  {
-    "name": "Películas de Ciencia Ficción",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Ciencia Ficción"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 5,
-      "note": "Género detectado en 5 títulos"
-    }
-  },
-  {
-    "name": "Películas de Bélica",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Bélica"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "count": 3,
-      "note": "Género detectado en 3 títulos"
-    }
-  },
-  {
-    "name": "Películas de 2025",
+    "name": "Lo reciente de 2025",
     "type": "field",
     "source": "movies",
     "field": "año",
@@ -318,7 +222,7 @@
     }
   },
   {
-    "name": "Películas de 2024",
+    "name": "Destellos de 2024",
     "type": "field",
     "source": "movies",
     "field": "año",
@@ -333,7 +237,7 @@
     }
   },
   {
-    "name": "Películas de 2023",
+    "name": "Destellos de 2023",
     "type": "field",
     "source": "movies",
     "field": "año",
@@ -348,7 +252,7 @@
     }
   },
   {
-    "name": "Películas de 2022",
+    "name": "Destellos de 2022",
     "type": "field",
     "source": "movies",
     "field": "año",
@@ -363,7 +267,22 @@
     }
   },
   {
-    "name": "Series mejor puntuadas",
+    "name": "Destellos de 2021",
+    "type": "field",
+    "source": "movies",
+    "field": "año",
+    "values": [
+      "2021"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "year",
+      "count": 4,
+      "note": "4 títulos del año 2021"
+    }
+  },
+  {
+    "name": "Lo mejor valorado",
     "type": "rating",
     "source": "series",
     "minRating": 3.5,
@@ -372,6 +291,21 @@
       "kind": "rating",
       "count": 2,
       "note": "Puntuación mínima 3.5"
+    }
+  },
+  {
+    "name": "Destellos de 2021",
+    "type": "field",
+    "source": "series",
+    "field": "año",
+    "values": [
+      "2021"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "year",
+      "count": 2,
+      "note": "2 títulos del año 2021"
     }
   }
 ]

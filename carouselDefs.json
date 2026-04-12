@@ -1,15 +1,42 @@
 [
   {
-    "name": "Mejor puntuadas (3.5+ )",
-    "type": "rating",
-    "source": "movies",
-    "minRating": 3.5,
+    "name": "Colección de Marvel Studios",
+    "type": "collection",
+    "source": "both",
+    "ids": [
+      "17",
+      "46",
+      "52",
+      "88",
+      "100",
+      "28",
+      "104",
+      "138"
+    ],
     "meta": {
-      "sourceText": "top por rating"
+      "query": "Marvel Studios",
+      "mode": "company",
+      "tmdb": {
+        "type": "company",
+        "id": 420,
+        "name": "Marvel Studios"
+      },
+      "titles": [
+        "Thunderbolts*",
+        "Vengadores: Infinity War",
+        "The Marvels",
+        "El increíble Hulk",
+        "Thor: Ragnarok",
+        "Venom: El último baile",
+        "Viuda Negra",
+        "Blade"
+      ],
+      "createdAt": "2026-04-12T03:15:41.858Z",
+      "note": "Generada con TMDB + catálogo local"
     }
   },
   {
-    "name": "Acción",
+    "name": "Películas de Acción",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -17,11 +44,26 @@
       "Acción"
     ],
     "meta": {
-      "sourceText": "género detectado (60 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 60,
+      "note": "Género detectado en 60 títulos"
     }
   },
   {
-    "name": "Terror",
+    "name": "Películas mejor puntuadas",
+    "type": "rating",
+    "source": "movies",
+    "minRating": 3.5,
+    "meta": {
+      "auto": true,
+      "kind": "rating",
+      "count": 63,
+      "note": "Puntuación mínima 3.5"
+    }
+  },
+  {
+    "name": "Películas de Terror",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -29,11 +71,14 @@
       "Terror"
     ],
     "meta": {
-      "sourceText": "género detectado (43 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 43,
+      "note": "Género detectado en 43 títulos"
     }
   },
   {
-    "name": "Suspense",
+    "name": "Películas de Suspense",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -41,23 +86,14 @@
       "Suspense"
     ],
     "meta": {
-      "sourceText": "género detectado (38 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 38,
+      "note": "Género detectado en 38 títulos"
     }
   },
   {
-    "name": "Ciencia ficción",
-    "type": "field",
-    "source": "movies",
-    "field": "genero",
-    "values": [
-      "Ciencia ficción"
-    ],
-    "meta": {
-      "sourceText": "género detectado (38 ítems)"
-    }
-  },
-  {
-    "name": "Aventura",
+    "name": "Películas de Aventura",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -65,11 +101,14 @@
       "Aventura"
     ],
     "meta": {
-      "sourceText": "género detectado (36 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 36,
+      "note": "Género detectado en 36 títulos"
     }
   },
   {
-    "name": "Comedia",
+    "name": "Películas de Comedia",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -77,11 +116,29 @@
       "Comedia"
     ],
     "meta": {
-      "sourceText": "género detectado (36 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 36,
+      "note": "Género detectado en 36 títulos"
     }
   },
   {
-    "name": "Drama",
+    "name": "Películas de Ciencia ficción",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Ciencia ficción"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 33,
+      "note": "Género detectado en 33 títulos"
+    }
+  },
+  {
+    "name": "Películas de Drama",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -89,11 +146,14 @@
       "Drama"
     ],
     "meta": {
-      "sourceText": "género detectado (32 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 32,
+      "note": "Género detectado en 32 títulos"
     }
   },
   {
-    "name": "Crimen",
+    "name": "Películas de Crimen",
     "type": "field",
     "source": "movies",
     "field": "genero",
@@ -101,11 +161,149 @@
       "Crimen"
     ],
     "meta": {
-      "sourceText": "género detectado (17 ítems)"
+      "auto": true,
+      "kind": "genre",
+      "count": 17,
+      "note": "Género detectado en 17 títulos"
     }
   },
   {
-    "name": "Estrenos 2025",
+    "name": "Películas de Animación",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Animación"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 14,
+      "note": "Género detectado en 14 títulos"
+    }
+  },
+  {
+    "name": "Películas de Fantasía",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Fantasía"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 13,
+      "note": "Género detectado en 13 títulos"
+    }
+  },
+  {
+    "name": "Películas de Familia",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Familia"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 12,
+      "note": "Género detectado en 12 títulos"
+    }
+  },
+  {
+    "name": "Películas de Misterio",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Misterio"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 12,
+      "note": "Género detectado en 12 títulos"
+    }
+  },
+  {
+    "name": "Películas de Suspenso",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Suspenso"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 12,
+      "note": "Género detectado en 12 títulos"
+    }
+  },
+  {
+    "name": "Películas de Historia",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Historia"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 8,
+      "note": "Género detectado en 8 títulos"
+    }
+  },
+  {
+    "name": "Películas de Romance",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Romance"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 7,
+      "note": "Género detectado en 7 títulos"
+    }
+  },
+  {
+    "name": "Películas de Ciencia Ficción",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Ciencia Ficción"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 5,
+      "note": "Género detectado en 5 títulos"
+    }
+  },
+  {
+    "name": "Películas de Bélica",
+    "type": "field",
+    "source": "movies",
+    "field": "genero",
+    "values": [
+      "Bélica"
+    ],
+    "meta": {
+      "auto": true,
+      "kind": "genre",
+      "count": 3,
+      "note": "Género detectado en 3 títulos"
+    }
+  },
+  {
+    "name": "Películas de 2025",
     "type": "field",
     "source": "movies",
     "field": "año",
@@ -113,76 +311,67 @@
       "2025"
     ],
     "meta": {
-      "sourceText": "año detectado (26 ítems)"
+      "auto": true,
+      "kind": "year",
+      "count": 26,
+      "note": "26 títulos del año 2025"
     }
   },
   {
-    "name": "Top 12 películas",
-    "type": "collection",
+    "name": "Películas de 2024",
+    "type": "field",
     "source": "movies",
-    "ids": [
-      "35",
-      "40",
-      "46",
-      "76",
-      "92",
-      "117",
-      "125",
-      "126",
-      "1",
-      "6",
-      "9",
-      "11"
+    "field": "año",
+    "values": [
+      "2024"
     ],
     "meta": {
-      "sourceText": "colección de mejores puntuadas"
+      "auto": true,
+      "kind": "year",
+      "count": 11,
+      "note": "11 títulos del año 2024"
     }
   },
   {
-    "name": "Recientes 2025 / 2024",
-    "type": "collection",
+    "name": "Películas de 2023",
+    "type": "field",
     "source": "movies",
-    "ids": [
-      "76",
-      "1",
-      "6",
-      "9",
-      "11",
-      "17",
-      "18",
-      "41",
-      "56",
-      "70",
-      "73",
-      "83"
+    "field": "año",
+    "values": [
+      "2023"
     ],
     "meta": {
-      "sourceText": "colección de estrenos recientes"
+      "auto": true,
+      "kind": "year",
+      "count": 9,
+      "note": "9 títulos del año 2023"
     }
   },
   {
-    "name": "Similares a Marvel Studios' 2021 Disney+ Day Special",
-    "type": "collection",
+    "name": "Películas de 2022",
+    "type": "field",
     "source": "movies",
-    "ids": [
-      "117",
-      "23",
-      "30",
-      "36",
-      "38",
-      "47",
-      "95",
-      "104",
-      "106",
-      "110",
-      "123",
-      "128",
-      "21",
-      "137"
+    "field": "año",
+    "values": [
+      "2022"
     ],
     "meta": {
-      "sourceText": "TMDB movie/877188 · géneros: Documental",
-      "reason": "title-tmdb"
+      "auto": true,
+      "kind": "year",
+      "count": 6,
+      "note": "6 títulos del año 2022"
+    }
+  },
+  {
+    "name": "Series mejor puntuadas",
+    "type": "rating",
+    "source": "series",
+    "minRating": 3.5,
+    "meta": {
+      "auto": true,
+      "kind": "rating",
+      "count": 2,
+      "note": "Puntuación mínima 3.5"
     }
   }
 ]

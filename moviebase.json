@@ -3287,5 +3287,77 @@
     "videourl": "https://archive.org/serve/blade-1-cazador-de-vampiros-1998-espanol-latino-full-screen/Blade%201%20Cazador%20de%20Vampiros%20%281998%29%20Espa%C3%B1ol%20Latino%20Full%20Screen.mp4",
     "tipo": 1,
     "link": "peliculas/138-blade.html"
+  },
+  {
+    "id": "139",
+    "titulo": "El quinto elemento",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/qUAggXj5MvMsc5bkbLp02VhjuwV.png",
+    "año": "1997",
+    "hora": "2 h",
+    "min": "7 min",
+    "edad": "13+",
+    "rating": "3.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/gvd0Gy7quhD3KrDQ5avlTDIvczK.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/cIuKVhTLio6BZql65ZETXLLK4WP.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/nEA2NYrhSP8axOQyTeArJy0nWL9.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/cIuKVhTLio6BZql65ZETXLLK4WP.jpg",
+    "sinopsis": "Cada 5.000 años se abre una puerta entre las dimensiones. En una dimensión existe el Universo y la vida. En la otra dimensión existe un elemento que no está hecho ni de tierra, ni de fuego, ni de aire, ni de...",
+    "genero": [
+      "Ciencia ficción",
+      "Acción",
+      "Aventura"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/elquintoelemento.dvdrip.latino/elquintoelemento.dvdrip.latino.mp4",
+    "tipo": 1,
+    "link": "peliculas/139-el-quinto-elemento.html"
+  },
+  {
+    "id": "140",
+    "titulo": "Pesadillas",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/5pbBrxjUtQry4wz8jazE4mFYOv6.png",
+    "año": "2015",
+    "hora": "1 h",
+    "min": "43 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/cA7M7H0gNCWhIIjVmSQGfwvGbm7.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/3pTpaysOQ7bcBQa8t5kfRaquKVI.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/kbtOWMfdpVuUv7MGRZKdLLTqHcs.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/3pTpaysOQ7bcBQa8t5kfRaquKVI.jpg",
+    "sinopsis": "El adolescente Zach Cooper se muda sin muchas ganas con su familia desde Nueva York al pequeño pueblo de Greendale. Allí encuentra un resquicio de ilusión cuando conoce a su vecina, la guapa Hannah, y hace un..",
+    "genero": [
+      "Terror",
+      "Aventura",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/escalofrios-2015-full-hd/Escalofrios%20%282015%29%20Full%20HD.mp4",
+    "tipo": 1,
+    "link": "peliculas/140-pesadillas.html"
+  },
+  {
+    "id": "141",
+    "titulo": "El viaje de Arlo",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/qzq77GNfrnafikTkCqcI9E1REfg.png",
+    "año": "2015",
+    "hora": "1 h",
+    "min": "40 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/cF3H9pyUF6dsvqlYUcH0TyBAMTG.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/w7aIPADuAQTa7n7ooRKHclpxmYu.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/bxPBpi7y9RAVJSNhiRwuEhSMUyT.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/w7aIPADuAQTa7n7ooRKHclpxmYu.jpg",
+    "sinopsis": "¿Qué hubiera pasado si el asteroide que cambió para siempre la vida en la Tierra no hubiese impactado en nuestro planeta? ¿Qué pasaría si los dinosaurios gigantes nunca se hubiesen extinguido?",
+    "genero": [
+      "Aventura",
+      "Animación",
+      "Familia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/download/escalofrios-2015-full-hd/Un%20Gran%20Dinosaurio%20%282015%29%20Full%20HD.mp4",
+    "tipo": 1,
+    "link": "peliculas/141-el-viaje-de-arlo.html"
   }
 ]

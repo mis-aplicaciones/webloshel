@@ -1,8 +1,8 @@
 [
   {
-    "name": "Pulso de adrenalina",
+    "name": "Acción brutal",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "1",
       "8",
@@ -34,14 +34,13 @@
       "123",
       "128",
       "131",
-      "133"
+      "133",
+      "S1"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Acción",
-      "primaryOnly": true,
-      "count": 31,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal acción",
+      "genre": "acción",
       "titles": [
         "Ballerina",
         "Jefes de Estado",
@@ -73,9 +72,10 @@
         "Tyler Rake",
         "El hombre del norte",
         "El precio del mañana",
-        "Dragon Ball Z: El Poder Invencible"
+        "Dragon Ball Z: El Poder Invencible",
+        "CHUCKY"
       ],
-      "note": "Género principal Acción en 31 títulos"
+      "updatedAt": "2026-04-13T00:42:11.060Z"
     }
   },
   {
@@ -116,11 +116,9 @@
       "138"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Terror",
-      "primaryOnly": true,
-      "count": 31,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal terror",
+      "genre": "terror",
       "titles": [
         "28 años después",
         "Screamboat: El barco del terror",
@@ -154,13 +152,13 @@
         "The Quest: En busca de la ciudad perdida",
         "Blade"
       ],
-      "note": "Género principal Terror en 31 títulos"
+      "updatedAt": "2026-04-13T00:43:40.451Z"
     }
   },
   {
-    "name": "Risas sin pausa",
+    "name": "Risas sin Pausa",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "34",
       "42",
@@ -177,11 +175,9 @@
       "130"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Comedia",
-      "primaryOnly": true,
-      "count": 13,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal comedia",
+      "genre": "comedia",
       "titles": [
         "Scary Movie 2",
         "Zoe, mi amiga muerta",
@@ -196,14 +192,13 @@
         "ALF (La película)",
         "Paranormal Movie",
         "17 otra vez"
-      ],
-      "note": "Género principal Comedia en 13 títulos"
+      ]
     }
   },
   {
-    "name": "Historias que dejan huella",
+    "name": "Historias que Dejan Huella",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "6",
       "59",
@@ -218,11 +213,9 @@
       "137"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Drama",
-      "primaryOnly": true,
-      "count": 11,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal drama",
+      "genre": "drama",
       "titles": [
         "Better Man: La Historia de Robbie Williams",
         "My Way",
@@ -235,14 +228,13 @@
         "El club de los poetas muertos",
         "Los Diez Mandamientos",
         "Lamborghini: El hombre detrás de la leyenda"
-      ],
-      "note": "Género principal Drama en 11 títulos"
+      ]
     }
   },
   {
-    "name": "Rutas sin fronteras",
+    "name": "Horizontes en Marcha",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "21",
       "22",
@@ -256,11 +248,9 @@
       "122"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Aventura",
-      "primaryOnly": true,
-      "count": 10,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal aventura",
+      "genre": "aventura",
       "titles": [
         "Uncharted",
         "Jumanji: Bienvenidos a la jungla",
@@ -272,14 +262,13 @@
         "Anaconda",
         "Super Mario Bros",
         "Exodus: Dioses y reyes"
-      ],
-      "note": "Género principal Aventura en 10 títulos"
+      ]
     }
   },
   {
-    "name": "Sueños en movimiento",
+    "name": "Magia en Movimiento",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "5",
       "24",
@@ -289,14 +278,13 @@
       "65",
       "76",
       "118",
-      "136"
+      "136",
+      "S2"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Animación",
-      "primaryOnly": true,
-      "count": 9,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal animación",
+      "genre": "animación",
       "titles": [
         "Hotel Transilvania",
         "Resident Evil: Death Island",
@@ -306,47 +294,52 @@
         "Shrek",
         "Transformers One",
         "Monstruos University",
-        "Predator: Asesino de asesinos"
-      ],
-      "note": "Género principal Animación en 9 títulos"
+        "Predator: Asesino de asesinos",
+        "¿Qué pasaría si...?"
+      ]
     }
   },
   {
-    "name": "Universos por descubrir",
+    "name": "Universos por Venir",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
       "2",
+      "3",
+      "11",
       "18",
       "20",
       "52",
+      "56",
       "79",
       "105",
       "129"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Ciencia ficción",
-      "primaryOnly": true,
-      "count": 7,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal ciencia ficción",
+      "genre": "ciencia ficción",
       "titles": [
         "Jurassic World: El renacer",
+        "La guerra de los mundos",
+        "Superman",
         "Los Cuatro Fantásticos: Primeros pasos",
         "Han Solo: Una historia de Star Wars",
         "The Marvels",
+        "La sustancia",
         "Godzilla Minus One",
         "Invasión a la Tierra",
         "Juez Dredd"
-      ],
-      "note": "Género principal Ciencia ficción en 7 títulos"
+      ]
     }
   },
   {
-    "name": "Bajo presión",
+    "name": "Sombras en Tensión",
     "type": "collection",
-    "source": "movies",
+    "source": "both",
     "ids": [
+      "7",
+      "15",
       "23",
       "38",
       "44",
@@ -356,12 +349,12 @@
       "111"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Suspense",
-      "primaryOnly": true,
-      "count": 7,
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal suspenso",
+      "genre": "suspenso",
       "titles": [
+        "Drop: Amenaza Anónima",
+        "Enemy",
         "Una joven prometedora",
         "Bad Boys for Life",
         "La trampa",
@@ -369,129 +362,121 @@
         "Silent Hill 2: Revelación",
         "No respires 2",
         "Asesino de modelos"
-      ],
-      "note": "Género principal Suspense en 7 títulos"
+      ]
     }
   },
   {
-    "name": "Universos por descubrir",
+    "name": "Universo Marvel",
     "type": "collection",
     "source": "movies",
     "ids": [
-      "3",
-      "11",
-      "56"
+      "52",
+      "100",
+      "17",
+      "18",
+      "46",
+      "88",
+      "104",
+      "138",
+      "28"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Ciencia Ficción",
-      "primaryOnly": true,
-      "count": 3,
+      "query": "Marvel Studios",
+      "mode": "company",
+      "tmdbContext": {
+        "type": "company",
+        "id": 420,
+        "name": "Marvel Studios"
+      },
       "titles": [
-        "La guerra de los mundos",
-        "Superman",
-        "La sustancia"
+        "The Marvels",
+        "Thor: Ragnarok",
+        "Thunderbolts*",
+        "Los Cuatro Fantásticos: Primeros pasos",
+        "Vengadores: Infinity War",
+        "El increíble Hulk",
+        "Viuda Negra",
+        "Blade",
+        "Venom: El último baile"
       ],
-      "note": "Género principal Ciencia Ficción en 3 títulos"
+      "generatedAt": "2026-04-13T00:41:37.316Z",
+      "note": "Generada con TMDB + catálogo local"
     }
   },
   {
-    "name": "Para ver en familia",
+    "name": "Selección de lujo",
     "type": "collection",
     "source": "movies",
     "ids": [
-      "57",
-      "67",
-      "124"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Familia",
-      "primaryOnly": true,
-      "count": 3,
-      "titles": [
-        "Stuart Little",
-        "Madagascar",
-        "Super Mario Bros: La película"
-      ],
-      "note": "Género principal Familia en 3 títulos"
-    }
-  },
-  {
-    "name": "Sombras del delito",
-    "type": "collection",
-    "source": "movies",
-    "ids": [
-      "83",
-      "126"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Crimen",
-      "primaryOnly": true,
-      "count": 2,
-      "titles": [
-        "Un buen ladrón",
-        "Taxi Driver"
-      ],
-      "note": "Género principal Crimen en 2 títulos"
-    }
-  },
-  {
-    "name": "Corazones en escena",
-    "type": "collection",
-    "source": "movies",
-    "ids": [
+      "125",
+      "117",
+      "92",
+      "40",
+      "126",
+      "35",
+      "76",
+      "46",
+      "32",
+      "69",
+      "47",
+      "38",
+      "1",
+      "134",
+      "6",
+      "106",
+      "110",
+      "S1",
       "108",
-      "113"
+      "89",
+      "55",
+      "133",
+      "80",
+      "128",
+      "98",
+      "72",
+      "29",
+      "102",
+      "96",
+      "30",
+      "25",
+      "79",
+      "99",
+      "115",
+      "37",
+      "56",
+      "18",
+      "135",
+      "9",
+      "118",
+      "59",
+      "45",
+      "94",
+      "95",
+      "136",
+      "73",
+      "97",
+      "70",
+      "24",
+      "85",
+      "65",
+      "66",
+      "36",
+      "112",
+      "124",
+      "11",
+      "100",
+      "17",
+      "58",
+      "123",
+      "83",
+      "23",
+      "104",
+      "41"
     ],
     "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Romance",
-      "primaryOnly": true,
-      "count": 2,
-      "titles": [
-        "Culpa nuestra",
-        "Separados"
-      ],
-      "note": "Género principal Romance en 2 títulos"
-    }
-  },
-  {
-    "name": "Bajo presión",
-    "type": "collection",
-    "source": "movies",
-    "ids": [
-      "7",
-      "15"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "genre",
-      "genre": "Suspenso",
-      "primaryOnly": true,
-      "count": 2,
-      "titles": [
-        "Drop: Amenaza Anónima",
-        "Enemy"
-      ],
-      "note": "Género principal Suspenso en 2 títulos"
-    }
-  },
-  {
-    "name": "Lo mejor valorado",
-    "type": "rating",
-    "source": "movies",
-    "minRating": 3.5,
-    "meta": {
-      "auto": true,
-      "kind": "rating",
-      "count": 63,
-      "note": "Puntuación mínima 3.5",
+      "createdAt": "2026-04-13T00:32:22.329Z",
+      "note": "Generado desde catálogo: rating ≥ 3.5",
+      "minRating": 3.5,
       "titles": [
         "El club de los poetas muertos",
         "El precio del poder",
@@ -510,10 +495,11 @@
         "Better Man: La Historia de Robbie Williams",
         "Black Phone",
         "Cherry",
+        "CHUCKY",
         "Culpa nuestra",
         "Drácula",
-        "Dragon Ball Z: El Poder Invencible",
         "Dragon Ball Z: ¡Fusión!",
+        "Dragon Ball Z: El Poder Invencible",
         "El despertar del diablo 2",
         "El hombre del norte",
         "El Implacable (El extranjero)",
@@ -556,113 +542,56 @@
         "Una joven prometedora",
         "Viuda Negra",
         "Weapons: La hora de la desaparición"
-      ]
+      ],
+      "updatedAt": "2026-04-13T00:33:29.024Z"
     }
   },
   {
-    "name": "Lo reciente de 2025",
-    "type": "field",
-    "source": "movies",
-    "field": "año",
-    "values": [
-      "2025"
+    "name": "El hilo de Destino Final",
+    "type": "collection",
+    "source": "both",
+    "ids": [
+      "60",
+      "61",
+      "62",
+      "63",
+      "64"
     ],
     "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 26,
-      "note": "26 títulos del año 2025"
-    }
-  },
-  {
-    "name": "Destellos de 2024",
-    "type": "field",
-    "source": "movies",
-    "field": "año",
-    "values": [
-      "2024"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 11,
-      "note": "11 títulos del año 2024"
-    }
-  },
-  {
-    "name": "Destellos de 2023",
-    "type": "field",
-    "source": "movies",
-    "field": "año",
-    "values": [
-      "2023"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 9,
-      "note": "9 títulos del año 2023"
-    }
-  },
-  {
-    "name": "Destellos de 2022",
-    "type": "field",
-    "source": "movies",
-    "field": "año",
-    "values": [
-      "2022"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 6,
-      "note": "6 títulos del año 2022"
-    }
-  },
-  {
-    "name": "Destellos de 2021",
-    "type": "field",
-    "source": "movies",
-    "field": "año",
-    "values": [
-      "2021"
-    ],
-    "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 4,
-      "note": "4 títulos del año 2021"
-    }
-  },
-  {
-    "name": "Lo mejor valorado",
-    "type": "rating",
-    "source": "series",
-    "minRating": 3.5,
-    "meta": {
-      "auto": true,
-      "kind": "rating",
-      "count": 2,
-      "note": "Puntuación mínima 3.5",
+      "createdAt": "2026-04-13T00:35:15.296Z",
+      "note": "Generado desde catálogo: familia de títulos \"destino final\"",
+      "root": "destino final",
       "titles": [
-        "¿Qué pasaría si...?",
-        "CHUCKY"
+        "Destino final",
+        "Destino final 2",
+        "Destino final 3",
+        "Destino final 4",
+        "Destino final 5"
       ]
     }
   },
   {
-    "name": "Destellos de 2021",
-    "type": "field",
-    "source": "series",
-    "field": "año",
-    "values": [
-      "2021"
+    "name": "Colección: Semana Santa",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "37",
+      "134",
+      "135",
+      "122"
     ],
     "meta": {
-      "auto": true,
-      "kind": "year",
-      "count": 2,
-      "note": "2 títulos del año 2021"
+      "query": "Semana Santa",
+      "mode": "title",
+      "tmdbContext": null,
+      "titles": [
+        "La pasión de Cristo",
+        "Ben-Hur",
+        "Los Diez Mandamientos",
+        "Exodus: Dioses y reyes"
+      ],
+      "generatedAt": "2026-04-13T00:46:03.026Z",
+      "note": "Generada con catálogo local"
     }
   }
 ]

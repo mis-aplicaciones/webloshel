@@ -1,5 +1,86 @@
 [
   {
+    "name": "Más allá del miedo",
+    "type": "collection",
+    "source": "movies",
+    "ids": [
+      "4",
+      "12",
+      "13",
+      "25",
+      "27",
+      "30",
+      "37",
+      "39",
+      "41",
+      "48",
+      "49",
+      "50",
+      "51",
+      "53",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "80",
+      "81",
+      "86",
+      "89",
+      "90",
+      "103",
+      "106",
+      "115",
+      "120",
+      "121",
+      "132",
+      "138",
+      "140",
+      "78"
+    ],
+    "meta": {
+      "createdAt": "2026-04-13T00:29:33.650Z",
+      "note": "Generado desde catálogo: género principal terror",
+      "genre": "terror",
+      "titles": [
+        "28 años después",
+        "Screamboat: El barco del terror",
+        "Turno nocturno",
+        "Five Nights at Freddy's",
+        "Resident Evil",
+        "Expediente Warren: Obligado por el demonio",
+        "La pasión de Cristo",
+        "F*llar Casar Matar",
+        "Weapons: La hora de la desaparición",
+        "Freddy contra Jason",
+        "La monja II",
+        "Cementerio de animales: Los orígenes",
+        "Horror Park",
+        "Expediente Warren: El último rito",
+        "Destino final",
+        "Destino final 2",
+        "Destino final 3",
+        "Destino final 4",
+        "Destino final 5",
+        "El despertar del diablo 2",
+        "Five Nights at Freddy's 2",
+        "Zombieland: Mata y remata",
+        "Drácula",
+        "Strangers: Capítulo 2",
+        "En la oscuridad",
+        "Black Phone",
+        "It (Eso)",
+        "Resident Evil 2: Apocalipsis",
+        "Polaroid",
+        "The Quest: En busca de la ciudad perdida",
+        "Blade",
+        "Pesadillas",
+        "Silent Hill 2: Revelación"
+      ],
+      "updatedAt": "2026-04-13T02:18:55.342Z"
+    }
+  },
+  {
     "name": "Acción brutal",
     "type": "collection",
     "source": "both",
@@ -38,9 +119,13 @@
       "S1"
     ],
     "meta": {
-      "createdAt": "2026-04-13T00:29:33.650Z",
-      "note": "Generado desde catálogo: género principal acción",
-      "genre": "acción",
+      "query": "Acción",
+      "mode": "theme",
+      "tmdbContext": {
+        "type": "genre",
+        "id": "acción",
+        "name": "acción"
+      },
       "titles": [
         "Ballerina",
         "Jefes de Estado",
@@ -75,84 +160,8 @@
         "Dragon Ball Z: El Poder Invencible",
         "CHUCKY"
       ],
-      "updatedAt": "2026-04-13T00:42:11.060Z"
-    }
-  },
-  {
-    "name": "Más allá del miedo",
-    "type": "collection",
-    "source": "movies",
-    "ids": [
-      "4",
-      "12",
-      "13",
-      "25",
-      "27",
-      "30",
-      "37",
-      "39",
-      "41",
-      "48",
-      "49",
-      "50",
-      "51",
-      "53",
-      "60",
-      "61",
-      "62",
-      "63",
-      "64",
-      "80",
-      "81",
-      "86",
-      "89",
-      "90",
-      "103",
-      "106",
-      "115",
-      "120",
-      "121",
-      "132",
-      "138"
-    ],
-    "meta": {
-      "createdAt": "2026-04-13T00:29:33.650Z",
-      "note": "Generado desde catálogo: género principal terror",
-      "genre": "terror",
-      "titles": [
-        "28 años después",
-        "Screamboat: El barco del terror",
-        "Turno nocturno",
-        "Five Nights at Freddy's",
-        "Resident Evil",
-        "Expediente Warren: Obligado por el demonio",
-        "La pasión de Cristo",
-        "F*llar Casar Matar",
-        "Weapons: La hora de la desaparición",
-        "Freddy contra Jason",
-        "La monja II",
-        "Cementerio de animales: Los orígenes",
-        "Horror Park",
-        "Expediente Warren: El último rito",
-        "Destino final",
-        "Destino final 2",
-        "Destino final 3",
-        "Destino final 4",
-        "Destino final 5",
-        "El despertar del diablo 2",
-        "Five Nights at Freddy's 2",
-        "Zombieland: Mata y remata",
-        "Drácula",
-        "Strangers: Capítulo 2",
-        "En la oscuridad",
-        "Black Phone",
-        "It (Eso)",
-        "Resident Evil 2: Apocalipsis",
-        "Polaroid",
-        "The Quest: En busca de la ciudad perdida",
-        "Blade"
-      ],
-      "updatedAt": "2026-04-13T00:43:40.451Z"
+      "generatedAt": "2026-04-13T02:03:44.309Z",
+      "note": "Generada con TMDB + catálogo local"
     }
   },
   {
@@ -279,7 +288,8 @@
       "76",
       "118",
       "136",
-      "66"
+      "66",
+      "141"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -295,9 +305,10 @@
         "Transformers One",
         "Monstruos University",
         "Predator: Asesino de asesinos",
-        "Shrek 2"
+        "Shrek 2",
+        "El viaje de Arlo"
       ],
-      "updatedAt": "2026-04-13T01:31:05.556Z"
+      "updatedAt": "2026-04-13T02:15:32.735Z"
     }
   },
   {
@@ -314,7 +325,8 @@
       "56",
       "79",
       "105",
-      "129"
+      "129",
+      "139"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -330,8 +342,10 @@
         "La sustancia",
         "Godzilla Minus One",
         "Invasión a la Tierra",
-        "Juez Dredd"
-      ]
+        "Juez Dredd",
+        "El quinto elemento"
+      ],
+      "updatedAt": "2026-04-13T02:16:22.759Z"
     }
   },
   {
@@ -426,7 +440,6 @@
       "6",
       "106",
       "110",
-      "S1",
       "108",
       "89",
       "55",
@@ -472,7 +485,8 @@
       "83",
       "23",
       "104",
-      "41"
+      "41",
+      "139"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:32:22.329Z",
@@ -496,7 +510,6 @@
         "Better Man: La Historia de Robbie Williams",
         "Black Phone",
         "Cherry",
-        "CHUCKY",
         "Culpa nuestra",
         "Drácula",
         "Dragon Ball Z: ¡Fusión!",
@@ -542,9 +555,10 @@
         "Un buen ladrón",
         "Una joven prometedora",
         "Viuda Negra",
-        "Weapons: La hora de la desaparición"
+        "Weapons: La hora de la desaparición",
+        "El quinto elemento"
       ],
-      "updatedAt": "2026-04-13T00:33:29.024Z"
+      "updatedAt": "2026-04-13T02:17:05.719Z"
     }
   },
   {

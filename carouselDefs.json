@@ -254,7 +254,8 @@
       "71",
       "74",
       "87",
-      "122"
+      "122",
+      "146"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -270,8 +271,10 @@
         "Poseidón",
         "Anaconda",
         "Super Mario Bros",
-        "Exodus: Dioses y reyes"
-      ]
+        "Exodus: Dioses y reyes",
+        "Lilo y Stitch"
+      ],
+      "updatedAt": "2026-04-14T03:36:36.929Z"
     }
   },
   {
@@ -326,7 +329,8 @@
       "79",
       "105",
       "129",
-      "139"
+      "139",
+      "145"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -343,9 +347,10 @@
         "Godzilla Minus One",
         "Invasión a la Tierra",
         "Juez Dredd",
-        "El quinto elemento"
+        "El quinto elemento",
+        "Frankenstein"
       ],
-      "updatedAt": "2026-04-13T02:16:22.759Z"
+      "updatedAt": "2026-04-14T03:37:54.927Z"
     }
   },
   {
@@ -486,7 +491,8 @@
       "23",
       "104",
       "41",
-      "139"
+      "139",
+      "146"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:32:22.329Z",
@@ -556,9 +562,10 @@
         "Una joven prometedora",
         "Viuda Negra",
         "Weapons: La hora de la desaparición",
-        "El quinto elemento"
+        "El quinto elemento",
+        "Lilo y Stitch"
       ],
-      "updatedAt": "2026-04-13T02:17:05.719Z"
+      "updatedAt": "2026-04-14T03:37:28.728Z"
     }
   },
   {

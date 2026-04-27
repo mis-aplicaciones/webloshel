@@ -116,7 +116,9 @@
       "128",
       "131",
       "133",
-      "S1"
+      "S1",
+      "148",
+      "149"
     ],
     "meta": {
       "query": "Acción",
@@ -158,10 +160,15 @@
         "El hombre del norte",
         "El precio del mañana",
         "Dragon Ball Z: El Poder Invencible",
-        "CHUCKY"
+        "CHUCKY",
+        "Sin control",
+        "Double Team"
       ],
       "generatedAt": "2026-04-13T02:03:44.309Z",
-      "note": "Generada con TMDB + catálogo local"
+      "note": "Generada con TMDB + catálogo local",
+      "updatedAt": "2026-04-27T02:42:26.878Z",
+      "refreshedAt": "2026-04-27T02:42:26.878Z",
+      "refreshCriteria": "Acción"
     }
   },
   {
@@ -181,7 +188,8 @@
       "101",
       "114",
       "127",
-      "130"
+      "130",
+      "150"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -200,8 +208,10 @@
         "¡Este cuerpo no es el mío!",
         "ALF (La película)",
         "Paranormal Movie",
-        "17 otra vez"
-      ]
+        "17 otra vez",
+        "Espías"
+      ],
+      "updatedAt": "2026-04-27T02:38:09.672Z"
     }
   },
   {

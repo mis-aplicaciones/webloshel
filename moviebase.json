@@ -3479,5 +3479,100 @@
     "videourl": "https://archive.org/serve/ver-lilo-y-stitch-2025-online-gratis-en-espanol-ver-peliculas-ultra/Ver_Lilo_Y_Stitch_%282025%29_Online_Gratis_en_Espa%C3%B1ol_-_VerPeliculasUltra.ia.mp4",
     "tipo": 1,
     "link": "peliculas/146-lilo-y-stitch.html"
+  },
+  {
+    "id": "147",
+    "titulo": "Timecop: Policía en el tiempo",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/pQOZ3HbZTDYhGd6GDHrIp0SyONS.png",
+    "año": "1994",
+    "hora": "1 h",
+    "min": "40 min",
+    "edad": "18+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/r7HiHx473pMvYIKyksjtlgBWhMy.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/7A4FJCsG26vOi9TUwFXdZMuzmOh.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/xAwzata7tae2TOScmhAXOpxOfvV.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7A4FJCsG26vOi9TUwFXdZMuzmOh.jpg",
+    "sinopsis": "En un futuro donde es posible viajar al pasado, se ha creado la Comisión de Control del Tiempo, que realiza diversas misiones encaminadas a impedir la alteración de hechos que cambiarían el curso de la...",
+    "genero": [
+      "Suspense",
+      "Ciencia ficción",
+      "Acción",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/time-cop-esp-mx-1994/Time%20Cop%20%28ESP%20MX%29%20%281994%29.mp4",
+    "tipo": 1,
+    "link": "peliculas/147-timecop-policia-en-el-tiempo.html"
+  },
+  {
+    "id": "148",
+    "titulo": "Sin control",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/1Skf93vCmoKcKg1EAtzhaeopnwg.png",
+    "año": "2002",
+    "hora": "1 h",
+    "min": "29 min",
+    "edad": "18+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/1VYLJv67t8Adz0glLGkvL7mW84.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/7jxwtTfxWy8UbNFCZBynW8xAFpK.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/vIRMKXptDYOyYCz6YA2hVEynALq.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/7jxwtTfxWy8UbNFCZBynW8xAFpK.jpg",
+    "sinopsis": "Jack es un agente secreto que acaba de iniciar unas vacaciones con su familia. Recibe un nuevo encargo: escoltar a una ladrona de un mortífero virus que venderá al gobierno americano.",
+    "genero": [
+      "Acción",
+      "Suspense"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/ElTrenDeLaMuerte2002/El%20Tren%20De%20La%20Muerte%202002%20Doblaje%20Argentino.mp4",
+    "tipo": 1,
+    "link": "peliculas/148-sin-control.html"
+  },
+  {
+    "id": "149",
+    "titulo": "Double Team",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/HdMBm4pq45XCWZ9sEfjvvzGk1G.png",
+    "año": "1997",
+    "hora": "1 h",
+    "min": "29 min",
+    "edad": "18+",
+    "rating": "2.5",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/rITWy6vxtI8ra2HhxlNBpHFZGQc.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/ffFiduNAjRdbwwPfhsuDv4tici0.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/u5KL7BBd0CmpbahpES2NIiLltk5.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/ffFiduNAjRdbwwPfhsuDv4tici0.jpg",
+    "sinopsis": "Jack Quinn, uno de los mejores agentes antiterroristas del país, tras fracasar en su última misión contra el peligroso Stavros, despierta en La Colonia, un lugar en el que permanecerá encerrado de por vida.",
+    "genero": [
+      "Acción",
+      "Ciencia Ficción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/jean-claude-van-damme-la-colonia/JEAN%20CLAUDE%20VAN%20DAMME%20-LA%20COLONIA.mp4",
+    "tipo": 1,
+    "link": "peliculas/149-double-team.html"
+  },
+  {
+    "id": "150",
+    "titulo": "Espías",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/mULwB2sWxpzSVbeDBcyJVOleu1g.png",
+    "año": "2015",
+    "hora": "2 h",
+    "min": "0 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/Mg8uvIOUKshx9rVQuZBqVj1az6.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/a0jJMlI1Nw83EXaYmN0QHuccRXm.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/yhGygwkYZ07xmFro87cLN1xiqCt.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/a0jJMlI1Nw83EXaYmN0QHuccRXm.jpg",
+    "sinopsis": "Susan Cooper (Melissa McCarthy) es una modesta y sedentaria analista de la CIA y la heroína olvidada de las misiones más peligrosas de la agencia. Pero cuando su compañero (Jude Law) desaparece de la faz de la.",
+    "genero": [
+      "Comedia",
+      "Acción",
+      "Crimen"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/spy-una-espia-despistada/Spy%20Una%20Esp%C3%ADa%20Despistada.mp4",
+    "tipo": 1,
+    "link": "peliculas/150-espias.html"
   }
 ]

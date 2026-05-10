@@ -3574,5 +3574,101 @@
     "videourl": "https://archive.org/serve/spy-una-espia-despistada/Spy%20Una%20Esp%C3%ADa%20Despistada.mp4",
     "tipo": 1,
     "link": "peliculas/150-espias.html"
+  },
+  {
+    "id": "151",
+    "titulo": "El hombre de la máscara de hierro",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/9QEvMJhomUAn7m83kPXUkQ0pMGd.png",
+    "año": "1998",
+    "hora": "2 h",
+    "min": "12 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/nbSfG2AQIL0ST7uN7D7wN4nVqLJ.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/kXiHkJmN722BAm6yLMBs7nT5QGN.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/tAbdRYFVJdCIHnhMmIIKKjhLAF1.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/kXiHkJmN722BAm6yLMBs7nT5QGN.jpg",
+    "sinopsis": "Francia se muere de hambre, mientras el Rey Luis XIV mantiene un reinado de terror. Sólo \"los tres mosqueteros\" podrán salir al rescate. Su misión: liberar a un misterioso prisionero en La Bastilla, en cuya...",
+    "genero": [
+      "Aventura",
+      "Acción",
+      "Drama"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/el-hombre-de-la-mascara-de-hierro-1998-espanol-latino-dvd-fullscreen/El%20Hombre%20de%20la%20M%C3%A1scara%20de%20Hierro%20%281998%29%20Espa%C3%B1ol%20Latino%20DVD%20Fullscreen.mp4",
+    "tipo": 1,
+    "link": "peliculas/151-el-hombre-de-la-mascara-de-hierro.html"
+  },
+  {
+    "id": "152",
+    "titulo": "La película de Tigger",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/uxvN6mvDR6OtBUm3HHiylLp7mSg.png",
+    "año": "2000",
+    "hora": "1 h",
+    "min": "20 min",
+    "edad": "7+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/iGzgEoQKKCqVCQUiIbr7MR8IGkv.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/wU1yXNuiOdsdlyEbb9FsfShJzWm.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/tiBgDJegvy2kbapsfHf0NA46TlB.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/wU1yXNuiOdsdlyEbb9FsfShJzWm.jpg",
+    "sinopsis": "Tigger y Rito hacen una minuciosa búsqueda en el Bosque de los Cien Acres reuniendo pistas sobre la familia de Tigger.",
+    "genero": [
+      "Animación",
+      "Familia",
+      "Comedia"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/tt0220099/tt0220099.mp4",
+    "tipo": 1,
+    "link": "peliculas/152-la-pelicula-de-tigger.html"
+  },
+  {
+    "id": "153",
+    "titulo": "La casa de cera",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/zFJtSm11eird4Zv8zGmDS6FZSNn.png",
+    "año": "2005",
+    "hora": "1 h",
+    "min": "53 min",
+    "edad": "13+",
+    "rating": "3",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/yZmzr8lXgvf4VIZplvrJiYfv5FR.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/zOJzSu88GNJFBVmSFXy6Bm3IL0q.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/d9B4mYCJgy3quN3AUwBUUTfn2DF.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/zOJzSu88GNJFBVmSFXy6Bm3IL0q.jpg",
+    "sinopsis": "Seis amigos que viajan por carretera para asistir al campeonato universitario de fútbol más importante del año, deciden acampar al aire libre la víspera del partido.",
+    "genero": [
+      "Terror",
+      "Suspense",
+      "Misterio"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/la-casa-de-cera-2005-espanol-latino-vhs-rip-fullscreen/La%20Casa%20de%20Cera%20%282005%29%20Espa%C3%B1ol%20Latino%20VHS-Rip%20Fullscreen.mp4",
+    "tipo": 1,
+    "link": "peliculas/153-la-casa-de-cera.html"
+  },
+  {
+    "id": "154",
+    "titulo": "El señor de los anillos: La comunidad del anillo",
+    "titleimgUrl": "https://image.tmdb.org/t/p/original/1sLT5721gtQ45L1QnRRodQ5SB9N.png",
+    "año": "2001",
+    "hora": "2 h",
+    "min": "59 min",
+    "edad": "7+",
+    "rating": "4",
+    "backgroundUrl": "https://image.tmdb.org/t/p/original/d3wOfpqtt8RYZWEVcDgvCesrvCO.jpg",
+    "backgroundmovil": "https://image.tmdb.org/t/p/original/xXrX7u37Mcju6mfuoPxkOWMTY20.jpg",
+    "cardimgUrl": "https://image.tmdb.org/t/p/original/4eHy3KjCGfdMmAq7VmBDQ3rtJ6M.jpg",
+    "cardimgUrl2": "https://image.tmdb.org/t/p/original/xXrX7u37Mcju6mfuoPxkOWMTY20.jpg",
+    "sinopsis": "En la Tierra Media, el Señor Oscuro Saurón creó los Grandes Anillos de Poder, forjados por los herreros Elfos. Tres para los reyes Elfos, siete para los Señores Enanos, y nueve para los Hombres Mortales.",
+    "genero": [
+      "Aventura",
+      "Fantasía",
+      "Acción"
+    ],
+    "video_type": "mp4",
+    "videourl": "https://archive.org/serve/el-senor-de-los-anillos-1-la-comunidad-del-anillo-2001-espanol-latino-dvd-fullsc/El%20Se%C3%B1or%20de%20los%20Anillos%201%20La%20Comunidad%20del%20Anillo%20%282001%29%20Espa%C3%B1ol%20Latino%20DVD%20Fullscreen%20Theatrical%20Version.mp4",
+    "tipo": 1,
+    "link": "peliculas/154-el-senor-de-los-anillos-la-comunidad-del-anillo.html"
   }
 ]

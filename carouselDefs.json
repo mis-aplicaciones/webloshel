@@ -36,7 +36,10 @@
       "132",
       "138",
       "140",
-      "78"
+      "78",
+      "111",
+      "116",
+      "7"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -75,9 +78,14 @@
         "The Quest: En busca de la ciudad perdida",
         "Blade",
         "Pesadillas",
-        "Silent Hill 2: Revelación"
+        "Silent Hill 2: Revelación",
+        "Asesino de modelos",
+        "Atrapados en el abismo",
+        "Drop: Amenaza Anónima"
       ],
-      "updatedAt": "2026-04-13T02:18:55.342Z"
+      "updatedAt": "2026-05-10T03:29:57.056Z",
+      "refreshedAt": "2026-05-10T03:29:57.057Z",
+      "refreshCriteria": "Más allá del miedo"
     }
   },
   {
@@ -189,7 +197,8 @@
       "114",
       "127",
       "130",
-      "150"
+      "150",
+      "91"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -209,9 +218,12 @@
         "ALF (La película)",
         "Paranormal Movie",
         "17 otra vez",
-        "Espías"
+        "Espías",
+        "Plan en familia 2"
       ],
-      "updatedAt": "2026-04-27T02:38:09.672Z"
+      "updatedAt": "2026-05-10T03:31:17.759Z",
+      "refreshedAt": "2026-05-10T03:31:17.759Z",
+      "refreshCriteria": "Risas sin Pausa"
     }
   },
   {
@@ -302,7 +314,12 @@
       "118",
       "136",
       "66",
-      "141"
+      "141",
+      "67",
+      "68",
+      "112",
+      "57",
+      "152"
     ],
     "meta": {
       "createdAt": "2026-04-13T00:29:33.650Z",
@@ -319,9 +336,16 @@
         "Monstruos University",
         "Predator: Asesino de asesinos",
         "Shrek 2",
-        "El viaje de Arlo"
+        "El viaje de Arlo",
+        "Madagascar",
+        "Madagascar 2",
+        "Sonic 3: La película",
+        "Stuart Little",
+        "La película de Tigger"
       ],
-      "updatedAt": "2026-04-13T02:15:32.735Z"
+      "updatedAt": "2026-05-10T03:34:57.262Z",
+      "refreshedAt": "2026-05-10T03:34:29.398Z",
+      "refreshCriteria": "Magia en Movimiento"
     }
   },
   {

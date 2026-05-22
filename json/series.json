@@ -1,0 +1,12 @@
+[
+  {
+    "tmdbId": 1399,
+    "videoUrl": "https://tu-servidor.com/videos/got-s1e1.m3u8",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 66732,
+    "videoUrl": "https://tu-servidor.com/videos/otra-serie.m3u8",
+    "provider": "json"
+  }
+]

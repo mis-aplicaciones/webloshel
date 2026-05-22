@@ -2,6 +2,7 @@
   {
     "tmdbId": 1399,
     "title": "Game of Thrones",
+    "fallback": true,
     "seasons": [
       {
         "season": 1,
@@ -10,169 +11,35 @@
           {
             "episode": 1,
             "title": "Winter Is Coming",
-            "overview": "Eddard Stark recibe una inesperada visita del rey Robert.",
-            "runtime": 62,
+            "runtime": "62 min",
+            "stillPath": "/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg",
+            "provider": "main",
             "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup1.example.com/got/s1/e1/index.m3u8",
-              "https://backup2.example.com/got/s1/e1/video.mp4"
-            ],
-            "stillPath": "/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg"
+            "sources": [
+              {
+                "type": "hls",
+                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
+              },
+              {
+                "type": "mp4",
+                "url": "https://backup2.example.com/got/s1/e1/video.mp4"
+              }
+            ]
           },
+
           {
             "episode": 2,
             "title": "The Kingsroad",
-            "overview": "Los Stark parten rumbo al sur mientras Bran lucha por sobrevivir.",
-            "runtime": 56,
+            "runtime": "56 min",
+            "stillPath": "/xSZbNCSRWp5KQm3SxQ2f7A5ASc6.jpg",
+            "provider": "main",
             "videoUrl": "https://cdn.example.com/got/s1/e2/master.m3u8",
-            "backupUrls": [
-              "https://backup1.example.com/got/s1/e2/index.m3u8"
-            ],
-            "stillPath": "/xSZbNCSRWp5KQm3SxQ2f7A5ASc6.jpg"
-          }
-        ]
-      },
-      {
-        "season": 2,
-        "title": "Season 2",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "The North Remembers",
-            "overview": "Tyrion llega a King's Landing para reorganizar el reino.",
-            "runtime": 53,
-            "videoUrl": "https://cdn.example.com/got/s2/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup1.example.com/got/s2/e1/index.m3u8"
-            ],
-            "stillPath": "/l2ezA8uJxA5v6vD5K6mV8fP4xkR.jpg"
-          },
-          {
-            "episode": 2,
-            "title": "The Night Lands",
-            "overview": "Arya comparte secretos con un misterioso prisionero.",
-            "runtime": 54,
-            "videoUrl": "https://cdn.example.com/got/s2/e2/video.mp4",
-            "backupUrls": [],
-            "stillPath": "/r7q3uKxj4Wm9aJ4fQ8qQn1yXv7x.jpg"
-          }
-        ]
-      },
-      {
-        "season": 3,
-        "title": "Season 3",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "Valar Dohaeris",
-            "overview": "Jon Snow se enfrenta al Rey Más Allá del Muro.",
-            "runtime": 58,
-            "videoUrl": "https://cdn.example.com/got/s3/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup1.example.com/got/s3/e1/video.mp4"
-            ],
-            "stillPath": "/m9d6Xz2Yv4Q7kN4nA1dL5fP8rRt.jpg"
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "tmdbId": 66732,
-    "title": "Stranger Things",
-    "seasons": [
-      {
-        "season": 1,
-        "title": "Season 1",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "The Vanishing of Will Byers",
-            "overview": "Un niño desaparece misteriosamente en Hawkins.",
-            "runtime": 47,
-            "videoUrl": "https://cdn.example.com/st/s1/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup.example.com/st/s1/e1/video.mp4"
-            ],
-            "stillPath": "/AdwF2jXvhdODr6gUZ61bHKRwmn4.jpg"
-          },
-          {
-            "episode": 2,
-            "title": "The Weirdo on Maple Street",
-            "overview": "Mike esconde a Eleven mientras Joyce sigue buscando respuestas.",
-            "runtime": 55,
-            "videoUrl": "https://cdn.example.com/st/s1/e2/master.m3u8",
-            "backupUrls": [],
-            "stillPath": "/7sV0WcBq7O4rDU0V6VQp8N5tF2S.jpg"
-          }
-        ]
-      },
-      {
-        "season": 2,
-        "title": "Season 2",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "MADMAX",
-            "overview": "Una nueva chica llega a Hawkins con un misterioso pasado.",
-            "runtime": 48,
-            "videoUrl": "https://cdn.example.com/st/s2/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup.example.com/st/s2/e1/index.m3u8"
-            ],
-            "stillPath": "/oQY4V7YxM5n6cQ0dR7fL8vN3w2P.jpg"
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "tmdbId": 82856,
-    "title": "The Mandalorian",
-    "seasons": [
-      {
-        "season": 1,
-        "title": "Season 1",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "Chapter 1: The Mandalorian",
-            "overview": "Un cazarrecompensas acepta una misión especial.",
-            "runtime": 39,
-            "videoUrl": "https://cdn.example.com/mando/s1/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup.example.com/mando/s1/e1/video.mp4"
-            ],
-            "stillPath": "/gHw4ZX9yJ6k2P4hHn0Q7wV8sL5d.jpg"
-          }
-        ]
-      },
-      {
-        "season": 2,
-        "title": "Season 2",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "Chapter 9: The Marshal",
-            "overview": "Mando busca a otros mandalorianos.",
-            "runtime": 54,
-            "videoUrl": "https://cdn.example.com/mando/s2/e1/master.m3u8",
-            "backupUrls": [
-              "https://backup.example.com/mando/s2/e1/index.m3u8",
-              "https://backup2.example.com/mando/s2/e1/video.mp4"
-            ],
-            "stillPath": "/f2KpQ9vR7xD4mT0nC8aL5sY1hVg.jpg"
-          },
-          {
-            "episode": 2,
-            "title": "Chapter 10: The Passenger",
-            "overview": "Una misión peligrosa lleva a Mando a un planeta helado.",
-            "runtime": 42,
-            "videoUrl": "https://cdn.example.com/mando/s2/e2/video.mp4",
-            "backupUrls": [],
-            "stillPath": "/z7XoP4kQ2rM9fN1yV6cD8sL3wHt.jpg"
+            "sources": [
+              {
+                "type": "hls",
+                "url": "https://backup1.example.com/got/s1/e2/index.m3u8"
+              }
+            ]
           }
         ]
       }
@@ -182,6 +49,7 @@
   {
     "tmdbId": 76479,
     "title": "The Boys",
+    "fallback": true,
     "seasons": [
       {
         "season": 1,
@@ -189,57 +57,64 @@
         "episodes": [
           {
             "episode": 1,
-            "title": "",
-            "overview": "",
-            "runtime": 55,
-            "videoUrl": "",
-            "backupUrls": [],
-            "stillPath": ""
-          }
-        ]
-      },
+            "title": "The Name of the Game",
+            "runtime": "55 min",
+            "stillPath": "",
+            "provider": "archive",
+            "videoUrl": "https://archive.org/video1.m3u8",
+            "sources": [
+              {
+                "type": "mp4",
+                "url": "https://archive.org/video1.mp4"
+              }
+            ]
+          },
+
           {
             "episode": 2,
-            "title": "",
-            "overview": "",
-            "runtime": 55,
-            "videoUrl": "",
-            "backupUrls": [],
-            "stillPath": ""
+            "title": "Cherry",
+            "runtime": "58 min",
+            "stillPath": "",
+            "provider": "archive",
+            "videoUrl": "https://archive.org/video2.m3u8",
+            "sources": []
           }
         ]
       },
+
       {
         "season": 2,
         "title": "Season 2",
         "episodes": [
           {
             "episode": 1,
-            "title": "",
-            "overview": "",
-            "runtime": ,
-            "videoUrl": "",
-            "backupUrls": [
-              ""
-            ],
-            "stillPath": ""
+            "title": "The Big Ride",
+            "runtime": "54 min",
+            "stillPath": "",
+            "provider": "archive",
+            "videoUrl": "https://archive.org/video3.m3u8",
+            "sources": [
+              {
+                "type": "mp4",
+                "url": "https://archive.org/video3.mp4"
+              }
+            ]
           }
         ]
       },
+
       {
         "season": 3,
         "title": "Season 3",
         "episodes": [
           {
             "episode": 1,
-            "title": "",
-            "overview": "",
-            "runtime": ,
+            "title": "Payback",
+            "runtime": "57 min",
+            "stillPath": "",
+            "provider": "archive",
             "videoUrl": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4",
-            "backupUrls": [
-              ""
-            ],
-            "stillPath": ""
+            "sources": []
           }
         ]
       }

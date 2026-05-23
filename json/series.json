@@ -1,18 +1,13 @@
 [
   {
     "tmdbId": 1399,
-    "title": "Game of Thrones",
     "fallback": true,
     "seasons": [
       {
         "season": 1,
-        "title": "Season 1",
         "episodes": [
           {
             "episode": 1,
-            "title": "Winter Is Coming",
-            "runtime": "62 min",
-            "stillPath": "/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg",
             "provider": "main",
             "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
             "sources": [
@@ -29,9 +24,6 @@
 
           {
             "episode": 2,
-            "title": "The Kingsroad",
-            "runtime": "56 min",
-            "stillPath": "/xSZbNCSRWp5KQm3SxQ2f7A5ASc6.jpg",
             "provider": "main",
             "videoUrl": "https://cdn.example.com/got/s1/e2/master.m3u8",
             "sources": [
@@ -48,18 +40,13 @@
 
   {
     "tmdbId": 76479,
-    "title": "The Boys",
     "fallback": true,
     "seasons": [
       {
         "season": 1,
-        "title": "Season 1",
         "episodes": [
           {
             "episode": 1,
-            "title": "The Name of the Game",
-            "runtime": "55 min",
-            "stillPath": "",
             "provider": "archive",
             "videoUrl": "https://archive.org/video1.m3u8",
             "sources": [
@@ -72,9 +59,6 @@
 
           {
             "episode": 2,
-            "title": "Cherry",
-            "runtime": "58 min",
-            "stillPath": "",
             "provider": "archive",
             "videoUrl": "https://archive.org/video2.m3u8",
             "sources": []
@@ -84,13 +68,9 @@
 
       {
         "season": 2,
-        "title": "Season 2",
         "episodes": [
           {
             "episode": 1,
-            "title": "The Big Ride",
-            "runtime": "54 min",
-            "stillPath": "",
             "provider": "archive",
             "videoUrl": "https://archive.org/video3.m3u8",
             "sources": [
@@ -105,13 +85,9 @@
 
       {
         "season": 3,
-        "title": "Season 3",
         "episodes": [
           {
             "episode": 1,
-            "title": "Payback",
-            "runtime": "57 min",
-            "stillPath": "",
             "provider": "archive",
             "videoUrl": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4",
             "sources": []

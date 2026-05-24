@@ -1,13 +1,19 @@
 [
   {
-    "tmdbId": 1399,
+    "tmdbId": 76479,
+    "title": "The Boys",
     "fallback": true,
     "seasons": [
       {
         "season": 1,
+        "title": "Season 1",
+        "seasonImageUrl": "",
         "episodes": [
           {
             "episode": 1,
+            "title": "Winter Is Coming",
+            "runtime": "62 min",
+            "stillUrl": "",
             "provider": "main",
             "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
             "sources": [
@@ -20,77 +26,56 @@
                 "url": "https://backup2.example.com/got/s1/e1/video.mp4"
               }
             ]
-          },
-
+          }
+        ]
+      },
+      {
+        "season": 2,
+        "title": "Season 2",
+        "seasonImageUrl": "",
+        "episodes": [
           {
-            "episode": 2,
+            "episode": 1,
+            "title": "Winter Is Coming",
+            "runtime": "62 min",
+            "stillUrl": "",
             "provider": "main",
-            "videoUrl": "https://cdn.example.com/got/s1/e2/master.m3u8",
+            "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
             "sources": [
               {
                 "type": "hls",
-                "url": "https://backup1.example.com/got/s1/e2/index.m3u8"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "tmdbId": 76479,
-    "fallback": true,
-    "seasons": [
-      {
-        "season": 1,
-        "episodes": [
-          {
-            "episode": 1,
-            "provider": "archive",
-            "videoUrl": "https://archive.org/video1.m3u8",
-            "sources": [
+                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
+              },
               {
                 "type": "mp4",
-                "url": "https://archive.org/video1.mp4"
-              }
-            ]
-          },
-
-          {
-            "episode": 2,
-            "provider": "archive",
-            "videoUrl": "https://archive.org/video2.m3u8",
-            "sources": []
-          }
-        ]
-      },
-
-      {
-        "season": 2,
-        "episodes": [
-          {
-            "episode": 1,
-            "provider": "archive",
-            "videoUrl": "https://archive.org/video3.m3u8",
-            "sources": [
-              {
-                "type": "mp4",
-                "url": "https://archive.org/video3.mp4"
+                "url": "https://backup2.example.com/got/s1/e1/video.mp4"
               }
             ]
           }
         ]
       },
-
       {
         "season": 3,
+        "title": "Season 3",
+        "seasonImageUrl": "",
         "episodes": [
           {
             "episode": 1,
-            "provider": "archive",
-            "videoUrl": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4",
-            "sources": []
+            "title": "Revancha",
+            "runtime": "1h 4min",
+            "stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
+            "provider": "main",
+            "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
+            "sources": [
+              {
+                "type": "hls",
+                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
+              },
+              {
+                "type": "mp4",
+                "url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
+              }
+            ]
           }
         ]
       }

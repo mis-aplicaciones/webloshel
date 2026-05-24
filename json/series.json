@@ -60,23 +60,23 @@
         "seasonImageUrl": "",
         "episodes": [
           {
-            "episode": 1,
-            "title": "Revancha",
-            "runtime": "1h 4min",
-            "stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
-            "provider": "main",
-            "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
-            "sources": [
-              {
-                "type": "hls",
-                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
-              },
-              {
-                "type": "mp4",
-                "url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
-              }
-            ]
-          }
+  "episode": 1,
+  "title": "Revancha",
+  "runtime": "1h 4min",
+
+  "stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
+
+  "provider": "main",
+
+  "videoUrl": "",
+
+  "sources": [
+    {
+      "type": "mp4",
+      "url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
+    }
+  ]
+}
         ]
       }
     ]

@@ -60,23 +60,40 @@
         "seasonImageUrl": "",
         "episodes": [
           {
-  "episode": 1,
-  "title": "Revancha",
-  "runtime": "1h 4min",
+  		"episode": 1,
+  		"title": "Revancha",
+  		"runtime": "1h 4min",
 
-  "stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
+  		"stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
 
-  "provider": "main",
+  		"provider": "main",
 
-  "videoUrl": "",
+  		"videoUrl": "",
 
-  "sources": [
-    {
-      "type": "mp4",
-      "url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
-    }
-  ]
-}
+  		"sources": [
+   		 {
+      		"type": "mp4",
+      		"url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
+    		}
+  		]
+		},{
+  		"episode": 2,
+  		"title": "El único hombre en el cielo",
+  		"runtime": "1h 2min",
+
+  		"stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/zszqaeKmSNB24q2tZigx29GH7zs.jpg",
+
+  		"provider": "main",
+
+  		"videoUrl": "",
+
+  		"sources": [
+   		 {
+      		"type": "mp4",
+      		"url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
+    		}
+  		]
+		}
         ]
       }
     ]

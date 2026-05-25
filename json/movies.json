@@ -18,5 +18,10 @@
     "tmdbId": 350,
     "videoUrl": "https://archive.org/serve/el-diablo-viste-a-la-moda_202101/EL%20DIABLO%20VISTE%20A%20LA%20MODA%20%28720%29.mp4",
     "provider": "json"
+  },
+  {
+    "tmdbId": 1380291,
+    "videoUrl": "https://hlswish.com/stream/nSeYZ_Qxve4CjQWaFl3_Yw/kjhhiuahiuhgihdf/1779719665/72074734/index-a2.m3u8",
+    "provider": "json"
   }
 ]

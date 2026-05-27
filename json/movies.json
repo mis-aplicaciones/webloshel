@@ -58,5 +58,25 @@
     "tmdbId": 38575,
     "videoUrl": "https://archive.org/serve/karate-kid-2010-espanol-latino-open-matte/Karate%20Kid%20%282010%29%20Espa%C3%B1ol%20Latino%20Open%20Matte.mp4",
     "provider": "json"
+  },
+  {
+    "tmdbId": 1304313,
+    "videoUrl": "https://p5.vimeos.zip/hls2/03/00010/rm46q7vy3t52_,n,h,.urlset/master.m3u8?t=QPRt64JlOSLCHjTeNTMrI30DaHa7MoufdChk75APnV4&s=1779851441&e=43200&v=246924101&srv=s1&i=0.0&sp=0&fr=rm46q7vy3t52&r=e",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 1439930,
+    "videoUrl": "https://p5.vimeos.zip/hls2/03/00010/w6xsos8sv3h9_n/index-v1-a1.m3u8?t=UYdTI2M2yZquyw0K0Pr8EID7UyoApbwJ9XOJ2Xc2dwI&s=1779851902&e=43200&v=246932050&srv=s1&i=0.0&sp=0&fr=w6xsos8sv3h9&r=e",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 539972,
+    "videoUrl": "https://ia600701.us.archive.org/24/items/peliculas-de-marvel-comics/Kraven%20El%20Cazador.ia.mp4",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 299534,
+    "videoUrl": "https://ia800701.us.archive.org/24/items/peliculas-de-marvel-comics/UMC%202019%202%20Avengers%20Endgame.ia.mp4",
+    "provider": "json"
   }
 ]

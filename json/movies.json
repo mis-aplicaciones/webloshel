@@ -101,7 +101,7 @@
   },
   {
     "tmdbId": 120,
-    "videoUrl": "https://archive.org/serve/el-senor-de-los-anillos-1-la-comunidad-del-anillo-2001-espanol-latino-dvd-fullsc/El%20Se%C3%B1or%20de%20los%20Anillos%201%20La%20Comunidad%20del%20Anillo%20%282001%29%20Espa%C3%B1ol%20Latino%20DVD%20Fullscreen%20Theatrical%20Version.mp4",
+    "videoUrl": "https://ia601603.us.archive.org/32/items/el-senor-de-los-anillos-1-la-comunidad-del-anillo-2001-espanol-latino-dvd-fullsc/El%20Se%C3%B1or%20de%20los%20Anillos%201%20La%20Comunidad%20del%20Anillo%20%282001%29%20Espa%C3%B1ol%20Latino%20DVD%20Fullscreen%20Theatrical%20Version.mp4?cnt=0",
     "provider": "json"
   },
   {
@@ -173,5 +173,27 @@
     "tmdbId": 297802,
     "videoUrl": "https://archive.org/serve/xdrnulfs/30xxlfs.mp4",
     "provider": "json"
+  },
+  {
+    "tmdbId": 1419406,
+    "videoUrl": "https://s10.vimeos.net/hls2/02/00007/an09b31u0cht_,n,h,.urlset/master.m3u8?t=xX006qNWLt8WepF_7A45uEKd7lytxT_W_Wp2D2a0Pok&s=1780714779&e=43200&v=254738370&i=0.0&sp=0&r=e",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 19959,
+    "videoUrl": "https://archive.org/serve/identidad-sustituta/Identidad%20Sustituta.ia.mp4",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 56295,
+    "videoUrl": "https://archive.org/serve/Halo.-4.-Adelante.-Hasta.-el.amanecer.-2012.1080p.-blu-ray.x-264.-aac-5.1-yts.-mx/Halo.4.Forward.Unto.Dawn.2012.1080p.BluRay.x264.AAC5.1-%5BYTS.MX%5D.mp4",
+    "provider": "json"
+  },
+  {
+    "tmdbId": 116711,
+    "videoUrl": "https://archive.org/serve/epic-el-reino-secreto/Epic%20-%20El%20Reino%20Secreto.ia.mp4",
+    "provider": "json"
   }
+
+
 ]

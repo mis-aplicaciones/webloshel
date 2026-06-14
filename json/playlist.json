@@ -32,29 +32,29 @@
     },
     {
       "number": "105",
-      "image": "img/canalplanetatv.png",
-      "title": "PLANETA",
-      "file": "https://live.obslivestream.com/planetatv/index.m3u8"
+      "image": "img/CANAL-AEHD.png",
+      "title": "A&E HD",
+      "file": "http://tecnotv.club/wbh2/phpcode/android.php?c=a0ud&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "106",
       "image": "img/CANAL-AMC.png",
-      "title": "AMC",
+      "title": "AMC TWD",
       "file": "https://amc-amcespanol-1-us.lg.wurl.tv/playlist.m3u8"
     },
     {
       "number": "107",
-      "image": "img/canalwowtv.png",
-      "title": "WOW TV",
+      "image": "img/CANAL-AMCHD.png",
+      "title": "AMC HD",
       "file":
-        "https://cdn.elsalvadordigital.com:1936/wowtv/smil:wowtv.smil/playlist.m3u8"
+        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0um&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "108",
-      "image": "img/canalcocotv.png",
-      "title": "COCO TV",
+      "image": "img/CANAL-CN.png",
+      "title": "CARTOON NETWORK",
       "file":
-        "https://cloudflare.streamgato.us:3253/live/canalcocotvlive.m3u8"
+        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0dv&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "109",
@@ -65,10 +65,10 @@
     },
     {
       "number": "110",
-      "image": "img/CANAL-AFV.png",
-      "title": "AFV TV",
+      "image": "img/CANAL-SPACE.png",
+      "title": "SPACE",
       "file":
-        "https://linear-46.frequency.stream/dist/plex/46/hls/master/playlist.m3u8"
+        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0hb&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "111",
@@ -89,7 +89,7 @@
       "image": "img/CANAL-CINECANAL.png",
       "title": "CINECANAL",
       "file":
-        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/CINECANAL/index.m3u8"
+        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0h8&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "114",
@@ -168,10 +168,17 @@
       "title": "DMJ",
       "file":
         "https://stmv1.voxhdnet.com/dmjsurtv/dmjsurtv/playlist.m3u8"
+    },
+    {
+      "number": "125",
+      "image": "img/CANAL-HESP.png",
+      "title": "HISTORY ESPAÑOL",
+      "file":
+        "https://d1k3vzh2ivy22k.cloudfront.net/Historia.m3u8"
     }
     ,
     {
-      "number": "125",
+      "number": "126",
       "image": "img/CANAL-H2.png",
       "title": "HISTORY 2",
       "file":
@@ -179,7 +186,7 @@
     }
     ,
     {
-      "number": "126",
+      "number": "127",
       "image": "img/CANAL-PALMERASTV.png",
       "title": "PALMERAS TV",
       "file":
@@ -187,7 +194,7 @@
     }
     ,
     {
-      "number": "127",
+      "number": "128",
       "image": "img/CANAL-MEGATV.png",
       "title": "MEGA TV",
       "file":
@@ -195,7 +202,7 @@
     }
     ,
     {
-      "number": "128",
+      "number": "129",
       "image": "img/CANAL-AMERICATV.png",
       "title": "AMERICA TV",
       "file":
@@ -203,14 +210,14 @@
     }
     ,
     {
-      "number": "129",
+      "number": "130",
       "image": "img/CANAL ATV.png",
       "title": "ATV",
       "file":
-        "https://alba-pe-atv-atv.stream.mediatiquestream.com/index.m3u8"
+        "https://d2b5h5wyivfnfl.cloudfront.net/live/25046411-8673-4dec-8ae8-5b41984f34e1/ts:abr.m3u8"
     },
     {
-      "number": "130",
+      "number": "131",
       "image": "img/CANAL-SONYCHANNEL.png",
       "title": "SONY CHANNEL",
       "file":
@@ -218,17 +225,32 @@
     }
     ,
     {
-      "number": "131",
+      "number": "132",
       "image": "img/CANAL-SOLTVTRUJILLO.png",
       "title": "SOL TV",
       "file":
         "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
     },
     {
-      "number": "132",
+      "number": "133",
       "image": "img/CANAL-STUDIOUNIVERSAL.png",
       "title": "STUDIO UNIVERSAL",
       "file":
         "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"
+    },
+    {
+      "number": "134",
+      "image": "img/CANAL-FIFA-ESP.png",
+      "title": "FIFA ESP",
+      "file":
+        "https://d63fabad.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWVzX0ZJRkFQbHVzU3BhbmlzaF9ITFM/playlist.m3u8"
+    },
+    {
+      "number": "135",
+      "image": "img/CANAL-ANIVISION.png",
+      "title": "ANIME VISION",
+      "file":
+        "https://d1ujfw1zyymzyd.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-a6fukwkbxmex8/live/fast-channel-animevision-64527ec0/fast-channel-animevision-64527ec0.m3u8"
     }
+
   ]

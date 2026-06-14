@@ -68,7 +68,7 @@
       "image": "img/CANAL-SPACE.png",
       "title": "SPACE",
       "file":
-        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0hb&token=tecnotokenplustv230516F&f=.m3u8"
+        "http://tecnotv.club/wbh2/phpcode/ssiptv.php?c=a0iz&token=tecnotokenplustv230516F&f=.m3u8"
     },
     {
       "number": "111",
@@ -236,12 +236,12 @@
       "image": "img/CANAL-STUDIOUNIVERSAL.png",
       "title": "STUDIO UNIVERSAL",
       "file":
-        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/STUDIO_UNIVERSAL/index.m3u8"
+        "https://jmp2.uk/plu-5d8d180092e97a5e107638d3.m3u8"
     },
     {
       "number": "134",
       "image": "img/CANAL-FIFA-ESP.png",
-      "title": "FIFA ESP",
+      "title": "FIFA+",
       "file":
         "https://d63fabad.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWVzX0ZJRkFQbHVzU3BhbmlzaF9ITFM/playlist.m3u8"
     },

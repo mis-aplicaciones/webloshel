@@ -126,10 +126,10 @@
     },
     {
       "number": "119",
-      "image": "img/CANAL-CTV.png",
-      "title": "CTV INTERNCIONAL",
+      "image": "img/CANAL-WOWTV.png",
+      "title": "WOW TV",
       "file":
-        "https://mediacp.us:8081/ctvhn/index.m3u8"
+        "https://cdn-edge1.cef-technology.com/wow/wow_tv/playlist.m3u8"
     },
     {
       "number": "120",

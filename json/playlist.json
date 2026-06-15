@@ -39,9 +39,9 @@
     },
     {
       "number": "106",
-      "image": "img/CANAL-AEHD.png",
-      "title": "A&E HD",
-      "file": "http://tecnotv.club/wbh2/phpcode/android.php?c=a0ud&token=tecnotokenplustv230516F&f=.m3u8"
+      "image": "img/CANAL-CRIMENYHISTORIA.png",
+      "title": "CRIMEN & HISTORIA",
+      "file": "https://jmp2.uk/plu-64ddcbb14c5ed80008fad416.m3u8"
     },
     {
       "number": "107",
@@ -202,10 +202,10 @@
     ,
     {
       "number": "129",
-      "image": "img/CANAL-MEGATV.png",
-      "title": "MEGA TV",
+      "image": "img/CANAL-CRIMENWBTV.png",
+      "title": "CRIMEN",
       "file":
-        "https://mc.servidor.stream:19360/megatv/megatv.m3u8"
+        "https://jmp2.uk/plu-6732499ce40c4a0008bb9894.m3u8"
     }
     ,
     {

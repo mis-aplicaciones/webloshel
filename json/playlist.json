@@ -51,17 +51,17 @@
     },
     {
       "number": "108",
-      "image": "img/CANAL-AMCHD.png",
-      "title": "AMC HD",
+      "image": "img/CANAL-TODOCINE.png",
+      "title": "TODO CINE",
       "file":
-        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0um&token=tecnotokenplustv230516F&f=.m3u8"
+        "https://aegis-cloudfront-1.tubi.video/be9224ff-0bff-440d-aa84-40afcb2150b5/playlist.m3u8"
     },
     {
       "number": "109",
-      "image": "img/CANAL-CN.png",
-      "title": "CARTOON NETWORK",
+      "image": "img/CANAL-TODONOVELAS.png",
+      "title": "TODO NOVELAS",
       "file":
-        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0dv&token=tecnotokenplustv230516F&f=.m3u8"
+        "https://dtsszjrztq9ti.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-yshah5p4v45g1/ToDoNovelas_ES.m3u8"
     },
     {
       "number": "110",
@@ -72,17 +72,17 @@
     },
     {
       "number": "111",
-      "image": "img/CANAL-SPACE.png",
-      "title": "SPACE",
+      "image": "img/CANAL-ESTRELLASDEACCION.png",
+      "title": "ESTRELLAS DE ACCIÓN",
       "file":
-        "http://tecnotv.club/wbh2/phpcode/ssiptv.php?c=a0iz&token=tecnotokenplustv230516F&f=.m3u8"
+        "https://jmp2.uk/plu-5e972a21ad709d00074195ba.m3u8"
     },
     {
       "number": "112",
-      "image": "img/canalsonynovelas.png",
-      "title": "SONY NOVELAS",
+      "image": "img/CANAL-TWD.png",
+      "title": "THE WALKING DEAD",
       "file":
-        "https://a89829b8dca2471ab52ea9a57bc28a35.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/CanelaTV_SonyCanalNovelas/playlist.m3u8"
+        "https://jmp2.uk/plu-5e82bb378601b80007b4bd78.m3u8"
     },
     {
       "number": "113",
@@ -93,10 +93,10 @@
     },
     {
       "number": "114",
-      "image": "img/CANAL-CINECANAL.png",
-      "title": "CINECANAL",
+      "image": "img/CANAL-EXTREMAACCION.png",
+      "title": "EXTREMA ACCIÓN",
       "file":
-        "http://tecnotv.club/wbh2/phpcode/android.php?c=a0h8&token=tecnotokenplustv230516F&f=.m3u8"
+        "https://stmv6.voxtvhd.com.br/cineaccion/cineaccion/playlist.m3u8"
     },
     {
       "number": "115",
@@ -133,9 +133,9 @@
     },
     {
       "number": "120",
-      "image": "img/CANAL-SONYCOMEDY.png",
-      "title": "SONY COMEDIA",
-      "file": "https://spt-sonyonecomedias-mx.xiaomi.wurl.tv/playlist.m3u8"
+      "image": "img/CANAL-COMEDYCENTRALHD.png",
+      "title": "COMEDY CENTRAL HD",
+      "file": "http://181.119.93.83:8000/play/a1di/index.m3u8"
     }
     ,
     {
@@ -171,10 +171,10 @@
     ,
     {
       "number": "125",
-      "image": "img/CANAL-DMJ.png",
-      "title": "DMJ",
+      "image": "img/CANAL-FOXDEPORTES.png",
+      "title": "FOX DEPORTES",
       "file":
-        "https://stmv1.voxhdnet.com/dmjsurtv/dmjsurtv/playlist.m3u8"
+        "https://cors-proxy.cooks.fyi/http://23.237.104.106:8080/USA_FOX_DEPORTES/index.m3u8"
     },
     {
       "number": "126",
@@ -186,10 +186,10 @@
     ,
     {
       "number": "127",
-      "image": "img/CANAL-H2.png",
-      "title": "HISTORY 2",
+      "image": "img/CANAL-CBS.png",
+      "title": "CBS ESPAÑOL",
       "file":
-        "https://cors-proxy.cooks.fyi/https://streamer1.nexgen.bz/HISTORY2/index.m3u8"
+        "https://jmp2.uk/plu-668c5cb4f01dbe0008dd4082.m3u8"
     }
     ,
     {
@@ -226,10 +226,10 @@
     ,
     {
       "number": "132",
-      "image": "img/CANAL-SOLTVTRUJILLO.png",
-      "title": "SOL TV",
+      "image": "img/CANAL-BONCHES.png",
+      "title": "BONCHES LATINOS TV",
       "file":
-        "https://video03.logicahost.com.br/soltv/soltv/chunklist_w149003240.m3u8"
+        "https://5790d294af2dc.streamlock.net/latinostv/latinostv/playlist.m3u8"
     },
     {
       "number": "133",

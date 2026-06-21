@@ -20,11 +20,6 @@
     "provider": "json"
   },
   {
-    "tmdbId": 931285,
-    "videoUrl": "https://hlswish.com/stream/nSeYZ_Qxve4CjQWaFl3_Yw/kjhhiuahiuhgihdf/1779719665/72074734/index-a2.m3u8",
-    "provider": "json"
-  },
-  {
     "tmdbId": 105,
     "videoUrl": "https://archive.org/serve/1985-volver-al-futuro-en-espanol-latino/%281985%29%20Volver%20al%20Futuro%20%28Robert%20Zemeckis%29.mp4",
     "provider": "json"

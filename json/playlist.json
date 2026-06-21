@@ -65,10 +65,10 @@
     },
     {
       "number": "110",
-      "image": "img/canalsoltv.png",
-      "title": "SOL TV",
+      "image": "img/CANAL-NEXTHD.png",
+      "title": "NEXT HD",
       "file":
-        "https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8"
+        "https://live.enhdtv.com:19360/nexthd/nexthd.m3u8"
     },
     {
       "number": "111",
@@ -218,10 +218,10 @@
     ,
     {
       "number": "131",
-      "image": "img/CANAL-SONYCHANNEL.png",
-      "title": "SONY CHANNEL",
+      "image": "img/CANAL-CRTV.png",
+      "title": "CR TV",
       "file":
-        "https://fl25.moveonjoy.com/Sony_Movie_Channel/index.m3u8"
+        "https://live.obslivestream.com/crtvmux/index.m3u8"
     }
     ,
     {
@@ -251,6 +251,27 @@
       "title": "ANIME VISION",
       "file":
         "https://d1ujfw1zyymzyd.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-a6fukwkbxmex8/live/fast-channel-animevision-64527ec0/fast-channel-animevision-64527ec0.m3u8"
+    },
+    {
+      "number": "136",
+      "image": "img/CANAL-NORSELVA.png",
+      "title": "NORSELVA",
+      "file":
+        "https://live.obslivestream.com/norselvatv/index.m3u8"
+    },
+    {
+      "number": "137",
+      "image": "img/CANAL-IMPACTOTV.png",
+      "title": "IMPACTO TV",
+      "file":
+        "https://cloudvideo.servers10.com:8081/impactotv/index.m3u8"
+    },
+    {
+      "number": "138",
+      "image": "img/CANAL-TELECOLOR.png",
+      "title": "TELECOLOR",
+      "file":
+        "https://live.obslivestream.com/telecolormux/index.m3u8"
     }
 
   ]

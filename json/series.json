@@ -1,101 +1,48 @@
-[
-  {
-    "tmdbId": 76479,
-    "title": "The Boys",
-    "fallback": true,
-    "seasons": [
-      {
-        "season": 1,
-        "title": "Season 1",
-        "seasonImageUrl": "",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "Winter Is Coming",
-            "runtime": "62 min",
-            "stillUrl": "",
-            "provider": "main",
-            "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
-            "sources": [
-              {
-                "type": "hls",
-                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
-              },
-              {
-                "type": "mp4",
-                "url": "https://backup2.example.com/got/s1/e1/video.mp4"
-              }
-            ]
-          }
-        ]
+{
+  "4588": {
+    "title": "ER Emergencias",
+    "seasons": {
+      "1": {
+        "1": "https://ejemplo.com/supergirl/s1e1.m3u8",
+        "2": "https://ejemplo.com/supergirl/s1e2.m3u8"
       },
-      {
-        "season": 2,
-        "title": "Season 2",
-        "seasonImageUrl": "",
-        "episodes": [
-          {
-            "episode": 1,
-            "title": "Winter Is Coming",
-            "runtime": "62 min",
-            "stillUrl": "",
-            "provider": "main",
-            "videoUrl": "https://cdn.example.com/got/s1/e1/master.m3u8",
-            "sources": [
-              {
-                "type": "hls",
-                "url": "https://backup1.example.com/got/s1/e1/index.m3u8"
-              },
-              {
-                "type": "mp4",
-                "url": "https://backup2.example.com/got/s1/e1/video.mp4"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "season": 3,
-        "title": "Season 3",
-        "seasonImageUrl": "",
-        "episodes": [
-          {
-  		"episode": 1,
-  		"title": "Revancha",
-  		"runtime": "1h 4min",
-
-  		"stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/yeAHbQ11ExTFWg34gnP4dGNwfk5.jpg",
-
-  		"provider": "main",
-
-  		"videoUrl": "",
-
-  		"sources": [
-   		 {
-      		"type": "mp4",
-      		"url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
-    		}
-  		]
-		},{
-  		"episode": 2,
-  		"title": "El único hombre en el cielo",
-  		"runtime": "1h 2min",
-
-  		"stillUrl": "https://media.themoviedb.org/t/p/w227_and_h127_face/zszqaeKmSNB24q2tZigx29GH7zs.jpg",
-
-  		"provider": "main",
-
-  		"videoUrl": "",
-
-  		"sources": [
-   		 {
-      		"type": "mp4",
-      		"url": "https://archive.org/serve/the-boys-temporada-3-doblaje-original-salvadoren/Ver%20The%20Boys%203x1%20Online%20Gratis%20Capitulo%20Completo%20HD.mp4"
-    		}
-  		]
-		}
-        ]
+      "4": {
+        "1": "https://archive.org/download/ER-04/01%20-%20Emboscada.ia.mp4",
+        "2": "https://archive.org/download/ER-04/02%20-%20Algo%20nuevo.ia.mp4",
+	"3": "https://archive.org/download/ER-04/03%20-%20Fuego%20amigo.ia.mp4",
+        "4": "https://archive.org/download/ER-04/04%20-%20Cuando%20la%20rama%20se%20rompe.ia.mp4",
+	"5": "https://archive.org/download/ER-04/05%20-%20Buen%20toque%2C%20mal%20toque.ia.mp4",
+        "6": "https://archive.org/download/ER-04/06%20-%20Zona%20de%20impacto.ia.mp4",
+	"7": "https://archive.org/download/ER-04/07%20-%20Padres%20e%20hijos.ia.mp4",
+        "8": "https://archive.org/download/ER-04/08%20-%20Espect%C3%A1culo%20de%20fen%C3%B3menos.ia.mp4",
+	"9": "https://archive.org/download/ER-04/09%20-%20Obstrucci%C3%B3n%20de%20la%20justicia.ia.mp4",
+        "10": "https://archive.org/download/ER-04/10%20-%20%C2%BFVes%20lo%20que%20veo.ia.mp4",
+	"11": "https://archive.org/download/ER-04/11-%20Piensa%20en%20cosas%20buenas.ia.mp4",
+        "12": "https://archive.org/download/ER-04/12%20-%20Alivio%20agudo.ia.mp4",
+	"13": "https://archive.org/download/ER-04/13%20-%20Elecci%C3%B3n%20de%20Carter.ia.mp4",
+        "14": "https://archive.org/download/ER-04/14%20-%20Medicina%20familia.ia.mp4",
+	"15": "https://archive.org/download/ER-04/15%20-%20%C3%89xodo.ia.mp4",
+        "16": "https://archive.org/download/ER-04/16%20-%20El%20cuidador%20de%20mi%20hermano.ia.mp4",
+	"17": "https://archive.org/download/ER-04/17%20-%20Un%20lio%20sangriento.ia.mp4",
+	"18": "https://archive.org/download/ER-04/18%20-%20Reacci%C3%B3n%20visceral.ia.mp4",
+        "19": "https://archive.org/download/ER-04/19%20-%20Sombras%20de%20Grey.ia.mp4",
+	"20": "https://archive.org/download/ER-04/20%20-%20Lamentar%20el%20pasado%20y%20temer%20al%20futuro.ia.mp4",
+        "21": "https://archive.org/download/ER-04/21%20-%20%20Sufrir%20a%20los%20ni%C3%B1os%20peque%C3%B1os.ia.mp4",
+	"22": "https://archive.org/download/ER-04/22%20-%20Un%20agujero%20en%20el%20coraz%C3%B3n.ia.mp4"
       }
-    ]
+    }
+  },
+  "76479": {
+    "title": "The Boys",
+    "seasons": {
+      "1": {
+        "1": "https://ejemplo.com/theboys/s1e1.m3u8",
+        "2": "https://ejemplo.com/theboys/s1e2.m3u8"
+      },
+      "2": {
+        "1": "https://ejemplo.com/theboys/s2e1.m3u8",
+        "2": "https://ejemplo.com/theboys/s2e2.m3u8"
+      }
+    }
   }
-]
+}

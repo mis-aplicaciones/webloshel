@@ -272,6 +272,12 @@
       "title": "TELECOLOR",
       "file":
         "https://live.obslivestream.com/telecolormux/index.m3u8"
+    },
+    {
+      "number": "139",
+      "image": "img/CANAL-UNIVERSAL.png",
+      "title": "UNIVERSAL",
+      "file":
+        "http://138.121.15.230:9002/UNIVERSAL-CHANNEL/index.m3u8"
     }
-
   ]

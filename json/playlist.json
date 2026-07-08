@@ -279,5 +279,75 @@
       "title": "UNIVERSAL",
       "file":
         "http://138.121.15.230:9002/UNIVERSAL-CHANNEL/index.m3u8"
+    },
+    {
+      "number": "140",
+      "image": "img/CANAL-STUDIOUNIVERSAL.png",
+      "title": "STUDIO UNIVERSAL",
+      "file":
+        "http://138.121.15.230:9002/STUDIO-UNIVERSAL/index.m3u8"
+    },
+    {
+      "number": "141",
+      "image": "img/CANAL-SONY.png",
+      "title": "SONY",
+      "file":
+        "http://138.121.15.230:9002/SONY/index.m3u8"
+    },
+    {
+      "number": "142",
+      "image": "img/CANAL-SPACE.png",
+      "title": "SPACE",
+      "file":
+        "http://138.121.15.230:9002/SPACE/index.m3u8"
+    },
+    {
+      "number": "143",
+      "image": "img/CANAL-GOLDEN.png",
+      "title": "GOLDEN",
+      "file":
+        "http://138.121.15.230:9002/GOLDEN/index.m3u8"
+    },
+    {
+      "number": "144",
+      "image": "img/CANAL-TNT.png",
+      "title": "TNT",
+      "file":
+        "http://138.121.15.230:9002/TNT/index.m3u8"
+    },
+    {
+      "number": "145",
+      "image": "img/CANAL-CINECANAL.png",
+      "title": "CINECANAL",
+      "file":
+        "http://138.121.15.230:9002/CINECANAL/index.m3u8"
+    },
+    {
+      "number": "146",
+      "image": "img/CANAL-DISNEYCHANNEL.png",
+      "title": "DISNEY CHANNEL",
+      "file":
+        "http://45.185.163.75:8000/play/a02j/index.m3u8"
+    },
+    {
+      "number": "147",
+      "image": "img/CANAL-DISNEYJR.png",
+      "title": "DISNEYJR",
+      "file":
+        "http://177.234.249.178:8888/DISNEY-JR/index.m3u8"
+    },
+    {
+      "number": "148",
+      "image": "img/CANAL-AXN.png",
+      "title": "AXN",
+      "file":
+        "http://138.121.15.230:9002/AXN/index.m3u8"
+    },
+    {
+      "number": "149",
+      "image": "img/CANAL-A&E.png",
+      "title": "A&E",
+      "file":
+        "http://138.121.15.230:9002/A&E/index.m3u8"
     }
   ]

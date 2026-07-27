@@ -1,0 +1,17 @@
+{
+  "id": "loshel_native",
+  "name": "LoShel Native Cloud Backend",
+  "version": "1.0.0",
+  "adapter_type": "loshel_api",
+  "capabilities": {
+    "discovery_method": "api_v1_catalog",
+    "verification_method": "api_v1_health",
+    "playback_type": "loshel_hls_stream"
+  },
+  "config": {
+    "base_url": "https://api.loshel.app",
+    "catalog_endpoint": "/v1/catalog/available",
+    "rate_limit_ms": 50,
+    "max_concurrent": 20
+  }
+}

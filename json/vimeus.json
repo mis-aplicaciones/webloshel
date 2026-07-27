@@ -1,0 +1,18 @@
+{
+  "id": "vimeus_prod",
+  "name": "Vimeus Stream Network",
+  "version": "1.0.0",
+  "adapter_type": "vimeus_http",
+  "capabilities": {
+    "discovery_method": "http_scrape",
+    "verification_method": "head_probe",
+    "playback_type": "vimeus_embed_resolver"
+  },
+  "config": {
+    "base_url": "https://vimeus.com",
+    "movie_pattern": "https://vimeus.com/e/movie?tmdb={tmdb_id}",
+    "series_pattern": "https://vimeus.com/e/serie?tmdb={tmdb_id}&se={season}&ep={episode}",
+    "rate_limit_ms": 200,
+    "max_concurrent": 5
+  }
+}

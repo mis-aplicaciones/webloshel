@@ -1,0 +1,9 @@
+{
+  "active_server_id": "vimeus_prod",
+  "name": "Vimeus Stream Network",
+  "resolver_type": "vimeus_embed_resolver",
+  "resolver_config": {
+    "pattern": "https://vimeus.com/e/movie?tmdb={tmdb_id}"
+  },
+  "updated_at": 1785124021
+}

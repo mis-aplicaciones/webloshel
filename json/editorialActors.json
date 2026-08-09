@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "actors": [
+    {
+      "id": "jackie-chan",
+      "tmdbId": 18897,
+      "displayName": "Jackie Chan",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "jet-li",
+      "tmdbId": 1336,
+      "displayName": "Jet Li",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "donnie-yen",
+      "tmdbId": 1337,
+      "displayName": "Donnie Yen",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "michelle-yeoh",
+      "tmdbId": 1620,
+      "displayName": "Michelle Yeoh",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "keanu-reeves",
+      "tmdbId": 6384,
+      "displayName": "Keanu Reeves",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "tom-cruise",
+      "tmdbId": 500,
+      "displayName": "Tom Cruise",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "denzel-washington",
+      "tmdbId": 5292,
+      "displayName": "Denzel Washington",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "brad-pitt",
+      "tmdbId": 287,
+      "displayName": "Brad Pitt",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "leonardo-dicaprio",
+      "tmdbId": 6193,
+      "displayName": "Leonardo DiCaprio",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "scarlett-johansson",
+      "tmdbId": 1245,
+      "displayName": "Scarlett Johansson",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "will-smith",
+      "tmdbId": 2888,
+      "displayName": "Will Smith",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "arnold-schwarzenegger",
+      "tmdbId": 1100,
+      "displayName": "Arnold Schwarzenegger",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "sylvester-stallone",
+      "tmdbId": 16483,
+      "displayName": "Sylvester Stallone",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "jason-statham",
+      "tmdbId": 976,
+      "displayName": "Jason Statham",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "liam-neeson",
+      "tmdbId": 3896,
+      "displayName": "Liam Neeson",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "harrison-ford",
+      "tmdbId": 3,
+      "displayName": "Harrison Ford",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "tom-hanks",
+      "tmdbId": 31,
+      "displayName": "Tom Hanks",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "robert-downey-jr",
+      "tmdbId": 3223,
+      "displayName": "Robert Downey Jr.",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "chris-hemsworth",
+      "tmdbId": 74568,
+      "displayName": "Chris Hemsworth",
+      "enabled": true,
+      "priority": 100
+    },
+    {
+      "id": "chris-evans",
+      "tmdbId": 16828,
+      "displayName": "Chris Evans",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "ryan-reynolds",
+      "tmdbId": 10859,
+      "displayName": "Ryan Reynolds",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "hugh-jackman",
+      "tmdbId": 6968,
+      "displayName": "Hugh Jackman",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "matt-damon",
+      "tmdbId": 1892,
+      "displayName": "Matt Damon",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "ben-affleck",
+      "tmdbId": 880,
+      "displayName": "Ben Affleck",
+      "enabled": true,
+      "priority": 90
+    },
+    {
+      "id": "johnny-depp",
+      "tmdbId": 85,
+      "displayName": "Johnny Depp",
+      "enabled": true,
+      "priority": 90
+    },
+    {
+      "id": "jennifer-lawrence",
+      "tmdbId": 72129,
+      "displayName": "Jennifer Lawrence",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "angelina-jolie",
+      "tmdbId": 11701,
+      "displayName": "Angelina Jolie",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "natalie-portman",
+      "tmdbId": 524,
+      "displayName": "Natalie Portman",
+      "enabled": true,
+      "priority": 90
+    },
+    {
+      "id": "morgan-freeman",
+      "tmdbId": 192,
+      "displayName": "Morgan Freeman",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "samuel-l-jackson",
+      "tmdbId": 2231,
+      "displayName": "Samuel L. Jackson",
+      "enabled": true,
+      "priority": 95
+    },
+    {
+      "id": "jack-nicholson",
+      "tmdbId": 514,
+      "displayName": "Jack Nicholson",
+      "enabled": true,
+      "priority": 90
+    }
+  ]
+}

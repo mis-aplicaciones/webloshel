@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "editorialActorsVersion": 1,
+  "updatedAt": "2026-08-09T00:00:00Z",
+  "rows": {
+    "popularActors": {
+      "enabled": true
+    }
+  }
+}

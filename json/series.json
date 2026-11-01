@@ -1,47 +1,1379 @@
 {
-  "4588": {
-    "title": "ER Emergencias",
-    "seasons": {
-      "1": {
-        "1": "https://ejemplo.com/supergirl/s1e1.m3u8",
-        "2": "https://ejemplo.com/supergirl/s1e2.m3u8"
-      },
-      "4": {
-        "1": "https://archive.org/download/ER-04/01%20-%20Emboscada.ia.mp4",
-        "2": "https://archive.org/download/ER-04/02%20-%20Algo%20nuevo.ia.mp4",
-	"3": "https://archive.org/download/ER-04/03%20-%20Fuego%20amigo.ia.mp4",
-        "4": "https://archive.org/download/ER-04/04%20-%20Cuando%20la%20rama%20se%20rompe.ia.mp4",
-	"5": "https://archive.org/download/ER-04/05%20-%20Buen%20toque%2C%20mal%20toque.ia.mp4",
-        "6": "https://archive.org/download/ER-04/06%20-%20Zona%20de%20impacto.ia.mp4",
-	"7": "https://archive.org/download/ER-04/07%20-%20Padres%20e%20hijos.ia.mp4",
-        "8": "https://archive.org/download/ER-04/08%20-%20Espect%C3%A1culo%20de%20fen%C3%B3menos.ia.mp4",
-	"9": "https://archive.org/download/ER-04/09%20-%20Obstrucci%C3%B3n%20de%20la%20justicia.ia.mp4",
-        "10": "https://archive.org/download/ER-04/10%20-%20%C2%BFVes%20lo%20que%20veo.ia.mp4",
-	"11": "https://archive.org/download/ER-04/11-%20Piensa%20en%20cosas%20buenas.ia.mp4",
-        "12": "https://archive.org/download/ER-04/12%20-%20Alivio%20agudo.ia.mp4",
-	"13": "https://archive.org/download/ER-04/13%20-%20Elecci%C3%B3n%20de%20Carter.ia.mp4",
-        "14": "https://archive.org/download/ER-04/14%20-%20Medicina%20familia.ia.mp4",
-	"15": "https://archive.org/download/ER-04/15%20-%20%C3%89xodo.ia.mp4",
-        "16": "https://archive.org/download/ER-04/16%20-%20El%20cuidador%20de%20mi%20hermano.ia.mp4",
-	"17": "https://archive.org/download/ER-04/17%20-%20Un%20lio%20sangriento.ia.mp4",
-	"18": "https://archive.org/download/ER-04/18%20-%20Reacci%C3%B3n%20visceral.ia.mp4",
-        "19": "https://archive.org/download/ER-04/19%20-%20Sombras%20de%20Grey.ia.mp4",
-	"20": "https://archive.org/download/ER-04/20%20-%20Lamentar%20el%20pasado%20y%20temer%20al%20futuro.ia.mp4",
-        "21": "https://archive.org/download/ER-04/21%20-%20%20Sufrir%20a%20los%20ni%C3%B1os%20peque%C3%B1os.ia.mp4",
-	"22": "https://archive.org/download/ER-04/22%20-%20Un%20agujero%20en%20el%20coraz%C3%B3n.ia.mp4"
+  "catalogVersion": 1,
+  "updatedAt": 1792816322,
+  "series": {
+    "2004": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-q4au60sy5xu0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/1.1Malcolmpiloto_201806/1.1%20malcolm%20%28piloto%29.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/M41c01mTeM1dd1e1x01PilotoHDMalcolmEnVivo/Malcolm%20In%20The%20Middle%201x01_Piloto_HD_%40MalcolmEnVivo.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://playmogo.com/e/fo8rosuugdiu",
+                "provider": "embed"
+              }
+            ],
+            "2": [
+              {
+                "url": "https://fastream.to/embed-bm0xx6n53ajv.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E02.mp4",
+                "provider": "json"
+              }
+            ],
+            "3": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E03.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E03.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-dd5789jmei3c.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/3?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "4": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E04.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E04.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-d1ys7osdpz00.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/4?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "5": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E05.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E05.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-o0i8gj5vtl79.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/5?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "6": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E06.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E06.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-ivgqfnj6g4hz.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/6?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "7": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E07.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E07.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm_in_the_middle_season_1/Commentary%20tracks%20%28ep.%207-12%29.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-af007ntg3zoj.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/7?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "8": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E08.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E08.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-rymt22kzp2df.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/8?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "9": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E09.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E09.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-313p8cie9w6f.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/9?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "10": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E10.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E10.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-yap7iyitsu5s.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/10?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "11": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E11.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E11.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-r5th82swmdxj.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/11?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "12": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E12.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E12.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-a2g2pgg94cqo.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/12?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "13": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E13.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E13.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm_in_the_middle_season_1/Commentary%20tracks%20%28ep.%2013-16%29.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-fcvqo5xb7cid.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/13?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "14": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E14.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E14.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-ikghjwpd2lcd.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/14?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "15": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E15.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E15.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-bcx3dhvgusui.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/15?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "16": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-01_202412/Malcolm%20El%20De%20En%20Medio%20S01E16.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-01/Malcolm%20El%20De%20En%20Medio%20T01E16.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-khc3oyrv9k5m.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/1/16?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        },
+        "2": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-jtj412rb7ybx.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/1?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "2": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E02.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E02.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-xkc6l6eiw3be.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/2?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "3": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E03.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E03.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-8musvpk1i8f0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/3?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "4": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E04.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E04.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-m5qmloe3p982.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/4?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "5": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E05.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E05.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-41loowantdu0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/5?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "6": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E06.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E06.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-p8rjmnw1rn09.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/6?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "7": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E07.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E07.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-sivtj74jqf70.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/7?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "8": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E08.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E08.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-yfpaeh5is1ll.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/8?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "9": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E09.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E09.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-ec4vmze4dw6l.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/9?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "10": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E10.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E10.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-r5qq9712xw9a.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/10?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "11": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E11.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E11.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-umek99kz1ic5.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/11?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "12": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E12.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E12.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-4h7qbn7vy7e3.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/12?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "13": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E13.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E13.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-bqmodo7ppdc3.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/13?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "14": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E14.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E14.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-32so7a2fwst2.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/14?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "15": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E15.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E15.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-thkrwu5ojnpb.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/15?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "16": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E16.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E16.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-un2m3vab70re.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/16?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "17": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E17.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E17.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-zm35c0clwqu7.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/17?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "18": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E18.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E18.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-4cwhqgytom77.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/18?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "19": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E19.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E19.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-idrs7zqbd12n.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/19?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "20": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E20.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E20.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-8izc8nv12hzq.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/20?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "21": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E21.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E21.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-tny3z5qaet94.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/21?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "22": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E22.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E22.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-lqzhv80yk6wy.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/22?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "23": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E23.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E23.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-owpyabd1btyd.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/23?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "24": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E24.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E24.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-64mtd5n44iry.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/24?lang=latino",
+                "provider": "json"
+              }
+            ],
+            "25": [
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-t-02/Malcolm%20El%20De%20En%20Medio%20T02E25.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/malcolm-el-de-en-medio-s-02/Malcolm%20El%20De%20En%20Medio%20S02E25.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-xnkjdrhr3886.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0212671/2/25?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
       }
-    }
-  },
-  "4604": {
-    "title": "Smallville",
-    "seasons": {
-      "1": {
-        "1": "https://archive.org/download/ER-04/01%20-%20Emboscada.ia.mp4",
-        "2": "https://archive.org/download/ER-04/02%20-%20Algo%20nuevo.ia.mp4"
-      },
-      "2": {
-        "1": "https://archive.org/download/ER-04/16%20-%20El%20cuidador%20de%20mi%20hermano.ia.mp4",
-        "2": "https://archive.org/download/ER-04/19%20-%20Sombras%20de%20Grey.ia.mp4"
+    },
+    "312359": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt39395275/1/1?lang=latino",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-h6ahc3vzojao.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/dragon-ball-super-beerus-episodio-1/Dragon%20Ball%20Super%20Beerus%20Epis%C3%B3dio%201.mp4",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "276161": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/gk-k-dramas-asi-aprenderas/1.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/teach-you-a-lesson-episode-1/Teach%20You%20a%20Lesson%20Episode%201.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt34809853/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt34809853/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "299167": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/paixaoflix-rancho-dutton-temporada-01/rancho-dutton_s01e01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-rphgtvyc9r5g.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-cppizrhx6zbb.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-3nyth9scphhg.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt34991493/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "229544": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-o1e92m7hnxic.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-gabc3227ylmo.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt28230655/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt28230655/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "278573": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/perfect-crown.-episode-4.kisskh/Perfect-Crown.Episode-1.kisskh.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/perfect.-crown.-s-01e-01.-x-265.720-p.-dsnp.-web-dl-aric-dramaday.-me/Perfect.Crown.S01e01.X265.720P.Dsnp.Web-Dl-Aric%20%5BDramaday.Me%5D.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/perfect-crown-season-1-episode-4-2026-webdl-1776530259.mp-4_202604/Lk21.DE-Perfect-Crown-Season-1-Episode-4-2026-WEBDL-1776530259.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt39333617/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt39333617/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "1396": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/breaking-bad-s-01-e-01_202604/Breaking%20Bad%20S01E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/20200522_20200522_1309breaking-bad-season-01/Breaking%20Bad%20Season%2001/Breaking%20Bad%20-%20S01E01%20-%20Pilot.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-poivxm8vdn8l.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-a0ulkn0p1jof.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-lg1pxvbvk7s7.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-uz1z7ds3ic7a.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0903747/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "273240": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt33546863/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "214999": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-ggpjm2k9n3vk.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-vecwfo0d037e.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt27042206/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt27042206/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "85077": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/cap-1-8/Cap%201.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-bnjar1bcafgb.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt5622316/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt5622316/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "209867": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt22248376/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt22248376/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "322430": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-smwh9viajchr.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-lonjxq08ttr7.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-qw7xubjocusk.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt42543947/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt42543947/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "259666": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt32896333/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt32896333/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "219246": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/when-life-gives-you-tangerines-s-01-e-01-by-shubham/When%20Life%20Gives%20You%20Tangerines%20S01E01%20by%20shubham.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/when-life-gives-you-tangerines-s01-1080p-2160p-nf-web-dl-ddp5-1-atmos-h264/When.Life.Gives.You.Tangerines.S01E01.Spring.in.a.Heartbeat.1080p.NF.WEB-DL.DDP5.1.Atmos.H.264-HBO.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/when-life-gives-you-tangerines/When-Life-Gives-You-Tangerines_S01E01_Spring-in-a-Heartbeat.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt26471411/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt26471411/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "245026": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-61se6jkgb1ik.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-xoaixezlu3q1.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-hvk6gph7r2rj.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-fvullx73xl2e.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-qwmhouud8fie.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-ruly5iiv7p07.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-4i7vjc01jzk7.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-ojr4l46xyw0f.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-jljtxahn1ruy.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-p7vjjbtsmtkp.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-qos3micc508q.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-fe9opdacd86r.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-oz69z9fm0bbi.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-bggis5owrzp8.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-gqhaft8a2mro.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-q87fbqwxa4vg.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-l4tf8as4tun2.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-2vgr360tk3az.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-rpcp76sqs8lv.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-mrjk5omqwu58.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-7jg37awdjb8j.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-roft0l1z5o5r.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-d2ni1tu1lsz2.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-vqldqr05kl7z.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-jocrylcflxri.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-svr3ad499aok.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-el3ztayowsat.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-k64u7b8q5wx9.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-f15nhxnjywoy.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-6i3kvqfas431.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt31867798/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt31867798/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "259837": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/the-wonderfools-s-01-e-01/The%20WONDERfools%20S01E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/the.-wonderfools.-s-01e-01.-x-265.720-p.-nf.-web-dl-marky-dramaday.-me/The.Wonderfools.S01e01.X265.720P.Nf.Web-Dl-Marky%20%5BDramaday.Me%5D.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-2jvpy7gtrtha.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-tduikc8k4dxt.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-nt98ptigzou0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt34440854/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "246": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/avatar-the-last-airbender-3/S01E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/avatar-the-last-airbender-s1-hindi-480p/01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-u7epgdaix521.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-i178e6w8uu9k.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt0417299/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0417299/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "284445": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/takopis_original_sin/01-To%20You%20in%202016.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt36988358/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt36988358/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "37854": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt0388629/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt0388629/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "94605": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-4oum3texu24o.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://unlimplay.com/f/embed/tv/tt11126994/1/1",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt11126994/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "250307": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/serve/PaixaoFlix-The-Pitt-1-Temporada/The%20Pitt%20S01E01.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://playlatinsrc.co/custom/serial/tt31938062/1/1?lang=latino",
+                "provider": "json"
+              }
+            ]
+          }
+        }
       }
     }
   }

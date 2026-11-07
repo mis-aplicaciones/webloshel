@@ -1,14 +1,14 @@
 {
   "manifestSchemaVersion": 1,
-  "catalogCommit": "1c99d587134b72d62655224aa3fe751f6998303e",
+  "catalogCommit": "SHA_COMPLETO_DEL_COMMIT_C",
   "movies": {
     "path": "json/movies.json",
-    "sizeBytes": 38782,
-    "sha256": "23cfef33ec7ba08eae0aa59511deebf06cb8fa2bba8a6224ecfe20e786c295cc"
+    "sizeBytes": 0,
+    "sha256": "SHA256_REAL_MOVIES"
   },
   "series": {
     "path": "json/series.json",
-    "sizeBytes": 50377,
-    "sha256": "8f09d1cae844f30643d39b5799f23ab0e94c00ee4ec45f0b622f827910e9e604"
+    "sizeBytes": 0,
+    "sha256": "SHA256_REAL_SERIES"
   }
 }

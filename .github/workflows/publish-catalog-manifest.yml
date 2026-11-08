@@ -1,0 +1,68 @@
+name: Publish catalog manifest
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - json/movies.json
+      - json/series.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: catalog-manifest-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout complete history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate pair and prepare manifest
+        id: catalog
+        run: >-
+          python scripts/publish_catalog_manifest.py
+          --repository .
+          --output json/catalog-manifest.json
+          --expected-head "${{ github.sha }}"
+
+      - name: Report incomplete pair
+        if: steps.catalog.outputs.action == 'pending'
+        run: echo "::notice::${{ steps.catalog.outputs.message }}"
+
+      - name: Verify and publish manifest
+        if: steps.catalog.outputs.action == 'publish'
+        env:
+          CATALOG_COMMIT: ${{ steps.catalog.outputs.catalog_commit }}
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- json/movies.json json/series.json
+          changed="$(git diff --name-only)"
+          test "$changed" = "json/catalog-manifest.json"
+
+          git fetch origin main
+          remote_head="$(git rev-parse origin/main)"
+          if [ "$remote_head" != "$CATALOG_COMMIT" ]; then
+            echo "::error::main cambio durante la validacion; una ejecucion posterior revalidara la pareja."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- json/catalog-manifest.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish catalog manifest"
+          git push origin HEAD:main

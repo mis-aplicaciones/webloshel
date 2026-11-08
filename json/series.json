@@ -1,6 +1,6 @@
 {
   "catalogVersion": 1,
-  "updatedAt": 1794105063,
+  "updatedAt": 1794166361,
   "series": {
     "2004": {
       "seasons": {
@@ -2200,6 +2200,944 @@
               {
                 "url": "https://fastream.to/embed-xjy0hr98up8d.html",
                 "provider": "embed"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "4239": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "13": [
+              {
+                "url": "https://archive.org/serve/s-01-e-06-bardo-en-lo-de-dardo-nf-480p/T1-013.%20Mar%20de%20las%20Pompas%20f%C3%BAnebres%20%28Parte%201%29%20%5B480p%5D.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://archive.org/serve/s-01-e-06-bardo-en-lo-de-dardo-nf-480p/T2-13.%20Mu%C3%B1eca%20brava%20%5B480p%5D.mp4",
+                "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "12609": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://archive.org/download/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf%2F01.El%20secreto%20de%20la%20esfera%20del%20drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "43": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/43.La%20casa%20de%20Bulma%20al%20oeste%20de%20la%20Metr%C3%B3poli.mp4",
+                "provider": "json"
+              }
+            ],
+            "44": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/44.Goku%20y%20sus%20amigos%20en%20terribles%20aprietos.mp4",
+                "provider": "json"
+              }
+            ],
+            "45": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/45.%C2%A1Cuidado%21%20hay%20una%20trampa.mp4",
+                "provider": "json"
+              }
+            ],
+            "46": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/46.El%20fracaso%20total%20de%20Bulma.mp4",
+                "provider": "json"
+              }
+            ],
+            "47": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/47.Encuentran%20la%20casa%20de%20Roshi.mp4",
+                "provider": "json"
+              }
+            ],
+            "48": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/48.%C2%A1El%20General%20Blue%20empieza%20a%20atacar%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "49": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/49.Cuidado%20con%20el%20enemigo.mp4",
+                "provider": "json"
+              }
+            ],
+            "50": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/50.El%20secreto%20de%20los%20piratas.mp4",
+                "provider": "json"
+              }
+            ],
+            "51": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/51.El%20guardia%20de%20las%20profundidades.mp4",
+                "provider": "json"
+              }
+            ],
+            "52": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/52.%C2%A1Grandioso%21%20Hemos%20encontrado%20el%20tesoro.mp4",
+                "provider": "json"
+              }
+            ],
+            "53": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/53.La%20cueva%20siniestra.mp4",
+                "provider": "json"
+              }
+            ],
+            "54": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/54.El%20escape.mp4",
+                "provider": "json"
+              }
+            ],
+            "55": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/55.Camino%20a%20Villa%20Ping%C3%BCino.mp4",
+                "provider": "json"
+              }
+            ],
+            "56": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/56.Arale%20viaja%20en%20la%20nube%20voladora.mp4",
+                "provider": "json"
+              }
+            ],
+            "57": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/57.Arale%20contra%20el%20General%20Blue.mp4",
+                "provider": "json"
+              }
+            ],
+            "58": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/58.La%20Tierra%20Sagrada.mp4",
+                "provider": "json"
+              }
+            ],
+            "59": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/59.Tao%20PaiPai%2C%20el%20exterminador%20m%C3%A1s%20famoso%20del%20mundo%20ha%20llegado.mp4",
+                "provider": "json"
+              }
+            ],
+            "60": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/60.La%20fuerza%20Kame%20Hame%20contra%20Tao%20Pai%20Pai.mp4",
+                "provider": "json"
+              }
+            ],
+            "61": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/61.La%20torre%20del%20maestro%20Karin.mp4",
+                "provider": "json"
+              }
+            ],
+            "62": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/62.El%20beneficio%20del%20agua%20ultra%20sagrada.mp4",
+                "provider": "json"
+              }
+            ],
+            "63": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/63.Goku%20contraataca.mp4",
+                "provider": "json"
+              }
+            ],
+            "64": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/64.El%20final%20de%20Tao%20Pai%20Pai.mp4",
+                "provider": "json"
+              }
+            ],
+            "66": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/66.El%20%C3%BAltimo%20esfuerzo%20de%20la%20Patrulla%20Roja.mp4",
+                "provider": "json"
+              }
+            ],
+            "67": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/67.El%20comandante%20de%20la%20patrulla%20roja%20muere.mp4",
+                "provider": "json"
+              }
+            ],
+            "68": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/68.La%20%C3%BAltima%20Esfera%20del%20Drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "69": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/69.Qui%C3%A9n%20es%20Uranai%20Baba.mp4",
+                "provider": "json"
+              }
+            ],
+            "70": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/70.El%20ataque%20de%20los%20cinco%20guerreros.mp4",
+                "provider": "json"
+              }
+            ],
+            "71": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/71.Una%20batalla%20sangrienta%20y%20mortal.mp4",
+                "provider": "json"
+              }
+            ],
+            "72": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/72.La%20pelea%20de%20Goku%20en%20el%20ba%C3%B1o%20del%20diablo.mp4",
+                "provider": "json"
+              }
+            ],
+            "73": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/73.Qu%C3%A9%20es%20el%20resplandor%20mortal%20del%20diablo.mp4",
+                "provider": "json"
+              }
+            ],
+            "74": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/74.El%20misterioso%20quinto%20participante.mp4",
+                "provider": "json"
+              }
+            ],
+            "75": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/75.%C2%A1Qu%C3%A9%21%20%C2%A1El%20poderoso%20adversario%20result%C3%B3%20ser%20un%20viejo%20amigo%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "76": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/76.La%20verdadera%20identidad%20del%20hombre%20enmascarado%20es....mp4",
+                "provider": "json"
+              }
+            ],
+            "77": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/77.El%20gran%20plan%20de%20Pilaf.mp4",
+                "provider": "json"
+              }
+            ],
+            "78": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/78.Otra%20vez%20el%20Dios%20Drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "79": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/79.Oro%2C%20Plata%20y%20una%20cantimplora%20come%20hombres.mp4",
+                "provider": "json"
+              }
+            ],
+            "80": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/80.Una%20pelea%20ante%20la%20presencia%20del%20rey%2C%20Goku%20vs%20Ten%20Long.mp4",
+                "provider": "json"
+              }
+            ],
+            "81": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/81.Goku%20va%20a%20la%20tierra%20del%20Demonio.mp4",
+                "provider": "json"
+              }
+            ],
+            "2": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/02.La%20b%C3%BAsqueda%20del%20emperador.mp4",
+                "provider": "json"
+              }
+            ],
+            "3": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/03.La%20nube%20dorada%20de%20Roshi.mp4",
+                "provider": "json"
+              }
+            ],
+            "4": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/04.Oolong%2C%20el%20secuestrador%20de%20ni%C3%B1as.mp4",
+                "provider": "json"
+              }
+            ],
+            "5": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/05.El%20misterioso%20y%20malvado%20Yamcha%20vive%20en%20el%20desierto.mp4",
+                "provider": "json"
+              }
+            ],
+            "6": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/06.Vigila%20la%20esfera%20del%20drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "7": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/07.Ox-Sat%C3%A1n%20en%20la%20monta%C3%B1a%20de%20fuego.mp4",
+                "provider": "json"
+              }
+            ],
+            "8": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/08.El%20Kame%20Hame%20Ha%20de%20Roshi.mp4",
+                "provider": "json"
+              }
+            ],
+            "9": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/09.El%20truco%20especial%20del%20Jefe%20Conejo.mp4",
+                "provider": "json"
+              }
+            ],
+            "10": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/10.Las%20esferas%20del%20drag%C3%B3n%20han%20sido%20robadas.mp4",
+                "provider": "json"
+              }
+            ],
+            "11": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/11.El%20drag%C3%B3n%20ha%20sido%20llamado.mp4",
+                "provider": "json"
+              }
+            ],
+            "12": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/12.Un%20deseo%20pedido%20al%20Dios%20drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "13": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/1%20-%20Saga%20de%20Pilaf/13.La%20metamorfosis%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "14": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/14.El%20rival%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "15": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/15.La%20misteriosa%20ni%C3%B1a%20Lunch.mp4",
+                "provider": "json"
+              }
+            ],
+            "16": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/16.La%20cacer%C3%ADa%20de%20piedras.mp4",
+                "provider": "json"
+              }
+            ],
+            "17": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/17.Los%20repartidores%20de%20leche.mp4",
+                "provider": "json"
+              }
+            ],
+            "18": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/18.Entrenando%20al%20estilo%20de%20Roshi.mp4",
+                "provider": "json"
+              }
+            ],
+            "19": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/19.El%20gran%20torneo%20de%20Artes%20Marciales.mp4",
+                "provider": "json"
+              }
+            ],
+            "20": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/20.Podr%C3%A1%20el%20duro%20entrenamiento%20ser%20puesto%20en%20pr%C3%A1ctica.mp4",
+                "provider": "json"
+              }
+            ],
+            "21": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/21.%C2%A1Alerta%20Krilin%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "22": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/22.%C2%A1Yamcha%20vs%20Jackie%20Chun%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "23": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/23.El%20horrible%20Gilan.mp4",
+                "provider": "json"
+              }
+            ],
+            "24": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/24.El%20fren%C3%A9tico%20ataque%20de%20krilin.mp4",
+                "provider": "json"
+              }
+            ],
+            "25": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/25.El%20terrible%20ataque%20a%C3%A9reo%20de%20Nam.mp4",
+                "provider": "json"
+              }
+            ],
+            "26": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/26.La%20fuerza%20Kame%20Hame%20al%20ataque.mp4",
+                "provider": "json"
+              }
+            ],
+            "27": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/27.Goku%20en%20graves%20aprietos.mp4",
+                "provider": "json"
+              }
+            ],
+            "28": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/2%20-%20Saga%2021%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/28.Goku%20ha%20desaparecido.mp4",
+                "provider": "json"
+              }
+            ],
+            "29": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/29.El%20r%C3%ADo%20que%20pod%C3%ADa%20moverse.mp4",
+                "provider": "json"
+              }
+            ],
+            "30": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/30.El%20marciano%20y%20La%20patrulla%20misteriosa.mp4",
+                "provider": "json"
+              }
+            ],
+            "31": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/31.Goku%20crey%C3%B3%20encontrarla.mp4",
+                "provider": "json"
+              }
+            ],
+            "32": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/32.La%20fortaleza%20voladora%20desapareci%C3%B3.mp4",
+                "provider": "json"
+              }
+            ],
+            "33": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/33.La%20leyenda%20del%20Drag%C3%B3n.mp4",
+                "provider": "json"
+              }
+            ],
+            "34": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/34.El%20ej%C3%A9rcito%20list%C3%B3n%20rojo%20y%20su%20cruel%20comandante%20general.mp4",
+                "provider": "json"
+              }
+            ],
+            "35": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/35.Suno%2C%20la%20peque%C3%B1a%20ni%C3%B1a%20de%20la%20aldea%20del%20norte.mp4",
+                "provider": "json"
+              }
+            ],
+            "36": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/36.La%20batalla%20con%20el%20sargento%20Met%C3%A1lico.mp4",
+                "provider": "json"
+              }
+            ],
+            "37": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/37.Lleg%C3%B3%20el%20ninja%20P%C3%BArpura.mp4",
+                "provider": "json"
+              }
+            ],
+            "38": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/38.Cinco%20ninjas%20en%20contra%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "39": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/39.El%20encuentro%20con%20el%20misterioso%20robot%20N%C2%BA%208.mp4",
+                "provider": "json"
+              }
+            ],
+            "40": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/40.La%20pelea%20de%20Goku%20con%20el%20temible%20Buyon.mp4",
+                "provider": "json"
+              }
+            ],
+            "41": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/41.El%20%C3%BAltimo%20d%C3%ADa%20en%20la%20torre%20de%20la%20fuerza.mp4",
+                "provider": "json"
+              }
+            ],
+            "42": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/3%20-%20Saga%20del%20Ej%C3%A9rcito%20de%20la%20Red%20Ribbon/42.El%20inesperado%20secreto%20del%20Dr.%20Flappe.mp4",
+                "provider": "json"
+              }
+            ],
+            "82": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/4%20-%20Saga%20El%20Palacio%20de%20Uranai%20Baba/82.Un%20monstruo%20violento%20llamado%20Inoch-ka-cho.mp4",
+                "provider": "json"
+              }
+            ],
+            "83": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/083.%C2%A1Apres%C3%BArate%2C%20Goku%21%20El%20Torneo%20de%20las%20Artes%20Marciales%20se%20avecina.mp4",
+                "provider": "json"
+              }
+            ],
+            "84": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/084.Qui%C3%A9n%20es%20el%20mejor%20peleador%20de%20las%20Artes%20Marciales.mp4",
+                "provider": "json"
+              }
+            ],
+            "85": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/085.%C2%A1Tenemos%20que%20ganar%21%20Qui%C3%A9n%20llegar%C3%A1%20a%20las%20preliminares.mp4",
+                "provider": "json"
+              }
+            ],
+            "86": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/086.Los%20ocho%20finalistas.mp4",
+                "provider": "json"
+              }
+            ],
+            "87": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/087.Yamcha%20vs%20Ten%20Shin%20Han.mp4",
+                "provider": "json"
+              }
+            ],
+            "88": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/088.%C2%A1Ten%20cuidado%2C%20Yamcha%21%20El%20temible%20Ten%20Shin%20Han%20es%20muy%20peligroso.mp4",
+                "provider": "json"
+              }
+            ],
+            "89": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/089.%C2%A1Terror%21%20El%20misterio%20de%20la%20Luna%20llena.mp4",
+                "provider": "json"
+              }
+            ],
+            "90": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/090.%C2%A1Qu%C3%A9%21%20%C2%A1Qu%C3%A9%21%20%C2%A1Qu%C3%A9%21%20%C2%A1Dodonpa%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "91": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/091.%C2%A1La%20situaci%C3%B3n%20ha%20cambiado%21%20El%20plan%20matem%C3%A1tico%20de%20Krilin.mp4",
+                "provider": "json"
+              }
+            ],
+            "92": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/092.Finalmente...%20El%20turno%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "93": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/093.Una%20pelea%20muy%20dif%C3%ADcil.%20Ten%20Shin%20Han%20vs%20Jackie%20Chun.mp4",
+                "provider": "json"
+              }
+            ],
+            "94": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/094.%C2%A1Qu%C3%A9%21%20La%20t%C3%A9cnica%20del%20Maestro%20Tsuru.%20Taiy%C5%8Dken.mp4",
+                "provider": "json"
+              }
+            ],
+            "95": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/095.%C2%A1A%20pelear%21%20%C2%A1Goku%20vs%20Krilin%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "96": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/096.La%20sorpresa%20de%20Goku%20y%20el%20plan%20de%20Krilin.mp4",
+                "provider": "json"
+              }
+            ],
+            "97": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/097.%C2%A1El%20%C3%BAltimo%20combate%21%20Qui%C3%A9n%20ser%C3%A1%20el%20mejor%20peleador%20de%20las%20Artes%20Marciales.mp4",
+                "provider": "json"
+              }
+            ],
+            "98": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/098.Las%20t%C3%A9cnicas%20secretas%20Taiy%C5%8Dken%20contra%20el%20poder%20de%20combate.mp4",
+                "provider": "json"
+              }
+            ],
+            "99": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/099.La%20angustia%20de%20Ten%20Shin%20Han.mp4",
+                "provider": "json"
+              }
+            ],
+            "100": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/100.%C2%A1Vivir%20o%20morir%21%20%C2%A1La%20%C3%BAltima%20alternativa%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "101": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/5%20-%20Saga%20%2022%C2%B0%20Tenkaichi%20Bud%C5%8Dkai/101.El%20Torneo%20de%20las%20Artes%20Marciales%20ha%20terminado...%20Y%20ahora%20qu%C3%A9.mp4",
+                "provider": "json"
+              }
+            ],
+            "102": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/102.%C2%A1La%20muerte%20de%20Krilin%21%20Un%20complot.mp4",
+                "provider": "json"
+              }
+            ],
+            "103": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/103.El%20temible%20Pikoro%20Dai-ma-ku.mp4",
+                "provider": "json"
+              }
+            ],
+            "104": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/104.Goku%20regresa.mp4",
+                "provider": "json"
+              }
+            ],
+            "105": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/105.El%20gran%20Yajirobe.mp4",
+                "provider": "json"
+              }
+            ],
+            "106": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/106.El%20malvado%20Tambourine%20se%20acerca.mp4",
+                "provider": "json"
+              }
+            ],
+            "107": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/107.Goku%20se%20enfurece.mp4",
+                "provider": "json"
+              }
+            ],
+            "108": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/108.La%20aparici%C3%B3n%20de%20Pikoro%20Dai-ma-ku.mp4",
+                "provider": "json"
+              }
+            ],
+            "109": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/109.Goku%20vs%20Pikoro%20Dai-ma-ku.mp4",
+                "provider": "json"
+              }
+            ],
+            "110": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/110.%C2%A1T%C3%BA%20puedes%20Goku%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "111": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/111.El%20%C3%BAltimo%20Ma-Fuu-Ba%20del%20maestro%20Roshi.mp4",
+                "provider": "json"
+              }
+            ],
+            "112": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/112.Podr%C3%A1%20Pikoro%20Dai-ma-ku%20recuperar%20la%20juventud.mp4",
+                "provider": "json"
+              }
+            ],
+            "113": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/113.Ataque%20al%20Castillo%20del%20Rey.mp4",
+                "provider": "json"
+              }
+            ],
+            "114": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/114.La%20esperanza%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "115": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/115.Vamos%20por%20la%20misteriosa%20agua%20de%20los%20Dioses.mp4",
+                "provider": "json"
+              }
+            ],
+            "116": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/116.El%20Maestro%20Roshi%20est%C3%A1%20vivo.mp4",
+                "provider": "json"
+              }
+            ],
+            "117": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/117.Goku%20despierta.mp4",
+                "provider": "json"
+              }
+            ],
+            "118": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/118.La%20decisi%C3%B3n%20de%20Ten%20Shin%20Han.mp4",
+                "provider": "json"
+              }
+            ],
+            "119": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/119.La%20legendaria%20t%C3%A9cnica%20Ma-Fuu-Ba.mp4",
+                "provider": "json"
+              }
+            ],
+            "120": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/120.La%20ira%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "121": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/121.El%20momento%20crucial%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "122": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/122.El%20%C3%BAltimo%20esfuerzo.mp4",
+                "provider": "json"
+              }
+            ],
+            "123": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/123.El%20secreto%20del%20b%C3%A1culo%20sagrado.mp4",
+                "provider": "json"
+              }
+            ],
+            "124": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/124.El%20templo%20sagrado%20que%20est%C3%A1%20arriba%20de%20las%20nubes.mp4",
+                "provider": "json"
+              }
+            ],
+            "125": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/125.La%20aparici%C3%B3n%20de%20Kami-Sama.mp4",
+                "provider": "json"
+              }
+            ],
+            "126": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/126.Shen-Long%20revive.mp4",
+                "provider": "json"
+              }
+            ],
+            "127": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/127.M%C3%A1s%20r%C3%A1pido%20que%20un%20rel%C3%A1mpago.mp4",
+                "provider": "json"
+              }
+            ],
+            "128": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/128.Tranquilo%20como%20el%20cielo.mp4",
+                "provider": "json"
+              }
+            ],
+            "129": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/129.Goku%20viaja%20a%20trav%C3%A9s%20del%20tiempo.mp4",
+                "provider": "json"
+              }
+            ],
+            "130": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/130.El%20oponente%20de%20Goku%20es...%20%C2%A1Goku%21.mp4",
+                "provider": "json"
+              }
+            ],
+            "131": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/131.Cada%20qui%C3%A9n%20toma%20un%20camino%20diferente.mp4",
+                "provider": "json"
+              }
+            ],
+            "132": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/6%20-%20Saga%20de%20Piccolo%20Daima%C5%8D/132.M%C3%A1s%20caliente%20que%20el%20magma.mp4",
+                "provider": "json"
+              }
+            ],
+            "133": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/133.Una%20reuni%C3%B3n%20despu%C3%A9s%20de%20la%20tormenta.mp4",
+                "provider": "json"
+              }
+            ],
+            "134": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/134.El%20torneo%20de%20las%20Artes%20Marciales%20ha%20comenzado.mp4",
+                "provider": "json"
+              }
+            ],
+            "135": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/135.Los%20ocho%20peleadores.mp4",
+                "provider": "json"
+              }
+            ],
+            "136": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/136.El%20contraataque%20del%20asesino%20Tao-pai-Pa.mp4",
+                "provider": "json"
+              }
+            ],
+            "137": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/137.La%20promesa%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "138": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/138.El%20misterioso%20hombre%20llamado%20Shen.mp4",
+                "provider": "json"
+              }
+            ],
+            "139": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/139.Nuevamente%20una%20pelea%20violenta.%20Goku%20contra%20Ten-shin-han.mp4",
+                "provider": "json"
+              }
+            ],
+            "140": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/140.El%20verdadero%20poder.mp4",
+                "provider": "json"
+              }
+            ],
+            "141": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/141.Cuatro%20Ten-shin-han.mp4",
+                "provider": "json"
+              }
+            ],
+            "142": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/142.Qui%C3%A9n%20ser%C3%A1%20m%C3%A1s%20fuerte.%20Kami-Sama%20vs%20Pikoro%20Dai-ma-ku.mp4",
+                "provider": "json"
+              }
+            ],
+            "143": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/143.El%20destino%20del%20mundo%20corre%20peligro.mp4",
+                "provider": "json"
+              }
+            ],
+            "144": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/144.El%20s%C3%BAper%20Kame-Hame-Ha.mp4",
+                "provider": "json"
+              }
+            ],
+            "145": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/145.El%20gigante%20Pikoro%20Daimaku.mp4",
+                "provider": "json"
+              }
+            ],
+            "146": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/146.La%20trampa%20de%20Goku.mp4",
+                "provider": "json"
+              }
+            ],
+            "147": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/147.Todo%20se%20ha%20perdido.mp4",
+                "provider": "json"
+              }
+            ],
+            "148": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/148.El%20hombre%20m%C3%A1s%20fuerte%20del%20mundo.mp4",
+                "provider": "json"
+              }
+            ],
+            "149": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/149.El%20vestido%20de%20novia%20rodeado%20por%20las%20llamas.mp4",
+                "provider": "json"
+              }
+            ],
+            "150": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/150.El%20ave%20traga%20fuego.mp4",
+                "provider": "json"
+              }
+            ],
+            "151": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/151.Milk%20entrena%20dur%C3%B3%20para%20ser%20una%20buena%20esposa.mp4",
+                "provider": "json"
+              }
+            ],
+            "152": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/152.%C2%A1Apres%C3%BArate%20Goku%21%20El%20misterio%20de%20la%20monta%C3%B1a%20de%20los%20cinco%20elementos.mp4",
+                "provider": "json"
+              }
+            ],
+            "153": [
+              {
+                "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/153.La%20monta%C3%B1a%20Fry-Pan%20esta%20en%20llamas%2C%20una%20decisi%C3%B3n%20de%20vida%20o%20muerte.mp4",
+                "provider": "json"
               }
             ]
           }

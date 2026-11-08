@@ -1,6 +1,6 @@
 {
   "catalogVersion": 1,
-  "updatedAt": 1794105063,
+  "updatedAt": 1794166361,
   "movies": {
     "1246": [
       {
@@ -1794,6 +1794,48 @@
       {
         "url": "https://fastream.to/embed-mvdx1arqv626.html",
         "provider": "embed"
+      }
+    ],
+    "39148": [
+      {
+        "url": "https://ia903108.us.archive.org/1/items/Dragon-Ball-Latino-JP/Pel%C3%ADculas/4.El%20Camino%20Hacia%20El%20Poder.mp4?cnt=0",
+        "provider": "embed"
+      }
+    ],
+    "116776": [
+      {
+        "url": "https://ia800602.us.archive.org/3/items/dragon-ball-03-gran-aventura-mistica/Dragon%20Ball%2003%20-%20Gran%20Aventura%20M%C3%ADstica.mp4?cnt=0",
+        "provider": "embed"
+      },
+      {
+        "url": "https://archive.org/serve/dragon-ball-03-gran-aventura-mistica/Dragon%20Ball%2003%20-%20Gran%20Aventura%20M%C3%ADstica.mp4",
+        "provider": "json"
+      }
+    ],
+    "39145": [
+      {
+        "url": "https://archive.org/serve/dragon-ball-02-la-bella-durmiente-en-el-castillo-del-mal/Dragon%20Ball%2002%20-%20La%20Bella%20Durmiente%20en%20el%20Castillo%20del%20Mal.mp4",
+        "provider": "json"
+      },
+      {
+        "url": "https://ia801005.us.archive.org/29/items/dragon-ball-02-la-bella-durmiente-en-el-castillo-del-mal/Dragon%20Ball%2002%20-%20La%20Bella%20Durmiente%20en%20el%20Castillo%20del%20Mal.mp4?cnt=0",
+        "provider": "embed"
+      }
+    ],
+    "39144": [
+      {
+        "url": "https://archive.org/serve/dragon-ball-01-la-leyenda-de-shenlong/Dragon%20Ball%2001%20-%20La%20Leyenda%20de%20Shenlong.mp4",
+        "provider": "json"
+      },
+      {
+        "url": "https://ia803204.us.archive.org/4/items/dragon-ball-01-la-leyenda-de-shenlong/Dragon%20Ball%2001%20-%20La%20Leyenda%20de%20Shenlong.mp4?cnt=0",
+        "provider": "embed"
+      }
+    ],
+    "11690": [
+      {
+        "url": "https://archive.org/serve/contacto-sangiento-bloodsport-1988-newt-arnold-spa-latino/Contacto%20Sangiento%20%28Bloodsport%29%201988%2C%20Newt%20Arnold%20SPA%20Latino.mp4",
+        "provider": "json"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
   "catalogVersion": 1,
-  "updatedAt": 1794021237,
+  "updatedAt": 1794105063,
   "series": {
     "2004": {
       "seasons": {
@@ -1826,12 +1826,12 @@
             ],
             "2": [
               {
-                "url": "https://archive.org/serve/it-welcome-to-derry-s-01-e-02-1080p-rhs/IT-%20Welcome%20to%20Derry%20S01E02_1080p_RHS.mp4",
-                "provider": "json"
-              },
-              {
                 "url": "https://fastream.to/embed-egh9a21pnddx.html",
                 "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/it-welcome-to-derry-s-01-e-02-1080p-rhs/IT-%20Welcome%20to%20Derry%20S01E02_1080p_RHS.mp4",
+                "provider": "json"
               },
               {
                 "url": "https://fastream.to/embed-f7g26cufcirk.html",

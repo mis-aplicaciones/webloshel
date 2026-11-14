@@ -1,14 +1,14 @@
 {
   "manifestSchemaVersion": 1,
-  "catalogCommit": "decb746223b018955dc5ecd0be401647dcad0ee2",
+  "catalogCommit": "552e4104c407d44c0fbdfd3fa6beb096456a5fad",
   "movies": {
     "path": "json/movies.json",
-    "sizeBytes": 53919,
-    "sha256": "cd2dece9b8f4d62e10255d17e4c562b839d7d9a0cfb0a245d8f0284bcb4120ee"
+    "sizeBytes": 54453,
+    "sha256": "3badd3d4cbb2a3690a6f97e297345ae32eda9908034554bdf1287ade7f873cfe"
   },
   "series": {
     "path": "json/series.json",
-    "sizeBytes": 122660,
-    "sha256": "815a1d1e5a8a393dd41f1a2f07ebb11ff06ff4d763e4ed173b750ff58f8d1272"
+    "sizeBytes": 128279,
+    "sha256": "61e29fa05f9d3d61e88c7ca2b2ee4ceda480ed412c86a4f3c4adac681fdcaa41"
   }
 }

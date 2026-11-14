@@ -1,6 +1,6 @@
 {
   "catalogVersion": 1,
-  "updatedAt": 1794166361,
+  "updatedAt": 1794622652,
   "series": {
     "2004": {
       "seasons": {
@@ -2219,6 +2219,12 @@
                 "url": "https://archive.org/serve/s-01-e-06-bardo-en-lo-de-dardo-nf-480p/T2-13.%20Mu%C3%B1eca%20brava%20%5B480p%5D.mp4",
                 "provider": "json"
               }
+            ],
+            "1": [
+              {
+                "url": "https://stream-9251-178-118.pkcdn.org/eioctgn7neikkfn2ma67yokkhcuixw42dri6fshigg7mrthho73mgn2hme/v.mp4",
+                "provider": "json"
+              }
             ]
           }
         }
@@ -3138,6 +3144,168 @@
               {
                 "url": "https://archive.org/serve/Dragon-Ball-Latino-JP/7%20-%20Saga%2023%C2%BA%20Tenkaichi%20Bud%C5%8Dkai/153.La%20monta%C3%B1a%20Fry-Pan%20esta%20en%20llamas%2C%20una%20decisi%C3%B3n%20de%20vida%20o%20muerte.mp4",
                 "provider": "json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "279246": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-xjt1t4n6rd54.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-y9r6uhyte7tf.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/the.-remarried.-empress.-s-01e-01.-av-1.1080-p/The.Remarried.Empress.S01e01.Av1.1080P.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-3tg13zxf77u1.html",
+                "provider": "embed"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "95350": {
+      "seasons": {
+        "1": {
+          "episodes": {
+            "1": [
+              {
+                "url": "https://fastream.to/embed-xfd6f4ojzta0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/lanterns-s-01-e-01-1080p-embedplay/Lanterns_S01E01_1080p_EMBEDPLAY.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-w6a8ib64if7p.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-ihgveyx9dq02.html",
+                "provider": "embed"
+              }
+            ],
+            "2": [
+              {
+                "url": "https://fastream.to/embed-h7mgi8i41jf8.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-co4g2k49bgwh.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-u3n767z4rewr.html",
+                "provider": "embed"
+              }
+            ],
+            "3": [
+              {
+                "url": "https://fastream.to/embed-rvql03m6t75q.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-1id5k5lddlqk.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-yl0ujns9cr3l.html",
+                "provider": "embed"
+              }
+            ],
+            "4": [
+              {
+                "url": "https://fastream.to/embed-mr108ceceo45.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-dowbhnpyme3a.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-d1c9nxqvvj59.html",
+                "provider": "embed"
+              }
+            ],
+            "5": [
+              {
+                "url": "https://fastream.to/embed-sxdyiyq4hxw3.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-ilmwm8qqrpz5.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-hqazmj1d15py.html",
+                "provider": "embed"
+              }
+            ],
+            "6": [
+              {
+                "url": "https://fastream.to/embed-dekvk00s9t4b.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/linternas.-t-1x-06.-lat/Linternas.T1x06.LAT.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-lgji9p0mdtt5.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-s68tkqcaijvx.html",
+                "provider": "embed"
+              }
+            ],
+            "7": [
+              {
+                "url": "https://fastream.to/embed-5trn50m3ajb7.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/linternas-temporada-1-capitulo-7_202610/Linternas%20Temporada%201%20Capitulo%207.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-6it55cmqq03l.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-k2bhzfsc1pef.html",
+                "provider": "embed"
+              }
+            ],
+            "8": [
+              {
+                "url": "https://fastream.to/embed-ueri1c7n00r0.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://archive.org/serve/linternas-temporada-1-capitulo-7_202610/Linternas%208.mp4",
+                "provider": "json"
+              },
+              {
+                "url": "https://fastream.to/embed-0v7ayf3gv1nk.html",
+                "provider": "embed"
+              },
+              {
+                "url": "https://fastream.to/embed-klallyvm0cdy.html",
+                "provider": "embed"
               }
             ]
           }

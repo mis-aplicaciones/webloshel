@@ -1,6 +1,6 @@
 {
   "catalogVersion": 1,
-  "updatedAt": 1794166361,
+  "updatedAt": 1794622652,
   "movies": {
     "1246": [
       {
@@ -1836,6 +1836,30 @@
       {
         "url": "https://archive.org/serve/contacto-sangiento-bloodsport-1988-newt-arnold-spa-latino/Contacto%20Sangiento%20%28Bloodsport%29%201988%2C%20Newt%20Arnold%20SPA%20Latino.mp4",
         "provider": "json"
+      }
+    ],
+    "562": [
+      {
+        "url": "https://fastream.to/embed-uv2gtrzxzrx6.html",
+        "provider": "embed"
+      }
+    ],
+    "8681": [
+      {
+        "url": "https://fastream.to/embed-ccb13ao6f0mh.html",
+        "provider": "embed"
+      }
+    ],
+    "82675": [
+      {
+        "url": "https://fastream.to/embed-ar47o67tgzew.html",
+        "provider": "embed"
+      }
+    ],
+    "260346": [
+      {
+        "url": "https://fastream.to/embed-ieb125u6zdj1.html",
+        "provider": "embed"
       }
     ]
   }
